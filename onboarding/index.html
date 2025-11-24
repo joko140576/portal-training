@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis Jalan Berliku</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .road-container {
+            position: relative;
+            height: 300px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .road {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: #34495e;
+            border-radius: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transform: translateY(-50%);
+        }
+
+        .road::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #f1c40f,
+                #f1c40f 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            transform: translateY(-50%);
+        }
+
+        .person {
+            position: absolute;
+            width: 120px;
+            height: 160px;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .person:hover {
+            transform: translateY(-10px);
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+
+        .person-img {
+            width: 100px;
+            height: 120px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .person-legs {
+            width: 80px;
+            height: 40px;
+            background: #27ae60;
+            border-radius: 0 0 10px 10px;
+            position: relative;
+            margin-top: -5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .person-legs::before,
+        .person-legs::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            width: 20px;
+            height: 15px;
+            background: #2c3e50;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .person-legs::before {
+            left: 15px;
+        }
+
+        .person-legs::after {
+            right: 15px;
+        }
+
+        .label-box {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(52, 73, 94, 0.9);
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .label-box:hover {
+            background: rgba(41, 128, 185, 0.9);
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .label-box i {
+            margin-right: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            animation: modalAppear 0.4s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #e74c3c;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #c0392b;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #2ecc71;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-title i {
+            margin-right: 10px;
+        }
+
+        .modal-description {
+            line-height: 1.6;
+            color: #ecf0f1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .road-container {
+                height: 500px;
+            }
+            
+            .person {
+                width: 80px;
+                height: 120px;
+            }
+            
+            .person-img {
+                width: 70px;
+                height: 85px;
+                font-size: 1.5rem;
+            }
+            
+            .person-legs {
+                width: 60px;
+                height: 35px;
+            }
+            
+            .label-box {
+                font-size: 0.8rem;
+                padding: 8px 15px;
+                top: -40px;
+                min-width: 80px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Training College</h1>
+            <p class="subtitle">College ( Continuous Learning Go To Your Journey ) adalah training untuk pegawai baru yang telah disusun secara bertahap dari awal journey yaitu kasir sampai terakhir yaitu Admin . Ikuti saja perjalanan belajarmu. " Whenever and wherever you have free time, you can start learning "</p>
+        </header>
+
+        <div class="road-container">
+            <div class="road"></div>
+            
+            <!-- Person 1 - Kasir -->
+            <div class="person" style="left: 10%; top: 50%;">
+                <div class="label-box" data-target="kasir">
+                    <i class="fas fa-cash-register"></i> Kasir
+                </div>
+                <img src="https://drive.google.com/file/d/1vrV0m1d4iFLtclitdyiLHZd11V4xGcrg/view?usp=sharing" width="80" height="180" alt="">
+            </div>
+            
+            <!-- Person 2 - Custody -->
+            <div class="person" style="left: 25%; top: 30%;">
+                <div class="label-box" data-target="custody">
+                    <i class="fas fa-lock"></i> Custody
+                </div>
+                <div class="person-img">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="person-legs"></div>
+            </div>
+            
+            <!-- Person 3 - FLM -->
+            <div class="person" style="left: 45%; top: 60%;">
+                <div class="label-box" data-target="flm">
+                    <i class="fas fa-users"></i> FLM
+                </div>
+                <div class="person-img">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <div class="person-legs"></div>
+            </div>
+            
+            <!-- Person 4 - SLM -->
+            <div class="person" style="left: 65%; top: 35%;">
+                <div class="label-box" data-target="slm">
+                    <i class="fas fa-chart-line"></i> SLM
+                </div>
+                <div class="person-img">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="person-legs"></div>
+            </div>
+            
+            <!-- Person 5 - Admin -->
+            <div class="person" style="left: 85%; top: 55%;">
+                <div class="label-box" data-target="admin">
+                    <i class="fas fa-clipboard-list"></i> Admin
+                </div>
+                <div class="person-img">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="person-legs"></div>
+            </div>
+        </div>
+
+        <!-- Modal Windows -->
+        <div id="kasir-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 class="modal-title"><i class="fas fa-cash-register"></i> Kasir</h2>
+                <p class="modal-description">Bertanggung jawab atas transaksi keuangan, penerimaan pembayaran, dan pencatatan keuangan dengan akurat. Memastikan setiap transaksi tercatat dengan baik dan memberikan layanan yang ramah kepada pelanggan. Posisi ini memerlukan ketelitian dan kejujuran dalam menangani uang.</p>
+            </div>
+        </div>
+
+        <div id="custody-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 class="modal-title"><i class="fas fa-lock"></i> Custody</h2>
+                <p class="modal-description">Mengelola dan menjaga aset perusahaan dengan aman. Memastikan dokumentasi yang tepat, penyimpanan yang aman, dan pelacakan aset secara berkala untuk meminimalkan risiko kehilangan atau kerusakan. Posisi ini memerlukan tanggung jawab tinggi terhadap keamanan aset berharga.</p>
+            </div>
+        </div>
+
+        <div id="flm-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 class="modal-title"><i class="fas fa-users"></i> FLM (Front Line Manager)</h2>
+                <p class="modal-description">Memimpin tim operasional di garis depan, memastikan standar kualitas layanan, dan mengawasi kinerja staf. Bertanggung jawab untuk memotivasi tim dan menjadi penghubung antara manajemen dan staf operasional. Posisi ini memerlukan kemampuan kepemimpinan dan komunikasi yang baik.</p>
+            </div>
+        </div>
+
+        <div id="slm-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 class="modal-title"><i class="fas fa-chart-line"></i> SLM (Service Level Manager)</h2>
+                <p class="modal-description">Memonitor dan memastikan kualitas layanan sesuai dengan standar yang ditetapkan. Mengelola hubungan dengan pelanggan, mengukur kepuasan, dan mengimplementasikan perbaikan berkelanjutan untuk meningkatkan kualitas layanan. Posisi ini memerlukan kemampuan analitis dan pemecahan masalah.</p>
+            </div>
+        </div>
+
+        <div id="admin-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 class="modal-title"><i class="fas fa-clipboard-list"></i> Admin</h2>
+                <p class="modal-description">Mengelola administrasi kantor, termasuk pengarsipan dokumen, pengelolaan database, dan koordinasi komunikasi internal. Memastikan operasional administratif berjalan lancar dan efisien untuk mendukung seluruh departemen. Posisi ini memerlukan keterampilan organisasi dan multitasking yang baik.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 Infografis Interaktif - Setiap Posisi Penting dalam Perjalanan</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all label boxes
+            const labelBoxes = document.querySelectorAll('.label-box');
+            
+            // Get all modals
+            const modals = document.querySelectorAll('.modal');
+            
+            // Get all close buttons
+            const closeButtons = document.querySelectorAll('.close-btn');
+            
+            // Add click event to each label box
+            labelBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    const modal = document.getElementById(`${target}-modal`);
+                    
+                    if (modal) {
+                        modal.style.display = 'flex';
+                    }
+                });
+            });
+            
+            // Add click event to close buttons
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    modal.style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside the content
+            window.addEventListener('click', function(event) {
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
