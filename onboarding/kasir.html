@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training On Boarding</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #2b1055, #7597de);
+            font-family: "Poppins", sans-serif;
+            color: #eee;
+        }
+
+        /* TITLE */
+        .section-title {
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* CARD */
+        .card-custom {
+            border-radius: 25px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            transition: 0.3s;
+        }
+        .card-custom:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+        }
+
+        /* HEADER CARD */
+        .card-header-custom {
+            padding: 25px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #ae48ff, #ff6fd8);
+        }
+        .card-header-red { background: linear-gradient(135deg, #ff3cac, #562b7c); }
+        .card-header-blue { background: linear-gradient(135deg, #4b2cff, #8e5dff); }
+
+        /* LINK LIST */
+        .link-list a {
+            display: block;
+            padding: 8px 0;
+            text-decoration: none;
+            font-weight: 500;
+            color: #ffb8ff;
+            transition: 0.2s;
+        }
+        .link-list a:hover {
+            padding-left: 10px;
+            color: #ffe6ff;
+            text-shadow: 0 0 8px rgba(255,255,255,0.7);
+        }
+
+        /* CARD FOOTER */
+        .card-footer-custom {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(6px);
+            padding: 15px;
+            font-weight: 600;
+            text-align: center;
+            color: #ddd;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: linear-gradient(135deg, #150035, #33005f);
+            color: #eee;
+            padding: 35px 0;
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        footer p {
+            margin: 0;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        /* MODAL */
+        .modal-content {
+            background: rgba(255,255,255,0.1) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .modal-header {
+            background: linear-gradient(135deg, #7f00ff, #e100ff) !important;
+            color: #fff !important;
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            background: linear-gradient(135deg, #7a2cff, #d043ff);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #6a25e6, #bf2ee6);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffae00, #ff6f00);
+            border: none;
+            color: #fff;
+        }
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #e89c00, #e65e00);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- SECTION 1 -->
+    <section class="py-3 text-center animate__animated animate__fadeIn">
+        <div class="container">
+            <h1 class="section-title display-5 mb-3">Training Mandatory & Refreshment</h1>
+            <p class="lead mx-auto text-light" style="max-width: 750px;">
+                Program pelatihan awal bagi pegawai baru untuk memahami standar kerja, sistem operasional,
+                prosedur layanan, serta budaya perusahaan.
+            </p>
+
+            <button class="btn btn-primary mt-3 px-4 py-2" data-bs-toggle="modal" data-bs-target="#quizModal">
+                <i class="fa-solid fa-question-circle"></i> Mulai Quiz
+            </button>
+        </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="py-5 animate__animated animate__fadeInUp">
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- CARD MODULE PDF -->
+                <div class="col-md-6">
+                    <div class="card card-custom h-100">
+
+                        <div class="card-header-custom card-header-red">
+                            <i class="fa-solid fa-file-pdf fa-lg"></i>
+                            Module PDF
+                        </div>
+
+                        <div class="p-4 text-light">
+                            <p class="text-light">Kumpulan modul pelatihan dalam format PDF.</p>
+
+                            <div class="link-list">
+                                <a href="#"><i class="fa-solid fa-book-open"></i> Modul Pelatihan 1</a>
+                                <a href="#"><i class="fa-solid fa-book-open"></i> Modul Pelatihan 2</a>
+                                <a href="#"><i class="fa-solid fa-book-open"></i> Modul Pelatihan 3</a>
+                            </div>
+                        </div>
+
+                        <div class="card-footer-custom">
+                            Terimakasih telah mengikuti pembelajaran dari materi PDF
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CARD MODULE VIDEO -->
+                <div class="col-md-6">
+                    <div class="card card-custom h-100">
+
+                        <div class="card-header-custom card-header-blue">
+                            <i class="fa-solid fa-video fa-lg"></i>
+                            Module Video
+                        </div>
+
+                        <div class="p-4 text-light">
+                            <p class="text-light">Video pembelajaran interaktif untuk memahami materi.</p>
+
+                            <div class="link-list">
+                                <a href="#"><i class="fa-solid fa-circle-play"></i> Video Pelatihan 1</a>
+                                <a href="#"><i class="fa-solid fa-circle-play"></i> Video Pelatihan 2</a>
+                                <a href="#"><i class="fa-solid fa-circle-play"></i> Video Pelatihan 3</a>
+                            </div>
+                        </div>
+
+                        <div class="card-footer-custom">
+                            Terimakasih telah mengikuti pembelajaran dari materi Video
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ MODAL -->
+    <div class="modal fade" id="quizModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header text-white">
+                    <h5 class="modal-title"><i class="fa-solid fa-clipboard-question"></i> Quiz On Boarding</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body text-light">
+
+                    <p><b>1. Apa tujuan utama program On Boarding?</b></p>
+                    <div>
+                        <input type="radio" name="q1" value="A"> A. Agar pegawai langsung bekerja tanpa pelatihan<br>
+                        <input type="radio" name="q1" value="B"> B. Membantu pegawai memahami budaya dan prosedur kerja<br>
+                        <input type="radio" name="q1" value="C"> C. Menggantikan training tahunan<br>
+                    </div>
+
+                    <p class="mt-3"><b>2. Apa format materi yang tersedia?</b></p>
+                    <div>
+                        <input type="radio" name="q2" value="A"> A. Hanya audio<br>
+                        <input type="radio" name="q2" value="B"> B. PDF dan Video<br>
+                        <input type="radio" name="q2" value="C"> C. Tidak ada materi<br>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button class="btn btn-success" onclick="checkQuiz()">Kirim Jawaban</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+<!-- POST TEST SECTION -->
+<section class="py-5 text-center">
+    <div class="container">
+        <button class="btn btn-warning px-4 py-2 btn-lg shadow" data-bs-toggle="modal" data-bs-target="#quizModal">
+            <i class="fa-solid fa-file-pen"></i> Post Test
+        </button>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 Training Mandatory/Refreshment — PT SSI</p>
+    <p>Didesain untuk pengalaman belajar terbaik bagi pegawai baru</p>
+</footer>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function checkQuiz() {
+        let score = 0;
+
+        if (document.querySelector('input[name="q1"]:checked')?.value === "B") score++;
+        if (document.querySelector('input[name="q2"]:checked')?.value === "B") score++;
+
+        alert("Skor Anda: " + score + "/2");
+    }
+</script>
+
+</body>
+</html>
