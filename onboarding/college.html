@@ -33,13 +33,45 @@
 
         h1 {
             font-size: 2.8rem;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            
+            /* Realistic Glossy Gold Gradient */
+            background: linear-gradient(
+                90deg,
+                #f9e79f,
+                #f1c40f,
+                #d4af37,
+                #b8860b,
+                #f7dc6f,
+                #f1c40f,
+                #d4af37
+            );
+            background-size: 200% auto; /* efek glossy bergerak */
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        
+            /* Soft Glow */
+            text-shadow:
+            0 0 6px rgba(255, 215, 0, 0.45),
+            0 0 12px rgba(212, 175, 55, 0.35),
+            0 0 18px rgba(255, 223, 86, 0.25);
+
+            margin-bottom: 15px;
+        
+            /* Animasi Glossy */
+            animation: goldGloss 4s linear infinite;
         }
+
+/* Efek Glossy Bergerak Halus */
+@keyframes goldGloss {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
 
         .subtitle {
             font-size: 1.2rem;
