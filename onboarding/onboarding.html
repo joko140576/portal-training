@@ -184,18 +184,37 @@
 
                 <div class="modal-body">
 
-                    <p><b>1. Apa tujuan utama program On Boarding?</b></p>
+                    <p><b>1.Dibawah ini adalah core bisnis PT SSI , kecuali  </b></p>
                     <div>
-                        <input type="radio" name="q1" value="A"> A. Agar pegawai langsung bekerja tanpa pelatihan<br>
-                        <input type="radio" name="q1" value="B"> B. Membantu pegawai memahami budaya dan prosedur kerja<br>
-                        <input type="radio" name="q1" value="C"> C. Menggantikan training tahunan<br>
+                        <input type="radio" name="q1" value="A"> A. Card Replenishment & maintenance ATM <br>
+                        <input type="radio" name="q1" value="B"> B. Cash In Transit <br>
+                        <input type="radio" name="q1" value="C"> C. Security Service<br>
                     </div>
 
-                    <p class="mt-3"><b>2. Apa format materi yang tersedia?</b></p>
+                    <p class="mt-3"><b>2. Dibawah ini adalah ciri ciri keaslian uang rupiah dengan cara di terawang , kecuali</b></p>
                     <div>
-                        <input type="radio" name="q2" value="A"> A. Hanya audio<br>
-                        <input type="radio" name="q2" value="B"> B. PDF dan Video<br>
-                        <input type="radio" name="q2" value="C"> C. Tidak ada materi<br>
+                        <input type="radio" name="q2" value="A"> A. Rectoverso<br>
+                        <input type="radio" name="q2" value="B"> B. Intaglio <br>
+                        <input type="radio" name="q2" value="C"> C. Watermark<br>
+                    </div>
+
+                    <p class="mt-3"><b>3. Bagian mesin ATM yang berfungsi mengacak kode PIN nasabah adalah </b></p>
+                    <div>
+                        <input type="radio" name="q2" value="A"> A. Encriptor<br>
+                        <input type="radio" name="q2" value="B"> B. Card Reader <br>
+                        <input type="radio" name="q2" value="C"> C. Dispenser <br>
+                    </div>
+                    <p class="mt-3"><b>2. Dibawah ini adalah ciri ciri keaslian uang rupiah dengan cara di terawang , kecuali</b></p>
+                    <div>
+                        <input type="radio" name="q2" value="A"> A. Rectoverso<br>
+                        <input type="radio" name="q2" value="B"> B. Intaglio <br>
+                        <input type="radio" name="q2" value="C"> C. Watermark<br>
+                    </div>
+                    <p class="mt-3"><b>2. Dibawah ini adalah Rutinitas kegiatan pengisian ATM , kecuali  </b></p>
+                    <div>
+                        <input type="radio" name="q2" value="A"> A. Print Counter & Admin  <br>
+                        <input type="radio" name="q2" value="B"> B. Pengambilan Record CCTV <br>
+                        <input type="radio" name="q2" value="C"> C. Pengambilan EJ <br>
                     </div>
 
                 </div>
@@ -233,10 +252,13 @@
         function checkQuiz() {
             let score = 0;
 
-            if (document.querySelector('input[name="q1"]:checked')?.value === "B") score++;
+            if (document.querySelector('input[name="q1"]:checked')?.value === "C") score++;
+            if (document.querySelector('input[name="q2"]:checked')?.value === "B") score++;
+            if (document.querySelector('input[name="q2"]:checked')?.value === "A") score++;
+            if (document.querySelector('input[name="q2"]:checked')?.value === "C") score++;
             if (document.querySelector('input[name="q2"]:checked')?.value === "B") score++;
 
-            alert("Skor Anda: " + score + "/2");
+            alert("Skor Anda: " + score + "/5");
         }
     </script>
 
