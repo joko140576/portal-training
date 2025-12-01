@@ -1,1 +1,480 @@
-file mana
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Pelatihan PT SSI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(to bottom right, #fff8e6, #f6e7c5);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .mainbox {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .card {
+        border-radius: 16px;
+        border: none;
+    }
+
+    .card-header {
+        background: #d4af37;
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+        border-radius: 16px 16px 0 0 !important;
+    }
+
+    .hidden { display:none; }
+
+    .soal-box {
+        padding: 18px;
+        margin-bottom: 15px;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e3d7ac;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+ 
+    #videoBox .card {
+        max-width: 1200px;       /* batas ukuran maksimal */
+        margin: 0 auto;         /* supaya card berada di tengah */
+    }
+    #videoBox video {
+        width: 100%;            /* tetap responsif */
+        border-radius: 10px;
+    }
+
+
+    /* Sertifikat */
+    .certificate {
+        width: 100%;
+        padding: 50px;
+        text-align: center;
+        font-family: serif;
+        background: url('https://i.ibb.co/6gMdF6Y/cert-bg-premium.jpg');
+        background-size: cover;
+    }
+
+
+
+    /* Loading */
+    #loadingOverlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255,255,255,0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loadingOverlay">
+    <div class="text-center">
+        <div class="spinner-border" style="width:65px;height:65px;" role="status"></div>
+        <p class="mt-3 fw-bold">Mengambil soal... harap menunggu</p>
+    </div>
+</div>
+
+<div class="container mainbox py-4">
+
+    <h2 class="text-center  fw-bold text-dark">
+        Pelatihan Online PT SSI
+    </h2> 
+    <h4 class="text-center mb-3"> <i class="fa-solid fa-graduation-cap"></i> Module Customer Fokus</h4>
+
+    <!-- ============================================
+    FORM PESERTA
+    ============================================= -->
+    <div id="formPeserta" class="card shadow">
+    <div class="card-header fw-bold">
+        Data Peserta Training Leadership Competency Skills
+    </div>
+
+    <div class="card-body">
+
+        <div class="mb-3">
+            <label for="nama" class="form-label">Nama Pegawai</label>
+            <input class="form-control" id="nama">
+        </div>
+
+        <div class="mb-3">
+            <label for="npp" class="form-label">NPP</label>
+            <input class="form-control" id="npp">
+        </div>
+
+        <div class="mb-3">
+            <label for="divisi" class="form-label">Pilih Divisi</label>
+            <select id="divisi" name="divisi" class="form-select">
+                <option value="">-- Pilih Divisi --</option>
+                <option value="INA">INA</option>
+                <option value="HCC">HCC</option>
+                <option value="FRM">FRM</option>
+                <option value="PLM">PLM</option>
+                <option value="OPR-1">OPR-1</option>
+                <option value="OPR-2">OPR-2</option>
+                <option value="OPS">OPS</option>
+                <option value="MBS">MBS</option>
+                <option value="SBD">SBD</option>
+                <option value="CSI">CSI</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="unit" class="form-label">Unit</label>
+            <input class="form-control" id="unit">
+        </div>
+
+        <div class="mb-5">
+            <label for="jabatan" class="form-label">Pilih Jabatan</label>
+            <select id="jabatan" name="jabatan" class="form-select">
+                <option value="">-- Pilih Jabatan  --</option>
+                <option value="GM">General Manager</option>
+                <option value="CEO">CEO Region</option>
+                <option value="Dep">Deputi</option>
+                <option value="SM">Senior Manager</option>
+                <option value="Mgr">Manager</option>
+                <option value="Asmen">Asmen</option>
+                <option value="Staf">Staf</option>
+                <option value="dll">others..</option>
+            </select>
+        </div>
+
+        <button class="btn btn-warning w-100 fw-bold" onclick="mulaiPelatihan()">
+            Mulai Pelatihan
+        </button>
+
+    </div>
+</div>
+
+
+
+    <!-- ============================================
+    VIDEO
+    ============================================= -->
+    <div id="videoBox" class="hidden mt-4">
+        <div class="card shadow">
+            <div class="card-header">Tonton Video Pelatihan</div>
+
+            <div class="card-body">
+                <iframe 
+                    src="https://drive.google.com/file/d/1ohD82szO0tMjQK49Ts4zF1slnY0z5GvH/preview"
+                    width="100%" height="720" 
+                    allow="autoplay" 
+                    style="border:0; border-radius:10px;">
+                </iframe>
+
+                <button class="btn btn-success mt-3 w-100 fw-bold" onclick="mulaiKuis()">Lanjut Kuis</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ============================================
+    KUIS
+    ============================================= -->
+    <div id="kuisBox" class="hidden mt-4">
+        <div class="card shadow">
+            <div class="card-header">Kuis Pelatihan</div>
+
+            <div class="card-body">
+                <div id="listSoal"></div>
+                <button class="btn btn-primary w-100 fw-bold" onclick="kumpulkan()">Kumpulkan Jawaban</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ============================================
+    HASIL & SERTIFIKAT
+    ============================================= -->
+    <div id="hasilBox" class="hidden mt-4 card p-4 shadow text-center">
+        <h3 id="tampilNilai"></h3>
+
+        <button id="btnCetak" class="btn btn-warning mt-3 hidden fw-bold" onclick="cetakSertifikat()">Cetak Sertifikat</button>
+
+        <button id="btnUlang" class="btn btn-danger mt-3 hidden fw-bold" onclick="ulangKuis()">Ulangi Kuis</button>
+    </div>
+
+</div> <!-- container end -->
+
+
+
+<!-- ============================================================
+SCRIPT LOGIC
+=============================================================== -->
+
+<script>
+const WEBAPP = "https://script.google.com/macros/s/AKfycbwruHppGhZZ_1MH0V8WtSb6sS2SPm0c5ghMoCaURW-kyGR4UOsp9xysaML7_o8b6pvKTA/exec";
+let DATA_SOAL = [];
+let USER = {};
+
+// 1. MULAI PELATIHAN
+function mulaiPelatihan() {
+    USER.nama = document.getElementById("nama").value;
+    USER.npp  = document.getElementById("npp").value;
+    USER.divisi = document.getElementById("divisi").value;
+    USER.unit = document.getElementById("unit").value;
+    USER.jabatan = document.getElementById("jabatan").value;
+
+    if (!USER.nama || !USER.npp) {
+        alert("Nama & NPP wajib diisi.");
+        return;
+    }
+
+    fetch(WEBAPP+"?action=simpandata", {
+        method:"POST",
+        body:JSON.stringify(USER)
+    });
+
+    document.getElementById("formPeserta").classList.add("hidden");
+    document.getElementById("videoBox").classList.remove("hidden");
+}
+
+// 2. LOAD SOAL
+async function mulaiKuis() {
+    document.getElementById("videoBox").classList.add("hidden");
+    document.getElementById("loadingOverlay").style.display = "flex";
+
+    await loadSoal();
+
+    document.getElementById("loadingOverlay").style.display = "none";
+    document.getElementById("kuisBox").classList.remove("hidden");
+}
+
+async function loadSoal() {
+    const res = await fetch(WEBAPP + "?action=getsoal");
+    DATA_SOAL = await res.json();
+
+    let html = "";
+    DATA_SOAL.forEach((s,i)=>{
+        html += `
+        <div class="soal-box">
+            <b>${i+1}. ${s.soal}</b><br><br>
+            ${["A","B","C","D"].map(pil=>`
+                <label class="mb-1">
+                    <input type="radio" name="soal${i}" value="${pil}">
+                    ${pil}. ${s["opsi"+pil]}
+                </label><br>
+            `).join("")}
+        </div>`;
+    });
+
+    document.getElementById("listSoal").innerHTML = html;
+}
+
+// 3. NILAI
+function kumpulkan() {
+    let benar = 0;
+
+    DATA_SOAL.forEach((s,i)=>{
+        const jawaban = document.querySelector(`input[name='soal${i}']:checked`);
+        if (jawaban && jawaban.value === s.kunci) benar++;
+    });
+
+    let nilai = Math.round((benar / DATA_SOAL.length) * 100);
+    USER.nilai = nilai;
+
+    fetch(WEBAPP+"?action=simpannilai", {
+        method:"POST",
+        body: JSON.stringify(USER)
+    });
+
+    document.getElementById("kuisBox").classList.add("hidden");
+    document.getElementById("hasilBox").classList.remove("hidden");
+
+    document.getElementById("tampilNilai").innerHTML =
+        `Nilai Anda: <b>${nilai}</b>`;
+
+    if (nilai >= 70) {
+        document.getElementById("btnCetak").classList.remove("hidden");
+        document.getElementById("btnUlang").classList.add("hidden");
+    } else {
+        document.getElementById("btnCetak").classList.add("hidden");
+        document.getElementById("btnUlang").classList.remove("hidden");
+    }
+}
+
+// Ulang Kuis
+function ulangKuis() {
+    document.getElementById("hasilBox").classList.add("hidden");
+    document.querySelectorAll("input[type=radio]").forEach(r=> r.checked = false);
+    document.getElementById("kuisBox").classList.remove("hidden");
+    USER.nilai = 0;
+}
+
+// ======================================================
+// 4. CETAK SERTIFIKAT
+// ======================================================
+function cetakSertifikat() {
+    const cert = `
+    <html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: url('https://i.ibb.co/Z8zLX1b/gold-royal-bg.jpg');
+                background-size: cover;
+                background-position: center;
+                font-family: "Times New Roman", serif;
+            }
+
+            .container {
+                width: 85%;
+                margin: 60px auto;
+                padding: 60px;
+                background: rgba(255, 247, 220, 0.93);
+                border-radius: 22px;
+                border: 10px solid #d4af37;
+                outline: 8px double #b08a32;
+                text-align: center;
+                box-shadow: 0 0 25px rgba(0,0,0,0.3);
+                position: relative;
+            }
+
+            /* Ornamen pojok */
+            .orn-1, .orn-2, .orn-3, .orn-4 {
+                width: 200px;
+                position: absolute;
+                opacity: 0.60;
+            }
+            .orn-1 { top: 20px; left: 20px; }
+            .orn-2 { top: 20px; right: 20px; transform: scaleX(-1); }
+            .orn-3 { bottom: 20px; left: 20px; transform: scaleY(-1); }
+            .orn-4 { bottom: 20px; right: 20px; transform: scale(-1); }
+
+            .title {
+                font-size: 54px;
+                color: #b38728;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                letter-spacing: 2px;
+                text-shadow: 1px 1px 2px #fff;
+            }
+
+            .sub {
+                font-size: 20px;
+                color: #6b5a2a;
+                margin-bottom: 40px;
+            }
+
+            .name { 
+                 text-transform: uppercase;
+                 font-family: "Bebas Neue", sans-serif;
+                 font-size: 72px;
+                 font-weight: 700;
+                 color: #b38728;
+                 letter-spacing: 2px;
+                
+                margin: 10px 0;
+            }
+
+            .info {
+                font-size: 20px;
+                color: #333;
+                margin-top: 15px;
+                margin-bottom: 40px;
+                line-height: 1.7;
+            }
+
+            .logo {
+                width: 130px;
+                margin-bottom: 20px;
+            }
+
+            .signature {
+                margin-top: 60px;
+                font-size: 18px;
+                color: #222;
+                letter-spacing: 0.5px;
+            }
+
+            .signature:before {
+                content: "";
+                display: block;
+                width: 260px;
+                height: 1px;
+                background: #8b6a20;
+                margin: 0 auto 10px auto;
+                margin-top: 40px;
+            }
+
+            .footer {
+                margin-top: 45px;
+                font-size: 16px;
+                color: #444;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+
+            <!-- Ornamen sudut -->
+            <img src="ornamen.png" class="orn-1">
+            <img src="ornamen.png" class="orn-2">
+            <img src="ornamen.png" class="orn-3">
+            <img src="ornamen.png" class="orn-4">
+
+            <!-- Logo -->
+            <img src="ssi.png" class="logo">
+
+            <div class="title">Sertifikat Kelulusan</div>
+            <div class="sub">Diberikan kepada peserta pelatihan resmi PT SSI</div>
+
+            <div class="name" >${USER.nama}</div>
+
+            <div class="info">
+                NPP: <b>${USER.npp}</b><br>
+                Divisi: <b>${USER.divisi}</b><br>
+                Jabatan: <b>${USER.jabatan}</b><br><br>
+                Dengan ini dinyatakan <b>LULUS</b> dalam program pelatihan PT SSI<br>
+                dengan nilai akhir <b>${USER.nilai}</b>.
+            </div>
+
+            <div class="signature">
+                PT Swadharma Sarana Informatika<br>
+                Departemen Training & Development
+            </div>
+
+            <div class="footer">
+                Dokumen ini dicetak otomatis oleh sistem pelatihan online PT SSI
+            </div>
+
+        </div>
+
+    </body>
+    </html>
+    `;
+
+    const w = window.open("", "_blank", "width=1100,height=800");
+    w.document.write(cert);
+    w.document.close();
+    w.print();
+}
+
+</script>
+
+</body>
+</html>
