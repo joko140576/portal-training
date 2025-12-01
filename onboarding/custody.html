@@ -231,18 +231,36 @@
 
                 <div class="modal-body text-light">
 
-                    <p><b>1. Apa tujuan utama program On Boarding?</b></p>
+                    <p><b>1. Dibawah ini adalah tugas pegawai custody , kecuali </b></p>
                     <div>
-                        <input type="radio" name="q1" value="A"> A. Agar pegawai langsung bekerja tanpa pelatihan<br>
-                        <input type="radio" name="q1" value="B"> B. Membantu pegawai memahami budaya dan prosedur kerja<br>
-                        <input type="radio" name="q1" value="C"> C. Menggantikan training tahunan<br>
+                        <input type="radio" name="q1" value="A"> A. Melakukan Restoking mesin ATM<br>
+                        <input type="radio" name="q1" value="B"> B. Melakukan Colecting mesin CRM <br>
+                        <input type="radio" name="q1" value="C"> C. Sortir & Counting uang <br>
                     </div>
 
-                    <p class="mt-3"><b>2. Apa format materi yang tersedia?</b></p>
+                    <p class="mt-3"><b>2. Kejadian dimana nasabah mengambil uang dan uang tersebut ditarik kembali ke dalam mesin ATM karena waktu habis </b></p>
                     <div>
-                        <input type="radio" name="q2" value="A"> A. Hanya audio<br>
-                        <input type="radio" name="q2" value="B"> B. PDF dan Video<br>
-                        <input type="radio" name="q2" value="C"> C. Tidak ada materi<br>
+                        <input type="radio" name="q2" value="A"> A. Reversal <br>
+                        <input type="radio" name="q2" value="B"> B. Reject <br>
+                        <input type="radio" name="q2" value="C"> C. retract <br>
+                    </div>
+                     <p class="mt-3"><b>3. Sebelum melakukan pengisian kaset di mesin, langkah pertama adalah </b></p>
+                    <div>
+                        <input type="radio" name="q3" value="A"> A. Ambil EJ <br>
+                        <input type="radio" name="q3" value="B"> B. Print Counter <br>
+                        <input type="radio" name="q3" value="C"> C. Proses Admin ATM <br>
+                    </div>
+                     <p class="mt-3"><b>4. Dimesin Wincor jika terjadi perubahan Denom , apa yg harus dilakukan </b></p>
+                    <div>
+                        <input type="radio" name="q4" value="A"> A. Test Dispense<br>
+                        <input type="radio" name="q4" value="B"> B. Lakukan Reference value <br>
+                        <input type="radio" name="q4" value="C"> C. Ambil Ej <br>
+                    </div>
+                     <p class="mt-3"><b>5. Penyebab ATM Offline karena hardware dibawah ini kecuali </b></p>
+                    <div>
+                        <input type="radio" name="q5" value="A"> A. Printer problem <br>
+                        <input type="radio" name="q5" value="B"> B. Card Reader fatal Error <br>
+                        <input type="radio" name="q5" value="C"> C. EPP Problem <br>
                     </div>
 
                 </div>
@@ -268,7 +286,7 @@
 
 <!-- FOOTER -->
 <footer>
-    <p>© 2025 Training On Boarding — PT SSI</p>
+    <p>© 2025 Training Staf Custody — PT SSI</p>
     <p>Didesain untuk pengalaman belajar terbaik bagi pegawai baru</p>
 </footer>
 
@@ -279,10 +297,12 @@
     function checkQuiz() {
         let score = 0;
 
-        if (document.querySelector('input[name="q1"]:checked')?.value === "B") score++;
-        if (document.querySelector('input[name="q2"]:checked')?.value === "B") score++;
-
-        alert("Skor Anda: " + score + "/2");
+        if (document.querySelector('input[name="q1"]:checked')?.value === "C") score++;
+        if (document.querySelector('input[name="q2"]:checked')?.value === "C") score++;
+        if (document.querySelector('input[name="q3"]:checked')?.value === "B") score++;
+        if (document.querySelector('input[name="q4"]:checked')?.value === "B") score++;
+        if (document.querySelector('input[name="q5"]:checked')?.value === "A") score++;
+        alert("Skor Anda: " + score + "/5");
     }
 </script>
 
