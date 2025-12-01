@@ -1,0 +1,52 @@
+function doGet(e) {
+  const action = e.parameter.action;
+
+  if (action === "getsoal") return getSoal();
+
+  return ContentService.createTextOutput("Ready");
+}
+
+
+function doPost(e) {
+  const action = e.parameter.action;
+  const data = JSON.parse(e.postData.contents);
+
+  if (action === "simpandata") return simpanData(data);
+  if (action === "simpannilai") return simpanNilai(data);
+
+  return ContentService.createTextOutput("No action");
+}
+
+
+
+function getSoal() {
+  const sh = SpreadsheetApp.getActive().getSheetByName("SOAL");
+  const rows = sh.getDataRange().getValues();
+  rows.shift();
+
+  const soal = rows.map(r => ({
+    soal:  r[0],
+    opsiA: r[1],
+    opsiB: r[2],
+    opsiC: r[3],
+    opsiD: r[4],
+    kunci: r[5]
+  }));
+
+  return ContentService
+    .createTextOutput(JSON.stringify(soal))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+
+function simpanData(d) {
+  const sh = SpreadsheetApp.getActive().getSheetByName("DATA");
+  sh.appendRow([new Date(), d.nama, d.npp, d.divisi, d.unit, d.jabatan]);
+  return ContentService.createTextOutput("OK");
+}
+
+function simpanNilai(d) {
+  const sh = SpreadsheetApp.getActive().getSheetByName("DATA");
+  sh.appendRow([new Date(), d.nama, d.npp, d.divisi, d.unit, d.jabatan, d.nilai]);
+  return ContentService.createTextOutput("OK");
+}
