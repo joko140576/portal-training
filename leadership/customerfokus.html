@@ -252,6 +252,14 @@ function mulaiPelatihan() {
 
 // 2. LOAD SOAL
 async function mulaiKuis() {
+
+    // ===== HENTIKAN VIDEO =====
+    const iframe = document.querySelector("#videoBox iframe");
+    if (iframe) {
+        const src = iframe.src;
+        iframe.src = "";      // kosongkan agar video stop
+        iframe.src = src;     // kembalikan src
+    }
     document.getElementById("videoBox").classList.add("hidden");
     document.getElementById("loadingOverlay").style.display = "flex";
 
