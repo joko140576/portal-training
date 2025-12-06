@@ -146,6 +146,15 @@
                             </button>
                         </li>
                     </ul>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Organization Capabilities Development
+                            <button class="btn btn-materi btn-sm" onclick="openMateri('organization')">
+                                Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </li>
+                    </ul>
+
 
                 </div>
             </div>
@@ -165,6 +174,7 @@
             if (type === "managerial") link = "https://youtu.be/kHMFNV5XDTY?si=cmUk9PpHTWzHVDyF";
             if (type === "strategy") link = "https://youtu.be/L2ZS1Lcvr3s?si=IVZgHfK1vn8wxLa8";
             if (type === "customer") link = "customerfokus.html";
+            if (type === "organization") link = "capableorganization.html";
 
             window.open(link, "_blank");
         }
