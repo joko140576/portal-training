@@ -345,145 +345,147 @@ function ulangKuis() {
 // ======================================================
 function cetakSertifikat() {
     const cert = `
-    <html>
-    <head>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                background: url('https://i.ibb.co/Z8zLX1b/gold-royal-bg.jpg');
-                background-size: cover;
-                background-position: center;
-                font-family: "Times New Roman", serif;
-            }
+ <html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://i.ibb.co/7k3p4s6/blue-luxury-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: "Times New Roman", serif;
+        }
 
-            .container {
-                width: 85%;
-                margin: 60px auto;
-                padding: 60px;
-                background: rgba(255, 247, 220, 0.93);
-                border-radius: 22px;
-                border: 10px solid #d4af37;
-                outline: 8px double #b08a32;
-                text-align: center;
-                box-shadow: 0 0 25px rgba(0,0,0,0.3);
-                position: relative;
-            }
+        .container {
+            width: 85%;
+            margin: 60px auto;
+            padding: 60px;
+            background: rgba(240, 248, 255, 0.92);
+            border-radius: 22px;
+            border: 10px solid #c0c9d6;
+            outline: 8px double #8ea4c8;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+            position: relative;
+        }
 
-            /* Ornamen pojok */
-            .orn-1, .orn-2, .orn-3, .orn-4 {
-                width: 200px;
-                position: absolute;
-                opacity: 0.60;
-            }
-            .orn-1 { top: 20px; left: 20px; }
-            .orn-2 { top: 20px; right: 20px; transform: scaleX(-1); }
-            .orn-3 { bottom: 20px; left: 20px; transform: scaleY(-1); }
-            .orn-4 { bottom: 20px; right: 20px; transform: scale(-1); }
+        /* Ornamen pojok */
+        .orn-1, .orn-2, .orn-3, .orn-4 {
+            width: 200px;
+            position: absolute;
+            opacity: 0.55;
+            filter: hue-rotate(180deg) brightness(1.2);
+        }
+        .orn-1 { top: 20px; left: 20px; }
+        .orn-2 { top: 20px; right: 20px; transform: scaleX(-1); }
+        .orn-3 { bottom: 20px; left: 20px; transform: scaleY(-1); }
+        .orn-4 { bottom: 20px; right: 20px; transform: scale(-1); }
 
-            .title {
-                font-size: 54px;
-                color: #b38728;
-                font-weight: bold;
-                text-transform: uppercase;
-                margin-bottom: 10px;
-                letter-spacing: 2px;
-                text-shadow: 1px 1px 2px #fff;
-            }
+        .title {
+            font-size: 54px;
+            color: #1e4e7f;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 3px #fff;
+        }
 
-            .sub {
-                font-size: 20px;
-                color: #6b5a2a;
-                margin-bottom: 40px;
-            }
+        .sub {
+            font-size: 20px;
+            color: #3d5875;
+            margin-bottom: 40px;
+        }
 
-            .name { 
-                 text-transform: uppercase;
-                 font-family: "Bebas Neue", sans-serif;
-                 font-size: 72px;
-                 font-weight: 700;
-                 color: #b38728;
-                 letter-spacing: 2px;
-                
-                margin: 10px 0;
-            }
+        .name { 
+            text-transform: uppercase;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: #1e4e7f;
+            letter-spacing: 3px;
+            margin: 10px 0;
+        }
 
-            .info {
-                font-size: 20px;
-                color: #333;
-                margin-top: 15px;
-                margin-bottom: 40px;
-                line-height: 1.7;
-            }
+        .info {
+            font-size: 20px;
+            color: #222;
+            margin-top: 15px;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
 
-            .logo {
-                width: 130px;
-                margin-bottom: 20px;
-            }
+        .logo {
+            width: 130px;
+            margin-bottom: 20px;
+            filter: brightness(1.1);
+        }
 
-            .signature {
-                margin-top: 60px;
-                font-size: 18px;
-                color: #222;
-                letter-spacing: 0.5px;
-            }
+        .signature {
+            margin-top: 60px;
+            font-size: 18px;
+            color: #1d3557;
+            letter-spacing: 0.5px;
+        }
 
-            .signature:before {
-                content: "";
-                display: block;
-                width: 260px;
-                height: 1px;
-                background: #8b6a20;
-                margin: 0 auto 10px auto;
-                margin-top: 40px;
-            }
+        .signature:before {
+            content: "";
+            display: block;
+            width: 260px;
+            height: 1px;
+            background: #547aa5;
+            margin: 0 auto 10px auto;
+            margin-top: 40px;
+        }
 
-            .footer {
-                margin-top: 45px;
-                font-size: 16px;
-                color: #444;
-            }
-        </style>
-    </head>
-    <body>
+        .footer {
+            margin-top: 45px;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
 
-        <div class="container">
+    <div class="container">
 
-            <!-- Ornamen sudut -->
-            <img src="ornamen.png" class="orn-1">
-            <img src="ornamen.png" class="orn-2">
-            <img src="ornamen.png" class="orn-3">
-            <img src="ornamen.png" class="orn-4">
+        <!-- Ornamen sudut -->
+        <img src="ornamen.png" class="orn-1">
+        <img src="ornamen.png" class="orn-2">
+        <img src="ornamen.png" class="orn-3">
+        <img src="ornamen.png" class="orn-4">
 
-            <!-- Logo -->
-            <img src="ssi.png" class="logo">
+        <!-- Logo -->
+        <img src="ssi.png" class="logo">
 
-            <div class="title">Sertifikat Kelulusan</div>
-            <div class="sub">Diberikan kepada peserta pelatihan resmi PT SSI</div>
+        <div class="title">Sertifikat Kelulusan</div>
+        <div class="sub">Diberikan kepada peserta pelatihan resmi PT SSI</div>
 
-            <div class="name" >${USER.nama}</div>
+        <div class="name">${USER.nama}</div>
 
-            <div class="info">
-                NPP: <b>${USER.npp}</b><br>
-                Divisi: <b>${USER.divisi}</b><br>
-                Jabatan: <b>${USER.jabatan}</b><br><br>
-                Dengan ini dinyatakan <b>LULUS</b> dalam program pelatihan PT SSI<br>
-                dengan nilai akhir <b>${USER.nilai}</b>.
-            </div>
-
-            <div class="signature">
-                PT Swadharma Sarana Informatika<br>
-                Departemen Training & Development
-            </div>
-
-            <div class="footer">
-                Dokumen ini dicetak otomatis oleh sistem pelatihan online PT SSI
-            </div>
-
+        <div class="info">
+            NPP: <b>${USER.npp}</b><br>
+            Divisi: <b>${USER.divisi}</b><br>
+            Jabatan: <b>${USER.jabatan}</b><br><br>
+            Dengan ini dinyatakan <b>LULUS</b> dalam program pelatihan PT SSI<br>
+            dengan nilai akhir <b>${USER.nilai}</b>.
         </div>
 
-    </body>
-    </html>
+        <div class="signature">
+            PT Swadharma Sarana Informatika<br>
+            Departemen Training & Development
+        </div>
+
+        <div class="footer">
+            Dokumen ini dicetak otomatis oleh sistem pelatihan online PT SSI
+        </div>
+
+    </div>
+
+</body>
+</html>
+
     `;
 
     const w = window.open("", "_blank", "width=1100,height=800");
