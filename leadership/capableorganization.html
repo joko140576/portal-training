@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -26,12 +28,21 @@
     }
 
     .card-header {
-        background: 434E78;
+        background: #434E78;
         color: white;
         font-size: 20px;
         font-weight: 600;
         border-radius: 16px 16px 0 0 !important;
     }
+    .bg-joko {
+    background-color: #434E78;  /* contoh warna */
+    color: white;               /* warna teks */
+        }
+
+        .bg-joko:hover {
+            background-color: #1565C0;  /* warna saat hover */
+            color: white;
+        }
 
     .hidden { display:none; }
 
@@ -156,7 +167,7 @@
             </select>
         </div>
 
-        <button class="btn btn-warning w-100 fw-bold" onclick="mulaiPelatihan()">
+        <button class="btn btn bg-joko w-100 fw-bold" onclick="mulaiPelatihan()">
             Mulai Pelatihan
         </button>
 
@@ -485,4 +496,3 @@ function cetakSertifikat() {
 
 </body>
 </html>
-
