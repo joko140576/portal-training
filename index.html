@@ -1,370 +1,385 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login & Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Dashboard</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-<style>
-    body {
-        font-family: Calibri, sans-serif;
-        margin: 0;
-        overflow-x: hidden;
-    }
-
-    /* Background Login */
-    #loginPage {
-        height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                    url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80') center/cover no-repeat;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(3px);
-    }
-
-    /* Background Dashboard */
-    #dashboardPage {
-        display: none;
-        min-height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                    url('https://crehana-blog.imgix.net/media/filer_public/22/fe/22feb5f2-763b-4218-a1ad-e1312564c7f1/publicidad-digital.jpg?auto=format&q=50') center/cover no-repeat;
-        padding-bottom: 50px;
-        animation: fadeIn 1s ease-in-out;
-    }
-
-    /* Animasi Fade In */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    /* Login Card */
-    .login-card {
-        background: rgba(255, 255, 255, 0.15);
-        padding: 40px;
-        border-radius: 16px;
-        width: 350px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(100, 149, 237, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        animation: fadeIn 1s ease-in-out, glow 3s infinite alternate;
-        color: white;
-    }
-
-    .modal-header-custom {
-        background: #18f2eb;
-        background: linear-gradient(90deg, rgba(24, 242, 235, 1) 0%, rgba(23, 23, 189, 1) 25%, rgba(2, 15, 18, 1) 100%);
-    }
-    
-
-    /* Efek Glowing */
-    @keyframes glow {
-        from {
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(100, 149, 237, 0.5);
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
         }
-        to {
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 30px rgba(100, 149, 237, 0.8);
+
+        /* Background Login */
+        #loginPage {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80')
+                        center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
         }
-    }
 
-    /* Title Box */
-    .title-box {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        padding: 15px 40px;
-        display: inline-block;
-        border-radius: 12px;
-        margin-top: 30px;
-        margin-bottom: 40px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.2);
-        animation: fadeIn 1.5s ease-in-out;
-        color: white;
-    }
+        /* Background Dashboard */
+        #dashboardPage {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://crehana-blog.imgix.net/media/filer_public/22/fe/22feb5f2-763b-4218-a1ad-e1312564c7f1/publicidad-digital.jpg?auto=format&q=50')
+                        center/cover no-repeat;
+            padding-bottom: 50px;
+            animation: fadeIn 1s ease-in-out;
+        }
 
-    /* Menu Boxes */
-    .menu-box {
-        color: white;
-        padding: 35px 20px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.4s ease;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 500;
-        min-height: 140px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        animation: fadeIn 1s ease-in-out;
-        opacity: 0;
-        animation-fill-mode: forwards;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        position: relative;
-        overflow: hidden;
-    }
+        /* Fade In */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
 
-    /* Animasi bertahap untuk kotak menu */
-    .menu-box:nth-child(1) { animation-delay: 0.2s; }
-    .menu-box:nth-child(2) { animation-delay: 0.4s; }
-    .menu-box:nth-child(3) { animation-delay: 0.6s; }
-    .menu-box:nth-child(4) { animation-delay: 0.8s; }
+        /* Login Card */
+        .login-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 16px;
+            width: 350px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        0 0 20px rgba(100, 149, 237, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out, glow 3s infinite alternate;
+            color: white;
+        }
 
-    .menu-box:hover {
-        transform: translateY(-10px) scale(1.03);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.3);
-    }
+        .modal-header-custom {color: white;
+            background: linear-gradient(90deg,
+                        rgba(24, 242, 235, 1) 0%,
+                        rgba(23, 23, 189, 1) 25%,
+                        rgba(2, 15, 18, 1) 100%);
+        }
 
-    /* Gradien warna untuk setiap kotak */
-    .menu-box:nth-child(1) {
-        background: linear-gradient(135deg, rgba(45, 107, 204, 0.8), rgba(100, 149, 237, 0.8));
-        box-shadow: 0 5px 15px rgba(45, 107, 204, 0.5), 0 0 15px rgba(100, 149, 237, 0.5);
-    }
+        @keyframes glow {
+            from { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                            0 0 20px rgba(100, 149, 237, 0.5); }
+            to   { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                            0 0 30px rgba(100, 149, 237, 0.8); }
+        }
 
-    .menu-box:nth-child(2) {
-        background: linear-gradient(135deg, rgba(196, 8, 8, 0.8), rgba(255, 69, 0, 0.8));
-        box-shadow: 0 5px 15px rgba(196, 8, 8, 0.5), 0 0 15px rgba(255, 69, 0, 0.5);
-    }
+        .title-box {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 40px;
+            display: inline-block;
+            border-radius: 12px;
+            margin-top: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+                        0 0 15px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1.5s ease-in-out;
+            color: white;
+        }
 
-    .menu-box:nth-child(3) {
-        background: linear-gradient(135deg, rgba(0, 166, 58, 0.8), rgba(50, 205, 50, 0.8));
-        box-shadow: 0 5px 15px rgba(0, 166, 58, 0.5), 0 0 15px rgba(50, 205, 50, 0.5);
-    }
+        /* MENU BOX */
+        .menu-box {
+            color: white;
+            padding: 40px 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-align: left;
+            font-size: 20px;
+            font-weight: 600;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1),
+                        0 0 30px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 1s ease-in-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-    .menu-box:nth-child(4) {
-        background: linear-gradient(135deg, rgba(104, 38, 166, 0.8), rgba(138, 43, 226, 0.8));
-        box-shadow: 0 5px 15px rgba(104, 38, 166, 0.5), 0 0 15px rgba(138, 43, 226, 0.5);
-    }
+        /* Hilangkan pseudo-element */
+        .menu-box::before {
+            content: none !important;
+        }
 
-    .library-box {
-        background: linear-gradient(135deg, rgba(255, 165, 0, 0.8), rgba(255, 215, 0, 0.8));
-        color: white;
-        border-radius: 12px;
-        padding: 25px;
-        width: 230px;
-        margin: 40px auto 0 auto;
-        text-align: center;
-        cursor: pointer;
-        box-shadow: 0 5px 15px rgba(255, 165, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.5);
-        transition: all 0.4s ease;
-        animation: fadeIn 1.5s ease-in-out;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        .menu-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.7),
+                        0 0 35px currentColor,
+                        0 0 50px currentColor;
+        }
 
-    .library-box:hover {
-        transform: translateY(-8px) scale(1.05);
-        box-shadow: 0 10px 25px rgba(255, 165, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.6);
-    }
+        .menu-icon {
+            font-size: 60px;
+            line-height: 1;
+        }
 
-    /* Form Input Styling */
-    .form-control {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        backdrop-filter: blur(5px);
-    }
+        /* Warna Box */
+        .menu-box:nth-child(1) { background: rgba(0, 128, 255, 0.25); border: 2px solid #008cff; }
+        .menu-box:nth-child(2) { background: rgba(255, 0, 128, 0.25); border: 2px solid #ff0080;; }
+        .menu-box:nth-child(3) { background: rgba(0, 255, 128, 0.25); border: 2px solid #00ff80;; }
+        .menu-box:nth-child(4) { background: rgba(255, 128, 0, 0.25); border: 2px solid #ff8000;; }
 
-    .form-control:focus {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: rgba(100, 149, 237, 0.7);
-        box-shadow: 0 0 0 0.25rem rgba(100, 149, 237, 0.25);
-        color: white;
-    }
+        .library-box {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.8),
+                                              rgba(255, 215, 0, 0.8));
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            width: 230px;
+            margin: 40px auto 0 auto;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.5),
+                        0 0 15px rgba(255, 215, 0, 0.5);
+            transition: all 0.4s ease;
+            animation: fadeIn 1.5s ease-in-out;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-    .form-label {
-        color: white;
-        font-weight: 500;
-    }
+        .library-box:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 165, 0, 0.6),
+                        0 0 20px rgba(255, 215, 0, 0.6);
+        }
 
-    /* Button Styling */
-    .btn-primary {
-        background: linear-gradient(135deg, rgba(45, 107, 204, 0.8), rgba(100, 149, 237, 0.8));
-        border: none;
-        box-shadow: 0 4px 15px rgba(45, 107, 204, 0.4);
-        transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        background: linear-gradient(135deg, rgba(45, 107, 204, 1), rgba(100, 149, 237, 1));
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(45, 107, 204, 0.6);
-    }
-
-    /* Modal Styling */
-    .modal-content {
-        background: rgba(30, 30, 40, 0.95);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: white;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(100, 149, 237, 0.3);
-    }
-
-    .modal-header {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .modal-footer {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-close {
-        filter: invert(1);
-    }
-</style>
+        .form-control {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- ===================================== LOGIN PAGE ===================================== -->
-<div id="loginPage">
-    <div class="login-card">
-        <h4 class="text-center mb-4"><b>Login Sistem</b></h4>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage">
+        <div class="login-card">
+            <h4 class="text-center mb-4"><b>Login Sistem</b></h4>
 
-        <div class="mb-3">
-            <label class="form-label">Username</label>
-            <input type="text" id="username" class="form-control" placeholder="Masukkan username">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" id="username" class="form-control" placeholder="Masukkan username">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Masukkan password">
+            </div>
+
+            <div id="errorMsg" class="text-danger mb-3" style="display:none;">
+                Username atau password salah!
+            </div>
+
+            <button class="btn btn-primary w-100" onclick="login()">Login</button>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password" id="password" class="form-control" placeholder="Masukkan password">
-        </div>
-
-        <div id="errorMsg" class="text-danger mb-3" style="display:none;">
-            Username atau password salah!
-        </div>
-
-        <button class="btn btn-primary w-100" onclick="login()">Login</button>
-    </div>
-</div>
-
-<!-- ===================================== DASHBOARD PAGE ===================================== -->
-<div id="dashboardPage">
-
-<div class="container text-center">
-
-    <div class="title-box">
-        <h3><i>Unit Development & Training</i></h3>
     </div>
 
-    <div class="row justify-content-center g-3">
+    <!-- DASHBOARD -->
+    <div id="dashboardPage">
+        <div class="container text-center">
 
-        <div class="col-md-3">
-            <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal1">
-                Training<br>On Boarding<br>New Employee
+            <div class="title-box mt-5">
+                <h3><i>Unit Development & Training</i></h3>
+            </div>
+
+            <div class="row justify-content-center g-3">
+
+                <div class="col-md-3">
+                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal1">
+                        <i class="bi bi-people-fill menu-icon"></i>
+                        <span>Training<br>On Boarding<br>New Employee</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal2">
+                        <i class="bi bi-journal-text menu-icon"></i>
+                        <span>Training Mandatory<br>& Refreshment</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal3">
+                        <i class="bi bi-award-fill menu-icon"></i>
+                        <span>Training Leadership<br>& Culture</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal4">
+                        <i class="bi bi-lightbulb-fill menu-icon"></i>
+                        <span>Training<br>Development</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="library-box" data-bs-toggle="modal" data-bs-target="#modalLibrary">
+                kamus SSI 
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal fade" id="modal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">Training On Boarding New Employee</h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Informasi mengenai pelatihan onboarding karyawan baru</p>
+                    <p>program pelatihan nya disebut COLLEGE " Continuos Learning Go To Your Journey "</p>
+                    <p>Program ini adalah pelatihan berjenjang yang meliputi :</p>
+                    <ul>
+                        <li>Training kasir</li>
+                        <li>Training custody</li>
+                        <li>Training FLM</li>
+                        <li>Training SLM</li>
+                        <li>Training Admin</li>
+                    </ul>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="onboarding/college.html" button class="btn btn-primary">Let's Going to Training !</button></a>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal2">
-                Training Mandatory<br>& Refreshment
+    <div class="modal fade" id="modal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">Training Mandatory & Refreshment</h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Training mandatory adalah training yang wajib diikuti untuk setiap pegawai yang melekat pada jabatannya</p>
+                    <p>Training ini merupakan kelanjutan setelah pegawai melakukan On-Boarding Training</p>
+                    <p>Materi materi yang diberikan berupa Up-Scalling dari materi yang sudah ada</p>
+                    <p>Materi ini juga bisa digunakan untuk Refrestment Knowledge & Skill Pegawai</p>
+                    <ul>
+                        <li>Materi Lanjutan Kasir</li>
+                        <li>Materi Lanjutan Custody</li>
+                        <li>Materi Lanjutan FLM/SLM</li>
+                        <li>Materi Lanjutan Admin</li>
+                    </ul>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Let's Going to Training !</button>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal3">
-                Training Leadership<br>& Culture
+    <div class="modal fade" id="modal3">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">Training Leadership & Culture</h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Training Leadership diberikan untuk para pemimpin dari Level Asmen hingga GM</p>
+                    <p>Training Leadership terdiri dari dasar Leadership dan 10 Competency menurut standar BUMN</p>
+                    <p>Materi Culture adalah materi dasar untuk setiap pegawai terkait dengan budaya perusahaan</p>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="leadership/leadership.html" button class="btn btn-primary">Let's Going to training !</button></a>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal4">
-                Training<br>Development
+    <div class="modal fade" id="modal4">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">Training Development</h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Materi yang dibuat untuk pengembangan diri pegawai</p>
+                    <p>Materi yang bersifat Non operasinal</p>
+                    <p>Tujuan training adalah menambah skill, kompetensi, knowledge diluar pekerjaan operasional</p>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="development/develop.html" button class="btn btn-primary">Let's Going to Training !</button></a>
+                </div>
+
             </div>
         </div>
-
     </div>
 
-    <div class="library-box" data-bs-toggle="modal" data-bs-target="#modalLibrary">
-        Library Module
+    <div class="modal fade" id="modalLibrary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">Kamus SSI </h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    Kamus ini sangat berguna untuk pegawai baru , untuk mengetahui beberapa istilah terkait dengan dunia ATM dan operasional .
+                </div>
+
+                <div class="modal-footer">
+                    <a href="https://kamus-ssi.vercel.app/" button class="btn btn-secondary">Open Kamus !</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-</div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+        function login() {
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
 
-<!-- ===================================== MODALS ===================================== -->
-<div class="modal fade" id="modal1"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header modal-header-custom"><h5 class="modal-title" >Training On Boarding New Employee</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-    <div class="modal-body">
-        <p>Informasi mengenai pelatihan onboarding karyawan baru</p>
-        <p>program pelatihan nya disebut COLLEGE " Continuos Learning Go To Your Journey "</p>
-        <p>Program ini adalah pelatihan berjenjang yang meliputi :</p>
-        <ul>
-            <li> Training kasir </li>
-            <li> Training custody </li>
-            <li> Training FLM </li>
-            <li> Training SLM </li>
-            <li> Training Admin </li>
-        </ul>
-    </div>
-    <div class="modal-footer"><a href="onboarding/college.html" button class="btn btn-primary">Let's Going to Training !</button></a></div>
-</div></div></div>
-
-<div class="modal fade" id="modal2"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header modal-header-custom"><h5 class="modal-title">Training Mandatory & Refreshment</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-    <div class="modal-body">
-            <p>Training mandatory adalah training yang wajib diikuti untuk setiap pegawai yang melekat pada jabatannya </p>
-            <p>Training ini merupakan kelanjutan setelah pegawai melakukan On-Boarding Training</p>
-            <p>Materi materi yang diberikan berupa Up-Scalling dari materi yang sudah ada </p>
-            <p>Materi ini juga bisa digunakan untuk Refrestment Knowledge & Skill Pegawai </p>
-            <ul>
-                <li> Materi Lanjutan Kasir  </li>
-                <li> Materi Lanjutan Custody </li>
-                <li> Materi Lanjutan FLM/SLM </li>
-                <li> materi lanjutan Admin </li>
-            </ul>
-    </div>
-    <div class="modal-footer"><button class="btn btn-primary">Let's Going to Training !</button></div>
-</div></div></div>
-
-<div class="modal fade" id="modal3"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header modal-header-custom"><h5 class="modal-title">Training Leadership & Culture</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-    <div class="modal-body">
-            <p>Training Leadership diberikan untuk para pemimpin dari Level Asmen hingga GM  </p>
-            <p>Training Leadership terdiri dari dasar Leadership dan 10 Competency menurut standar BUMN</p>
-            <p>Materi Culture adalah materi dasar untuk setiap pegawai terkait dengan budaya perusahaan </p>
-            
-    </div>
-    <div class="modal-footer"><a href="leadership/leadership.html" button class="btn btn-primary">Let's Going to training !</button></a></div>
-</div></div></div>
-
-<div class="modal fade" id="modal4"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header modal-header-custom" ><h5 class="modal-title">Training Development</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-    <div class="modal-body">
-        <p>Materi yang dibuat untuk pengembangan diri pegawai</p>
-        <p>Materi yang bersifat Non operasinal </p>
-        <p>Tujuan training adalah  menambah skill , kompetensi , knowledge diluar dari pekerjaan operasional </p>
-    </div>
-    <div class="modal-footer"><a href="development/develop.html" button class="btn btn-primary">Let's Going to Training !</button></a></div>
-</div></div></div>
-
-<div class="modal fade" id="modalLibrary"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header modal-header-custom"><h5 class="modal-title">Library Module</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-    <div class="modal-body">Informasi mengenai library module.</div>
-    <div class="modal-footer"><button class="btn btn-secondary">Close</button></div>
-</div></div></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-function login() {
-    let user = document.getElementById("username").value;
-    let pass = document.getElementById("password").value;
-
-    if (user === "ptssi" && pass === "bisa") {
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("dashboardPage").style.display = "block";
-    } else {
-        document.getElementById("errorMsg").style.display = "block";
-    }
-}
-</script>
+            if (user === "ptssi" && pass === "siap") {
+                document.getElementById("loginPage").style.display = "none";
+                document.getElementById("dashboardPage").style.display = "block";
+            } else {
+                document.getElementById("errorMsg").style.display = "block";
+            }
+        }
+    </script>
 
 </body>
 </html>
