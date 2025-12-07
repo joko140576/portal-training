@@ -1,0 +1,20 @@
+function doGet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sh = ss.getSheetByName("sheet1");
+  const data = sh.getDataRange().getValues();
+
+  let output = [];
+
+  // Skip header
+  for (let i = 1; i < data.length; i++) {
+    output.push({
+      jabatan: data[i][0],
+      module: data[i][1],
+      link: data[i][2]
+    });
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify(output))
+    .setMimeType(ContentService.MimeType.JSON);
+}
