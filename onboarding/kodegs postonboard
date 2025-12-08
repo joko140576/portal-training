@@ -1,0 +1,56 @@
+
+function doGet(e) {
+  let action = e.parameter.action;
+
+  if (action === "getSoal") {
+    const sh = SpreadsheetApp.getActive().getSheetByName("SOAL");
+    const lastRow = sh.getLastRow();
+    if (lastRow < 2) {
+      // tidak ada soal
+      return ContentService.createTextOutput(JSON.stringify({ soal: [] }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // Ambil 7 kolom: no | pertanyaan | opsiA | opsiB | opsiC | opsiD | kunci
+    const rows = sh.getRange(2, 1, lastRow - 1, 7).getValues();
+
+    const data = rows.map(r => ({
+      // mapping sesuai header: r[0]=no, r[1]=pertanyaan, r[2]=opsiA, r[3]=opsiB, r[4]=opsiC, r[5]=opsiD, r[6]=kunci
+      pertanyaan: (r[1] || "").toString(),
+      pilihan: [
+        (r[2] || "").toString(),
+        (r[3] || "").toString(),
+        (r[4] || "").toString(),
+        (r[5] || "").toString()
+      ],
+      // bersihkan kunci: trim + uppercase + hapus whitespace berlebih
+      kunci: ((r[6] || "").toString().trim().toUpperCase().replace(/\s+/g, ""))
+    }));
+
+    return ContentService.createTextOutput(JSON.stringify({ soal: data }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  // default
+  return ContentService.createTextOutput("OK");
+}
+
+
+// =============== POST SIMPAN HASIL ===============
+function doPost(e) {
+  const body = JSON.parse(e.postData.contents);
+
+  const sheet = SpreadsheetApp.getActive().getSheetByName("HASIL");
+  sheet.appendRow([
+    new Date(),
+    body.nama,
+    body.npp,
+    body.jabatan,
+    body.cou,
+    body.score,
+    body.waktu
+  ]);
+
+  return ContentService.createTextOutput(JSON.stringify({ status:"success" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
