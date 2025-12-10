@@ -154,6 +154,14 @@
                             </button>
                         </li>
                     </ul>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           Driving Execution
+                            <button class="btn btn-materi btn-sm" onclick="openMateri('execution')">
+                                Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </li>
+                    </ul>
 
 
                 </div>
@@ -175,6 +183,7 @@
             if (type === "strategy") link = "https://youtu.be/L2ZS1Lcvr3s?si=IVZgHfK1vn8wxLa8";
             if (type === "customer") link = "customerfokus.html";
             if (type === "organization") link = "capableorganization.html";
+            if (type === "execution") link = "drivingexecution.html";
 
             window.open(link, "_blank");
         }
