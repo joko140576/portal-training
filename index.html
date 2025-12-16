@@ -162,6 +162,29 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
         }
+
+        /* FOOTER DASHBOARD */
+        .dashboard-footer {
+            position: fixed;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            padding: 0 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .dashboard-footer button {
+            border-radius: 30px;
+            padding: 8px 20px;
+        }
+
+        .footer-right {
+            opacity: 0.85;
+        }
+
     </style>
 </head>
 
@@ -227,17 +250,39 @@
                         <span>Training<br>Development</span>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal5">
+                        <i class="bi bi-lightbulb-fill menu-icon"></i>
+                        <span>Request<br>Training</span>
+                    </div>
+                </div>
 
             </div>
 
-            <div class="library-box" data-bs-toggle="modal" data-bs-target="#modalLibrary">
-                kamus SSI 
-            </div>
+            <!-- FOOTER ACTION -->
+            <div class="dashboard-footer">
+                
+                <!-- KIRI : KAMUS -->
+                <div class="footer-left">
+                    <button class="btn btn-warning fw-bold"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalLibrary">
+                        📘 Kamus SSI
+                    </button>
+                </div>
+
+                <!-- KANAN : CREATE BY HCC 2025-->
+                <div class="footer-right text-white">
+                    
+                    <i class="bi bi-person-fill me-1"></i> Create By HCC 2025
+                   
+                </div>
+
 
         </div>
     </div>
 
-    <!-- MODALS -->
+    <!-- INI MODALS -->
     <div class="modal fade" id="modal1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -344,6 +389,29 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal5">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">Request Training </h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Pelatihan khusus yang diadakan oleh divisi HCC</p>
+                    <p>Sesuai permintaan request dari Divisi </p>
+                    <p>Tujuan training adalah menambah skill, kompetensi, knowledge pegawai  </p>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="development/develop.html" button class="btn btn-primary">Get Started  !</button></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modalLibrary">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -358,8 +426,9 @@
                 </div>
 
                 <div class="modal-footer">
-                    <a href="https://kamus-ssi.vercel.app/" button class="btn btn-secondary">Open Kamus !</button>
+                    <a href="https://kamus-ssi.vercel.app/" button class="btn btn-secondary">Open Kamus !</button>               
                 </div>
+
 
             </div>
         </div>
