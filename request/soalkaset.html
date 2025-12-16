@@ -6,6 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- BOOTSTRAP 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- BOOTSTRAP ICONS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
 body {
@@ -50,35 +55,101 @@ body {
     </div>
 </div>
 
-<div class="container mainbox py-4">
+<div class="container mainbox py-5">
 
-<h3 class="text-center fw-bold">Pelatihan Online PT SSI</h3>
-<h5 class="text-center mb-4">Module Kaset ATM</h5>
+    <!-- JUDUL -->
+    <div class="text-center mb-4">
+        <h3 class="fw-bold text-success">
+            <i class="bi bi-mortarboard-fill me-2"></i>
+            Pelatihan Online PT SSI
+        </h3>
+        <h5 class="text-muted">
+            <i class="bi bi-journal-text me-1"></i>
+            Module Kaset ATM
+        </h5>
+    </div>
 
-<!-- FORM PESERTA -->
-<div id="formPeserta" class="card shadow">
-<div class="card-header">Data Peserta</div>
-<div class="card-body">
+    <!-- FORM PESERTA -->
+    <div id="formPeserta" class="card shadow-lg border-0">
 
-<input id="nama" class="form-control mb-3" placeholder="Nama Pegawai">
-<input id="npp" class="form-control mb-3" placeholder="NPP">
+        <div class="card-header bg-success text-white fw-bold">
+            <i class="bi bi-person-vcard me-2"></i>
+            Data Peserta
+        </div>
 
-<select id="region" class="form-select mb-3">
-<option value="">-- Pilih Region --</option>
-<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-</select>
+        <div class="card-body p-4">
 
-<input id="unit" class="form-control mb-3" placeholder="Unit (contoh: TWU Bekasi)">
+            <!-- NAMA -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    <i class="bi bi-person-fill me-1 text-success"></i>
+                    Nama Pegawai
+                </label>
+                <input id="nama" class="form-control" placeholder="Nama Pegawai">
+            </div>
 
-<select id="jabatan" class="form-select mb-4">
-<option value="">-- Jabatan --</option>
-<option>GM</option><option>Manager</option><option>Staf</option>
-</select>
+            <!-- NPP -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    <i class="bi bi-credit-card-2-front-fill me-1 text-success"></i>
+                    NPP
+                </label>
+                <input id="npp" class="form-control" placeholder="NPP">
+            </div>
 
-<button class="btn btn-danger w-100 fw-bold" onclick="mulaiPostTest()">Mulai Post Test</button>
+            <!-- REGION -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    <i class="bi bi-geo-alt-fill me-1 text-success"></i>
+                    Region
+                </label>
+                <select id="region" class="form-select">
+                    <option value="">-- Pilih Region --</option>
+                    <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+                    <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                </select>
+            </div>
+
+            <!-- UNIT -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    <i class="bi bi-building-fill me-1 text-success"></i>
+                    Unit
+                </label>
+                <input id="unit" class="form-control" placeholder="Unit (contoh: TWU Bekasi)">
+            </div>
+
+            <!-- JABATAN -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    <i class="bi bi-briefcase-fill me-1 text-success"></i>
+                    Jabatan
+                </label>
+                <select id="jabatan" class="form-select">
+                    <option value="">-- Jabatan --</option>
+                    <option>GM</option>
+                    <option>Ceo Region</option>
+                    <option>Deputy</option>
+                    <option>Senior Manager</option>
+                    <option>Manager</option>
+                    <option>Asisten Manager</option>
+                    <option>Staf</option>
+                </select>
+            </div>
+
+            <!-- BUTTON -->
+            <button 
+                class="btn btn-warning w-100 fw-bold py-2 shadow-sm"
+                onclick="mulaiPostTest()">
+                <i class="bi bi-play-circle-fill me-2"></i>
+                Mulai Post Test
+            </button>
+
+        </div>
+    </div>
+
 </div>
-</div>
+
 
 <!-- KUIS -->
 <div id="kuisBox" class="hidden mt-4">
@@ -195,82 +266,96 @@ const cert = `
     margin: 0;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f9f4e8, #f1e0b8);
-    font-family: "Times New Roman", serif;
+    height: 100vh;
+    font-family: "Georgia", "Times New Roman", serif;
+    background: 
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+        url("https://unsplash.com/photos/3d-rendering-of-earth-futuristic-technology-abstract-background-illustration-W5AgncO6FOU");
+    background-size: cover;
+    background-position: center;
 }
 
+/* CONTAINER SERTIFIKAT */
 .certificate {
     width: 100%;
     height: 100vh;
-    padding: 60px;
-    box-sizing: border-box;
+    padding: 70px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
     border: 18px solid #d4af37;
     outline: 6px double #b8963d;
-    background: #fffdf
     text-align: center;
     position: relative;
 }
 
-/* Ornamen sudut */
-.orn {
-    position: absolute;
-    width: 120px;
-    opacity: 0.4;
-}
-.orn.tl { top: 20px; left: 20px; }
-.orn.tr { top: 20px; right: 20px; transform: scaleX(-1); }
-.orn.bl { bottom: 20px; left: 20px; transform: scaleY(-1); }
-.orn.br { bottom: 20px; right: 20px; transform: scale(-1); }
-
+/* TITLE */
 .title {
-    font-size: 48px;
+    font-size: 52px;
     color: #b08a2e;
     font-weight: bold;
-    letter-spacing: 3px;
-    margin-top: 40px;
+    letter-spacing: 4px;
+    margin-top: 20px;
 }
 
 .subtitle {
     font-size: 18px;
     color: #555;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
+/* GARIS EMAS */
 .line {
-    width: 60%;
-    height: 2px;
+    width: 65%;
+    height: 3px;
     background: linear-gradient(to right, transparent, #d4af37, transparent);
-    margin: 25px auto;
+    margin: 30px auto;
 }
 
+/* NAMA PESERTA */
 .name {
-    font-size: 60px;
+    font-size: 62px;
     font-weight: bold;
-    color: #8c6a1f;
-    margin: 20px 0;
+    color: #7a5a18;
+    margin: 30px 0 20px;
     text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
+/* INFO */
 .info {
     font-size: 20px;
     color: #333;
-    line-height: 1.8;
+    line-height: 1.9;
 }
 
+/* NILAI */
 .score {
     font-size: 22px;
-    margin-top: 20px;
+    margin-top: 28px;
     color: #000;
 }
 
+.score span {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 38px;
+    font-weight: bold;
+    color: #b08a2e;
+}
+
+/* TANDA TANGAN */
 .signature-area {
-    margin-top: 70px;
+    margin-top: 80px;
     display: flex;
     justify-content: space-between;
-    padding: 0 80px;
+    padding: 0 120px;
 }
 
 .sign {
@@ -280,16 +365,19 @@ body {
 }
 
 .sign .line-sign {
-    width: 220px;
-    height: 1px;
+    width: 240px;
+    height: 1.5px;
     background: #333;
-    margin: 40px auto 8px;
+    margin: 45px auto 10px;
 }
 
+/* FOOTER */
 .footer {
     position: absolute;
     bottom: 30px;
-    width: 100%;
+    left: 0;
+    right: 0;
+    text-align: center;
     font-size: 14px;
     color: #666;
 }
@@ -300,18 +388,12 @@ body {
 
 <div class="certificate">
 
-    <!-- Ornamen (opsional, boleh hapus jika tidak ada gambar) -->
-    <!-- <img src="ornamen.png" class="orn tl">
-    <img src="ornamen.png" class="orn tr">
-    <img src="ornamen.png" class="orn bl">
-    <img src="ornamen.png" class="orn br"> -->
-
     <div class="title">SERTIFIKAT KELULUSAN</div>
     <div class="subtitle">Pelatihan Resmi PT Swadharma Sarana Informatika</div>
 
     <div class="line"></div>
 
-    <div class="info">Dengan ini diberikan kepada:</div>
+    <div class="info">Dengan ini menyatakan bahwa:</div>
 
     <div class="name">${USER.nama}</div>
 
@@ -322,25 +404,14 @@ body {
     </div>
 
     <div class="score">
-        Dinyatakan <b>LULUS</b> dengan nilai akhir<br>
-        <span style="font-size:34px;font-weight:bold;color:#b08a2e;">
-            ${USER.nilai}
-        </span>
+        Dinyatakan <b>LULUS</b> dengan nilai akhir
+        <br>
+        <span>${USER.nilai}</span>
     </div>
 
-    <div class="signature-area">
-        <div class="sign">
-            <div class="line-sign"></div>
-            Trainer / Instruktur
-        </div>
-        <div class="sign">
-            <div class="line-sign"></div>
-            Manager Training & Development
-        </div>
-    </div>
-
+    
     <div class="footer">
-        Dokumen ini dicetak otomatis oleh sistem pelatihan online PT SSI
+        Dokumen ini dicetak otomatis oleh Sistem Pelatihan Online PT SSI
     </div>
 
 </div>
@@ -349,11 +420,11 @@ body {
 </html>
 `;
 
-const w = window.open("", "_blank", "width=1200,height=850");
-w.document.write(cert);
-w.document.close();
-w.focus();
-w.print();
+    const win = window.open("", "_blank");
+    win.document.write(cert);
+    win.document.close();
+    win.focus();
+    win.print();
 }
 </script>
 
