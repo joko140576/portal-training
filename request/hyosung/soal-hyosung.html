@@ -1,3 +1,4 @@
+
 <!-- DESKRIPSI -->
 <!DOCTYPE html>
 <html lang="id">
@@ -66,7 +67,7 @@ body {
         </h3>
         <h5 class="text-muted">
             <i class="bi bi-journal-text me-1"></i>
-            Module Mesin ATM Hyosung 
+            Training Mesin ATM Hyosung berbasis E-Learning
         </h5>
     </div>
 
@@ -251,8 +252,37 @@ function ulangKuis(){
     kuisBox.classList.remove("hidden");
 }
 
+function generateNoSertifikat() {
+    const now = new Date();
+    const pad = n => n.toString().padStart(2, "0");
+
+    const tanggal =
+        now.getFullYear() +
+        pad(now.getMonth() + 1) +
+        pad(now.getDate());
+
+    const jam =
+        pad(now.getHours()) +
+        pad(now.getMinutes()) +
+        pad(now.getSeconds());
+
+    const random5 = Math.floor(10000 + Math.random() * 90000);
+
+    return `SSI/HCC/${tanggal}/${jam}/${random5}`;
+}
+
+function getTemaPelatihan() {
+    const el = document.querySelector("h5.text-muted");
+    return el
+        ? el.innerText.trim()
+        : "Program Pelatihan PT SSI";
+}
+
 
 function cetakSertifikat() {
+
+const noSertifikat = generateNoSertifikat();
+const temaPelatihan = getTemaPelatihan();
 
 const cert = `
 <!DOCTYPE html>
@@ -267,36 +297,31 @@ const cert = `
     margin: 0;
 }
 
-* {
-    box-sizing: border-box;
-}
-
 body {
     margin: 0;
-    padding: 0;
-    height: 100vh;
-    font-family: "Georgia", "Times New Roman", serif;
-    background: 
-        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-        url("https://unsplash.com/photos/3d-rendering-of-earth-futuristic-technology-abstract-background-illustration-W5AgncO6FOU");
-    background-size: cover;
-    background-position: center;
+    font-family: "Georgia", serif;
+    background: #f8f8f8;
 }
 
-/* CONTAINER SERTIFIKAT */
 .certificate {
     width: 100%;
     height: 100vh;
     padding: 70px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(6px);
+    background: #fff;
     border: 18px solid #d4af37;
     outline: 6px double #b8963d;
     text-align: center;
     position: relative;
 }
 
-/* TITLE */
+.no-sertifikat {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    font-size: 14px;
+    color: #555;
+}
+
 .title {
     font-size: 52px;
     color: #b08a2e;
@@ -311,7 +336,20 @@ body {
     margin-top: 12px;
 }
 
-/* GARIS EMAS */
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+    width: 150px;
+    height: 100px;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .line {
     width: 65%;
     height: 3px;
@@ -319,66 +357,29 @@ body {
     margin: 30px auto;
 }
 
-/* NAMA PESERTA */
 .name {
     font-size: 62px;
     font-weight: bold;
     color: #7a5a18;
-    margin: 30px 0 20px;
+    margin: 30px 0;
     text-transform: uppercase;
-    letter-spacing: 2px;
 }
 
-/* INFO */
 .info {
     font-size: 20px;
-    color: #333;
     line-height: 1.9;
 }
 
-/* NILAI */
-.score {
-    font-size: 22px;
-    margin-top: 28px;
-    color: #000;
-}
-
 .score span {
-    display: inline-block;
-    margin-top: 8px;
     font-size: 38px;
     font-weight: bold;
     color: #b08a2e;
 }
 
-/* TANDA TANGAN */
-.signature-area {
-    margin-top: 80px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 120px;
-}
-
-.sign {
-    text-align: center;
-    font-size: 16px;
-    color: #333;
-}
-
-.sign .line-sign {
-    width: 240px;
-    height: 1.5px;
-    background: #333;
-    margin: 45px auto 10px;
-}
-
-/* FOOTER */
 .footer {
     position: absolute;
     bottom: 30px;
-    left: 0;
-    right: 0;
-    text-align: center;
+    width: 100%;
     font-size: 14px;
     color: #666;
 }
@@ -389,8 +390,16 @@ body {
 
 <div class="certificate">
 
+    <div class="logo">
+     <img src="logo.png" alt="Logo PT SSI">
+    </div>
+
+    <div class="no-sertifikat">
+        No Sertifikat : <b>${noSertifikat}</b>
+    </div>
+
     <div class="title">SERTIFIKAT KELULUSAN</div>
-    <div class="subtitle">Program Pelatihan Mesin ATM Hyosung Berbasis E-Learning </div>
+    <div class="subtitle">${temaPelatihan} </div>
 
     <div class="line"></div>
 
@@ -405,12 +414,10 @@ body {
     </div>
 
     <div class="score">
-        Dinyatakan <b>LULUS</b> dengan nilai akhir
-        <br>
+        Dinyatakan <b>LULUS</b> dengan nilai akhir<br>
         <span>${USER.nilai}</span>
     </div>
 
-    
     <div class="footer">
         Dokumen ini dicetak otomatis oleh Sistem Pelatihan Online PT SSI
     </div>
@@ -421,12 +428,13 @@ body {
 </html>
 `;
 
-    const win = window.open("", "_blank");
-    win.document.write(cert);
-    win.document.close();
-    win.focus();
-    win.print();
+const win = window.open("", "_blank");
+win.document.write(cert);
+win.document.close();
+win.focus();
+win.print();
 }
+
 </script>
 
 
