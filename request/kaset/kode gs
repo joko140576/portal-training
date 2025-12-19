@@ -1,11 +1,15 @@
 function doGet(e) {
   const action = e.parameter.action;
+  const cb = e.parameter.callback;
 
   if (action === "getsoal") return getSoal();
 
-  return ContentService.createTextOutput("Ready");
-}
+  if (action === "dashboard" && cb) {
+    return getDashboard(cb);
+  }
 
+  return ContentService.createTextOutput("OK");
+}
 
 function doPost(e) {
   const action = e.parameter.action;
@@ -14,18 +18,17 @@ function doPost(e) {
   if (action === "simpandata") return simpanData(data);
   if (action === "simpannilai") return simpanNilai(data);
 
-  return ContentService.createTextOutput("No action");
+  return ContentService.createTextOutput("NO ACTION");
 }
 
-
-
+/* ================= SOAL ================= */
 function getSoal() {
   const sh = SpreadsheetApp.getActive().getSheetByName("SOAL");
   const rows = sh.getDataRange().getValues();
   rows.shift();
 
-  const soal = rows.map(r => ({
-    soal:  r[0],
+  const data = rows.map(r => ({
+    soal: r[0],
     opsiA: r[1],
     opsiB: r[2],
     opsiC: r[3],
@@ -34,14 +37,14 @@ function getSoal() {
   }));
 
   return ContentService
-    .createTextOutput(JSON.stringify(soal))
+    .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-
+/* ================= SIMPAN ================= */
 function simpanData(d) {
   const sh = SpreadsheetApp.getActive().getSheetByName("DATA");
-  sh.appendRow([new Date(), d.nama, d.npp, d.region, d.unit, d.jabatan]);
+  sh.appendRow([new Date(), d.nama, d.npp, d.region, d.unit, d.jabatan, ""]);
   return ContentService.createTextOutput("OK");
 }
 
@@ -49,4 +52,42 @@ function simpanNilai(d) {
   const sh = SpreadsheetApp.getActive().getSheetByName("DATA");
   sh.appendRow([new Date(), d.nama, d.npp, d.region, d.unit, d.jabatan, d.nilai]);
   return ContentService.createTextOutput("OK");
+}
+
+/* ================= DASHBOARD (JSONP) ================= */
+function getDashboard(callback) {
+  const sh = SpreadsheetApp.getActive().getSheetByName("DATA");
+  const rows = sh.getDataRange().getValues();
+  rows.shift();
+
+  const peserta = rows.filter(r => r[6] !== "");
+
+  const total = peserta.length;
+  const rata =
+    total === 0
+      ? 0
+      : Math.round(
+          peserta.reduce((s, r) => s + Number(r[6]), 0) / total
+        );
+
+  const tabel = peserta.map(r => ({
+    nama: r[1],
+    npp: r[2],
+    region: r[3],
+    unit: r[4],
+    jabatan: r[5],
+    nilai: r[6]
+  }));
+
+  const result = {
+    totalPeserta: total,
+    rataRata: rata,
+    data: tabel
+  };
+
+  return ContentService
+    .createTextOutput(
+      `${callback}(${JSON.stringify(result)})`
+    )
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
 }
