@@ -303,12 +303,23 @@ body {
 }
 
 .certificate {
-    width: 290mm; 
-    height: 195mm; 
-    padding: 20px;
+    width: 297mm;
+    height: 210mm;
+    padding: 25mm;
     background: #fff;
-    border: 18px solid #d4af37;
-    outline: 6px double #b8963d;
+
+    border: 18px solid transparent;
+    background:
+      linear-gradient(white, white) padding-box,
+      linear-gradient(
+        135deg,
+        #ff6b6b,
+        #b11217,
+        #7a0e12,
+        #ff6b6b
+      ) border-box;
+
+    outline: 6px double #7a0e12;
     text-align: center;
     position: relative;
 }
