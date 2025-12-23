@@ -303,9 +303,9 @@ body {
 }
 
 .certificate {
-    width: 100%;
-    height: 100vh;
-    padding: 70px;
+    width: 290mm; 
+    height: 195mm; 
+    padding: 20px;
     background: #fff;
     border: 18px solid #d4af37;
     outline: 6px double #b8963d;
@@ -322,11 +322,11 @@ body {
 }
 
 .title {
-    font-size: 52px;
+    font-size: 50px;
     color: #b08a2e;
     font-weight: bold;
     letter-spacing: 4px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .subtitle {
@@ -337,22 +337,21 @@ body {
 
 .logo {
     position: absolute;
-    top: 30px;
-    left: 50px;
-    width: 150px;
-    height: 100px;
+    top: 25px;
+    left: 25px;
+    
 }
 
 .logo img {
-    width: 100%;
-    height: 100%;
+    width: 120px;
+    height: 100px;
     object-fit: contain;
 }
 
 .line {
     width: 65%;
     height: 3px;
-    background: linear-gradient(to right, transparent, #d4af37, transparent);
+    background: linear-gradient(to right, transparent, #8b1e1e, transparent);
     margin: 30px auto;
 }
 
@@ -431,7 +430,11 @@ const win = window.open("", "_blank");
 win.document.write(cert);
 win.document.close();
 win.focus();
-win.print();
+win.onload = () => {
+    setTimeout(() => {
+        win.print();
+    }, 800);
+};
 }
 
 </script>
