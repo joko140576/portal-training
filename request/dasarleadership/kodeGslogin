@@ -1,0 +1,25 @@
+function doPost(e) {
+  const ss = SpreadsheetApp.openById("18Kc3rcDI8fBmpQhYSlJP3qGyp5RmqZocTbBDEKxx8_M");
+  const sheet = ss.getSheetByName("users");
+
+  const data = JSON.parse(e.postData.contents);
+  const username = data.username;
+  const password = data.password;
+
+  const values = sheet.getDataRange().getValues();
+
+  for (let i = 1; i < values.length; i++) {
+    if (values[i][0] == username && values[i][1] == password) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: "success",
+        nama: values[i][2],
+        role: values[i][3]
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({
+    status: "failed",
+    message: "Username atau password salah"
+  })).setMimeType(ContentService.MimeType.JSON);
+}
