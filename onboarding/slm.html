@@ -305,18 +305,37 @@
 
                 <div class="modal-body text-light">
 
-                    <p><b>1. Apa tujuan utama program On Boarding?</b></p>
+                    <p><b>1. apa fungsi MDMS sensor pada mesin Wincor ?</b></p>
                     <div>
-                        <input type="radio" name="q1" value="A"> A. Agar pegawai langsung bekerja tanpa pelatihan<br>
-                        <input type="radio" name="q1" value="B"> B. Membantu pegawai memahami budaya dan prosedur kerja<br>
-                        <input type="radio" name="q1" value="C"> C. Menggantikan training tahunan<br>
+                        <input type="radio" name="q1" value="A"> A. Agar uang keluar sesuai Warna <br>
+                        <input type="radio" name="q1" value="B"> B. sebagai sensor thickness, untuk mencegah uang Double <br>
+                        <input type="radio" name="q1" value="C"> C. Agar uang keluar sesuai Denom <br>
                     </div>
 
-                    <p class="mt-3"><b>2. Apa format materi yang tersedia?</b></p>
+                    <p class="mt-3"><b>2. Apa gunanya module Stacker ?</b></p>
                     <div>
-                        <input type="radio" name="q2" value="A"> A. Hanya audio<br>
-                        <input type="radio" name="q2" value="B"> B. PDF dan Video<br>
-                        <input type="radio" name="q2" value="C"> C. Tidak ada materi<br>
+                        <input type="radio" name="q2" value="A"> A. Tempat Penampungan uang Reject <br>
+                        <input type="radio" name="q2" value="B"> B. Penghitungan uang dan penampungan sementara sebelum di delivery ke Nasabah<br>
+                        <input type="radio" name="q2" value="C"> C. Tempat Penampungan uang Retract <br>
+                    </div>
+
+                    <p class="mt-3"><b>3. Jika terjadi proses ganti Denom pada mesin Wincor , sebaiknya melakukan apa?</b></p>
+                    <div>
+                        <input type="radio" name="q3" value="A"> A. Copy EJ  <br>
+                        <input type="radio" name="q3" value="B"> B. Test Cash <br>
+                        <input type="radio" name="q3" value="C"> C. Reference Value <br>
+                    </div>
+                    <p class="mt-3"><b>4. Sistem penarikan mesin NCR dengan cara apa ?</b></p>
+                    <div>
+                        <input type="radio" name="q4" value="A"> A. Hybrid <br>
+                        <input type="radio" name="q4" value="B"> B. Friksi <br>
+                        <input type="radio" name="q4" value="C"> C. Vacum <br>
+                    </div>
+                    <p class="mt-3"><b>5. Bagian Module CRM menampng uang sementara sebelum konfirmasi adalah  ?</b></p>
+                    <div>
+                        <input type="radio" name="q5" value="A"> A. Escrow Module <br>
+                        <input type="radio" name="q5" value="B"> B. Transport Module <br>
+                        <input type="radio" name="q5" value="C"> C. Lower Module  <br>
                     </div>
 
                 </div>
@@ -355,8 +374,11 @@
 
         if (document.querySelector('input[name="q1"]:checked')?.value === "B") score++;
         if (document.querySelector('input[name="q2"]:checked')?.value === "B") score++;
-
-        alert("Skor Anda: " + score + "/2");
+        if (document.querySelector('input[name="q3"]:checked')?.value === "C") score++;
+        if (document.querySelector('input[name="q4"]:checked')?.value === "C") score++;
+        if (document.querySelector('input[name="q5"]:checked')?.value === "A") score++;
+        
+        alert("Skor Anda: " + score + "/5");
     }
 </script>
 
