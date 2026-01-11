@@ -56,20 +56,22 @@ function doPost(e) {
       data.metode,
       data.trainer,
       data.peserta,
-      biaya
+      biaya,
+      data.realisasi
       
     ]);
   }
 
   if (data.action === "edit") {
-    sheet.getRange(data.id, 1, 1, 7).setValues([[
+    sheet.getRange(data.id, 1, 1, 8).setValues([[
       data.bulan,
       data.week,
       data.nama_pelatihan,
       data.metode,
       data.trainer,
       data.peserta,
-      biaya
+      biaya,
+      data.realisasi
       
     ]]);
   }
