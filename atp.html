@@ -125,6 +125,7 @@ body {
             <th>Trainer</th>
             <th>Peserta</th>
             <th>Biaya</th>
+            <th>Realisasi</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -151,6 +152,7 @@ body {
           <div class="col"><input id="trainer" class="form-control" placeholder="Trainer"></div>
           <div class="col"><input id="peserta" class="form-control" placeholder="Peserta"></div>
           <div class="col-12"><input id="biaya" type="number" class="form-control" placeholder="Biaya"></div>
+          <div class="col"><input id="realisasi" class="form-control" placeholder="Realisasi"></div>
         </div>
       </div>
       <div class="modal-footer">
@@ -163,7 +165,7 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbw0U8u7mUOqDjS7KK08ATuVssAZeAdivpDoBqRvHBj6UvdbCGvv4qiwg8ESkRyweAaz5g/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbywOrlIhNwlnnkcquecWxcGh5B9jcYB2DYbGEcVms4r5JnoOWF28cZxuOFw6D27uC75lw/exec";
 
 document.addEventListener("DOMContentLoaded", () => {
   modal = new bootstrap.Modal(document.getElementById("formModal"));
@@ -187,6 +189,7 @@ function loadData() {
             <td>${d.trainer}</td>
             <td>${d.peserta}</td>
             <td>Rp ${Number(d.biaya).toLocaleString("id-ID")}</td>
+            <td>${d.realisasi}</td>
             <td>
               <button class="btn btn-sm btn-warning"
                 onclick='editData(${JSON.stringify(d)})'>✏</button>
@@ -211,6 +214,7 @@ function saveData() {
       trainer: trainer.value,
       peserta: peserta.value,
       biaya: Number(biaya.value || 0),
+      realisasi:realisasi.value,
      
 
     })
@@ -239,6 +243,7 @@ function editData(d) {
   trainer.value = d.trainer;
   peserta.value = d.peserta;
   biaya.value = Number(d.biaya || 0);
+  realisasi.value =d.realisasi
   
 
   modal.show();
