@@ -1,0 +1,82 @@
+const SHEET_NAME = "DATA";
+
+function doGet(e) {
+  const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+  const values = sheet.getDataRange().getValues();
+
+  if (values.length < 2) {
+    return ContentService
+      .createTextOutput(JSON.stringify([]))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const headers = values.shift().map(h =>
+    h.toString().toLowerCase().replace(/\s+/g, "_")
+  );
+
+  let result = values
+    .filter(row => row.join("").toString().trim() !== "") // skip row kosong
+    .map((row, i) => {
+      let obj = { id: i + 2 };
+      headers.forEach((h, j) => {
+        obj[h] = h === "biaya"
+          ? Number(row[j] || 0)
+          : row[j];
+      });
+      return obj;
+    });
+    
+  if (e.parameter.bulan) {
+  const bulanFilter = e.parameter.bulan.toString().trim().toLowerCase();
+
+  result = result.filter(r =>
+    r.bulan &&
+    r.bulan.toString().trim().toLowerCase() === bulanFilter
+  );
+}
+
+
+
+  return ContentService
+    .createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+  const data = JSON.parse(e.postData.contents);
+
+  const biaya = Number(data.biaya || 0);
+
+  if (data.action === "add") {
+    sheet.appendRow([
+      data.bulan,
+      data.week,
+      data.nama_pelatihan,
+      data.metode,
+      data.trainer,
+      data.peserta,
+      biaya
+      
+    ]);
+  }
+
+  if (data.action === "edit") {
+    sheet.getRange(data.id, 1, 1, 7).setValues([[
+      data.bulan,
+      data.week,
+      data.nama_pelatihan,
+      data.metode,
+      data.trainer,
+      data.peserta,
+      biaya
+      
+    ]]);
+  }
+
+  if (data.action === "delete") {
+    sheet.deleteRow(data.id);
+  }
+
+  return ContentService.createTextOutput("OK");
+}
