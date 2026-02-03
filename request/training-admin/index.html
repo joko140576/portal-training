@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Learning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .video-btn button {
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold">📘 E-Learning untuk Team Admin </h2>
+
+    <div class="row g-4">
+
+        <!-- KOLOM 1 -->
+        <div class="col-md-6">
+            <div class="card p-4 h-100">
+                <h4 class="fw-bold">📌 E-learning  1: Aplikasi SOA </h4>
+                <p>
+                    Materi ini membahas dasar-dasar kepemimpinan, karakter pemimpin,
+                    serta contoh penerapannya dalam organisasi.
+                </p>
+
+                <!-- PDF -->
+                <h6 class="fw-semibold mt-3">📄 Materi User Manual SOA & SOA Mobile</h6>
+                <a href="https://drive.google.com/file/d/17dpkZiZJJaByn04dEpjh60rI34NZeYl3/view?usp=drive_link" class="btn btn-outline-primary btn-sm mb-2" download>
+                    Download PDF 1
+                </a>
+                <a href="https://drive.google.com/file/d/1mVSBM4vPpbipa_pQXJclMx2DqVJG4aHa/view?usp=drive_link" class="btn btn-outline-primary btn-sm mb-3" download>
+                    Download PDF 2
+                </a>
+
+                <!-- Video -->
+                <h6 class="fw-semibold">🎬 Video Pembelajaran</h6>
+                <div class="video-btn">
+                    <button class="btn btn-success btn-sm" onclick="openVideo('https://https://drive.google.com/file/d/1WM2daaqCoYK0fs6T8jKKktCRLb3-kLFq/view?usp=drive_link')">Video 1</button>
+                    <button class="btn btn-success btn-sm" onclick="openVideo('https://www.youtube.com/watch?v=video2')">Video 2</button>
+                    <button class="btn btn-success btn-sm" onclick="openVideo('https://www.youtube.com/watch?v=video3')">Video 3</button>
+                    <button class="btn btn-success btn-sm" onclick="openVideo('https://www.youtube.com/watch?v=video4')">Video 4</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KOLOM 2 -->
+        <div class="col-md-6">
+            <div class="card p-4 h-100">
+                <h4 class="fw-bold">📌 E-learning 2: Aplikasi Monimanager Bank BNI </h4>
+                <p>
+                    Materi lanjutan yang membahas gaya kepemimpinan,
+                    komunikasi tim, dan pengambilan keputusan.
+                </p>
+
+                <!-- PDF -->
+                <h6 class="fw-semibold mt-3">📄 Materi PDF</h6>
+                <a href="materi3.pdf" class="btn btn-outline-primary btn-sm mb-2" download>
+                    Download PDF 1
+                </a>
+                <a href="materi4.pdf" class="btn btn-outline-primary btn-sm mb-3" download>
+                    Download PDF 2
+                </a>
+
+                <!-- Video -->
+                <h6 class="fw-semibold">🎬 Video Pembelajaran</h6>
+                <div class="video-btn">
+                    <button class="btn btn-warning btn-sm" onclick="openVideo('https://www.youtube.com/watch?v=video5')">Video 1</button>
+                    <button class="btn btn-warning btn-sm" onclick="openVideo('https://www.youtube.com/watch?v=video6')">Video 2</button>
+                    <button class="btn btn-warning btn-sm" onclick="openVideo('https://www.youtube.com/watch?v=video7')">Video 3</button>
+                    <button class="btn btn-warning btn-sm" onclick="openVideo('https://www.youtube.com/watch?v=video8')">Video 4</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function openVideo(url) {
+        window.open(url, '_blank');
+    }
+</script>
+
+</body>
+</html>
