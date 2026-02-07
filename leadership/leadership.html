@@ -82,52 +82,46 @@
             <div class="col-md-6">
                 <div class="card card-custom p-3">
 
-                    <h4 class="fw-bold mb-3"><i class="fa-solid fa-user-graduate"></i> Leadership Basic</h4>
+                    <h4 class="fw-bold mb-3">
+                        <i class="fa-solid fa-user-graduate"></i> Leadership Basic
+                    </h4>
 
                     <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                        <li class="list-group-item">
                             Communication Skill-1
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('comm1')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
 
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item">
                             Communication Skill-2
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('comm2')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
 
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item">
                             Leadership Skill - 1
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('leader1')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
 
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item">
                             Leadership Skill - 2
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('leader2')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
 
-
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item">
                             Managerial Skill
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('managerial')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
 
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item">
                             Strategy Management
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('strategy')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
+
                     </ul>
+
+                    <!-- Tombol Link di Bawah -->
+                    <div class="text-center">
+                        <button class="btn btn-materi"
+                            onclick="openMateri('leadership-basic')">
+                            Buka Semua Materi
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
 
                 </div>
             </div>
@@ -183,12 +177,8 @@
         function openMateri(type) {
             let link = "";
 
-            if (type === "comm1") link = "https://youtu.be/cRMSIK9RCRU?si=cUwTo9MyzJ-hnMmT";
-            if (type === "comm2") link = "https://youtu.be/oJbP4RDXWTY?si=iQKHwEazOPQVLIhF";
-            if (type === "leader1") link = "https://youtu.be/DasJVL3NB-I?si=lCKIpfAk-HgfI0cC";
-            if (type === "leader2") link = "https://youtu.be/PNyEQb0YK2s?si=p_1RvELjwYPrgB6i";
-            if (type === "managerial") link = "https://youtu.be/kHMFNV5XDTY?si=cmUk9PpHTWzHVDyF";
-            if (type === "strategy") link = "https://youtu.be/L2ZS1Lcvr3s?si=IVZgHfK1vn8wxLa8";
+           
+            if (type === "leadership-basic") link = "https:google.com";
             if (type === "customer") link = "customerfokus.html";
             if (type === "organization") link = "capableorganization.html";
             if (type === "execution") link = "drivingexecution.html";
