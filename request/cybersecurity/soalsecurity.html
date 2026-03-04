@@ -1,3 +1,4 @@
+
 <!-- DESKRIPSI -->
 <!DOCTYPE html>
 <html lang="id">
@@ -72,7 +73,7 @@ body {
     <!-- FORM PESERTA -->
     <div id="formPeserta" class="card shadow-lg border-0">
 
-        <div class="card-header bg-primary text-white fw-bold">
+        <div class="card-header bg-danger text-white fw-bold">
             <i class="bi bi-person-vcard me-2"></i>
             Data Peserta
         </div>
@@ -154,10 +155,10 @@ body {
 <!-- KUIS -->
 <div id="kuisBox" class="hidden mt-4">
 <div class="card shadow">
-<div class="card-header">Post Test</div>
+<div class="card-header bg-danger">Post Test</div>
 <div class="card-body">
 <div id="listSoal"></div>
-<button class="btn btn-primary w-100 fw-bold" onclick="kumpulkan()">Kumpulkan Jawaban</button>
+<button class="btn btn-danger w-100 fw-bold" onclick="kumpulkan()">Kumpulkan Jawaban</button>
 </div>
 </div>
 </div>
@@ -165,7 +166,7 @@ body {
 <!-- HASIL -->
 <div id="hasilBox" class="hidden mt-4 card shadow p-4 text-center">
 <h4 id="tampilNilai"></h4>
-<button id="btnCetak" class="btn btn-warning mt-3 hidden" onclick="cetakSertifikat()">Cetak Sertifikat</button>
+<button id="btnCetak" class="btn btn-danger mt-3 hidden" onclick="cetakSertifikat()">Cetak Sertifikat</button>
 <button id="btnUlang" class="btn btn-danger mt-3 hidden" onclick="ulangKuis()">Ulangi Post Test</button>
 </div>
 
@@ -388,7 +389,7 @@ body {
 <div class="certificate">
 
     <div class="logo">
-     <img src="logo.png" alt="Logo PT SSI">
+     <img src="logo.png" alt="PT SSI">
     </div>
 
     <div class="no-sertifikat">
