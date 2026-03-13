@@ -4,7 +4,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<title>Post test </title>
+<title>Pelatihan PT SSI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- BOOTSTRAP 5 -->
@@ -60,20 +60,20 @@ body {
 
     <!-- JUDUL -->
     <div class="text-center mb-4">
-        <h3 class="fw-bold text-success">
+        <h3 class="fw-bold text-dark">
             <i class="bi bi-mortarboard-fill me-2"></i>
             Pelatihan Online PT SSI
         </h3>
         <h5 class="text-muted">
             <i class="bi bi-journal-text me-1"></i>
-           SOSIALISASI  UU PDP & ANTI PENCUCIAN UANG 
+            Training Basic Cyber Security 
         </h5>
     </div>
 
     <!-- FORM PESERTA -->
     <div id="formPeserta" class="card shadow-lg border-0">
 
-        <div class="card-header bg-info text-white fw-bold">
+        <div class="card-header bg-danger text-white fw-bold">
             <i class="bi bi-person-vcard me-2"></i>
             Data Peserta
         </div>
@@ -106,7 +106,7 @@ body {
                 </label>
                 <select id="region" class="form-select">
                     <option value="">-- Pilih Region --</option>
-                    <option>kantor pusat</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+                    <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                     <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                 </select>
             </div>
@@ -117,7 +117,7 @@ body {
                     <i class="bi bi-building-fill me-1 text-success"></i>
                     Unit
                 </label>
-                <input id="unit" class="form-control" placeholder="Unit (contoh: kantor pusat , COU Harmoni atau TWU Bekasi)">
+                <input id="unit" class="form-control" placeholder="Unit (contoh: TWU Bekasi)">
             </div>
 
             <!-- JABATAN -->
@@ -140,7 +140,7 @@ body {
 
             <!-- BUTTON -->
             <button 
-                class="btn btn-info w-100 fw-bold py-2 shadow-sm"
+                class="btn btn-danger text-white w-100 fw-bold py-2 shadow-sm"
                 onclick="mulaiPostTest()">
                 <i class="bi bi-play-circle-fill me-2"></i>
                 Mulai Post Test
@@ -155,10 +155,10 @@ body {
 <!-- KUIS -->
 <div id="kuisBox" class="hidden mt-4">
 <div class="card shadow">
-<div class="card-header">Post Test</div>
+<div class="card-header bg-danger">Post Test</div>
 <div class="card-body">
 <div id="listSoal"></div>
-<button class="btn btn-primary w-100 fw-bold" onclick="kumpulkan()">Kumpulkan Jawaban</button>
+<button class="btn btn-danger w-100 fw-bold" onclick="kumpulkan()">Kumpulkan Jawaban</button>
 </div>
 </div>
 </div>
@@ -166,14 +166,14 @@ body {
 <!-- HASIL -->
 <div id="hasilBox" class="hidden mt-4 card shadow p-4 text-center">
 <h4 id="tampilNilai"></h4>
-<button id="btnCetak" class="btn btn-warning mt-3 hidden" onclick="cetakSertifikat()">Cetak Sertifikat</button>
+<button id="btnCetak" class="btn btn-danger mt-3 hidden" onclick="cetakSertifikat()">Cetak Sertifikat</button>
 <button id="btnUlang" class="btn btn-danger mt-3 hidden" onclick="ulangKuis()">Ulangi Post Test</button>
 </div>
 
 </div>
 
 <script>
-const WEBAPP = "https://script.google.com/macros/s/AKfycbzdhl8i7tgTSNjjq963A_TRHXfWsbSusBR4BDRfBasNJoA1AZwVFU-u8gJgAaPVlaXy/exec";
+const WEBAPP = "https://script.googleInmks4Bfhr93RaiqYloqEteBKYkTE86vU_3mg_PhvfClO0jKL8CtZSs8R4m/exec";
 
 const formPeserta = document.getElementById("formPeserta");
 const kuisBox = document.getElementById("kuisBox");
@@ -389,7 +389,7 @@ body {
 <div class="certificate">
 
     <div class="logo">
-     <img src="logo.png" alt="Logo PT SSI">
+     <img src="logo.png" alt="PT SSI">
     </div>
 
     <div class="no-sertifikat">
