@@ -79,7 +79,7 @@ body {
           <tr>
             <th>Bulan</th><th>Week</th><th>Pelatihan</th>
             <th>Metode</th><th>Trainer</th><th>Peserta</th>
-            <th>Biaya</th><th>Realisasi</th><th>Aksi</th>
+            <th>Biaya</th><th>Realisasi</th><th>keterangan</th><th>Aksi</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -104,6 +104,7 @@ body {
           <div class="col"><input id="peserta" class="form-control" placeholder="Peserta"></div>
           <div class="col-12"><input id="biaya" type="number" class="form-control" placeholder="Biaya"></div>
           <div class="col"><input id="realisasi" class="form-control" placeholder="Realisasi"></div>
+          <div class="col"><input id="keterangan" class="form-control" placeholder="keterangan"></div>
         </div>
       </div>
       <div class="modal-footer">
@@ -162,6 +163,7 @@ function loadData() {
           <td>${d.peserta}</td>
           <td>Rp ${Number(d.biaya).toLocaleString("id-ID")}</td>
           <td>${d.realisasi}</td>
+          <td>${d.keterangan}</td>
           <td>
             <button class="btn btn-sm btn-warning" onclick='editData(${JSON.stringify(d)})'>✏</button>
             <button class="btn btn-sm btn-danger" onclick='deleteData(${d.id})'>🗑</button>
@@ -192,6 +194,7 @@ function editData(d) {
   peserta.value = d.peserta;
   biaya.value = d.biaya;
   realisasi.value = d.realisasi;
+  keterangan.value = d.keterangan;
   modal.show();
 }
 
@@ -208,7 +211,8 @@ function saveData() {
       trainer: trainer.value,
       peserta: peserta.value,
       biaya: Number(biaya.value || 0),
-      realisasi: realisasi.value
+      realisasi: realisasi.value,
+      keterangan: keterangan.value
     })
   }).then(() => {
     modal.hide();
