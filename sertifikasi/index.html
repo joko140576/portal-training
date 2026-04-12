@@ -40,15 +40,12 @@ header::after {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.6);
 }
 
 header h1 {
     position: relative;
-    color:white;
-     -webkit-text-stroke: 3px black; /* stroke (ketebalan & warna) */
-    font-weight: bold;
-    font-size: 5rem;
+    font-size: 3rem;
     animation: fadeDown 1.5s ease;
 }
 
@@ -133,10 +130,23 @@ section {
     transform: translateY(0);
 }
 
-   .login-box {
+#loginPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.login-box {
     width: 350px;
     padding: 25px;
-    background: #fff;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
@@ -144,7 +154,7 @@ section {
 </head>
 
 <body>
- <div id="loginPage">
+    <div id="loginPage">
         <div class="login-box">
             <h4 class="text-center mb-3">Login Akses</h4>
             <input type="text" id="username" class="form-control mb-2" placeholder="Username">
@@ -152,9 +162,10 @@ section {
             <button onclick="login()" class="btn btn-primary w-100">Login</button>
             <p id="error" class="text-danger mt-2 text-center" style="display:none;">Username / Password salah</p>
         </div>
-</div>
-    
+    </div>
+
 <div id="mainContent" style="display:none;">
+
 <!-- HEADER -->
 <header>
     <h1>SERTIFIKASI PEGAWAI<br>PT SSI</h1>
@@ -180,7 +191,7 @@ section {
             <i class="fas fa-tools"></i>
             <h3>Teknisi / SLM</h3>
             <p>Sertifikasi untuk teknisi atau SLM bertujuan memastikan kemampuan teknis dalam perawatan, perbaikan, dan operasional perangkat.</p>
-            <a href="slm/index.html" class="btn">Started</a>
+            <a href="#" class="btn">Started</a>
         </div>
 
         <div class="card">
@@ -229,8 +240,9 @@ section {
 
     </div>
 </section>
+</div>
 
-</div>    
+
 
 <!-- JS ANIMATION -->
 <script>
@@ -239,7 +251,7 @@ function login() {
     var user = document.getElementById("username").value;
     var pass = document.getElementById("password").value;
 
-    if (user === "ptssi" && pass === "adaptif") {
+    if (user === "ptssi" && pass === "slm") {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("mainContent").style.display = "block";
     } else {
@@ -248,7 +260,7 @@ function login() {
 }
 
 
-    
+
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
@@ -261,6 +273,6 @@ document.querySelectorAll('.fade-in, .card').forEach(el => {
     observer.observe(el);
 });
 </script>
-    
+
 </body>
 </html>
