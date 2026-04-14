@@ -110,8 +110,8 @@ function login() {
     const pass = document.getElementById("password").value.trim();
 
     if(user === USER_LOGIN && pass === PASS_LOGIN){
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
+        document.getElementById("loginPage").style.display = "block";
+        document.getElementById("mainContent").style.display = "none";
     } else {
         document.getElementById("errorMsg").style.display = "block";
     }
