@@ -285,8 +285,8 @@
                 <div class="footer-left">
                     <button class="btn btn-warning fw-bold"
                             data-bs-toggle="modal"
-                            data-bs-target="#modalLibrary">
-                        📘 Kamus SSI
+                            data-bs-target="#modalhcc">
+                        📘 Tool HCC
                     </button>
                 </div>
 
@@ -482,29 +482,63 @@
             </div>
         </div>
     </div>
-    
 
-    <div class="modal fade" id="modalLibrary">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Kamus SSI </h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    Kamus ini sangat berguna untuk pegawai baru , untuk mengetahui beberapa istilah terkait dengan dunia ATM dan operasional .
-                </div>
-
-                <div class="modal-footer">
-                    <a href="https://kamus-ssi.vercel.app/" button class="btn btn-secondary">Open Kamus !</button>               
-                </div>
-
-
+ <div class="modal fade" id="modalhcc">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- HEADER -->
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">🛠️ Tools HCC</h5>
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
+            <!-- BODY -->
+            <div class="modal-body">
+                <div class="row">
+                    <!-- TOOL 1 -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5>📘 Kamus PT SSI</h5>
+                                <p>
+                                    Tool ini membantu pegawai baru memahami istilah-istilah 
+                                    di dunia ATM dan operasional PT SSI.
+                                </p>
+                                <a href="https://kamus-ssi.vercel.app/" target="_blank" class="btn btn-primary">
+                                    Klik Kamus
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TOOL 2 -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body text-center">
+
+                                <h5>🎓 Generator Sertifikat</h5>
+                                <p>
+                                    Tool untuk membuat sertifikat training pegawai secara cepat 
+                                    dan otomatis.
+                                </p>
+                                <button class="btn btn-success">
+                                    Generate Sertifikat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+
         </div>
     </div>
+</div>   
+        
+
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
