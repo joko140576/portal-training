@@ -27,6 +27,25 @@ body {
 
 <body>
 
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="container d-flex justify-content-center align-items-center" style="height:100vh;">
+    <div class="card p-4 shadow" style="width:350px;">
+        <h4 class="text-center mb-3">🔐 Login</h4>
+
+        <input type="text" id="username" class="form-control mb-3" placeholder="Username">
+        <input type="password" id="password" class="form-control mb-3" placeholder="Password">
+
+        <button onclick="login()" class="btn btn-primary w-100">Login</button>
+
+        <div id="errorMsg" class="text-danger text-center mt-2" style="display:none;">
+            Username / Password salah!
+        </div>
+    </div>
+</div>
+
+<div id="mainContent" style="display:none;">
+
+
 <div class="container mainbox py-5">
 
     <!-- JUDUL -->
@@ -79,6 +98,26 @@ body {
 </div>
 
 <script>
+
+
+// 🔐 LOGIN DATA
+const USER_LOGIN = "ptssi";
+const PASS_LOGIN = "solid";
+
+// LOGIN FUNCTION
+function login() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+
+    if(user === USER_LOGIN && pass === PASS_LOGIN){
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+    } else {
+        document.getElementById("errorMsg").style.display = "block";
+    }
+}
+
+ 
 let USER = {};
 
 function generateNoSertifikat() {
