@@ -7,6 +7,11 @@
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Allura&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Qwigley&display=swap" rel="stylesheet">
+
+
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -372,8 +377,8 @@ body::before {
   <!-- HEADER -->
   <header class="site-header">
     <div class="header-badge"><i class="bi bi-mortarboard-fill"></i> PT SSI</div>
-    <h1>Pelatihan <span>E-Learning Online</span><br>PT SSI</h1>
-    <p id="temaPelatihan">Training 8 Skills Leadership </p>
+    <h1>Pelatihan <span>Online</span><br>PT SSI</h1>
+    <p id="temaPelatihan">Training Skills Leadership Advance Part – 2</p>
     <div class="ornament">
       <div class="ornament-line"></div>
       <div class="ornament-diamond"></div>
@@ -484,7 +489,7 @@ body::before {
 </div><!-- /page-wrap -->
 
 <script>
-const WEBAPP = "https://script.google.com/macros/s/AKfycbwE4C2yY-YaRaHoFfU2FkcQq2GonNTWHFDpnGG3XHUXHg8AjYIaHJwIHHcuBrLIDa9eqw/exec";
+const WEBAPP = "https://script.google.com/macros/s/AKfycbx02DCOX-teBBYTlz8_HXVYH4X6MYqyCj7cegxrTn7fg53UJzvTv8jjl2Zc3wUFkG8maw/exec";
 
 const formPeserta = document.getElementById("formPeserta");
 const kuisBox     = document.getElementById("kuisBox");
@@ -637,240 +642,367 @@ function cetakSertifikat(){
 <meta charset="UTF-8">
 <title>Sertifikat – ${USER.nama}</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-@page { size:A4 landscape; margin:0; }
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 
-body {
-  width:297mm; height:210mm;
-  display:flex; align-items:center; justify-content:center;
-  background:#1a0e06;
+<style>
+
+@page {
+  size:A4 landscape;
+  margin:0;
+}
+
+*,*::before,*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  width:297mm;
+  height:210mm;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f4efe4;
   font-family:'Montserrat',sans-serif;
+
   -webkit-print-color-adjust:exact;
   print-color-adjust:exact;
 }
 
-/* ── OUTER FRAME ── */
-.cert {
-  width:289mm; height:202mm;
+/* ===== MAIN CERTIFICATE ===== */
+.cert{
+  width:289mm;
+  height:202mm;
   position:relative;
-  background:linear-gradient(145deg,#1a0e06 0%,#2d1a08 40%,#1a0e06 100%);
-  border:2px solid #c9a84c;
-  border-radius:4px;
   overflow:hidden;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  padding:0 40px;
+
+  background:
+    radial-gradient(circle at top left, rgba(201,168,76,.10), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(155,28,28,.05), transparent 28%),
+    linear-gradient(145deg,#fffdf8 0%,#f9f3e7 100%);
+
+  border:2px solid #d4b25f;
+  border-radius:10px;
+
+  box-shadow:
+    inset 0 0 0 8px rgba(212,178,95,.12),
+    inset 0 0 0 16px rgba(212,178,95,.06);
+
+  padding:34px 46px;
 }
 
-/* ── CORNER ORNAMENTS ── */
-.corner {
-  position:absolute; width:70px; height:70px;
-  background:none;
+/* ===== ORNAMENT ===== */
+.corner{
+  position:absolute;
+  width:90px;
+  height:90px;
 }
-.corner svg { width:70px; height:70px; }
-.tl { top:10px; left:10px; }
-.tr { top:10px; right:10px; transform:scaleX(-1); }
-.bl { bottom:10px; left:10px; transform:scaleY(-1); }
-.br { bottom:10px; right:10px; transform:scale(-1); }
 
-/* corner SVG path */
-.corner-svg { fill:none; stroke:#c9a84c; stroke-width:1.5; }
-
-/* ── SIDE PATTERN STRIPS ── */
-.strip-left, .strip-right {
-  position:absolute; top:0; bottom:0; width:22px;
-  background:repeating-linear-gradient(
-    to bottom,
-    transparent 0px, transparent 8px,
-    rgba(201,168,76,.35) 8px, rgba(201,168,76,.35) 9px
-  );
-}
-.strip-left  { left:0; border-right:1.5px solid rgba(201,168,76,.3); }
-.strip-right { right:0; border-left:1.5px solid rgba(201,168,76,.3); }
-
-/* ── HORIZONTAL RULES ── */
-.h-rule {
+.corner svg{
   width:100%;
-  display:flex; align-items:center; gap:8px;
-}
-.h-rule-line {
-  flex:1;
-  height:1px;
-  background:linear-gradient(to right, transparent, #c9a84c 20%, #c9a84c 80%, transparent);
-}
-.h-rule-diamond {
-  width:8px; height:8px;
-  background:#c9a84c;
-  transform:rotate(45deg);
-  flex-shrink:0;
+  height:100%;
 }
 
-/* ── BACKGROUND WATERMARK ── */
-.watermark {
+.tl{top:12px;left:12px;}
+.tr{top:12px;right:12px;transform:scaleX(-1);}
+.bl{bottom:12px;left:12px;transform:scaleY(-1);}
+.br{bottom:12px;right:12px;transform:scale(-1);}
+
+.corner-svg{
+  fill:none;
+  stroke:#c9a84c;
+  stroke-width:1.7;
+}
+
+/* ===== WATERMARK ===== */
+.watermark{
   position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  font-family:'Cinzel Decorative', serif;
-  font-size:88px; font-weight:900;
-  color:rgba(201,168,76,.04);
-  letter-spacing:10px;
-  white-space:nowrap;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-family:'Cinzel Decorative',serif;
+  font-size:150px;
+  font-weight:900;
+
+  color:rgba(201,168,76,.05);
+
+  letter-spacing:14px;
   pointer-events:none;
-  user-select:none;
 }
 
-/* ── LOGO + TTD AREA ── */
-.logo-area {
+/* ===== HEADER ===== */
+.logo-area{
   position:absolute;
-  top:28px; left:50px;
-  display:flex; align-items:center; gap:10px;
+  top:34px;
+  left:42px;
 }
-.logo-area img {
-  width:72px; height:72px;
+
+.logo-area img{
+  width:78px;
+  height:78px;
   object-fit:contain;
-  filter:drop-shadow(0 2px 8px rgba(201,168,76,.4));
 }
 
-.ttd-area {
+.no-sert{
   position:absolute;
-  bottom:28px; right:50px;
+  top:38px;
+  right:46px;
+
+  font-size:12px;
+  letter-spacing:1px;
+
+  color:#8b6914;
+  font-weight:600;
+}
+
+/* ===== CONTENT ===== */
+.content{
+  position:relative;
+  z-index:2;
+
+  width:100%;
+  height:100%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
   text-align:center;
 }
-.ttd-area img {
-  height:60px;
-  object-fit:contain;
-  filter:brightness(1.6) sepia(.2);
-  margin-bottom:4px;
-}
-.ttd-name {
-  font-size:10px; font-weight:600;
-  color:#c9a84c; letter-spacing:1.5px;
-  text-transform:uppercase;
-}
-.ttd-pos { font-size:9px; color:rgba(201,168,76,.6); margin-top:1px; }
 
-/* ── NO SERTIFIKAT ── */
-.no-sert {
-  position:absolute;
-  top:18px; right:50px;
-  font-size:9.5px;
-  color:rgba(201,168,76,.55);
-  letter-spacing:1px;
-  font-family:'Montserrat',sans-serif;
-  font-weight:500;
-}
+/* ===== TITLE ===== */
+.cert-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:42px;
+  font-weight:900;
 
-/* ── MAIN CONTENT ── */
-.content { text-align:center; position:relative; z-index:2; max-width:580px; }
+  color:#8b6914;
 
-.cert-title {
-  font-family:'Cinzel Decorative', serif;
-  font-size:32px; font-weight:900;
-  color:#f0d98b;
-  letter-spacing:5px;
-  text-shadow:0 0 40px rgba(201,168,76,.5);
+  letter-spacing:6px;
   line-height:1.1;
-  margin-bottom:4px;
-}
-.cert-subtitle {
-  font-family:'Cormorant Garamond', serif;
-  font-size:13.5px;
-  color:rgba(240,217,139,.65);
-  letter-spacing:4px;
-  text-transform:uppercase;
-  font-style:italic;
-  margin-bottom:14px;
-}
-.training-theme {
-  font-family:'Cormorant Garamond', serif;
-  font-size:13px;
-  color:rgba(240,217,139,.55);
-  letter-spacing:2px;
-  margin-bottom:16px;
-  font-style:italic;
-}
 
-.given-to {
-  font-family:'Cormorant Garamond', serif;
-  font-size:14px;
-  color:rgba(255,255,255,.55);
-  letter-spacing:3px;
-  text-transform:uppercase;
   margin-bottom:8px;
 }
-.recipient-name {
-  font-family:'Cinzel Decorative', serif;
-  font-size:30px;
-  font-weight:700;
-  color:#f0d98b;
+
+.cert-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px;
+  font-style:italic;
+
+  color:#8c7350;
+
   letter-spacing:2px;
-  text-shadow:0 2px 20px rgba(201,168,76,.4);
-  margin-bottom:14px;
-  line-height:1.2;
+  margin-bottom:22px;
 }
 
-.meta-row {
+/* ===== LINE ===== */
+.h-rule{
+  width:78%;
   display:flex;
-  justify-content:center;
-  gap:28px;
-  margin-bottom:14px;
-}
-.meta-item {
-  text-align:center;
-}
-.meta-item .meta-label {
-  font-size:8px;
-  color:rgba(201,168,76,.55);
-  letter-spacing:2px;
-  text-transform:uppercase;
-  font-weight:600;
-}
-.meta-item .meta-val {
-  font-size:12px;
-  font-family:'Cormorant Garamond', serif;
-  font-weight:600;
-  color:rgba(255,255,255,.8);
-  margin-top:2px;
-}
-
-.verdict {
-  margin-top:4px;
-  display:inline-flex;
   align-items:center;
   gap:10px;
-}
-.verdict-text {
-  font-family:'Cinzel Decorative', serif;
-  font-size:11px;
-  color:rgba(240,217,139,.8);
-  letter-spacing:3px;
-}
-.score-badge {
-  background:linear-gradient(135deg,#c9a84c,#8b6914);
-  color:#1a0e06;
-  font-family:'Cinzel Decorative', serif;
-  font-size:22px; font-weight:900;
-  width:52px; height:52px;
-  display:inline-flex; align-items:center; justify-content:center;
-  border-radius:50%;
-  box-shadow:0 0 20px rgba(201,168,76,.5);
-  letter-spacing:0;
-  line-height:1;
+
+  margin:14px 0;
 }
 
-.date-line {
-  position:absolute;
-  bottom:18px; left:50px;
-  font-size:9px;
-  color:rgba(201,168,76,.45);
-  letter-spacing:1.5px;
+.h-rule-line{
+  flex:1;
+  height:1.5px;
+
+  background:
+  linear-gradient(
+    to right,
+    transparent,
+    #c9a84c,
+    transparent
+  );
+}
+
+.h-rule-diamond{
+  width:10px;
+  height:10px;
+
+  background:#c9a84c;
+  transform:rotate(45deg);
+}
+
+/* ===== TRAINING ===== */
+.training-theme{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+
+  color:#6a5337;
+
+  letter-spacing:1px;
+  margin-top:6px;
+  margin-bottom:18px;
+}
+
+/* ===== LABEL ===== */
+.given-to{
+  font-size:16px;
   text-transform:uppercase;
+  letter-spacing:4px;
+
+  color:#8d7b63;
+
+  margin-bottom:12px;
+  font-weight:600;
 }
 
-@media print {
-  body { margin:0; }
-  .cert { page-break-after:avoid; }
+/* ===== NAME ===== */
+.recipient-name{
+  font-family:'Qwigley', cursive;
+
+  font-size:48px;
+  font-weight:400;
+
+  color:#7a4b15;
+
+  line-height:1.2;
+  letter-spacing:1px;
+
+  margin-bottom:24px;
+
+  text-shadow:
+    0 2px 10px rgba(201,168,76,.18);
+}
+
+/* ===== DESCRIPTION ===== */
+.cert-desc{
+  width:78%;
+
+  font-size:18px;
+  line-height:1.9;
+
+  color:#4f4234;
+
+  text-align:justify;
+
+  margin-bottom:28px;
+}
+
+/* ===== META ===== */
+.meta-row{
+  display:flex;
+  justify-content:center;
+  gap:48px;
+
+  margin-top:4px;
+  margin-bottom:22px;
+}
+
+.meta-item{
+  text-align:center;
+}
+
+.meta-label{
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+
+  color:#a48a5f;
+  font-weight:700;
+
+  margin-bottom:5px;
+}
+
+.meta-val{
+  font-size:18px;
+  color:#3b2d1c;
+  font-weight:600;
+}
+
+/* ===== SCORE ===== */
+.verdict{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.verdict-text{
+  font-family:'Cinzel Decorative',serif;
+
+  font-size:15px;
+  color:#8b6914;
+
+  letter-spacing:2px;
+}
+
+.score-badge{
+  width:66px;
+  height:66px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #e5c772,
+      #b98b22
+    );
+
+  color:white;
+
+  font-family:'Cinzel Decorative',serif;
+  font-size:24px;
+  font-weight:900;
+
+  box-shadow:
+    0 8px 18px rgba(185,139,34,.28);
+}
+
+/* ===== FOOTER ===== */
+.date-line{
+  position:absolute;
+  bottom:28px;
+  left:46px;
+
+  font-size:12px;
+  letter-spacing:1px;
+
+  color:#8b6914;
+}
+
+.ttd-area{
+  position:absolute;
+  right:52px;
+  bottom:28px;
+
+  text-align:center;
+}
+
+.ttd-area img{
+  height:74px;
+  object-fit:contain;
+}
+
+.ttd-name{
+  font-size:13px;
+  font-weight:700;
+
+  color:#6d531d;
+
+  margin-top:4px;
+}
+
+.ttd-pos{
+  font-size:11px;
+  color:#9a8660;
+}
+
+/* ===== PRINT ===== */
+@media print{
+  body{
+    margin:0;
+  }
 }
 </style>
 </head>
