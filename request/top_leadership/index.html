@@ -85,6 +85,87 @@
   .btn-posttest-link{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:800;font-size:16px;padding:14px 36px;border-radius:50px;border:none;cursor:pointer;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(0,0,0,0.1);}
   .btn-posttest-link:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(201,168,76,0.4);}
   
+   .section-pdf{
+    max-width:1200px;
+    margin:auto;
+}
+
+.title{
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:40px;
+    color:#0f172a;
+}
+
+/* 2 CARD */
+.grid-card{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-bottom: 20px;
+}
+
+.card{
+    background:#ffffff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    transition:0.3s;
+    border:1px solid #e2e8f0;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 30px rgba(0,0,0,0.12);
+}
+
+.card-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:25px;
+    color:#1e293b;
+    border-left:6px solid #2563eb;
+    padding-left:15px;
+}
+
+.pdf-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f8fafc;
+    padding:14px 18px;
+    border-radius:12px;
+    margin-bottom:15px;
+    transition:0.3s;
+}
+
+.pdf-item:hover{
+    background:#e0ecff;
+}
+
+.pdf-name{
+    font-size:14px;
+    font-weight:200;
+    color:#334155;
+}
+
+.badge-link{
+    text-decoration:none;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.badge-link:hover{
+    transform:scale(1.05);
+    background:linear-gradient(135deg,#1d4ed8,#0f172a);
+}
+
   footer{text-align:center;padding:40px 24px;font-size:13px;color:var(--muted);border-top:1px solid rgba(0,0,0,.07);margin-top:40px;}
   @media(max-width:600px){.section-body{padding:20px;}}
 </style>
@@ -115,7 +196,7 @@
         <div class="rule-item"><div class="rule-icon">1️⃣</div><div class="rule-text"><strong>Wajib Tonton 8 Video</strong><p>Peserta wajib menonton seluruh 8 video kompetensi softskill Leadership yang telah disediakan.</p></div></div>
         <div class="rule-item"><div class="rule-icon">🔒</div><div class="rule-text"><strong>Video Berurutan & Terkunci</strong><p>Video lainnya akan terkunci sebelum Anda menonton video secara urut dari video 1 hingga video 8.</p></div></div>
         <div class="rule-item"><div class="rule-icon">⏱️</div><div class="rule-text"><strong>Tombol Lanjut setelah 2 Menit</strong><p>Tombol "Tandai Selesai & Lanjut" akan muncul setelah Anda menonton minimal 2 menit (120 detik). Anda bisa tetap melanjutkan menonton atau memilih lanjut — sepenuhnya pilihan Anda.</p></div></div>
-        <div class="rule-item"><div class="rule-icon">📝</div><div class="rule-text"><strong>Post Test</strong><p>Setelah 8 video selesai, Anda akan diarahkan ke halaman Post Test (link terpisah) untuk menguji pemahaman Anda.</p></div></div>
+        <div class="rule-item"><div class="rule-icon">📝</div><div class="rule-text"><strong>Post Test</strong><p>Setelah 8 video selesai, akan tampil Library Materi-materi PDF-nya , anda bisa mendownloadnya . Dan dibawahnya terdapat Tombol Link untuk  Post Test untuk menguji pemahaman Anda. Silahkan tekan tombolnya untuk memulai Post test-nya </p></div></div>
       </div>
     </div>
   </div>
@@ -133,14 +214,81 @@
 
   <!-- POST TEST SECTION (muncul setelah 8 video selesai) - hanya tombol link -->
   <div id="section-posttest">
-    <div class="posttest-container">
+    <section class="section-pdf">
+      <h1 class="title">Daftar File PDF Kompetensi</h1>
+        <div class="grid-card">
+            <!-- CARD 1 -->
+            <div class="card">
+
+                <div class="card-title">
+                    Kompetensi Utama
+                </div>
+                  <div class="pdf-item">
+                      <div class="pdf-name">Customer Fokus</div>
+                      <a href="https://drive.google.com/file/d/1AGxyREoOA73oLLXkydDYXF9KiLxjWt5h/view?usp=drive_link" target="_blank" class="badge-link">
+                          PDF
+                      </a>
+                  </div>
+                  <div class="pdf-item">
+                      <div class="pdf-name">Digital Leadership</div>
+                      <a href="https://drive.google.com/file/d/11Vbo9My-Zgltcy6gvfuHqBGTM33OoUKa/view?usp=drive_link" target="_blank" class="badge-link">
+                          PDF
+                      </a>
+                  </div>
+                  <div class="pdf-item">
+                      <div class="pdf-name">Global Business Savvy</div>
+                      <a href="https://drive.google.com/file/d/10VZde06Jq13PgNMdLrF5SqPGry5_AP9T/view?usp=drive_link" target="_blank" class="badge-link">
+                          PDF
+                      </a>
+                  </div>
+                  <div class="pdf-item">
+                      <div class="pdf-name">Driving Execution</div>
+                      <a href="https://drive.google.com/file/d/1XmPJG1aBvjxAuvMiddvuBMfxjFCXXshC/view?usp=drive_link" target="_blank" class="badge-link">
+                          PDF
+                      </a>
+                  </div>                
+            </div>
+            <!-- CARD 2 -->
+            <div class="card">
+                <div class="card-title">
+                    Kompetensi Strategis
+                </div>        
+                <div class="pdf-item">
+                    <div class="pdf-name">Leading Change</div>
+                    <a href="https://drive.google.com/file/d/1IxojjjClDijBd7xjK2aXWmnLJp_KL3wp/view?usp=drive_link" target="_blank" class="badge-link">
+                        PDF
+                    </a>
+                </div>
+                <div class="pdf-item">
+                    <div class="pdf-name">Organization Capabilities Development</div>
+                    <a href="https://drive.google.com/file/d/1l6kLG5oGqDFnVkE4ALzkSpR38llpwWUd/view?usp=drive_link" target="_blank" class="badge-link">
+                        PDF
+                    </a>
+                </div>
+                <div class="pdf-item">
+                    <div class="pdf-name">Strategy Orientation</div>
+                    <a href="https://drive.google.com/file/d/13DKTjcCK8rtkvQsfosQXII8J_YX5eegw/view?usp=drive_link" target="_blank" class="badge-link">
+                        PDF
+                    </a>
+                </div>
+                <div class="pdf-item">
+                    <div class="pdf-name">Managing Diversity</div>
+                    <a href="https://drive.google.com/file/d/1t4NVdO8py7zk1m5S87wYmXq5GvlNE3MI/view?usp=drive_link" target="_blank" class="badge-link">
+                        PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="posttest-container">     
       <div class="posttest-icon">📋</div>
       <h2>🎓 Uji Kompetensi Anda</h2>
       <p>Selamat! Anda telah menyelesaikan seluruh 8 materi video. Klik tombol di bawah untuk mengerjakan Post Test di platform resmi kami.<br>
       <strong>⚠️ Catatan:</strong> Post test bersifat wajib sebagai syarat kelulusan program ini.</p>
       
       <!-- TOMBOL POST TEST (LINK URL) -->
-      <a href="https://forms.gle/example-posttest" target="_blank" class="btn-posttest-link" id="posttestLinkBtn">
+      <a href="soal_top_leadership.html" target="_blank" class="btn-posttest-link" id="posttestLinkBtn">
         ✍️ Kerjakan Post Test Sekarang →
       </a>
   
@@ -153,22 +301,25 @@
 <script>
 // ===================== DATA VIDEO ===================
 const videos = [
-  
-  { id: 1, title: "Customer Fokus", desc: "Fokus pada kebutuhan dan kepuasan pelanggan.", src: "https://drive.google.com/file/d/1E7z3N6KN8oALUOQFolU3YjhqYh7GmkER/preview", durasi: 10 }, 
-  
-  { id: 2, title: "Digital Leadership", desc: "Memimpin dengan pemanfaatan teknologi digital.", src: "https://drive.google.com/file/d/1BeVbeNWBtvwmlXYsFu7vVowpXmMiemyA/preview", durasi: 10 },
 
-  { id: 3, title: "Global Business Savvy ", desc: "Memahami bisnis dan pasar global.", src: "https://drive.google.com/file/d/1HrcVh4PoNWrVpln9Q_EsjKJNyP4zQJJs/preview", durasi: 10 },
+  { id: 1, title: "Digital Leadership", desc: "Memimpin dengan pemanfaatan teknologi digital.", src: "https://drive.google.com/file/d/1BeVbeNWBtvwmlXYsFu7vVowpXmMiemyA/preview", durasi: 2 },
 
-  { id: 4, title: "Driving Execution", desc: "Menjalankan rencana hingga tercapai hasil.", src: "https://drive.google.com/file/d/1f5M3F1U54KxaPfPmw74CNZ8pIJO13vph/preview", durasi: 10 },
+  { id: 2, title: "Customer Fokus", desc: "Fokus pada kebutuhan dan kepuasan pelanggan.", src: "https://drive.google.com/file/d/1E7z3N6KN8oALUOQFolU3YjhqYh7GmkER/preview", durasi: 2 },
 
-  { id: 5, title: "Leading change", desc: "Memimpin dan mengelola perubahan.", src: "https://drive.google.com/file/d/1EZ42sh2oN191lYeonNMy0E4ag23Hf6SP/preview", durasi: 10 },
+  { id: 3, title: "Global Business Savvy ", desc: "Memahami bisnis dan pasar global.", src: "https://drive.google.com/file/d/1HrcVh4PoNWrVpln9Q_EsjKJNyP4zQJJs/preview", durasi: 2 },
 
-  { id: 6, title: "Organization Capabilties ", desc: "Membangun kemampuan organisasi.", src: "https://drive.google.com/file/d/15cpAEGdNHK5Om5Rr-6ZXRt_V2sPq2AC3/preview", durasi: 10 },
 
-  { id: 7, title: "Strategy Orientation", desc: "Berpikir dan bertindak strategis.i", src: "https://drive.google.com/file/d/1eZT3_QBRQjVoNLdNUrJm_-Pw4UThil9L/preview", durasi: 10 },
+  { id: 4, title: "Driving Execution", desc: "Menjalankan rencana hingga tercapai hasil.", src: "https://drive.google.com/file/d/1f5M3F1U54KxaPfPmw74CNZ8pIJO13vph/preview", durasi: 2 },
 
-  { id: 8, title: "Managing Diversity", desc: "Mengelola keberagaman secara harmonis.", src: "https://drive.google.com/file/d/1V2U9_b1UeWzKR3cxqeBcLdx2XJwoW_ob/preview", durasi: 10 }
+  { id: 5, title: "Leading change", desc: "Memimpin dan mengelola perubahan.", src: "https://drive.google.com/file/d/1EZ42sh2oN191lYeonNMy0E4ag23Hf6SP/preview", durasi: 2 },
+
+
+  { id: 6, title: "Organization Capabilties ", desc: "Membangun kemampuan organisasi.", src: "https://drive.google.com/file/d/15cpAEGdNHK5Om5Rr-6ZXRt_V2sPq2AC3/preview", durasi: 2 },
+
+  { id: 7, title: "Strategy Orientation", desc: "Berpikir dan bertindak strategis.i", src: "https://drive.google.com/file/d/1eZT3_QBRQjVoNLdNUrJm_-Pw4UThil9L/preview", durasi: 2 },
+
+
+  { id: 8, title: "Managing Diversity", desc: "Mengelola keberagaman secara harmonis.", src: "https://drive.google.com/file/d/1V2U9_b1UeWzKR3cxqeBcLdx2XJwoW_ob/preview", durasi: 2 }
 
 ];
 
