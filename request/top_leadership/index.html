@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>E-Learning Delapan Kompetensi Softskill Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0a1628;--navy2:#112040;--gold:#c9a84c;--gold-light:#e8c97a;--cream:#faf7f0;--text:#1a2744;--muted:#6b7a99;--green:#2ecc71;--green-dark:#27ae60;--red:#e74c3c;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1a3060 100%);min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 24px 70px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(201,168,76,.18) 0%,transparent 70%);pointer-events:none;}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold-light);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 20px;border-radius:100px;margin-bottom:24px;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);font-weight:900;color:#fff;line-height:1.18;max-width:720px;}
+  .hero h1 span{color:var(--gold);}
+  .hero-sub{margin-top:16px;color:rgba(255,255,255,.65);font-size:15px;max-width:500px;}
+
+  .progress-wrap{background:#fff;border-bottom:1px solid rgba(0,0,0,.07);padding:14px 40px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+  .progress-label{font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;}
+  .progress-bar-outer{flex:1;height:8px;background:#e8eaf0;border-radius:100px;overflow:hidden;}
+  .progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1);width:0%;}
+  .progress-count{font-size:13px;font-weight:700;color:var(--gold);white-space:nowrap;}
+
+  main{max-width:1000px;margin:0 auto;padding:0 24px 80px;}
+
+  .section-card{background:#fff;border-radius:24px;box-shadow:0 8px 32px rgba(10,22,40,.08);margin-top:36px;overflow:hidden;}
+  .section-header{display:flex;align-items:center;gap:16px;padding:24px 32px 20px;border-bottom:1px solid rgba(0,0,0,.06);}
+  .section-num{width:44px;height:44px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:var(--gold);font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:18px;}
+  .section-title{font-size:20px;font-weight:700;color:var(--navy);}
+  .section-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+  .section-body{padding:28px 32px;}
+
+  /* PERATURAN */
+  .rules-grid{display:flex;flex-direction:column;gap:14px;}
+  .rule-item{display:flex;gap:14px;align-items:flex-start;background:#f8faff;padding:16px 20px;border-radius:16px;border-left:4px solid var(--gold);}
+  .rule-icon{font-size:22px;min-width:40px;text-align:center;}
+  .rule-text strong{color:var(--navy);display:block;margin-bottom:4px;}
+  .rule-text p{font-size:14px;color:var(--muted);line-height:1.5;}
+
+  .video-list{display:flex;flex-direction:column;gap:14px;}
+  .video-item{border:1.5px solid rgba(0,0,0,.08);border-radius:16px;overflow:hidden;transition:all .2s;background:#fafbff;}
+  .video-item.active{border-color:var(--gold);box-shadow:0 4px 20px rgba(201,168,76,.2);background:#fff;}
+  .video-item.done{border-color:var(--green);background:#f0fff6;}
+  .video-item.locked{opacity:.6;}
+  .video-header{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;}
+  .video-item.locked .video-header{cursor:not-allowed;}
+  .video-num{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+  .video-item:not(.done):not(.active) .video-num{background:#e8eaf0;color:var(--muted);}
+  .video-item.active .video-num{background:var(--gold);color:var(--navy);}
+  .video-item.done .video-num{background:var(--green);color:#fff;}
+  .video-info{flex:1;}
+  .video-info h4{font-size:15px;font-weight:700;color:var(--navy);}
+  .video-info p{font-size:12px;color:var(--muted);margin-top:2px;}
+  .video-status{font-size:12px;font-weight:600;padding:4px 12px;border-radius:100px;}
+  .video-item.done .video-status{background:#d4f5e4;color:var(--green-dark);}
+  .video-item.active .video-status{background:#fff3cc;color:#a07a00;}
+  .video-item.locked .video-status{background:#e8eaf0;color:#b0bec5;}
+
+  .video-player-wrap{display:none;padding:0 20px 20px;}
+  .video-item.active .video-player-wrap{display:block;}
+  .video-note{background:#fff8e1;border:1px solid #ffe082;border-radius:12px;padding:12px 16px;font-size:13px;color:#795500;margin-bottom:14px;display:flex;gap:8px;}
+  .video-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0d1f3c,#1a3060);border-radius:14px;display:flex;align-items:center;justify-content:center;}
+  .placeholder-inner{text-align:center;color:rgba(255,255,255,.7);}
+  .placeholder-icon{width:64px;height:64px;background:rgba(201,168,76,.15);border:2px solid rgba(201,168,76,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--gold);margin:0 auto 14px;}
+  .video-embed{width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;display:none;}
+  .video-embed iframe{width:100%;height:100%;border:none;}
+  .watch-progress-wrap{margin-top:12px;background:#e0e0e0;height:8px;border-radius:100px;overflow:hidden;}
+  .watch-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;}
+  .watch-time-row{display:flex;justify-content:space-between;margin-top:6px;}
+  .watch-pct-label,.watch-time-label{font-size:12px;color:var(--muted);}
+  .btn-simulate{background:var(--navy);color:var(--gold);font-weight:700;font-size:14px;padding:12px 24px;border-radius:10px;border:none;cursor:pointer;transition:0.2s;}
+  .btn-simulate:disabled{opacity:.5;cursor:not-allowed;}
+  .btn-next-video{flex:1;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;padding:12px 24px;border-radius:10px;border:none;cursor:pointer;transition:0.2s;}
+  .btn-next-video:disabled{opacity:.4;cursor:not-allowed;}
+
+  /* POST TEST SECTION - hanya tombol link */
+  #section-posttest{display:none;margin-top:30px;}
+  #section-posttest.visible{display:block;}
+  .posttest-container{background:#fff;border-radius:24px;padding:40px 32px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,0.1);}
+  .posttest-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 20px;}
+  .posttest-container h2{color:var(--navy);margin-bottom:12px;}
+  .posttest-container p{color:var(--muted);margin-bottom:28px;line-height:1.6;}
+  .btn-posttest-link{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:800;font-size:16px;padding:14px 36px;border-radius:50px;border:none;cursor:pointer;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+  .btn-posttest-link:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(201,168,76,0.4);}
+  
+  footer{text-align:center;padding:40px 24px;font-size:13px;color:var(--muted);border-top:1px solid rgba(0,0,0,.07);margin-top:40px;}
+  @media(max-width:600px){.section-body{padding:20px;}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-badge">✦ Program Pengembangan Divisi HCC</div>
+  <h1>E-Learning <span>Delapan Kompetensi</span><br>Softskill Leadership</h1>
+  <p class="hero-sub">Selesaikan 8 video, kemudian kerjakan post test melalui link yang tersedia</p>
+</section>
+
+<div class="progress-wrap">
+  <span class="progress-label">Progress Video</span>
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+  <span class="progress-count" id="progressCount">0 / 8</span>
+</div>
+
+<main>
+  <!-- PERATURAN E-LEARNING -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">📜</div>
+      <div><div class="section-title">Peraturan E-Learning</div><div class="section-sub">Simak aturan sebelum memulai materi</div></div>
+    </div>
+    <div class="section-body">
+      <div class="rules-grid">
+        <div class="rule-item"><div class="rule-icon">1️⃣</div><div class="rule-text"><strong>Wajib Tonton 8 Video</strong><p>Peserta wajib menonton seluruh 8 video kompetensi softskill Leadership yang telah disediakan.</p></div></div>
+        <div class="rule-item"><div class="rule-icon">🔒</div><div class="rule-text"><strong>Video Berurutan & Terkunci</strong><p>Video lainnya akan terkunci sebelum Anda menonton video secara urut dari video 1 hingga video 8.</p></div></div>
+        <div class="rule-item"><div class="rule-icon">⏱️</div><div class="rule-text"><strong>Tombol Lanjut setelah 2 Menit</strong><p>Tombol "Tandai Selesai & Lanjut" akan muncul setelah Anda menonton minimal 2 menit (120 detik). Anda bisa tetap melanjutkan menonton atau memilih lanjut — sepenuhnya pilihan Anda.</p></div></div>
+        <div class="rule-item"><div class="rule-icon">📝</div><div class="rule-text"><strong>Post Test</strong><p>Setelah 8 video selesai, Anda akan diarahkan ke halaman Post Test (link terpisah) untuk menguji pemahaman Anda.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATERI VIDEO -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div><div class="section-title">Materi Video</div><div class="section-sub">Tonton minimal 2 menit per video untuk membuka tombol lanjut</div></div>
+    </div>
+    <div class="section-body">
+      <div class="video-list" id="videoList"></div>
+    </div>
+  </div>
+
+  <!-- POST TEST SECTION (muncul setelah 8 video selesai) - hanya tombol link -->
+  <div id="section-posttest">
+    <div class="posttest-container">
+      <div class="posttest-icon">📋</div>
+      <h2>🎓 Uji Kompetensi Anda</h2>
+      <p>Selamat! Anda telah menyelesaikan seluruh 8 materi video. Klik tombol di bawah untuk mengerjakan Post Test di platform resmi kami.<br>
+      <strong>⚠️ Catatan:</strong> Post test bersifat wajib sebagai syarat kelulusan program ini.</p>
+      
+      <!-- TOMBOL POST TEST (LINK URL) -->
+      <a href="https://forms.gle/example-posttest" target="_blank" class="btn-posttest-link" id="posttestLinkBtn">
+        ✍️ Kerjakan Post Test Sekarang →
+      </a>
+  
+      
+    </div>
+  </div>
+</main>
+<footer>© 2025 E-Learning Leadership PT SSI · Program Pengembangan Kompetensi SDM</footer>
+
+<script>
+// ===================== DATA VIDEO ===================
+const videos = [
+
+  { id: 1, title: "Digital Leadership", desc: "Memimpin dengan pemanfaatan teknologi digital.", src: "https://drive.google.com/file/d/1BeVbeNWBtvwmlXYsFu7vVowpXmMiemyA/preview", durasi: 30 },
+
+  { id: 2, title: "Customer Fokus", desc: "Fokus pada kebutuhan dan kepuasan pelanggan.", src: "https://drive.google.com/file/d/1E7z3N6KN8oALUOQFolU3YjhqYh7GmkER/preview", durasi: 30 },
+
+  { id: 3, title: "Global Business Savvy ", desc: "Memahami bisnis dan pasar global.", src: "https://drive.google.com/file/d/1HrcVh4PoNWrVpln9Q_EsjKJNyP4zQJJs/preview", durasi: 30 },
+
+
+  { id: 4, title: "Driving Execution", desc: "Menjalankan rencana hingga tercapai hasil.", src: "https://drive.google.com/file/d/1f5M3F1U54KxaPfPmw74CNZ8pIJO13vph/preview", durasi: 30 },
+
+  { id: 5, title: "Leading change", desc: "Memimpin dan mengelola perubahan.", src: "https://drive.google.com/file/d/1EZ42sh2oN191lYeonNMy0E4ag23Hf6SP/preview", durasi: 30 },
+
+
+  { id: 6, title: "Organization Capabilties ", desc: "Membangun kemampuan organisasi.", src: "https://drive.google.com/file/d/15cpAEGdNHK5Om5Rr-6ZXRt_V2sPq2AC3/preview", durasi: 30 },
+
+  { id: 7, title: "Strategy Orientation", desc: "Berpikir dan bertindak strategis.i", src: "https://drive.google.com/file/d/1eZT3_QBRQjVoNLdNUrJm_-Pw4UThil9L/preview", durasi: 30 },
+
+
+  { id: 8, title: "Managing Diversity", desc: "Mengelola keberagaman secara harmonis.", src: "https://drive.google.com/file/d/1V2U9_b1UeWzKR3cxqeBcLdx2XJwoW_ob/preview", durasi: 120 }
+
+];
+
+let watchedCount = 0;        // jumlah video yg sudah ditandai selesai
+let activeTimer = null;
+
+function fmt(sec) { let m = Math.floor(sec/60); let s = sec%60; return `${m}:${s<10?'0'+s:s}`; }
+function killTimer() { if(activeTimer) { clearInterval(activeTimer); activeTimer = null; } }
+
+// Render video list
+function renderVideos() {
+  const container = document.getElementById('videoList');
+  if(!container) return;
+  container.innerHTML = '';
+  videos.forEach((v, idx) => {
+    const isDone = idx < watchedCount;
+    const isActive = (idx === watchedCount);
+    const isLocked = idx > watchedCount;
+    const badge = isDone ? '✓ Selesai' : isActive ? '▶ Aktif' : '🔒 Terkunci';
+    let playerHTML = '';
+    if(isActive) {
+      playerHTML = `
+        <div class="video-player-wrap">
+          <div class="video-note">⏱️ <strong>Aturan:</strong> Tonton minimal <strong>2 menit (120 detik)</strong> — setelah itu tombol "Tandai Selesai & Lanjut" akan aktif. Video tetap berjalan, Anda bebas memilih kapan lanjut.</div>
+          <div class="video-placeholder" id="ph-${idx}"><div class="placeholder-inner"><div class="placeholder-icon">▶</div><p>Tekan <strong>Mulai Menonton</strong><br>untuk memutar video</p></div></div>
+          <div class="video-embed" id="emb-${idx}" style="display:none;"></div>
+          <div class="watch-progress-wrap"><div class="watch-progress-bar" id="bar-${idx}"></div></div>
+          <div class="watch-time-row"><span class="watch-pct-label" id="pct-${idx}">⏳ Belum dimulai</span><span class="watch-time-label" id="tim-${idx}">0:00 / ${fmt(v.durasi)}</span></div>
+          <div style="display:flex;gap:10px;margin-top:14px;"><button class="btn-simulate" id="bsim-${idx}">▶ Mulai Menonton</button><button class="btn-next-video" id="bnxt-${idx}" disabled>Tandai Selesai & Lanjut →</button></div>
+          <p style="font-size:11px;color:#6b7a99;margin-top:8px;">* Setelah 120 detik, tombol selesai aktif meski video masih berjalan.</p>
+        </div>`;
+    }
+    const div = document.createElement('div');
+    div.className = `video-item ${isDone?'done':''} ${isActive?'active':''} ${isLocked?'locked':''}`;
+    div.id = `vi-${idx}`;
+    div.innerHTML = `<div class="video-header" onclick="handleLockedClick(${idx})"><div class="video-num">${isDone?'✓':v.id}</div><div class="video-info"><h4>${v.title}</h4><p>${v.desc} · ${fmt(v.durasi)}</p></div><span class="video-status">${badge}</span></div>${playerHTML}`;
+    container.appendChild(div);
+  });
+  if(watchedCount < videos.length){
+    const act = watchedCount;
+    const startBtn = document.getElementById(`bsim-${act}`);
+    if(startBtn) { let clone = startBtn.cloneNode(true); startBtn.parentNode.replaceChild(clone, startBtn); clone.addEventListener('click',()=>startWatching(act)); }
+    const nextBtn = document.getElementById(`bnxt-${act}`);
+    if(nextBtn) { let clone2 = nextBtn.cloneNode(true); nextBtn.parentNode.replaceChild(clone2, nextBtn); clone2.addEventListener('click',()=>markDone(act)); }
+  }
+  updateTopProgress();
+}
+
+function handleLockedClick(idx){ if(idx > watchedCount){ document.getElementById(`vi-${idx}`)?.animate([{transform:'translateX(0)'},{transform:'translateX(6px)'},{transform:'translateX(-6px)'},{transform:'translateX(0)'}],{duration:260}); } }
+
+function startWatching(idx){
+  if(idx !== watchedCount) return;
+  killTimer();
+  const btnSim = document.getElementById(`bsim-${idx}`);
+  const phDiv = document.getElementById(`ph-${idx}`);
+  const embDiv = document.getElementById(`emb-${idx}`);
+  const bar = document.getElementById(`bar-${idx}`);
+  const pctSpan = document.getElementById(`pct-${idx}`);
+  const timeSpan = document.getElementById(`tim-${idx}`);
+  const nextBtn = document.getElementById(`bnxt-${idx}`);
+  const totalDur = videos[idx].durasi;
+  if(!embDiv) return;
+  if(phDiv) phDiv.style.display = 'none';
+  embDiv.style.display = 'block';
+  const oldIframe = embDiv.querySelector('iframe');
+  if(oldIframe) oldIframe.remove();
+  const iframe = document.createElement('iframe');
+  iframe.src = videos[idx].src;
+  iframe.allow = "autoplay; fullscreen";
+  iframe.style.width="100%"; iframe.style.height="100%";
+  embDiv.appendChild(iframe);
+  btnSim.disabled = true;
+  btnSim.innerHTML = '⏳ Memutar...';
+  let elapsed = 0;
+  let unlocked = false;
+  activeTimer = setInterval(() => {
+    elapsed++;
+    let percent = Math.min((elapsed/totalDur)*100,100);
+    if(bar) bar.style.width = percent+'%';
+    if(pctSpan) pctSpan.textContent = `${Math.floor(percent)}% ditonton`;
+    if(timeSpan) timeSpan.textContent = `${fmt(elapsed)} / ${fmt(totalDur)}`;
+    if(!unlocked && elapsed >= 120){
+      unlocked = true;
+      if(nextBtn){
+        nextBtn.disabled = false;
+        if(pctSpan) pctSpan.innerHTML = '✅ 2 menit tercapai! Klik "Tandai Selesai" untuk lanjut';
+      }
+    }
+    if(elapsed >= totalDur && !unlocked){
+      if(nextBtn) nextBtn.disabled = false;
+      unlocked = true;
+    }
+  }, 1000);
+}
+
+function markDone(idx){
+  if(idx !== watchedCount) return;
+  killTimer();
+  watchedCount = idx+1;
+  renderVideos();
+  if(watchedCount === videos.length){
+    showPostTestSection();
+  } else {
+    setTimeout(()=>{ document.getElementById(`vi-${watchedCount}`)?.scrollIntoView({behavior:'smooth', block:'center'}); },150);
+  }
+}
+
+function updateTopProgress(){
+  let percent = (watchedCount/videos.length)*100;
+  document.getElementById('progressBar').style.width = percent+'%';
+  document.getElementById('progressCount').innerHTML = `${watchedCount} / ${videos.length}`;
+}
+
+// Menampilkan section post test setelah semua video selesai
+function showPostTestSection(){
+  const postDiv = document.getElementById('section-posttest');
+  if(postDiv) postDiv.classList.add('visible');
+  
+  // Ganti link post test (bisa disesuaikan URL nya)
+  const postLink = document.getElementById('posttestLinkBtn');
+  if(postLink){
+    // GANTI URL POST TEST DI SINI sesuai kebutuhan
+    postLink.href = "soal_top_leadership.html";  // <-- GANTI DENGAN LINK POST TEST ANDA
+  }
+}
+
+renderVideos();
+</script>
+</body>
+</html>
