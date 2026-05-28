@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<title>Pelatihan PT SSI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root {
+  --gold:       #C9A84C;
+  --gold-light: #F0D98B;
+  --gold-dark:  #8B6914;
+  --red:        #9B1C1C;
+  --red-soft:   #C43A3A;
+  --cream:      #FBF5E6;
+  --cream2:     #F3E9CE;
+  --dark:       #1A1008;
+  --mid:        #4A3728;
+  --muted:      #7A6A54;
+  --white:      #FFFFFF;
+  --shadow:     0 8px 40px rgba(26,16,8,.13);
+  --radius:     18px;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--dark);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(201,168,76,.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(155,28,28,.10) 0%, transparent 55%);
+}
+
+/* ── PATTERN OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.05'%3E%3Cpath d='M20 20l10-10v10H20zM20 20l-10 10H10V20h10zM20 20l10 10h-10V20zM20 20L10 10h10v10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+}
+
+.page-wrap {
+  position:relative;
+  z-index:1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 40px 16px 60px;
+}
+
+/* ── HEADER ── */
+.site-header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeDown .7s ease both;
+}
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 99px;
+  margin-bottom: 16px;
+}
+.site-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px,5vw,42px);
+  font-weight: 800;
+  color: var(--dark);
+  line-height: 1.15;
+}
+.site-header h1 span { color: var(--red); }
+.site-header p {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 18px auto 0;
+}
+.ornament-line { flex:1; max-width:100px; height:1px; background:linear-gradient(to right, transparent, var(--gold)); }
+.ornament-line.r { background:linear-gradient(to left, transparent, var(--gold)); }
+.ornament-diamond {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow), 0 2px 0 var(--gold-light);
+  overflow: hidden;
+  animation: fadeUp .7s ease .1s both;
+}
+.card-head {
+  background: linear-gradient(135deg, var(--red) 0%, #7B1111 100%);
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.card-head i { font-size: 22px; color: var(--gold-light); }
+.card-head h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+}
+.card-head p { font-size: 13px; color: rgba(255,255,255,.7); margin-top: 2px; }
+
+.card-body { padding: 32px 28px; }
+
+/* ── FORM ── */
+.form-row { display: grid; gap: 20px; grid-template-columns: 1fr; }
+@media(min-width:560px){ .form-row.two { grid-template-columns:1fr 1fr; } }
+
+.field { display:flex; flex-direction:column; gap:6px; }
+.field label {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.field label i { color: var(--gold); font-size: 14px; }
+.field input, .field select {
+  border: 1.5px solid #E8DFC8;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--dark);
+  background: var(--cream);
+  transition: border-color .2s, box-shadow .2s, background .2s;
+  outline: none;
+  -webkit-appearance: none;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--gold);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(201,168,76,.15);
+}
+.field input::placeholder { color:#B8A98A; }
+
+/* ── BTN START ── */
+.btn-start {
+  margin-top: 28px;
+  width: 100%;
+  background: linear-gradient(135deg, var(--red) 0%, #7B1111 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: .5px;
+  transition: transform .2s, box-shadow .2s, filter .2s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-start::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);
+  pointer-events:none;
+}
+.btn-start:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(155,28,28,.35); filter:brightness(1.08); }
+.btn-start:active { transform:translateY(0); }
+
+/* ── LOADING ── */
+#loadingOverlay {
+  position:fixed; inset:0;
+  background:rgba(251,245,230,.9);
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  gap:16px;
+}
+.spinner-ring {
+  width:54px;height:54px;
+  border:4px solid var(--cream2);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+#loadingOverlay p { font-family:'Playfair Display',serif; font-weight:600; color:var(--mid); font-size:18px; }
+
+/* ── QUIZ BOX ── */
+#kuisBox { animation: fadeUp .5s ease both; }
+.soal-item {
+  background: var(--white);
+  border: 1.5px solid #EDE4CC;
+  border-radius: 14px;
+  padding: 22px 22px 18px;
+  margin-bottom: 16px;
+  transition: border-color .2s;
+}
+.soal-item:hover { border-color: var(--gold); }
+.soal-num {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:30px;height:30px;
+  background:var(--gold);
+  color:var(--white);
+  font-weight:700;
+  font-size:13px;
+  border-radius:50%;
+  margin-bottom:10px;
+  flex-shrink:0;
+}
+.soal-q { font-weight:600; font-size:15px; line-height:1.6; color:var(--dark); }
+.soal-opts { margin-top:14px; display:flex; flex-direction:column; gap:10px; }
+.opt-label {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 14px;
+  border-radius:9px;
+  border:1.5px solid #EDE4CC;
+  cursor:pointer;
+  font-size:14.5px;
+  color:var(--mid);
+  transition:all .2s;
+}
+.opt-label:hover { border-color:var(--gold); background:rgba(201,168,76,.06); color:var(--dark); }
+.opt-label input[type=radio] { accent-color:var(--gold); width:16px;height:16px;flex-shrink:0; }
+.opt-label input[type=radio]:checked + span { font-weight:600;color:var(--dark); }
+.opt-label:has(input:checked) { border-color:var(--gold); background:rgba(201,168,76,.10); }
+
+.opt-key {
+  font-weight:700;
+  font-size:13px;
+  color:var(--gold-dark);
+  min-width:20px;
+}
+
+.btn-submit {
+  width:100%; margin-top:8px;
+  background:linear-gradient(135deg,var(--red),#7B1111);
+  color:#fff; border:none;
+  border-radius:12px; padding:16px;
+  font-size:16px; font-weight:600;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer; letter-spacing:.5px;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-submit:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(155,28,28,.35); }
+
+/* ── RESULT ── */
+#hasilBox {
+  text-align:center;
+  padding:48px 28px 40px;
+  animation:fadeUp .5s ease both;
+}
+.result-icon {
+  width:80px; height:80px;
+  border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:36px;
+  margin-bottom:20px;
+}
+.result-icon.pass { background:rgba(34,197,94,.15); color:#16a34a; }
+.result-icon.fail { background:rgba(239,68,68,.12); color:#dc2626; }
+.result-score {
+  font-family:'Playfair Display',serif;
+  font-size:64px;
+  font-weight:800;
+  line-height:1;
+}
+.result-score.pass { color:#16a34a; }
+.result-score.fail { color:#dc2626; }
+.result-label { font-size:16px; color:var(--muted); margin-top:8px; }
+.result-status {
+  display:inline-block;
+  padding:6px 20px;
+  border-radius:99px;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-top:14px;
+}
+.result-status.pass { background:#dcfce7; color:#15803d; }
+.result-status.fail { background:#fee2e2; color:#b91c1c; }
+
+.btn-action {
+  margin-top:24px;
+  padding:14px 32px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:600;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+  border:none;
+  letter-spacing:.5px;
+  transition:transform .2s,box-shadow .2s;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.btn-cetak { background:linear-gradient(135deg,var(--gold),var(--gold-dark)); color:#fff; }
+.btn-cetak:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,168,76,.4); }
+.btn-ulang { background:linear-gradient(135deg,var(--red),#7B1111); color:#fff; }
+.btn-ulang:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(155,28,28,.35); }
+
+/* ── PROGRESS BAR (kuis) ── */
+.progress-wrap { margin-bottom:22px; }
+.progress-info { display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px; }
+.progress-track { height:6px;background:#EDE4CC;border-radius:99px;overflow:hidden; }
+.progress-fill { height:100%;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:99px;transition:width .4s; }
+
+/* ── UTILS ── */
+.hidden { display:none!important; }
+@keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes spin     { to{transform:rotate(360deg)} }
+
+/* separator */
+.divider { height:1px; background:linear-gradient(to right,transparent,var(--gold-light),transparent); margin:28px 0; }
+
+/* question header inside quiz card */
+.quiz-card-head { display:flex;align-items:center;gap:12px;margin-bottom:24px; }
+.quiz-card-head h2 { font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark); }
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loadingOverlay">
+  <div class="spinner-ring"></div>
+  <p>Mengambil soal…</p>
+</div>
+
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-badge"><i class="bi bi-mortarboard-fill"></i> PT SSI</div>
+    <h1>Pelatihan <span>Online</span><br>PT SSI</h1>
+    <p id="temaPelatihan">Training Skills Leadership Advance Part – 2</p>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line r"></div>
+    </div>
+  </header>
+
+  <!-- ═══ FORM PESERTA ═══ -->
+  <div id="formPeserta" class="card">
+    <div class="card-head">
+      <i class="bi bi-person-vcard-fill"></i>
+      <div>
+        <h2>Data Peserta</h2>
+        <p>Isi data diri sebelum memulai post test</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="form-row two">
+        <div class="field">
+          <label><i class="bi bi-person-fill"></i> Nama Pegawai</label>
+          <input id="nama" type="text" placeholder="Nama lengkap Anda">
+        </div>
+        <div class="field">
+          <label><i class="bi bi-credit-card-2-front-fill"></i> NPP</label>
+          <input id="npp" type="text" placeholder="Nomor pegawai">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="form-row two">
+        <div class="field">
+          <label><i class="bi bi-geo-alt-fill"></i> Region</label>
+          <select id="region">
+            <option value="">— Pilih Region —</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+          </select>
+        </div>
+        <div class="field">
+          <label><i class="bi bi-building-fill"></i> Unit</label>
+          <input id="unit" type="text" placeholder="contoh: TWU Bekasi">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="form-row">
+        <div class="field">
+          <label><i class="bi bi-briefcase-fill"></i> Jabatan</label>
+          <select id="jabatan">
+            <option value="">— Pilih Jabatan —</option>
+            <option>GM</option>
+            <option>Ceo Region</option>
+            <option>Deputy</option>
+            <option>Senior Manager</option>
+            <option>Manager</option>
+            <option>Asisten Manager</option>
+            <option>Staf</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-start" onclick="mulaiPostTest()">
+        <i class="bi bi-play-circle-fill" style="font-size:19px"></i>
+        Mulai Post Test
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ═══ KUIS ═══ -->
+  <div id="kuisBox" class="hidden">
+    <div class="card">
+      <div class="card-head">
+        <i class="bi bi-journal-check"></i>
+        <div>
+          <h2>Post Test</h2>
+          <p>Pilih jawaban yang paling tepat</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="progress-wrap">
+          <div class="progress-info">
+            <span id="progLabel">0 / 0 soal dijawab</span>
+            <span id="progPct">0%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+        </div>
+        <div id="listSoal"></div>
+        <button class="btn-submit" onclick="kumpulkan()">
+          <i class="bi bi-send-fill me-2"></i> Kumpulkan Jawaban
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ HASIL ═══ -->
+  <div id="hasilBox" class="hidden">
+    <div class="card">
+      <div class="card-body" style="padding:0">
+        <div id="hasilInner"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+const WEBAPP = "https://script.google.com/macros/s/AKfycbx02DCOX-teBBYTlz8_HXVYH4X6MYqyCj7cegxrTn7fg53UJzvTv8jjl2Zc3wUFkG8maw/exec";
+
+const formPeserta = document.getElementById("formPeserta");
+const kuisBox     = document.getElementById("kuisBox");
+const hasilBox    = document.getElementById("hasilBox");
+const listSoal    = document.getElementById("listSoal");
+const loadingOverlay = document.getElementById("loadingOverlay");
+
+let DATA_SOAL = [];
+let USER = {};
+
+/* ── Progress tracker ── */
+function updateProgress(){
+  const total = DATA_SOAL.length;
+  const answered = DATA_SOAL.filter((_,i)=>document.querySelector(`input[name=soal${i}]:checked`)).length;
+  const pct = total ? Math.round((answered/total)*100) : 0;
+  document.getElementById("progLabel").textContent = `${answered} / ${total} soal dijawab`;
+  document.getElementById("progPct").textContent   = pct + "%";
+  document.getElementById("progFill").style.width  = pct + "%";
+}
+
+/* ── START ── */
+async function mulaiPostTest(){
+  USER.nama    = document.getElementById("nama").value.trim();
+  USER.npp     = document.getElementById("npp").value.trim();
+  USER.region  = document.getElementById("region").value;
+  USER.unit    = document.getElementById("unit").value.trim();
+  USER.jabatan = document.getElementById("jabatan").value;
+
+  if(!USER.nama || !USER.npp){ alert("Nama & NPP wajib diisi"); return; }
+
+  fetch(WEBAPP+"?action=simpandata",{method:"POST",body:JSON.stringify(USER)});
+  formPeserta.classList.add("hidden");
+  loadingOverlay.style.display="flex";
+
+  try {
+    const res = await fetch(WEBAPP+"?action=getsoal");
+    DATA_SOAL = await res.json();
+  } catch(e) {
+    alert("Gagal mengambil soal. Coba lagi.");
+    formPeserta.classList.remove("hidden");
+    loadingOverlay.style.display="none";
+    return;
+  }
+
+  let html = "";
+  DATA_SOAL.forEach((s,i)=>{
+    html += `
+    <div class="soal-item">
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <div class="soal-num">${i+1}</div>
+        <div class="soal-q">${s.soal}</div>
+      </div>
+      <div class="soal-opts">
+        ${["A","B","C","D"].map(p=>`
+          <label class="opt-label">
+            <input type="radio" name="soal${i}" value="${p}" onchange="updateProgress()">
+            <span class="opt-key">${p}</span>
+            <span>${s["opsi"+p]}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>`;
+  });
+
+  listSoal.innerHTML = html;
+  updateProgress();
+  loadingOverlay.style.display = "none";
+  kuisBox.classList.remove("hidden");
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── SUBMIT ── */
+function kumpulkan(){
+  const unanswered = DATA_SOAL.some((_,i)=>!document.querySelector(`input[name=soal${i}]:checked`));
+  if(unanswered){
+    if(!confirm("Masih ada soal yang belum dijawab. Lanjutkan?")) return;
+  }
+
+  let benar = 0;
+  DATA_SOAL.forEach((s,i)=>{
+    const j = document.querySelector(`input[name=soal${i}]:checked`);
+    if(j && j.value===s.kunci) benar++;
+  });
+
+  USER.nilai = Math.round((benar/DATA_SOAL.length)*100);
+  fetch(WEBAPP+"?action=simpannilai",{method:"POST",body:JSON.stringify(USER)});
+
+  kuisBox.classList.add("hidden");
+  tampilHasil();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── TAMPIL HASIL ── */
+function tampilHasil(){
+  const lulus = USER.nilai >= 70;
+  const icon  = lulus ? "bi-patch-check-fill" : "bi-x-circle-fill";
+  const cls   = lulus ? "pass" : "fail";
+  const status= lulus ? "LULUS" : "TIDAK LULUS";
+  const msg   = lulus
+    ? "Selamat! Anda berhasil menyelesaikan post test."
+    : "Anda belum mencapai nilai minimum (70). Silakan ulangi post test.";
+
+  document.getElementById("hasilInner").innerHTML = `
+    <div id="hasilBox" style="text-align:center;padding:48px 28px 40px">
+      <div class="result-icon ${cls}">
+        <i class="bi ${icon}"></i>
+      </div>
+      <div class="result-score ${cls}">${USER.nilai}</div>
+      <div class="result-label">dari 100</div>
+      <div class="result-status ${cls}">${status}</div>
+      <p style="margin-top:20px;font-size:15px;color:var(--muted);max-width:360px;margin-left:auto;margin-right:auto">${msg}</p>
+      <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        ${lulus
+          ? `<button class="btn-action btn-cetak" onclick="cetakSertifikat()"><i class="bi bi-award-fill"></i> Cetak Sertifikat</button>`
+          : `<button class="btn-action btn-ulang" onclick="ulangKuis()"><i class="bi bi-arrow-clockwise"></i> Ulangi Post Test</button>`
+        }
+      </div>
+    </div>
+  `;
+  hasilBox.classList.remove("hidden");
+}
+
+/* ── ULANG ── */
+function ulangKuis(){
+  hasilBox.classList.add("hidden");
+  document.querySelectorAll("input[type=radio]").forEach(r=>r.checked=false);
+  updateProgress();
+  kuisBox.classList.remove("hidden");
+}
+
+/* ── HELPERS ── */
+function generateNoSertifikat(){
+  const now = new Date();
+  const pad = n=>n.toString().padStart(2,"0");
+  const tgl = now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate());
+  const jam = pad(now.getHours())+pad(now.getMinutes())+pad(now.getSeconds());
+  const rnd = Math.floor(10000+Math.random()*90000);
+  return `SSI/HCC/${tgl}/${jam}/${rnd}`;
+}
+
+/* ── SERTIFIKAT CANVA-STYLE ── */
+function cetakSertifikat(){
+  const noSert   = generateNoSertifikat();
+  const tema     = document.getElementById("temaPelatihan").innerText.trim();
+  const tglCetak = new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+
+  const cert = `<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sertifikat – ${USER.nama}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size:A4 landscape; margin:0; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  width:297mm; height:210mm;
+  display:flex; align-items:center; justify-content:center;
+  background:#1a0e06;
+  font-family:'Montserrat',sans-serif;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+/* ── OUTER FRAME ── */
+.cert {
+  width:289mm; height:202mm;
+  position:relative;
+  background:linear-gradient(145deg,#1a0e06 0%,#2d1a08 40%,#1a0e06 100%);
+  border:2px solid #c9a84c;
+  border-radius:4px;
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:0 40px;
+}
+
+/* ── CORNER ORNAMENTS ── */
+.corner {
+  position:absolute; width:70px; height:70px;
+  background:none;
+}
+.corner svg { width:70px; height:70px; }
+.tl { top:10px; left:10px; }
+.tr { top:10px; right:10px; transform:scaleX(-1); }
+.bl { bottom:10px; left:10px; transform:scaleY(-1); }
+.br { bottom:10px; right:10px; transform:scale(-1); }
+
+/* corner SVG path */
+.corner-svg { fill:none; stroke:#c9a84c; stroke-width:1.5; }
+
+/* ── SIDE PATTERN STRIPS ── */
+.strip-left, .strip-right {
+  position:absolute; top:0; bottom:0; width:22px;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 8px,
+    rgba(201,168,76,.35) 8px, rgba(201,168,76,.35) 9px
+  );
+}
+.strip-left  { left:0; border-right:1.5px solid rgba(201,168,76,.3); }
+.strip-right { right:0; border-left:1.5px solid rgba(201,168,76,.3); }
+
+/* ── HORIZONTAL RULES ── */
+.h-rule {
+  width:100%;
+  display:flex; align-items:center; gap:8px;
+}
+.h-rule-line {
+  flex:1;
+  height:1px;
+  background:linear-gradient(to right, transparent, #c9a84c 20%, #c9a84c 80%, transparent);
+}
+.h-rule-diamond {
+  width:8px; height:8px;
+  background:#c9a84c;
+  transform:rotate(45deg);
+  flex-shrink:0;
+}
+
+/* ── BACKGROUND WATERMARK ── */
+.watermark {
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cinzel Decorative', serif;
+  font-size:88px; font-weight:900;
+  color:rgba(201,168,76,.04);
+  letter-spacing:10px;
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+
+/* ── LOGO + TTD AREA ── */
+.logo-area {
+  position:absolute;
+  top:28px; left:50px;
+  display:flex; align-items:center; gap:10px;
+}
+.logo-area img {
+  width:72px; height:72px;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 8px rgba(201,168,76,.4));
+}
+
+.ttd-area {
+  position:absolute;
+  bottom:28px; right:50px;
+  text-align:center;
+}
+.ttd-area img {
+  height:60px;
+  object-fit:contain;
+  filter:brightness(1.6) sepia(.2);
+  margin-bottom:4px;
+}
+.ttd-name {
+  font-size:10px; font-weight:600;
+  color:#c9a84c; letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.ttd-pos { font-size:9px; color:rgba(201,168,76,.6); margin-top:1px; }
+
+/* ── NO SERTIFIKAT ── */
+.no-sert {
+  position:absolute;
+  top:18px; right:50px;
+  font-size:9.5px;
+  color:rgba(201,168,76,.55);
+  letter-spacing:1px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:500;
+}
+
+/* ── MAIN CONTENT ── */
+.content { text-align:center; position:relative; z-index:2; max-width:580px; }
+
+.cert-title {
+  font-family:'Cinzel Decorative', serif;
+  font-size:32px; font-weight:900;
+  color:#f0d98b;
+  letter-spacing:5px;
+  text-shadow:0 0 40px rgba(201,168,76,.5);
+  line-height:1.1;
+  margin-bottom:4px;
+}
+.cert-subtitle {
+  font-family:'Cormorant Garamond', serif;
+  font-size:13.5px;
+  color:rgba(240,217,139,.65);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  font-style:italic;
+  margin-bottom:14px;
+}
+.training-theme {
+  font-family:'Cormorant Garamond', serif;
+  font-size:13px;
+  color:rgba(240,217,139,.55);
+  letter-spacing:2px;
+  margin-bottom:16px;
+  font-style:italic;
+}
+
+.given-to {
+  font-family:'Cormorant Garamond', serif;
+  font-size:14px;
+  color:rgba(255,255,255,.55);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.recipient-name {
+  font-family:'Cinzel Decorative', serif;
+  font-size:30px;
+  font-weight:700;
+  color:#f0d98b;
+  letter-spacing:2px;
+  text-shadow:0 2px 20px rgba(201,168,76,.4);
+  margin-bottom:14px;
+  line-height:1.2;
+}
+
+.meta-row {
+  display:flex;
+  justify-content:center;
+  gap:28px;
+  margin-bottom:14px;
+}
+.meta-item {
+  text-align:center;
+}
+.meta-item .meta-label {
+  font-size:8px;
+  color:rgba(201,168,76,.55);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+}
+.meta-item .meta-val {
+  font-size:12px;
+  font-family:'Cormorant Garamond', serif;
+  font-weight:600;
+  color:rgba(255,255,255,.8);
+  margin-top:2px;
+}
+
+.verdict {
+  margin-top:4px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.verdict-text {
+  font-family:'Cinzel Decorative', serif;
+  font-size:11px;
+  color:rgba(240,217,139,.8);
+  letter-spacing:3px;
+}
+.score-badge {
+  background:linear-gradient(135deg,#c9a84c,#8b6914);
+  color:#1a0e06;
+  font-family:'Cinzel Decorative', serif;
+  font-size:22px; font-weight:900;
+  width:52px; height:52px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  box-shadow:0 0 20px rgba(201,168,76,.5);
+  letter-spacing:0;
+  line-height:1;
+}
+
+.date-line {
+  position:absolute;
+  bottom:18px; left:50px;
+  font-size:9px;
+  color:rgba(201,168,76,.45);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+
+@media print {
+  body { margin:0; }
+  .cert { page-break-after:avoid; }
+}
+</style>
+</head>
+<body>
+<div class="cert">
+
+  <!-- CORNER ORNAMENTS -->
+  ${['tl','tr','bl','br'].map(c=>`
+  <div class="corner ${c}">
+    <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+      <path class="corner-svg" d="M8,8 L8,38 M8,8 L38,8"/>
+      <path class="corner-svg" d="M8,8 L22,22"/>
+      <circle cx="8" cy="8" r="3" fill="#c9a84c" opacity=".7"/>
+      <circle cx="38" cy="8" r="2" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity=".5"/>
+      <circle cx="8" cy="38" r="2" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity=".5"/>
+      <path class="corner-svg" d="M15,8 L15,15 L8,15" opacity=".4"/>
+    </svg>
+  </div>`).join("")}
+
+  <!-- SIDE STRIPS -->
+  <div class="strip-left"></div>
+  <div class="strip-right"></div>
+
+  <!-- WATERMARK -->
+  <div class="watermark">SSI</div>
+
+  <!-- LOGO -->
+  <div class="logo-area">
+    <img src="logo.png" alt="Logo PT SSI">
+  </div>
+
+  <!-- NO SERTIFIKAT -->
+  <div class="no-sert">No. ${noSert}</div>
+
+  <!-- TTD -->
+  <div class="ttd-area">
+    <img src="ttd.png" alt="Tanda Tangan">
+    <div class="ttd-name">GM HCC</div>
+    <div class="ttd-pos">Human Capital &amp; Compliance</div>
+  </div>
+
+  <!-- DATE -->
+  <div class="date-line">Diterbitkan: ${tglCetak}</div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+
+    <div class="cert-title">SERTIFIKAT</div>
+    <div class="cert-subtitle">Certificate of Completion</div>
+
+    <div class="h-rule" style="margin-bottom:12px">
+      <div class="h-rule-line"></div>
+      <div class="h-rule-diamond"></div>
+      <div class="h-rule-line"></div>
+    </div>
+
+    <div class="training-theme">${tema}</div>
+
+    <div class="given-to">Diberikan Kepada</div>
+    <div class="recipient-name">${USER.nama}</div>
+
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="meta-label">NPP</div>
+        <div class="meta-val">${USER.npp}</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Region</div>
+        <div class="meta-val">${USER.region}</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Jabatan</div>
+        <div class="meta-val">${USER.jabatan}</div>
+      </div>
+      ${USER.unit?`<div class="meta-item">
+        <div class="meta-label">Unit</div>
+        <div class="meta-val">${USER.unit}</div>
+      </div>`:""}
+    </div>
+
+    <div class="h-rule" style="margin-bottom:14px">
+      <div class="h-rule-line"></div>
+      <div class="h-rule-diamond"></div>
+      <div class="h-rule-line"></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-text">Dinyatakan</div>
+      <div class="score-badge">${USER.nilai}</div>
+      <div class="verdict-text">LULUS</div>
+    </div>
+
+  </div><!-- /content -->
+
+</div><!-- /cert -->
+<script>
+  window.onload = function(){
+    setTimeout(()=>{ window.print(); }, 900);
+  };
+<\/script>
+</body>
+</html>`;
+
+  const win = window.open("","_blank");
+  win.document.write(cert);
+  win.document.close();
+}
+</script>
+</body>
+</html>
