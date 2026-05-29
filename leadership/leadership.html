@@ -130,42 +130,43 @@
             <div class="col-md-6">
                 <div class="card card-custom p-3">
 
-                    <h4 class="fw-bold mb-3"><i class="fa-solid fa-people-group"></i> Competency Leadership Skills</h4>
+                    <h4 class="fw-bold mb-3"><i class="fa-solid fa-people-group"></i> 8 Competency Leadership Skills</h4>
 
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Customer Focus
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('customer')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
-                    </ul>
-                    <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Organization Capabilities Development
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('organization')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
+                            Organization Capabilities Development   
                         </li>
-                    </ul>
-                    <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                            Driving Execution
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('execution')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
                         </li>
-                    </ul>
-                    <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                           Managing Diversity 
-                            <button class="btn btn-materi btn-sm" onclick="openMateri('diversity')">
-                                Materi <i class="fa-solid fa-arrow-right"></i>
-                            </button>
+                           Managing Diversity                  
                         </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Digital leadership                 
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Leading Change                
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                         Global Business Savvy               
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Strategic Orientation                
+                        </li>     
                     </ul>
 
-
+                    <!-- Tombol Link di Bawah -->
+                    <div class="text-center">
+                        <button class="btn btn-materi"
+                            onclick="openMateri('leadership-top')">
+                            Buka Semua Materi
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -177,15 +178,14 @@
         function openMateri(type) {
             let link = "";
 
-           
             if (type === "leadership-basic") link = "leadership-basic.html";
-            if (type === "customer") link = "customerfokus.html";
-            if (type === "organization") link = "capableorganization.html";
-            if (type === "execution") link = "drivingexecution.html";
-            if (type === "diversity") link = "managingdiversity.html";
+            if (type === "leadership-top") link = "https://portal-training.vercel.app/request/top_leadership/index.html";
+           
 
             window.open(link, "_blank");
         }
+
+        
     </script>
 
 </body>
