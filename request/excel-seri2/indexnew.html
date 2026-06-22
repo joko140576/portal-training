@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Excel Advance — PT SSI</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0C2233;
+    --navy2:   #163347;
+    --green:   #1A7F5B;
+    --green2:  #22A672;
+    --gold:    #F5A623;
+    --gold-bg: #FFF8EC;
+    --red-warn:#C0392B;
+    --red-bg:  #FDF2F0;
+    --light:   #F2F6FA;
+    --card-bg: #FFFFFF;
+    --text:    #1C2A36;
+    --muted:   #5A7184;
+    --border:  #D8E4EE;
+    --white:   #FFFFFF;
+    --shadow:  0 4px 24px rgba(12,34,51,.10);
+    --radius:  14px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ─── PAGES ─── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── HEADER / NAV ─── */
+  .nav {
+    background: var(--navy);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.3);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800; font-size: 1.1rem; color: var(--white);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-logo span.accent { color: var(--green2); }
+  .nav-logo .icon-xl {
+    width: 36px; height: 36px; background: var(--green);
+    border-radius: 8px; display: flex; align-items: center;
+    justify-content: center;
+  }
+  .nav-logo .icon-xl svg { width: 20px; height: 20px; fill: white; }
+  .nav-badge {
+    background: var(--green); color: white;
+    font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .nav-back {
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    color: white; padding: 7px 18px; border-radius: 8px;
+    font-size: .85rem; font-weight: 600; cursor: pointer;
+    transition: background .2s;
+    display: none;
+  }
+  .nav-back:hover { background: rgba(255,255,255,.2); }
+  .show-back .nav-back { display: flex; align-items: center; gap: 6px; }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 60%, #1a4060 100%);
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.04) 39px, rgba(255,255,255,.04) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.04) 39px, rgba(255,255,255,.04) 40px);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(26,127,91,.25); border: 1px solid rgba(34,166,114,.4);
+    color: #6EDCB0; font-size: .8rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+    margin-bottom: 22px;
+  }
+  .hero-eyebrow .dot { width: 7px; height: 7px; background: var(--green2); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+  .hero h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800; color: white; line-height: 1.15;
+    margin-bottom: 18px;
+  }
+  .hero h1 em { color: var(--green2); font-style: normal; }
+  .hero p {
+    font-size: 1.05rem; color: rgba(255,255,255,.72);
+    line-height: 1.8; max-width: 640px; margin-bottom: 0;
+  }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap;
+  }
+  .hero-stat { color: white; }
+  .hero-stat strong { display: block; font-family: 'Plus Jakarta Sans',sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--green2); }
+  .hero-stat span { font-size: .8rem; color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ─── MAIN CONTENT ─── */
+  .main { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* ─── DISCLAIMER ─── */
+  .disclaimer {
+    background: var(--red-bg);
+    border: 1.5px solid #E8998F;
+    border-left: 5px solid var(--red-warn);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .disc-icon {
+    width: 38px; height: 38px; min-width: 38px;
+    background: var(--red-warn); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .disc-icon svg { width: 20px; height: 20px; fill: white; }
+  .disc-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: .9rem; color: var(--red-warn);
+    text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px;
+  }
+  .disc-body { font-size: .9rem; color: #7A2A22; line-height: 1.6; }
+  .disc-body strong { color: var(--red-warn); }
+
+  /* ─── SECTION TITLE ─── */
+  .section-label {
+    font-size: .75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--green); margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.6rem; font-weight: 800; color: var(--text);
+    margin-bottom: 6px;
+  }
+  .section-desc { color: var(--muted); font-size: .93rem; margin-bottom: 30px; }
+
+  /* ─── MODULE CARDS ─── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 22px 22px;
+    display: flex; flex-direction: column;
+    box-shadow: var(--shadow);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 4px; background: var(--green);
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(12,34,51,.15); border-color: var(--green); }
+  .card-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 1.5rem;
+  }
+  .card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem; font-weight: 700; margin-bottom: 8px;
+  }
+  .card p { font-size: .83rem; color: var(--muted); line-height: 1.6; flex: 1; }
+  .card-meta {
+    display: flex; align-items: center; gap: 6px;
+    font-size: .75rem; color: var(--muted); margin: 12px 0;
+  }
+  .card-meta svg { width: 14px; height: 14px; }
+  .btn-learn {
+    background: var(--navy);
+    color: white; border: none; border-radius: 8px;
+    padding: 10px 0; font-size: .85rem; font-weight: 600;
+    cursor: pointer; width: 100%; transition: background .2s;
+    margin-top: 4px;
+  }
+  .btn-learn:hover { background: var(--green); }
+
+  /* Card color variants */
+  .card:nth-child(1) .card-icon { background: #E8F8F2; }
+  .card:nth-child(2) .card-icon { background: #EEF3FF; }
+  .card:nth-child(3) .card-icon { background: #FFF6E8; }
+  .card:nth-child(4) .card-icon { background: #F4EEFF; }
+  .card:nth-child(2)::before { background: #4B7BF5; }
+  .card:nth-child(3)::before { background: #F5A623; }
+  .card:nth-child(4)::before { background: #9B59B6; }
+
+  /* ─── POST TEST BUTTON ─── */
+  .posttest-bar {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 100%);
+    border-radius: var(--radius); padding: 28px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+    box-shadow: var(--shadow);
+  }
+  .posttest-text h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 4px;
+  }
+  .posttest-text p { font-size: .85rem; color: rgba(255,255,255,.6); }
+  .btn-posttest {
+    background: var(--gold); color: var(--navy);
+    border: none; border-radius: 10px; padding: 13px 28px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: .95rem; font-weight: 800;
+    cursor: pointer; white-space: nowrap;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 16px rgba(245,166,35,.4);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-posttest:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,166,35,.5); }
+  .btn-posttest svg { width: 18px; height: 18px; }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(10,20,30,.7); backdrop-filter: blur(4px);
+    z-index: 999; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: 20px;
+    padding: 40px; max-width: 460px; width: 90%;
+    box-shadow: 0 24px 80px rgba(0,0,0,.3);
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  .modal-icon {
+    width: 64px; height: 64px; background: var(--gold-bg);
+    border-radius: 16px; display: flex; align-items: center;
+    justify-content: center; margin-bottom: 20px; font-size: 2rem;
+  }
+  .modal h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.3rem; font-weight: 800; margin-bottom: 10px;
+  }
+  .modal p { font-size: .92rem; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+  .modal-actions { display: flex; gap: 12px; }
+  .btn-modal-no {
+    flex: 1; padding: 12px; border: 1.5px solid var(--border);
+    border-radius: 10px; background: white; color: var(--muted);
+    font-size: .9rem; font-weight: 600; cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-modal-no:hover { border-color: var(--text); color: var(--text); }
+  .btn-modal-yes {
+    flex: 2; padding: 12px; background: var(--green);
+    border: none; border-radius: 10px; color: white;
+    font-size: .9rem; font-weight: 700; cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-modal-yes:hover { background: var(--green2); }
+
+  /* ─── VIDEO PAGE ─── */
+  .video-page-header {
+    background: var(--navy);
+    padding: 36px 40px 30px;
+  }
+  .vph-inner { max-width: 960px; margin: 0 auto; }
+  .vph-eyebrow {
+    font-size: .75rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--green2); margin-bottom: 8px;
+  }
+  .vph-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.8rem; font-weight: 800; color: white; margin-bottom: 6px;
+  }
+  .vph-desc { font-size: .9rem; color: rgba(255,255,255,.6); }
+  .vph-progress {
+    margin-top: 20px;
+    background: rgba(255,255,255,.12); border-radius: 20px; height: 6px;
+    position: relative; max-width: 340px;
+  }
+  .vph-progress-bar {
+    height: 100%; border-radius: 20px;
+    background: linear-gradient(90deg, var(--green), var(--green2));
+    width: 0%; transition: width .4s ease;
+  }
+  .vph-progress-label { font-size: .75rem; color: rgba(255,255,255,.5); margin-top: 6px; }
+
+  .video-main { max-width: 960px; margin: 0 auto; padding: 36px 24px 60px; }
+
+  /* ─── VIDEO GRID ─── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .video-card {
+    background: white; border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    overflow: hidden; box-shadow: var(--shadow);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .video-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(12,34,51,.13); }
+
+  .video-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #0C2233, #163347);
+    position: relative; cursor: pointer; overflow: hidden;
+  }
+  .video-thumb-bg {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255,255,255,.04) 19px, rgba(255,255,255,.04) 20px),
+      repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255,255,255,.04) 19px, rgba(255,255,255,.04) 20px);
+  }
+  .video-thumb-num {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(0,0,0,.5); color: rgba(255,255,255,.6);
+    font-size: .72rem; font-weight: 600; padding: 3px 8px; border-radius: 6px;
+  }
+  .video-play-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 52px; height: 52px; background: rgba(255,255,255,.15);
+    border: 2px solid rgba(255,255,255,.5); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, transform .2s;
+    backdrop-filter: blur(4px);
+  }
+  .video-thumb:hover .video-play-btn {
+    background: var(--green); border-color: var(--green);
+    transform: translate(-50%,-50%) scale(1.1);
+  }
+  .video-play-btn svg { width: 22px; height: 22px; fill: white; margin-left: 3px; }
+  .video-fullscreen-btn {
+    position: absolute; bottom: 10px; right: 10px;
+    width: 30px; height: 30px; background: rgba(0,0,0,.5);
+    border: 1px solid rgba(255,255,255,.3); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .2s;
+  }
+  .video-fullscreen-btn:hover { background: rgba(0,0,0,.8); }
+  .video-fullscreen-btn svg { width: 14px; height: 14px; fill: white; }
+
+  .video-info { padding: 16px 18px; }
+  .video-info h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: .95rem; font-weight: 700; margin-bottom: 4px; color: var(--text);
+  }
+  .video-info p { font-size: .8rem; color: var(--muted); }
+  .video-status {
+    display: flex; align-items: center; gap: 6px;
+    font-size: .75rem; color: var(--muted); margin-top: 8px;
+    padding-top: 8px; border-top: 1px solid var(--border);
+  }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
+  .status-dot.watched { background: var(--green); }
+
+  /* ─── VIDEO PLAYER MODAL ─── */
+  .player-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.93); z-index: 1000;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .player-overlay.open { display: flex; }
+  .player-wrap {
+    width: 90vw; max-width: 900px;
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative;
+  }
+  .player-video-area {
+    width: 100%; aspect-ratio: 16/9;
+    background: #0C2233;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .player-video-area video {
+    width: 100%; height: 100%; object-fit: contain;
+    /* no controlsList to disable download; we use custom controls */
+  }
+  .player-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: rgba(255,255,255,.5);
+    background: linear-gradient(135deg, #0C2233, #163347);
+    position: relative;
+  }
+  .player-placeholder-grid {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.03) 39px, rgba(255,255,255,.03) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.03) 39px, rgba(255,255,255,.03) 40px);
+  }
+  .player-placeholder-icon { font-size: 3rem; margin-bottom: 12px; position: relative; }
+  .player-placeholder-text { font-size: .9rem; position: relative; }
+  .player-controls {
+    background: #111; padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ctrl-btn {
+    background: none; border: none; cursor: pointer;
+    color: white; display: flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 8px;
+    transition: background .15s;
+  }
+  .ctrl-btn:hover { background: rgba(255,255,255,.12); }
+  .ctrl-btn svg { width: 18px; height: 18px; fill: white; }
+  .ctrl-progress {
+    flex: 1; height: 4px; background: rgba(255,255,255,.2);
+    border-radius: 4px; cursor: pointer; position: relative;
+  }
+  .ctrl-progress-fill {
+    height: 100%; border-radius: 4px;
+    background: var(--green); width: 0%;
+    transition: width .1s;
+  }
+  .ctrl-time { font-size: .75rem; color: rgba(255,255,255,.6); white-space: nowrap; }
+  .ctrl-fullscreen { margin-left: auto; }
+  /* No download: we hide default context menu */
+  .player-video-area { user-select: none; }
+
+  .player-close {
+    position: absolute; top: 16px; right: 16px; z-index: 10;
+    background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.2);
+    color: white; width: 36px; height: 36px; border-radius: 8px;
+    font-size: 1.2rem; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; transition: background .2s;
+  }
+  .player-close:hover { background: rgba(200,0,0,.6); }
+  .player-title {
+    color: white; font-size: 1rem; font-weight: 600;
+    margin-bottom: 14px; opacity: .85;
+  }
+
+  /* ─── POST TEST PAGE ─── */
+  .posttest-page {
+    min-height: calc(100vh - 64px);
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4060 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 24px;
+    position: relative; overflow: hidden;
+  }
+  .posttest-page::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,.03) 59px, rgba(255,255,255,.03) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,.03) 59px, rgba(255,255,255,.03) 60px);
+  }
+  .posttest-content {
+    text-align: center; position: relative;
+    max-width: 600px;
+  }
+  .posttest-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,166,35,.15); border: 1px solid rgba(245,166,35,.4);
+    color: var(--gold); font-size: .8rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .08em;
+    padding: 6px 16px; border-radius: 20px; margin-bottom: 28px;
+  }
+  .posttest-trophy { font-size: 5rem; margin-bottom: 20px; display: block; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .posttest-content h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; color: white; margin-bottom: 16px;
+  }
+  .posttest-content h1 em { color: var(--green2); font-style: normal; }
+  .posttest-content p { font-size: 1rem; color: rgba(255,255,255,.65); line-height: 1.8; margin-bottom: 36px; }
+  .posttest-cards {
+    display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px;
+  }
+  .posttest-mini {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px; padding: 14px 18px; text-align: center; min-width: 110px;
+  }
+  .posttest-mini strong { display: block; font-size: 1.4rem; font-weight: 800; color: var(--green2); }
+  .posttest-mini span { font-size: .75rem; color: rgba(255,255,255,.5); }
+  .btn-coming {
+    background: var(--gold); color: var(--navy);
+    border: none; border-radius: 12px; padding: 16px 36px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem; font-weight: 800;
+    cursor: not-allowed; opacity: .8;
+    box-shadow: 0 4px 20px rgba(245,166,35,.3);
+  }
+  .coming-note { font-size: .8rem; color: rgba(255,255,255,.4); margin-top: 10px; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--navy); text-align: center;
+    padding: 20px; font-size: .78rem; color: rgba(255,255,255,.35);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .hero { padding: 48px 20px 40px; }
+    .main { padding: 32px 16px 60px; }
+    .nav { padding: 0 16px; }
+    .video-page-header { padding: 28px 20px; }
+    .video-main { padding: 24px 16px 40px; }
+    .posttest-bar { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav class="nav" id="mainNav">
+  <div class="nav-logo" onclick="goHome()">
+    <div class="icon-xl">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+    </div>
+    <span>Excel<span class="accent">Advance</span></span>
+  </div>
+  <button class="nav-back" onclick="goBack()" id="backBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Kembali
+  </button>
+  <span class="nav-badge">PT SSI Internal</span>
+</nav>
+
+<!-- ═══════════════════════════════ HOME PAGE ═══════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow"><span class="dot"></span> Program Pelatihan Internal</div>
+      <h1>Kuasai <em>Excel Tingkat Lanjut</em><br>untuk Produktivitas Maksimal</h1>
+      <p>Program pembelajaran terstruktur untuk meningkatkan kemampuan Excel Anda — dari analitik data hingga integrasi AI. Dirancang khusus untuk kebutuhan tim PT SSI.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>4</strong><span>Modul</span></div>
+        <div class="hero-stat"><strong>19</strong><span>Total Video</span></div>
+        <div class="hero-stat"><strong>Self-paced</strong><span>Belajar Mandiri</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <div class="disc-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.5L20.5 19h-17L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>
+      </div>
+      <div>
+        <div class="disc-title">⚠ Disclaimer — Harap Dibaca</div>
+        <div class="disc-body">
+          Materi pembelajaran ini bersifat <strong>RAHASIA dan hanya untuk penggunaan internal PT SSI</strong>.
+          Dilarang keras mempublikasikan, mendistribusikan, atau membagikan konten ini kepada pihak manapun
+          di luar PT SSI tanpa izin tertulis dari manajemen. Pelanggaran terhadap ketentuan ini dapat
+          dikenakan sanksi sesuai peraturan perusahaan yang berlaku.
+        </div>
+      </div>
+    </div>
+
+    <!-- Module Section -->
+    <div class="section-label">Modul Pembelajaran</div>
+    <div class="section-title">Pilih Modul yang Ingin Dipelajari</div>
+    <p class="section-desc">Setiap modul dilengkapi dengan video pembelajaran yang dapat ditonton secara mandiri.</p>
+
+    <div class="cards-grid">
+
+      <!-- Card 1: Excel Analitik -->
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Excel Analitik</h3>
+        <p>Pelajari teknik analisis data lanjutan menggunakan fungsi-fungsi powerful Excel.</p>
+        <div class="card-meta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+          5 Video Pembelajaran
+        </div>
+        <button class="btn-learn" onclick="goToModule('analitik')">▶ Klik untuk Belajar!</button>
+      </div>
+
+      <!-- Card 2: Query -->
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Query</h3>
+        <p>Kuasai Power Query untuk transformasi dan pengolahan data secara efisien dan otomatis.</p>
+        <div class="card-meta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+          8 Video Pembelajaran
+        </div>
+        <button class="btn-learn" onclick="goToModule('query')">▶ Klik untuk Belajar!</button>
+      </div>
+
+      <!-- Card 3: Dashboard -->
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h3>Dashboard</h3>
+        <p>Buat dashboard interaktif yang profesional dan informatif untuk pelaporan eksekutif.</p>
+        <div class="card-meta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+          1 Video Pembelajaran
+        </div>
+        <button class="btn-learn" onclick="goToModule('dashboard')">▶ Klik untuk Belajar!</button>
+      </div>
+
+      <!-- Card 4: Excel dengan AI -->
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>Excel dengan AI</h3>
+        <p>Integrasikan kecerdasan buatan ke dalam workflow Excel untuk produktivitas berlipat ganda.</p>
+        <div class="card-meta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+          5 Video Pembelajaran
+        </div>
+        <button class="btn-learn" onclick="goToModule('ai')">▶ Klik untuk Belajar!</button>
+      </div>
+
+    </div>
+
+    <!-- Post Test Bar -->
+    <div class="posttest-bar">
+      <div class="posttest-text">
+        <h4>🏁 Selesai Menonton Semua Materi?</h4>
+        <p>Uji pemahaman Anda dengan mengerjakan soal Post Test.</p>
+      </div>
+      <button class="btn-posttest" onclick="openModal()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        Post Test!
+      </button>
+    </div>
+
+  </div>
+
+  <footer class="footer">© 2025 PT SSI — Program Pelatihan Internal. Seluruh konten bersifat rahasia.</footer>
+</div>
+
+<!-- ═══════════════════════════════ VIDEO PAGE ═══════════════════════════════ -->
+<div class="page" id="page-video">
+  <div class="video-page-header">
+    <div class="vph-inner">
+      <div class="vph-eyebrow" id="vph-eyebrow">Modul</div>
+      <div class="vph-title" id="vph-title">Judul Modul</div>
+      <div class="vph-desc" id="vph-desc">Deskripsi modul</div>
+      <div class="vph-progress">
+        <div class="vph-progress-bar" id="progressBar"></div>
+      </div>
+      <div class="vph-progress-label" id="progressLabel">0 dari 0 video ditonton</div>
+    </div>
+  </div>
+  <div class="video-main">
+    <div class="video-grid" id="videoGrid"></div>
+  </div>
+  <footer class="footer">© 2025 PT SSI — Program Pelatihan Internal</footer>
+</div>
+
+<!-- ═══════════════════════════════ POST TEST PAGE ═══════════════════════════════ -->
+<div class="page" id="page-posttest">
+  <div class="posttest-page">
+    <div class="posttest-content">
+      <div class="posttest-badge">✦ Post Test</div>
+      <span class="posttest-trophy">🏆</span>
+      <h1>Selamat Datang di <em>Post Test</em></h1>
+      <p>Anda telah menyelesaikan seluruh materi pembelajaran Excel Advance. Kini saatnya membuktikan kemampuan Anda melalui Post Test ini. Soal-soal akan segera tersedia.</p>
+      <div class="posttest-cards">
+        <div class="posttest-mini"><strong>4</strong><span>Modul</span></div>
+        <div class="posttest-mini"><strong>19</strong><span>Video</span></div>
+        <div class="posttest-mini"><strong>—</strong><span>Soal</span></div>
+        <div class="posttest-mini"><strong>—</strong><span>Menit</span></div>
+      </div>
+      <button class="btn-coming">🚧 Soal Segera Hadir</button>
+      <div class="coming-note">Halaman Post Test sedang dalam pengembangan</div>
+    </div>
+  </div>
+  <footer class="footer">© 2025 PT SSI — Program Pelatihan Internal</footer>
+</div>
+
+<!-- ═══════════════════════════════ MODAL POSTTEST ═══════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon">📋</div>
+    <h2>Konfirmasi Post Test</h2>
+    <p>Apakah kamu sudah selesai menonton <strong>semua video</strong> dari keempat modul pembelajaran? Pastikan kamu telah memahami seluruh materi sebelum mengerjakan Post Test.</p>
+    <div class="modal-actions">
+      <button class="btn-modal-no" onclick="closeModal()">Belum, Tutup</button>
+      <button class="btn-modal-yes" onclick="goToPostTest()">✓ Sudah, Lanjut ke Post Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ VIDEO PLAYER MODAL ═══════════════════════════════ -->
+<div class="player-overlay" id="playerOverlay">
+  <div class="player-title" id="playerTitle">Nama Video</div>
+  <div class="player-wrap">
+    <button class="player-close" onclick="closePlayer()">✕</button>
+    <div class="player-video-area" id="playerArea">
+      <div class="player-placeholder">
+        <div class="player-placeholder-grid"></div>
+        <div class="player-placeholder-icon">🎬</div>
+        <div class="player-placeholder-text">Video sedang diputar...</div>
+      </div>
+    </div>
+    <div class="player-controls" id="playerControls">
+      <button class="ctrl-btn" onclick="togglePlay()" id="playPauseBtn" title="Play/Pause">
+        <svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span class="ctrl-time" id="ctrlTime">0:00 / 0:00</span>
+      <div class="ctrl-progress" onclick="seekVideo(event)">
+        <div class="ctrl-progress-fill" id="progressFill"></div>
+      </div>
+      <button class="ctrl-btn ctrl-fullscreen" onclick="requestFull()" title="Fullscreen">
+        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+      </button>
+    </div>
+  </div>
+  <div style="font-size:.72rem;color:rgba(255,255,255,.3);margin-top:10px;">
+    🔒 Video ini dilindungi — tidak dapat diunduh
+  </div>
+</div>
+
+<script>
+  // ─── DATA MODUL ───
+  // Format URL Google Drive: https://drive.google.com/file/d/FILE_ID/preview
+  // Ganti FILE_ID dengan ID file asli dari Google Drive Anda
+  const modules = {
+    analitik: {
+      eyebrow: 'Modul 1',
+      title: 'Excel Analitik',
+      desc: 'Teknik analisis data lanjutan — PivotTable, fungsi statistik, dan visualisasi data.',
+      icon: '📊',
+      videos: [
+        { id: 1, title: 'Pengantar Analitik Data dengan Excel',   duration: '12:34', url: 'https://drive.google.com/file/d/1c28i1u8pkcLN5dTtCjnCVYjZO7txlmzF/preview' },
+        { id: 2, title: 'PivotTable & PivotChart Mahir',          duration: '18:20', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00002/preview' },
+        { id: 3, title: 'Fungsi Statistik & Analisis Lanjutan',   duration: '15:45', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00003/preview' },
+        { id: 4, title: 'What-If Analysis & Goal Seek',           duration: '10:12', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00004/preview' },
+        { id: 5, title: 'Forecasting & Trendline Otomatis',       duration: '14:08', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00005/preview' },
+      ]
+    },
+    query: {
+      eyebrow: 'Modul 2',
+      title: 'Query (Power Query)',
+      desc: 'Transformasi dan pengolahan data otomatis dengan Power Query Editor.',
+      icon: '🔍',
+      videos: [
+        { id: 1, title: 'Pengenalan Power Query',                  duration: '09:55', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00006/preview' },
+        { id: 2, title: 'Import Data dari Berbagai Sumber',        duration: '13:22', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00007/preview' },
+        { id: 3, title: 'Transformasi & Pembersihan Data',         duration: '17:40', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00008/preview' },
+        { id: 4, title: 'Merge & Append Tabel',                   duration: '11:15', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00009/preview' },
+        { id: 5, title: 'Unpivot & Pivot Data',                   duration: '10:50', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00010/preview' },
+        { id: 6, title: 'Custom Column & Formula M',              duration: '16:30', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00011/preview' },
+        { id: 7, title: 'Parameter & Dynamic Query',              duration: '12:45', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00012/preview' },
+        { id: 8, title: 'Refresh Otomatis & Best Practices',      duration: '08:38', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00013/preview' },
+      ]
+    },
+    dashboard: {
+      eyebrow: 'Modul 3',
+      title: 'Dashboard Excel',
+      desc: 'Membangun dashboard interaktif dan profesional untuk pelaporan bisnis.',
+      icon: '📈',
+      videos: [
+        { id: 1, title: 'Membangun Dashboard Interaktif End-to-End', duration: '45:00', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00014/preview' },
+      ]
+    },
+    ai: {
+      eyebrow: 'Modul 4',
+      title: 'Excel dengan AI',
+      desc: 'Memanfaatkan kecerdasan buatan untuk mengotomasi dan mempercepat pekerjaan di Excel.',
+      icon: '🤖',
+      videos: [
+        { id: 1, title: 'Pengantar AI dalam Ekosistem Excel',       duration: '11:20', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00015/preview' },
+        { id: 2, title: 'Copilot Excel: Fitur & Cara Pakai',        duration: '14:55', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00016/preview' },
+        { id: 3, title: 'Generate Formula dengan AI',               duration: '13:10', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00017/preview' },
+        { id: 4, title: 'Analisis Data Otomatis dengan Copilot',    duration: '16:40', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00018/preview' },
+        { id: 5, title: 'Integrasi ChatGPT & API ke Excel',         duration: '20:05', url: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ00019/preview' },
+      ]
+    }
+  };
+
+  // ─── STATE ───
+  let currentModule = null;
+  let watchedVideos = {};   // { moduleKey: Set of video ids }
+  let currentVideoId = null;
+  let isPlaying = false;
+  let fakeProgress = 0;
+  let progressInterval = null;
+  let previousPage = 'home';
+
+  // Init watched sets
+  Object.keys(modules).forEach(k => { watchedVideos[k] = new Set(); });
+
+  // ─── NAVIGATION ───
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function goHome() {
+    showPage('home');
+    document.getElementById('mainNav').classList.remove('show-back');
+  }
+
+  function goBack() { goHome(); }
+
+  function goToModule(key) {
+    currentModule = key;
+    previousPage = 'home';
+    const m = modules[key];
+    document.getElementById('vph-eyebrow').textContent = m.eyebrow;
+    document.getElementById('vph-title').textContent = m.icon + ' ' + m.title;
+    document.getElementById('vph-desc').textContent = m.desc;
+    renderVideos(key);
+    updateProgress(key);
+    showPage('video');
+    document.getElementById('mainNav').classList.add('show-back');
+  }
+
+  function goToPostTest() {
+    closeModal();
+    showPage('posttest');
+    document.getElementById('mainNav').classList.add('show-back');
+  }
+
+  // ─── VIDEO GRID RENDER ───
+  function renderVideos(key) {
+    const m = modules[key];
+    const grid = document.getElementById('videoGrid');
+    grid.innerHTML = '';
+    m.videos.forEach(v => {
+      const watched = watchedVideos[key].has(v.id);
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.innerHTML = `
+        <div class="video-thumb" onclick="openPlayer('${key}', ${v.id}, '${v.title}')">
+          <div class="video-thumb-bg"></div>
+          <div class="video-thumb-num">Video ${v.id}</div>
+          <div class="video-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-fullscreen-btn" onclick="event.stopPropagation(); openPlayer('${key}', ${v.id}, '${v.title}'); requestFull();" title="Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </div>
+        </div>
+        <div class="video-info">
+          <h4>${v.title}</h4>
+          <p>${m.title} — ${m.eyebrow}</p>
+          <div class="video-status">
+            <span class="status-dot ${watched ? 'watched' : ''}"></span>
+            ${watched ? '<span style="color:var(--green);font-weight:600">Sudah ditonton</span>' : '<span>Belum ditonton</span>'}
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function updateProgress(key) {
+    const m = modules[key];
+    const total = m.videos.length;
+    const watched = watchedVideos[key].size;
+    const pct = total > 0 ? Math.round(watched / total * 100) : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = `${watched} dari ${total} video ditonton (${pct}%)`;
+  }
+
+  // ─── PLAYER ───
+  function openPlayer(key, id, title) {
+    currentModule = key;
+    currentVideoId = id;
+    isPlaying = false;
+    fakeProgress = 0;
+    clearInterval(progressInterval);
+
+    // Cari data video
+    const videoData = modules[key].videos.find(v => v.id === id);
+    const embedUrl = videoData && videoData.url ? videoData.url : null;
+
+    document.getElementById('playerTitle').textContent = '🎬 ' + title;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('ctrlTime').textContent = '0:00 / 0:00';
+    updatePlayIcon(false);
+
+    // Render iframe Google Drive atau placeholder
+    const area = document.getElementById('playerArea');
+    if (embedUrl) {
+      area.innerHTML = `
+        <iframe
+          src="${embedUrl}"
+          width="100%" height="100%"
+          style="border:none; display:block;"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+        ></iframe>`;
+      // Sembunyikan custom controls saat pakai iframe GDrive
+      document.getElementById('playerControls').style.display = 'none';
+    } else {
+      area.innerHTML = `
+        <div class="player-placeholder">
+          <div class="player-placeholder-grid"></div>
+          <div class="player-placeholder-icon">🎬</div>
+          <div class="player-placeholder-text">Link video belum tersedia</div>
+        </div>`;
+      document.getElementById('playerControls').style.display = 'flex';
+    }
+
+    document.getElementById('playerOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePlayer() {
+    clearInterval(progressInterval);
+    isPlaying = false;
+    document.getElementById('playerOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    // Mark as watched after opening
+    if (currentModule && currentVideoId) {
+      watchedVideos[currentModule].add(currentVideoId);
+      renderVideos(currentModule);
+      updateProgress(currentModule);
+    }
+  }
+
+  function togglePlay() {
+    isPlaying = !isPlaying;
+    updatePlayIcon(isPlaying);
+    if (isPlaying) {
+      progressInterval = setInterval(() => {
+        fakeProgress += 0.2;
+        if (fakeProgress >= 100) {
+          fakeProgress = 100;
+          clearInterval(progressInterval);
+          isPlaying = false;
+          updatePlayIcon(false);
+        }
+        document.getElementById('progressFill').style.width = fakeProgress + '%';
+        const dur = 600; // fake 10 min
+        const cur = Math.floor(dur * fakeProgress / 100);
+        document.getElementById('ctrlTime').textContent = `${fmt(cur)} / ${fmt(dur)}`;
+      }, 100);
+    } else {
+      clearInterval(progressInterval);
+    }
+  }
+
+  function fmt(s) {
+    const m = Math.floor(s / 60), sec = s % 60;
+    return m + ':' + String(sec).padStart(2, '0');
+  }
+
+  function updatePlayIcon(playing) {
+    document.getElementById('playIcon').innerHTML = playing
+      ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+      : '<path d="M8 5v14l11-7z"/>';
+  }
+
+  function seekVideo(e) {
+    const bar = e.currentTarget;
+    const rect = bar.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(100, (e.clientX - rect.left) / rect.width * 100));
+    fakeProgress = pct;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function requestFull() {
+    const area = document.getElementById('playerWrap') || document.querySelector('.player-wrap');
+    if (area && area.requestFullscreen) area.requestFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  }
+
+  // Prevent right-click on player
+  document.getElementById('playerOverlay').addEventListener('contextmenu', e => e.preventDefault());
+
+  // ─── MODAL ───
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close modal on overlay click
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ESC key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeModal();
+      closePlayer();
+    }
+  });
+</script>
+</body>
+</html>
