@@ -2,459 +2,751 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>E-Learning Delapan Kompetensi Softskill Leadership</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Learning Microsoft Excel — PT SSI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--navy:#0a1628;--navy2:#112040;--gold:#c9a84c;--gold-light:#e8c97a;--cream:#faf7f0;--text:#1a2744;--muted:#6b7a99;--green:#2ecc71;--green-dark:#27ae60;--red:#e74c3c;}
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+  :root{
+    --bg: #0A0D0B;
+    --bg-soft: #11150F;
+    --surface: #161B15;
+    --surface-2: #1C2219;
+    --line: rgba(255,255,255,0.09);
+    --line-strong: rgba(255,255,255,0.16);
+    --text: #F3F6F0;
+    --text-muted: #B6C0AF;
+    --text-faint: #87938A;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.35);
+    --shadow-md: 0 18px 40px -18px rgba(0,0,0,0.65);
 
-  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1a3060 100%);min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 24px 70px;position:relative;overflow:hidden;}
-  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(201,168,76,.18) 0%,transparent 70%);pointer-events:none;}
-  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold-light);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 20px;border-radius:100px;margin-bottom:24px;}
-  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);font-weight:900;color:#fff;line-height:1.18;max-width:720px;}
-  .hero h1 span{color:lightgreen;}
-  .hero-sub{margin-top:16px;color:rgba(255,255,255,.65);font-size:15px;max-width:500px;}
+    --basic: #34D399;
+    --basic-soft: rgba(52,211,153,0.16);
+    --inter: #5FA8FF;
+    --inter-soft: rgba(95,168,255,0.16);
+    --advance: #F4A93B;
+    --advance-soft: rgba(244,169,59,0.16);
 
-  .progress-wrap{background:#fff;border-bottom:1px solid rgba(0,0,0,.07);padding:14px 40px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06);}
-  .progress-label{font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;}
-  .progress-bar-outer{flex:1;height:8px;background:#e8eaf0;border-radius:100px;overflow:hidden;}
-  .progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1);width:0%;}
-  .progress-count{font-size:13px;font-weight:700;color:var(--gold);white-space:nowrap;}
+    --warn-border: #F2B046;
+    --warn-bg: rgba(242,176,70,0.12);
+    --warn-text: #F4DBA0;
 
-  main{max-width:1000px;margin:0 auto;padding:0 24px 80px;}
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
 
-  .section-card{background:#fff;border-radius:24px;box-shadow:0 8px 32px rgba(10,22,40,.08);margin-top:36px;overflow:hidden;}
-  .section-header{display:flex;align-items:center;gap:16px;padding:24px 32px 20px;border-bottom:1px solid rgba(0,0,0,.06);}
-  .section-num{width:44px;height:44px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:var(--gold);font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:18px;}
-  .section-title{font-size:20px;font-weight:700;color:var(--navy);}
-  .section-sub{font-size:13px;color:var(--muted);margin-top:2px;}
-  .section-body{padding:28px 32px;}
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{ display:block; }
+  a{ color:inherit; }
+  :focus-visible{
+    outline:2px solid var(--basic);
+    outline-offset:3px;
+  }
+  .icon{ stroke:currentColor; fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
 
-  /* PERATURAN */
-  .rules-grid{display:flex;flex-direction:column;gap:14px;}
-  .rule-item{display:flex;gap:14px;align-items:flex-start;background:#f8faff;padding:16px 20px;border-radius:16px;border-left:4px solid var(--gold);}
-  .rule-icon{font-size:22px;min-width:40px;text-align:center;}
-  .rule-text strong{color:var(--navy);display:block;margin-bottom:4px;}
-  .rule-text p{font-size:14px;color:var(--muted);line-height:1.5;}
+  /* ===== App chrome ===== */
+  .app-chrome{
+    position:sticky; top:0; z-index:40;
+    background:rgba(10,13,11,0.88);
+    -webkit-backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .titlebar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 20px;
+    max-width:1180px; margin:0 auto;
+  }
+  .titlebar-id{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-muted);
+    letter-spacing:0.02em;
+  }
+  .titlebar-id .brand-mark{
+    width:18px; height:18px; color:var(--basic);
+  }
+  .ribbon-tabs{
+    display:flex; gap:18px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-faint);
+  }
+  .ribbon-tabs span{ padding:4px 2px; }
+  .ribbon-tabs .active{
+    color:var(--text);
+    border-bottom:2px solid var(--basic);
+  }
+  @media (max-width:720px){ .ribbon-tabs{ display:none; } }
 
-  .video-list{display:flex;flex-direction:column;gap:14px;}
-  .video-item{border:1.5px solid rgba(0,0,0,.08);border-radius:16px;overflow:hidden;transition:all .2s;background:#fafbff;}
-  .video-item.active{border-color:var(--gold);box-shadow:0 4px 20px rgba(201,168,76,.2);background:#fff;}
-  .video-item.done{border-color:var(--green);background:#f0fff6;}
-  .video-item.locked{opacity:.6;}
-  .video-header{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;}
-  .video-item.locked .video-header{cursor:not-allowed;}
-  .video-num{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
-  .video-item:not(.done):not(.active) .video-num{background:#e8eaf0;color:var(--muted);}
-  .video-item.active .video-num{background:var(--gold);color:var(--navy);}
-  .video-item.done .video-num{background:var(--green);color:#fff;}
-  .video-info{flex:1;}
-  .video-info h4{font-size:15px;font-weight:700;color:var(--navy);}
-  .video-info p{font-size:12px;color:var(--muted);margin-top:2px;}
-  .video-status{font-size:12px;font-weight:600;padding:4px 12px;border-radius:100px;}
-  .video-item.done .video-status{background:#d4f5e4;color:var(--green-dark);}
-  .video-item.active .video-status{background:#fff3cc;color:#a07a00;}
-  .video-item.locked .video-status{background:#e8eaf0;color:#b0bec5;}
+  .formula-bar{
+    display:flex; align-items:stretch;
+    max-width:1180px; margin:0 auto;
+    border-top:1px solid var(--line);
+  }
+  .name-box{
+    flex:0 0 auto;
+    min-width:78px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:600; font-size:13px;
+    color:var(--basic);
+    border-right:1px solid var(--line);
+    padding:9px 14px;
+  }
+  .fx-label{
+    flex:0 0 auto;
+    display:flex; align-items:center;
+    font-family:var(--font-mono); font-style:italic; font-size:13px;
+    color:var(--text-faint);
+    padding:9px 12px;
+    border-right:1px solid var(--line);
+  }
+  .fx-value{
+    flex:1 1 auto;
+    display:flex; align-items:center;
+    font-family:var(--font-mono); font-size:13px;
+    color:var(--text-muted);
+    padding:9px 14px;
+    overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+  }
 
-  .video-player-wrap{display:none;padding:0 20px 20px;}
-  .video-item.active .video-player-wrap{display:block;}
-  .video-note{background:#fff8e1;border:1px solid #ffe082;border-radius:12px;padding:12px 16px;font-size:13px;color:#795500;margin-bottom:14px;display:flex;gap:8px;}
-  .video-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0d1f3c,#1a3060);border-radius:14px;display:flex;align-items:center;justify-content:center;}
-  .placeholder-inner{text-align:center;color:rgba(255,255,255,.7);}
-  .placeholder-icon{width:64px;height:64px;background:rgba(201,168,76,.15);border:2px solid rgba(201,168,76,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--gold);margin:0 auto 14px;}
-  .video-embed{width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;display:none;}
-  .video-embed iframe{width:100%;height:100%;border:none;}
-  .watch-progress-wrap{margin-top:12px;background:#e0e0e0;height:8px;border-radius:100px;overflow:hidden;}
-  .watch-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;}
-  .watch-time-row{display:flex;justify-content:space-between;margin-top:6px;}
-  .watch-pct-label,.watch-time-label{font-size:12px;color:var(--muted);}
-  .btn-simulate{background:var(--navy);color:var(--gold);font-weight:700;font-size:14px;padding:12px 24px;border-radius:10px;border:none;cursor:pointer;transition:0.2s;}
-  .btn-simulate:disabled{opacity:.5;cursor:not-allowed;}
-  .btn-next-video{flex:1;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;padding:12px 24px;border-radius:10px;border:none;cursor:pointer;transition:0.2s;}
-  .btn-next-video:disabled{opacity:.4;cursor:not-allowed;}
+  /* ===== Layout ===== */
+  main{ max-width:1180px; margin:0 auto; padding:0 20px; }
+  .section{
+    padding:40px 0;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .section:last-of-type{ border-bottom:none; }
+  .cell-ref{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:12.5px;
+    color:var(--text-faint);
+    margin-bottom:10px;
+  }
+  .cell-ref::before{
+    content:"";
+    width:6px; height:6px;
+    background:var(--text-faint);
+    border-radius:1px;
+  }
 
-  /* POST TEST SECTION - hanya tombol link */
-  #section-posttest{display:none;margin-top:30px;}
-  #section-posttest.visible{display:block;}
-  .posttest-container{background:#fff;border-radius:24px;padding:40px 32px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,0.1);}
-  .posttest-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 20px;}
-  .posttest-container h2{color:var(--navy);margin-bottom:12px;}
-  .posttest-container p{color:var(--muted);margin-bottom:28px;line-height:1.6;}
-  .btn-posttest-link{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:800;font-size:16px;padding:14px 36px;border-radius:50px;border:none;cursor:pointer;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(0,0,0,0.1);}
-  .btn-posttest-link:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(201,168,76,0.4);}
-  
-   .section-pdf{
-    max-width:1200px;
-    margin:auto;
-}
+  h1,h2,h3{
+    font-family:var(--font-display);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
 
-.title{
-    text-align:center;
-    font-size:24px;
-    font-weight:bold;
-    margin-bottom:40px;
-    color:#0f172a;
-}
-
-/* 2 CARD */
-.grid-card{
+  /* ===== Section 1 — Hero ===== */
+  .section-hero{
+    background-image:
+      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 48px),
+      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 48px);
+  }
+  .hero-grid{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    margin-bottom: 20px;
-}
-
-.card{
-    background:#ffffff;
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    transition:0.3s;
-    border:1px solid #e2e8f0;
-}
-
-.card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 15px 30px rgba(0,0,0,0.12);
-}
-
-.card-title{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:25px;
-    color:#1e293b;
-    border-left:6px solid #2563eb;
-    padding-left:15px;
-}
-
-.pdf-item{
-    display:flex;
-    justify-content:space-between;
+    grid-template-columns:1.15fr 1fr;
+    gap:36px;
     align-items:center;
-    background:#f8fafc;
-    padding:12px 16px;
+  }
+  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; gap:28px; } }
+
+  .hero-headline{
+    font-size:clamp(32px, 4.6vw, 54px);
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .hero-headline .accent{ color:var(--basic); }
+  .hero-desc{
+    font-size:16.5px;
+    color:var(--text-muted);
+    max-width:560px;
+    margin:0;
+  }
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-top:18px;
+  }
+  .hero-chip{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:12.5px;
+    color:var(--text-muted);
+    border:1px solid var(--line-strong);
+    border-radius:7px;
+    padding:8px 13px 8px 10px;
+    background:var(--surface);
+    box-shadow:var(--shadow-sm);
+  }
+  .hero-chip .icon{ width:15px; height:15px; color:var(--basic); flex:0 0 auto; }
+
+  /* ----- Hero illustration: mini spreadsheet card ----- */
+  .sheet-card{
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    border-radius:14px;
+    box-shadow:var(--shadow-md);
+    overflow:hidden;
+  }
+  .sheet-card-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:11px 14px;
+    border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+  }
+  .sheet-card-bar .sc-dot{ width:8px; height:8px; border-radius:50%; }
+  .sc-dot.r{ background:#E0846E; }
+  .sc-dot.y{ background:#E6C15A; }
+  .sc-dot.g{ background:#7CC08B; }
+  .sheet-card-bar .sc-fx{
+    margin-left:8px;
+    font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint);
+  }
+  .sheet-card-grid{ padding:6px 0; }
+  .sheet-card-img{
+    display:block;
+    width:100%;
+    height:auto;
+    background:var(--surface);
+  }
+  .sc-row{ display:grid; grid-template-columns:1.4fr 0.7fr 1fr; }
+  .sc-row > div{
+    padding:9px 14px;
+    font-size:13px;
+    border-bottom:1px solid var(--line);
+    color:var(--text-muted);
+  }
+  .sc-row.head > div{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    background:var(--surface-2);
+  }
+  .sc-row.total > div{ font-weight:600; color:var(--text); border-bottom:none; }
+  .sc-row.total{ border-top:1px solid var(--line-strong); }
+  .sheet-card-chart{
+    display:flex; align-items:flex-end; gap:10px;
+    padding:18px 18px 20px;
+    height:90px;
+  }
+  .sc-bar{ flex:1; border-radius:4px 4px 0 0; }
+  .sc-bar.b1{ background:var(--basic); }
+  .sc-bar.b2{ background:var(--inter); }
+  .sc-bar.b3{ background:var(--advance); }
+
+  /* ===== Section 2 — Disclaimer ===== */
+  .section-head{
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:16px;
+  }
+  .section-head .icon-badge{
+    width:38px; height:38px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  .section-head h2{ font-size:clamp(24px,3vw,30px); }
+
+  .warning-box{
+    display:flex; gap:16px;
+    background:var(--warn-bg);
+    border:1px solid var(--warn-border);
+    border-left:4px solid var(--warn-border);
+    border-radius:10px;
+    padding:18px 22px;
+    box-shadow:var(--shadow-sm);
+  }
+  .warning-icon{
+    flex:0 0 auto;
+    width:40px; height:40px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(242,176,70,0.16);
+    border-radius:10px;
+  }
+  .warning-icon .icon{ width:22px; height:22px; color:var(--warn-border); stroke-width:1.8; }
+  .warning-title{
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:13.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--warn-text);
+    margin-bottom:5px;
+  }
+  .warning-text{
+    color:var(--warn-text);
+    font-size:15.5px;
+    max-width:760px;
+    margin:0;
+  }
+  .warning-text b{ color:#FFE9BD; }
+
+  /* ===== Section 3 — Modules ===== */
+  .modules-sub{ color:var(--text-muted); font-size:15px; max-width:380px; margin-top:8px; }
+
+  .tabs-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+  }
+  @media (max-width:860px){ .tabs-grid{ grid-template-columns:1fr; } }
+
+  .sheet-tab{
+    appearance:none; border:none; cursor:pointer; text-align:left;
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    border-radius:10px 10px 6px 6px;
+    box-shadow:var(--shadow-sm);
+    padding:18px 18px 16px;
+    color:var(--text);
+    font-family:var(--font-body);
+    position:relative;
+    overflow:hidden;
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+  }
+  .sheet-tab::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0;
+    height:4px;
+    transform:scaleX(0.18);
+    transform-origin:left;
+    transition:transform .28s ease;
+  }
+  .sheet-tab:hover, .sheet-tab:focus-visible{
+    transform:translateY(-6px);
+    background:var(--surface-2);
+  }
+  .sheet-tab:hover::after, .sheet-tab:focus-visible::after{ transform:scaleX(1); }
+
+  .tab-basic{ border-top:3px solid var(--basic); }
+  .tab-basic::after{ background:var(--basic); }
+  .tab-basic:hover, .tab-basic:focus-visible{ border-color:var(--basic); box-shadow:0 16px 30px -18px var(--basic-soft); }
+
+  .tab-inter{ border-top:3px solid var(--inter); }
+  .tab-inter::after{ background:var(--inter); }
+  .tab-inter:hover, .tab-inter:focus-visible{ border-color:var(--inter); box-shadow:0 16px 30px -18px var(--inter-soft); }
+
+  .tab-advance{ border-top:3px solid var(--advance); }
+  .tab-advance::after{ background:var(--advance); }
+  .tab-advance:hover, .tab-advance:focus-visible{ border-color:var(--advance); box-shadow:0 16px 30px -18px var(--advance-soft); }
+
+  .tab-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:12px;
+  }
+  .tab-index{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+  }
+  .tab-glyph{
+    width:38px; height:38px;
+    border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tab-glyph .icon{ width:20px; height:20px; }
+  .tab-basic .tab-glyph{ background:var(--basic-soft); color:var(--basic); }
+  .tab-inter .tab-glyph{ background:var(--inter-soft); color:var(--inter); }
+  .tab-advance .tab-glyph{ background:var(--advance-soft); color:var(--advance); }
+
+  .sheet-tab h3{ font-size:21px; margin-bottom:6px; }
+  .sheet-tab p{ color:var(--text-muted); font-size:14.5px; margin:0; }
+  .tab-cta{
+    margin-top:12px;
+    font-family:var(--font-mono); font-size:12.5px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .tab-basic .tab-cta{ color:var(--basic); }
+  .tab-inter .tab-cta{ color:var(--inter); }
+  .tab-advance .tab-cta{ color:var(--advance); }
+
+  /* ===== Section 4 — Rules ===== */
+  .rules-head p{ color:var(--text-muted); font-size:15px; max-width:560px; margin:8px 0 0; }
+
+  .rules-grid{
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+    box-shadow:var(--shadow-sm);
+  }
+  .rule-row{
+    display:flex; align-items:flex-start; gap:14px;
+    border-bottom:1px solid var(--line);
+    padding:13px 20px;
+  }
+  .rule-row:last-child{ border-bottom:none; }
+  .rule-row:nth-child(even){ background:var(--surface-2); }
+  .rule-icon{
+    flex:0 0 auto;
+    width:34px; height:34px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .rule-icon .icon{ width:17px; height:17px; }
+  .rule-icon{ background:var(--basic-soft); color:var(--basic); }
+  .rule-num{
+    flex:0 0 auto;
+    font-family:var(--font-mono); font-size:12px;
+    color:var(--text-faint);
+    padding-top:7px;
+  }
+  .rule-text{
+    flex:1 1 auto;
+    padding-top:6px;
+    font-size:15px;
+    color:var(--text);
+  }
+  .rule-text b{ color:var(--basic); }
+
+  /* ===== Footer ===== */
+  footer{
+    max-width:1180px; margin:0 auto; padding:20px 20px 28px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+    font-family:var(--font-mono); font-size:12px; color:var(--text-faint);
+  }
+  footer .foot-lock{ display:flex; align-items:center; gap:7px; }
+  footer .foot-lock .icon{ width:13px; height:13px; }
+
+  /* ===== Modal ===== */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(0,0,0,0.62);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+    opacity:0; visibility:hidden;
+    transition:opacity .2s ease, visibility .2s ease;
+  }
+  .modal-overlay.open{ opacity:1; visibility:visible; }
+  .modal{
+    background:var(--surface);
+    border:1px solid var(--line-strong);
     border-radius:12px;
-    margin-bottom:15px;
-    transition:0.3s;
-}
-
-.pdf-item:hover{
-    background:#e0ecff;
-}
-
-.pdf-name{
-    font-size:14px;
-    font-weight:200;
-    color:#334155;
-}
-
-.badge-link{
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
+    max-width:460px; width:100%;
+    padding:30px 28px 26px;
+    position:relative;
+    transform:translateY(10px) scale(0.98);
+    transition:transform .22s ease;
+  }
+  .modal-overlay.open .modal{ transform:translateY(0) scale(1); }
+  .modal-close{
+    position:absolute; top:14px; right:14px;
+    width:30px; height:30px; border-radius:6px;
+    background:transparent; border:1px solid var(--line-strong);
+    color:var(--text-muted);
+    font-size:16px; cursor:pointer; line-height:1;
+  }
+  .modal-close:hover{ background:var(--surface-2); color:var(--text); }
+  .modal-icon{
+    width:42px; height:42px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:16px;
+  }
+  .modal-icon .icon{ width:22px; height:22px; }
+  .modal-tag{
+    display:inline-block;
+    font-family:var(--font-mono); font-size:12px;
+    padding:4px 9px; border-radius:5px;
+    margin-bottom:14px;
+  }
+  .modal h3{ font-size:22px; margin-bottom:12px; }
+  .modal p{ color:var(--text-muted); font-size:14.5px; margin:0 0 22px; }
+  .modal-btn{
+    display:inline-flex; align-items:center; gap:8px;
     text-decoration:none;
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
-    color:white;
-    padding:8px 16px;
-    border-radius:30px;
-    font-size:14px;
-    font-weight:bold;
-    transition:0.3s;
-}
+    font-family:var(--font-mono); font-size:13px; font-weight:600;
+    color:#fff;
+    background:var(--basic);
+    padding:11px 18px;
+    border-radius:7px;
+    transition:opacity .18s ease;
+  }
+  .modal-btn:hover{ opacity:0.88; }
 
-.badge-link:hover{
-    transform:scale(1.05);
-    background:linear-gradient(135deg,#1d4ed8,#0f172a);
-}
-
-  footer{text-align:center;padding:40px 24px;font-size:13px;color:var(--muted);border-top:1px solid rgba(0,0,0,.07);margin-top:40px;}
-  @media(max-width:600px){.section-body{padding:20px;}}
+  @media (prefers-reduced-motion: reduce){
+    .sheet-tab, .sheet-tab::after, .modal, .modal-overlay{ transition:none !important; }
+    .sheet-tab:hover{ transform:none; }
+  }
 </style>
 </head>
 <body>
 
-<section class="hero">
-  <div class="hero-badge">✦ Program Pengembangan Divisi HCC</div>
-  <h1>E-Learning <span>Microsoft Excel</span><br>Advance</h1>
-  <p class="hero-sub">Selesaikan 8 video, kemudian kerjakan post test melalui link yang tersedia</p>
-</section>
-
-<div class="progress-wrap">
-  <span class="progress-label">Progress Video</span>
-  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
-  <span class="progress-count" id="progressCount">0 / 8</span>
-</div>
-
-<main>
-  <!-- PERATURAN E-LEARNING -->
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-num">📜</div>
-      <div><div class="section-title">Peraturan E-Learning</div><div class="section-sub">Simak aturan sebelum memulai materi</div></div>
-    </div>
-    <div class="section-body">
-      <div class="rules-grid">
-        <div class="rule-item"><div class="rule-icon">1️⃣</div><div class="rule-text"><strong>Wajib Tonton 8 Video</strong><p>Peserta wajib menonton seluruh 8 video skill Excel Advanced  yang telah disediakan.</p></div></div>
-        <div class="rule-item"><div class="rule-icon">🔒</div><div class="rule-text"><strong>Video Berurutan & Terkunci</strong><p>Video lainnya akan terkunci sebelum Anda menonton video secara urut dari video 1 hingga video 8.</p></div></div>
-        <div class="rule-item"><div class="rule-icon">⏱️</div><div class="rule-text"><strong>Tombol Lanjut setelah 2 Menit</strong><p>Tombol "Tandai Selesai & Lanjut" akan muncul setelah Anda menonton minimal 2 menit (120 detik). Anda bisa tetap melanjutkan menonton atau memilih lanjut — sepenuhnya pilihan Anda.</p></div></div>
-        <div class="rule-item"><div class="rule-icon">📝</div><div class="rule-text"><strong>Post Test</strong><p>Setelah 8 video selesai, akan tampil Library Materi-materi PDF-nya , anda bisa mendownloadnya . Dan dibawahnya terdapat Tombol Link untuk  Post Test untuk menguji pemahaman Anda. Silahkan tekan tombolnya untuk memulai Post test-nya </p></div></div>
+  <div class="app-chrome">
+    <div class="titlebar">
+      <div class="titlebar-id">
+       <img src="ssi_logo.png" width="100" height="80" alt="">
+        PT SSI — Microsoft Excel E-Learning
       </div>
+      
     </div>
+    
   </div>
 
-  <!-- MATERI VIDEO -->
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-num">2</div>
-      <div><div class="section-title">Materi Video</div><div class="section-sub">Tonton minimal 2 menit per video untuk membuka tombol lanjut</div></div>
-    </div>
-    <div class="section-body">
-      <div class="video-list" id="videoList"></div>
-    </div>
-  </div>
+  <main>
 
-  <!-- POST TEST SECTION (muncul setelah 8 video selesai) - hanya tombol link -->
-  <div id="section-posttest">
-    <section class="section-pdf">
-      <h1 class="title">Daftar File PDF Kompetensi</h1>
-        <div class="grid-card">
-            <!-- CARD 1 -->
-            <div class="card">
-
-                <div class="card-title">
-                    Kompetensi Utama
-                </div>
-                  <div class="pdf-item">
-                      <div class="pdf-name">Customer Fokus</div>
-                      <a href="https://drive.google.com/file/d/1AGxyREoOA73oLLXkydDYXF9KiLxjWt5h/view?usp=drive_link" target="_blank" class="badge-link">
-                          PDF
-                      </a>
-                  </div>
-                  
-                  <div class="pdf-item">
-                    <div class="pdf-name">Organization Capabilities Development</div>
-                    <a href="https://drive.google.com/file/d/1l6kLG5oGqDFnVkE4ALzkSpR38llpwWUd/view?usp=drive_link" target="_blank" class="badge-link">
-                        PDF
-                    </a>
-                  </div> 
-
-                  <div class="pdf-item">
-                      <div class="pdf-name">Driving Execution</div>
-                      <a href="https://drive.google.com/file/d/1XmPJG1aBvjxAuvMiddvuBMfxjFCXXshC/view?usp=drive_link" target="_blank" class="badge-link">
-                          PDF
-                      </a>
-                  </div>  
-
-                  <div class="pdf-item">
-                    <div class="pdf-name">Managing Diversity</div>
-                    <a href="https://drive.google.com/file/d/1t4NVdO8py7zk1m5S87wYmXq5GvlNE3MI/view?usp=drive_link" target="_blank" class="badge-link">
-                        PDF
-                    </a>
-                  </div>                  
+    <!-- SECTION 1 — HERO -->
+    <section class="section section-hero" id="sec-hero" data-cell="B2" data-fx='="Tujuan Pelatihan Microsoft Excel"'>
+ 
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-headline">one worksheet <span class="accent">EXCEL </span> <Span style="color: indianred;">Unlimitted </Span>Propabilities</h1>
+          <p class="hero-desc">
+            Program e-learning ini dirancang untuk membekali seluruh karyawan PT SSI dengan kemampuan mengolah,
+            menganalisis, dan menyajikan data menggunakan Microsoft Excel secara efektif — mulai dari pengoperasian
+            dasar hingga teknik analisis dan otomatisasi tingkat lanjut.
+          </p>
+          <div class="hero-meta">
+            <div class="hero-chip">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/><path d="M4 21c0-3.9 3.6-7 8-7s8 3.1 8 7"/></svg>
+              Seluruh Pegawai PT SSI
             </div>
-          
-            <!-- CARD 2 -->
-            <div class="card">
-                <div class="card-title">
-                    Kompetensi Strategis
-                </div>    
-
-                  <div class="pdf-item">
-                      <div class="pdf-name">Digital Leadership</div>
-                      <a href="https://drive.google.com/file/d/11Vbo9My-Zgltcy6gvfuHqBGTM33OoUKa/view?usp=drive_link" target="_blank" class="badge-link">
-                          PDF
-                      </a>
-                  </div>
-              
-                  <div class="pdf-item">
-                      <div class="pdf-name">Global Business Savvy</div>
-                      <a href="https://drive.google.com/file/d/10VZde06Jq13PgNMdLrF5SqPGry5_AP9T/view?usp=drive_link" target="_blank" class="badge-link">
-                          PDF
-                      </a>
-                  </div> 
-              
-                <div class="pdf-item">
-                    <div class="pdf-name">Leading Change</div>
-                    <a href="https://drive.google.com/file/d/1IxojjjClDijBd7xjK2aXWmnLJp_KL3wp/view?usp=drive_link" target="_blank" class="badge-link">
-                        PDF
-                    </a>
-                </div>
-                
-                <div class="pdf-item">
-                    <div class="pdf-name">Strategy Orientation</div>
-                    <a href="https://drive.google.com/file/d/13DKTjcCK8rtkvQsfosQXII8J_YX5eegw/view?usp=drive_link" target="_blank" class="badge-link">
-                        PDF
-                    </a>
-                </div>       
+            <div class="hero-chip">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 7-7"/><path d="M21 12a9 9 0 1 1-5.5-8.3"/></svg>
+              Modul + Post Test
             </div>
+            <div class="hero-chip">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="6" y="13" width="3" height="6"/><rect x="11" y="9" width="3" height="10"/><rect x="16" y="5" width="3" height="14"/></svg>
+              Basic → Intermediate → Advance
+            </div>
+          </div>
         </div>
+
+        <div class="sheet-card" aria-hidden="true">
+          <div class="sheet-card-bar">
+            <span class="sc-dot r"></span>
+            <span class="sc-dot y"></span>
+            <span class="sc-dot g"></span>
+            <span class="sc-fx">Laporan_Penjualan.xlsx</span>
+          </div>
+          <img class="sheet-card-img" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDgwIDMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmdHcmFkIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxNjFCMTUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMUMyMjE5Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJnbG93IiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMzNEQzOTkiIHN0b3Atb3BhY2l0eT0iMC4xNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzNEQzOTkiIHN0b3Atb3BhY2l0eT0iMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CgogIDxyZWN0IHdpZHRoPSI0ODAiIGhlaWdodD0iMzIwIiBmaWxsPSJ1cmwoI2JnR3JhZCkiLz4KICA8Y2lyY2xlIGN4PSI4MCIgY3k9IjYwIiByPSIxMjAiIGZpbGw9InVybCgjZ2xvdykiLz4KCiAgPCEtLSBmbG9hdGluZyBkb2N1bWVudCBzaGVldCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTAsNDYpIj4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMjAiIGhlaWdodD0iMjYwIiByeD0iMTQiIGZpbGw9IiMxRjI2MUMiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjE0KSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICAgIDwhLS0gZm9sZGVkIGNvcm5lciAtLT4KICAgIDxwYXRoIGQ9Ik0xNzAgMCBMMjIwIDUwIEwxNzAgNTAgWiIgZmlsbD0iIzI4MzIyMiIvPgogICAgPCEtLSBoZWFkZXIgYmFyIC0tPgogICAgPHJlY3QgeD0iMTYiIHk9IjIwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwIiByeD0iNSIgZmlsbD0iI0YzRjZGMCIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cmVjdCB4PSIxNiIgeT0iMzgiIHdpZHRoPSI4MCIgaGVpZ2h0PSI3IiByeD0iMy41IiBmaWxsPSIjODc5MzhBIi8+CgogICAgPCEtLSBncmlkIG9mIGNlbGxzIC0tPgogICAgPGc+CiAgICAgIDxyZWN0IHg9IjE2IiB5PSI2NCIgd2lkdGg9IjE4OCIgaGVpZ2h0PSIxNTAiIHJ4PSI2IiBmaWxsPSIjMTYxQjE1IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xMCkiLz4KICAgICAgPCEtLSBjb2x1bW4gbGluZXMgLS0+CiAgICAgIDxsaW5lIHgxPSI3OCIgeTE9IjY0IiB4Mj0iNzgiIHkyPSIyMTQiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEwKSIvPgogICAgICA8bGluZSB4MT0iMTQyIiB5MT0iNjQiIHgyPSIxNDIiIHkyPSIyMTQiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEwKSIvPgogICAgICA8IS0tIHJvdyBsaW5lcyAtLT4KICAgICAgPGxpbmUgeDE9IjE2IiB5MT0iOTQiIHgyPSIyMDQiIHkyPSI5NCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTApIi8+CiAgICAgIDxsaW5lIHgxPSIxNiIgeTE9IjEyNCIgeDI9IjIwNCIgeTI9IjEyNCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTApIi8+CiAgICAgIDxsaW5lIHgxPSIxNiIgeTE9IjE1NCIgeDI9IjIwNCIgeTI9IjE1NCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTApIi8+CiAgICAgIDxsaW5lIHgxPSIxNiIgeTE9IjE4NCIgeDI9IjIwNCIgeTI9IjE4NCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTApIi8+CgogICAgICA8IS0tIGhpZ2hsaWdodGVkIGNlbGxzIC0tPgogICAgICA8cmVjdCB4PSIxNiIgeT0iNjQiIHdpZHRoPSI2MiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzM0RDM5OSIgb3BhY2l0eT0iMC4xOCIvPgogICAgICA8cmVjdCB4PSI3OCIgeT0iOTQiIHdpZHRoPSI2NCIgaGVpZ2h0PSIzMCIgZmlsbD0iIzVGQThGRiIgb3BhY2l0eT0iMC4xOCIvPgogICAgICA8cmVjdCB4PSIxNDIiIHk9IjE1NCIgd2lkdGg9IjYyIiBoZWlnaHQ9IjMwIiBmaWxsPSIjRjRBOTNCIiBvcGFjaXR5PSIwLjE4Ii8+CiAgICAgIDxyZWN0IHg9IjE2IiB5PSIxODQiIHdpZHRoPSI2MiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzM0RDM5OSIgb3BhY2l0eT0iMC4xMiIvPgogICAgPC9nPgoKICAgIDwhLS0gc21hbGwgZnggcGlsbCAtLT4KICAgIDxyZWN0IHg9IjE2IiB5PSIyMjYiIHdpZHRoPSI1NiIgaGVpZ2h0PSIxNiIgcng9IjgiIGZpbGw9IiMyODMyMjIiLz4KICAgIDx0ZXh0IHg9IjQ0IiB5PSIyMzciIGZvbnQtZmFtaWx5PSJJQk0gUGxleCBNb25vLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzg3OTM4QSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+PVNVTSgpPC90ZXh0PgoKICAgIDwhLS0gY2hlY2ttYXJrIGJhZGdlIC0tPgogICAgPGNpcmNsZSBjeD0iMTk2IiBjeT0iMjM0IiByPSIxNCIgZmlsbD0iIzM0RDM5OSIvPgogICAgPHBhdGggZD0iTTE5MCAyMzQgTDE5NSAyMzkgTDIwMyAyMjkiIHN0cm9rZT0iIzBBMEQwQiIgc3Ryb2tlLXdpZHRoPSIyLjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwvZz4KCiAgPCEtLSBtaW5pIGFzY2VuZGluZyBiYXIgY2hhcnQsIGZsb2F0aW5nIGJvdHRvbS1sZWZ0IC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2LDIyNCkiPgogICAgPHJlY3QgeD0iLTEyIiB5PSItMTIiIHdpZHRoPSIxMTgiIGhlaWdodD0iODYiIHJ4PSIxMiIgZmlsbD0iIzFGMjYxQyIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTQpIi8+CiAgICA8cmVjdCB4PSI2IiB5PSIzNCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjI4IiByeD0iMyIgZmlsbD0iIzM0RDM5OSIvPgogICAgPHJlY3QgeD0iMjgiIHk9IjE4IiB3aWR0aD0iMTQiIGhlaWdodD0iNDQiIHJ4PSIzIiBmaWxsPSIjNUZBOEZGIi8+CiAgICA8cmVjdCB4PSI1MCIgeT0iNiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjU2IiByeD0iMyIgZmlsbD0iI0Y0QTkzQiIvPgogICAgPHJlY3QgeD0iNzIiIHk9IjI0IiB3aWR0aD0iMTQiIGhlaWdodD0iMzgiIHJ4PSIzIiBmaWxsPSIjMzREMzk5Ii8+CiAgPC9nPgoKICA8IS0tIGZsb2F0aW5nIGZ1bmN0aW9uIHRhZywgdG9wLXJpZ2h0IC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMzMCw0MCkiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIzNCIgcng9IjEwIiBmaWxsPSIjMUYyNjFDIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xNCkiLz4KICAgIDx0ZXh0IHg9IjYwIiB5PSIyMiIgZm9udC1mYW1pbHk9IklCTSBQbGV4IE1vbm8sIG1vbm9zcGFjZSIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzVGQThGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+WExPT0tVUDwvdGV4dD4KICA8L2c+CgogIDwhLS0gZmxvYXRpbmcgcGVyY2VudCB0YWcsIG1pZC1yaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNTAsMTUwKSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iOTIiIGhlaWdodD0iMzQiIHJ4PSIxMCIgZmlsbD0iIzFGMjYxQyIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTQpIi8+CiAgICA8dGV4dCB4PSI0NiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJJQk0gUGxleCBNb25vLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNGNEE5M0IiIHRleHQtYW5jaG9yPSJtaWRkbGUiPis4NiU8L3RleHQ+CiAgPC9nPgo8L3N2Zz4K" alt="Ilustrasi lembar kerja Excel">
+        </div>
+      </div>
     </section>
 
-    <div class="posttest-container">     
-      <div class="posttest-icon">📋</div>
-      <h2>🎓 Uji Kompetensi Anda</h2>
-      <p>Selamat! Anda telah menyelesaikan seluruh 8 materi video. Klik tombol di bawah untuk mengerjakan Post Test di platform resmi kami.<br>
-      <strong>⚠️ Catatan:</strong> Post test bersifat wajib sebagai syarat kelulusan program ini.</p>
-      
-      <!-- TOMBOL POST TEST (LINK URL) -->
-      <a href="soal_top_leadership.html" target="_blank" class="btn-posttest-link" id="posttestLinkBtn">
-        ✍️ Kerjakan Post Test Sekarang →
-      </a>
-  
-      
+    <!-- SECTION 2 — DISCLAIMER -->
+    <section class="section" id="sec-disclaimer" data-cell="B9" data-fx='="Disclaimer — Internal Use Only"'>
+      <div class="cell-ref">SECTION 2 — PERINGATAN</div>
+      <div class="warning-box" role="note">
+        <div class="warning-icon" aria-hidden="true">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3L22 20H2L12 3Z" stroke-linejoin="round"/><path d="M12 10V14.5"/><circle cx="12" cy="17.2" r="0.9" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div>
+          <div class="warning-title">Disclaimer — Materi Internal</div>
+          <p class="warning-text">
+            Seluruh modul, video, dan materi pada platform e-learning ini merupakan <b>aset internal PT SSI</b>
+            dan hanya diperuntukkan bagi karyawan PT SSI. <b>Dilarang menyebarluaskan, mengunduh ulang, atau
+            membagikan tautan maupun materi ini kepada pihak di luar PT SSI</b> dalam bentuk apa pun, tanpa
+            izin tertulis dari Learning & Development PT SSI.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 — MODULES -->
+    <section class="section" id="sec-modules" data-cell="C14" data-fx='="Pilih Tingkatan Pelatihan"'>
+      <div class="cell-ref">SECTION 3 — MODUL PELATIHAN</div>
+      <div class="section-head">
+        <div class="icon-badge" style="background:var(--basic-soft); color:var(--basic);" aria-hidden="true">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </div>
+        <h2>Pilih Tingkatan yang Sesuai</h2>
+      </div>
+      <p class="modules-sub" style="margin-top:0; margin-bottom:20px;">Klik salah satu kotak di bawah untuk melihat detail modul sebelum menuju ke website pembelajaran.</p>
+
+      <div class="tabs-grid">
+        <button class="sheet-tab tab-basic" data-module="basic">
+          <div class="tab-row">
+            <span class="tab-index">Sheet 1</span>
+            <span class="tab-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg></span>
+          </div>
+          <h3>Excel Basic</h3>
+          <p>Fondasi mengoperasikan Excel: navigasi sel, rumus dasar, dan format tabel.</p>
+          <div class="tab-cta">Lihat detail modul →</div>
+        </button>
+
+        <button class="sheet-tab tab-inter" data-module="inter">
+          <div class="tab-row">
+            <span class="tab-index">Sheet 2</span>
+            <span class="tab-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M7 5v6.5L4 19h16l-3-7.5V5"/></svg></span>
+          </div>
+          <h3>Excel Intermediate</h3>
+          <p>VLOOKUP/XLOOKUP, PivotTable, dan teknik pembersihan data untuk laporan.</p>
+          <div class="tab-cta">Lihat detail modul →</div>
+        </button>
+
+        <button class="sheet-tab tab-advance" data-module="advance">
+          <div class="tab-row">
+            <span class="tab-index">Sheet 3</span>
+            <span class="tab-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2l1.8 4.5L18 8l-4.2 1.5L12 14l-1.8-4.5L6 8l4.2-1.5L12 2Z"/><path d="M19 14l.9 2.2L22 17l-2.1.8L19 20l-.9-2.2L16 17l2.1-.8L19 14Z"/></svg></span>
+          </div>
+          <h3>Excel Advance</h3>
+          <p>Power Query, makro/VBA dasar, dan dashboard untuk otomatisasi laporan.</p>
+          <div class="tab-cta">Lihat detail modul →</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 4 — RULES -->
+    <section class="section" id="sec-rules" data-cell="D24" data-fx='="Aturan E-Learning"'>
+      <div class="cell-ref">SECTION 4 — ATURAN</div>
+      <div class="rules-head">
+        <div class="section-head">
+          <div class="icon-badge" style="background:var(--basic-soft); color:var(--basic);" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 11l3 3 7-7"/><path d="M21 12a9 9 0 1 1-5.5-8.3"/></svg>
+          </div>
+          <h2>Aturan E-Learning</h2>
+        </div>
+        <p>Mohon dibaca sebelum memulai pelatihan agar proses belajar berjalan lancar.</p>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rule-row">
+          <div class="rule-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M5 3l14 7-6 2-2 6-6-15Z"/></svg></div>
+          <div class="rule-num">01</div>
+          <div class="rule-text">Silakan pilih modul yang sesuai. Jika Anda merasa <b>sudah pernah mengikuti Basic</b>, Anda tidak perlu mengikutinya kembali.</div>
+        </div>
+        <div class="rule-row">
+          <div class="rule-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div class="rule-num">02</div>
+          <div class="rule-text">Kerjakan <b>post test</b> sesuai dengan materi yang telah Anda pelajari.</div>
+        </div>
+        <div class="rule-row">
+          <div class="rule-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l8 4-8 4-8-4 8-4Z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg></div>
+          <div class="rule-num">03</div>
+          <div class="rule-text">Anda dapat mempelajari <b>satu tingkat saja</b> atau <b>seluruh tingkatan</b>, sesuai kebutuhan.</div>
+        </div>
+        <div class="rule-row">
+          <div class="rule-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/><path d="M4 21c0-3.9 3.6-7 8-7s8 3.1 8 7"/></svg></div>
+          <div class="rule-num">04</div>
+          <div class="rule-text"><b>Seluruh pegawai</b> PT SSI dapat mengikuti program ini.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© PT SSI — Learning & Development</span>
+    <span class="foot-lock">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+      Internal use only — tidak untuk disebarluaskan
+    </span>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Tutup">×</button>
+      <div class="modal-icon" id="modalIcon"></div>
+      <span class="modal-tag" id="modalTag"></span>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <a id="modalLink" class="modal-btn" target="_blank" rel="noopener noreferrer">Buka Modul →</a>
     </div>
   </div>
-</main>
-<footer>© 2025 E-Learning Leadership PT SSI · Program Pengembangan Kompetensi SDM</footer>
 
 <script>
-// ===================== DATA VIDEO ===================
-const videos = [
-
-  { id: 1, title: "Berkenalan dengan Query Editor Excel", desc: "Module-1 Materi Query Excel", src: "https://drive.google.com/file/d/1OBb8JQ1id-s0U2wqm_xH7fq7qiTFMaPl/preview", durasi: 120 },  
-
-  { id: 2, title: "Fungsi Get, Load dan Refresh Data Query", desc: "Module-2 Materi Query Excel", src: "https://drive.google.com/file/d/1RBgoaZBmGzmbsxkcCW-0RxxQzryp7try/preview", durasi: 120 },
-
-  { id: 3, title: "Perintah Query dasar  ", desc: "Module-3 Materi Query Excel", src: "https://drive.google.com/file/d/1iMgwRxiikDvXjiZGnCby9tlvCqvFqO0s/preview", durasi: 120 },
-
-
-  { id: 4, title: "Mengubah struktur data pada Query", desc: "Module-4 Materi Query Excel", src: "https://drive.google.com/file/d/1RWb0ZWnPj5PMnlJHFHxd8iOvsc2g2V0x/preview", durasi: 120 },
-
-  { id: 5, title: "Menggunakan Formula pada Query", desc: "Module-5 Materi Query Excel", src: "https://drive.google.com/file/d/1-_hMxBR35KiUD_IkwdDp5ykVjODRYXMQ/view?usp=drive_link", durasi: 120 },
-
-
-  { id: 6, title: "Membuat Rekap data pada Query ", desc: "Module-6 Materi Query Excel", src: "https://drive.google.com/file/d/1Hw-tZ-2A5vpSMXVswnhW8Wez41Zl1SPW/preview", durasi: 120 },
-
-  { id: 7, title: "Memeriksa data pada Query", desc: "Module-7 Materi Query Excel", src: "https://drive.google.com/file/d/1r4E_lJI-wDuNvSaMjfIgrWvhKQKAZNMQ/preview", durasi: 120 },
-
-
-  { id: 8, title: "TroubleShooting pada Query ", desc: "Module-8 Materi Query Excel", src: "", durasi: 120 }
-
-];
-
-let watchedCount = 0;        // jumlah video yg sudah ditandai selesai
-let activeTimer = null;
-
-function fmt(sec) { let m = Math.floor(sec/60); let s = sec%60; return `${m}:${s<10?'0'+s:s}`; }
-function killTimer() { if(activeTimer) { clearInterval(activeTimer); activeTimer = null; } }
-
-// Render video list
-function renderVideos() {
-  const container = document.getElementById('videoList');
-  if(!container) return;
-  container.innerHTML = '';
-  videos.forEach((v, idx) => {
-    const isDone = idx < watchedCount;
-    const isActive = (idx === watchedCount);
-    const isLocked = idx > watchedCount;
-    const badge = isDone ? '✓ Selesai' : isActive ? '▶ Aktif' : '🔒 Terkunci';
-    let playerHTML = '';
-    if(isActive) {
-      playerHTML = `
-        <div class="video-player-wrap">
-          <div class="video-note">⏱️ <strong>Aturan:</strong> Tonton minimal <strong>2 menit (120 detik)</strong> — setelah itu tombol "Tandai Selesai & Lanjut" akan aktif. Video tetap berjalan, Anda bebas memilih kapan lanjut.</div>
-          <div class="video-placeholder" id="ph-${idx}"><div class="placeholder-inner"><div class="placeholder-icon">▶</div><p>Tekan <strong>Mulai Menonton</strong><br>untuk memutar video</p></div></div>
-          <div class="video-embed" id="emb-${idx}" style="display:none;"></div>
-          <div class="watch-progress-wrap"><div class="watch-progress-bar" id="bar-${idx}"></div></div>
-          <div class="watch-time-row"><span class="watch-pct-label" id="pct-${idx}">⏳ Belum dimulai</span><span class="watch-time-label" id="tim-${idx}">0:00 / ${fmt(v.durasi)}</span></div>
-          <div style="display:flex;gap:10px;margin-top:14px;"><button class="btn-simulate" id="bsim-${idx}">▶ Mulai Menonton</button><button class="btn-next-video" id="bnxt-${idx}" disabled>Tandai Selesai & Lanjut →</button></div>
-          <p style="font-size:11px;color:#6b7a99;margin-top:8px;">* Setelah 120 detik, tombol selesai aktif meski video masih berjalan.</p>
-        </div>`;
+  const moduleData = {
+    basic: {
+      tag: 'Sheet 1 — Excel Basic',
+      tagColor: 'var(--basic)',
+      tagBg: 'var(--basic-soft)',
+      title: 'Excel Basic — Fondasi Mengolah Data',
+      desc: 'E-learning Basic Excel pernah kami lakukan pada tanggal 23 feb - 09 Maret 2026. Terdapat 15 Module yang telah kami sediakan. Bagi yang sudah pernah mengikuti silahkan pilih Materi Excel Intermediate . Namun bagi  yang belum silahkan anda mengikuti dari basic terlebih dahulu  ',
+      link: 'excel-basic.html',
+      icon: '<svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg>'
+    },
+    inter: {
+      tag: 'Sheet 2 — Excel Intermediate',
+      tagColor: 'var(--inter)',
+      tagBg: 'var(--inter-soft)',
+      title: 'Excel Intermediate — Analisis Data Lebih Dalam',
+      desc: 'E-learning Excel tingkat Intermediate akan dimulai tanggal 29 Juni hingga bulan Juli 2026.  Tingkatkan kemampuan Anda untuk mengenal Slicer , PivotTable, membuat suatu Dashboard dan mengenal apa itu QUERY pada Excel ',
+      link: 'excel-intermediate.html',
+      icon: '<svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M7 5v6.5L4 19h16l-3-7.5V5"/></svg>'
+    },
+    advance: {
+      tag: 'Sheet 3 — Excel Advance',
+      tagColor: 'var(--advance)',
+      tagBg: 'var(--advance-soft)',
+      title: 'Excel Advance — Otomatisasi & Dashboard',
+      desc: 'Pada E-Learning level Advance akan dimulai di Bulan Agustus 2026 . Team Training & Development akan menginformasikan kembali ',
+      link: 'excel-advance.html',
+      icon: '<svg class="icon" viewBox="0 0 24 24"><path d="M12 2l1.8 4.5L18 8l-4.2 1.5L12 14l-1.8-4.5L6 8l4.2-1.5L12 2Z"/><path d="M19 14l.9 2.2L22 17l-2.1.8L19 20l-.9-2.2L16 17l2.1-.8L19 14Z"/></svg>'
     }
-    const div = document.createElement('div');
-    div.className = `video-item ${isDone?'done':''} ${isActive?'active':''} ${isLocked?'locked':''}`;
-    div.id = `vi-${idx}`;
-    div.innerHTML = `<div class="video-header" onclick="handleLockedClick(${idx})"><div class="video-num">${isDone?'✓':v.id}</div><div class="video-info"><h4>${v.title}</h4><p>${v.desc} · ${fmt(v.durasi)}</p></div><span class="video-status">${badge}</span></div>${playerHTML}`;
-    container.appendChild(div);
+  };
+
+  const overlay = document.getElementById('modalOverlay');
+  const modalTag = document.getElementById('modalTag');
+  const modalIcon = document.getElementById('modalIcon');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalLink = document.getElementById('modalLink');
+  const modalClose = document.getElementById('modalClose');
+  let lastFocused = null;
+
+  function openModal(key){
+    const data = moduleData[key];
+    if(!data) return;
+    modalTag.textContent = data.tag;
+    modalTag.style.color = data.tagColor;
+    modalTag.style.background = data.tagBg;
+    modalIcon.innerHTML = data.icon;
+    modalIcon.style.color = data.tagColor;
+    modalIcon.style.background = data.tagBg;
+    modalTitle.textContent = data.title;
+    modalDesc.textContent = data.desc;
+    modalLink.href = data.link;
+    modalLink.style.background = data.tagColor;
+    lastFocused = document.activeElement;
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    modalClose.focus();
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.removeEventListener('keydown', onKeydown);
+    if(lastFocused) lastFocused.focus();
+  }
+
+  function onKeydown(e){
+    if(e.key === 'Escape') closeModal();
+  }
+
+  document.querySelectorAll('.sheet-tab').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.module));
   });
-  if(watchedCount < videos.length){
-    const act = watchedCount;
-    const startBtn = document.getElementById(`bsim-${act}`);
-    if(startBtn) { let clone = startBtn.cloneNode(true); startBtn.parentNode.replaceChild(clone, startBtn); clone.addEventListener('click',()=>startWatching(act)); }
-    const nextBtn = document.getElementById(`bnxt-${act}`);
-    if(nextBtn) { let clone2 = nextBtn.cloneNode(true); nextBtn.parentNode.replaceChild(clone2, nextBtn); clone2.addEventListener('click',()=>markDone(act)); }
-  }
-  updateTopProgress();
-}
+  modalClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
 
-function handleLockedClick(idx){ if(idx > watchedCount){ document.getElementById(`vi-${idx}`)?.animate([{transform:'translateX(0)'},{transform:'translateX(6px)'},{transform:'translateX(-6px)'},{transform:'translateX(0)'}],{duration:260}); } }
+  /* Name box + formula bar sync with current section */
+  const nameBox = document.getElementById('nameBox');
+  const fxValue = document.getElementById('fxValue');
+  const sections = document.querySelectorAll('.section');
 
-function startWatching(idx){
-  if(idx !== watchedCount) return;
-  killTimer();
-  const btnSim = document.getElementById(`bsim-${idx}`);
-  const phDiv = document.getElementById(`ph-${idx}`);
-  const embDiv = document.getElementById(`emb-${idx}`);
-  const bar = document.getElementById(`bar-${idx}`);
-  const pctSpan = document.getElementById(`pct-${idx}`);
-  const timeSpan = document.getElementById(`tim-${idx}`);
-  const nextBtn = document.getElementById(`bnxt-${idx}`);
-  const totalDur = videos[idx].durasi;
-  if(!embDiv) return;
-  if(phDiv) phDiv.style.display = 'none';
-  embDiv.style.display = 'block';
-  const oldIframe = embDiv.querySelector('iframe');
-  if(oldIframe) oldIframe.remove();
-  const iframe = document.createElement('iframe');
-  iframe.src = videos[idx].src;
-  iframe.allow = "autoplay; fullscreen";
-  iframe.style.width="100%"; iframe.style.height="100%";
-  embDiv.appendChild(iframe);
-  btnSim.disabled = true;
-  btnSim.innerHTML = '⏳ Memutar...';
-  let elapsed = 0;
-  let unlocked = false;
-  activeTimer = setInterval(() => {
-    elapsed++;
-    let percent = Math.min((elapsed/totalDur)*100,100);
-    if(bar) bar.style.width = percent+'%';
-    if(pctSpan) pctSpan.textContent = `${Math.floor(percent)}% ditonton`;
-    if(timeSpan) timeSpan.textContent = `${fmt(elapsed)} / ${fmt(totalDur)}`;
-    if(!unlocked && elapsed >= 120){
-      unlocked = true;
-      if(nextBtn){
-        nextBtn.disabled = false;
-        if(pctSpan) pctSpan.innerHTML = '✅ 2 menit tercapai! Klik "Tandai Selesai" untuk lanjut';
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && entry.intersectionRatio > 0.4){
+        nameBox.textContent = entry.target.dataset.cell;
+        fxValue.textContent = entry.target.dataset.fx;
       }
-    }
-    if(elapsed >= totalDur && !unlocked){
-      if(nextBtn) nextBtn.disabled = false;
-      unlocked = true;
-    }
-  }, 1000);
-}
+    });
+  }, { threshold: [0.4] });
 
-function markDone(idx){
-  if(idx !== watchedCount) return;
-  killTimer();
-  watchedCount = idx+1;
-  renderVideos();
-  if(watchedCount === videos.length){
-    showPostTestSection();
-  } else {
-    setTimeout(()=>{ document.getElementById(`vi-${watchedCount}`)?.scrollIntoView({behavior:'smooth', block:'center'}); },150);
-  }
-}
-
-function updateTopProgress(){
-  let percent = (watchedCount/videos.length)*100;
-  document.getElementById('progressBar').style.width = percent+'%';
-  document.getElementById('progressCount').innerHTML = `${watchedCount} / ${videos.length}`;
-}
-
-// Menampilkan section post test setelah semua video selesai
-function showPostTestSection(){
-  const postDiv = document.getElementById('section-posttest');
-  if(postDiv) postDiv.classList.add('visible');
-  
-  // Ganti link post test (bisa disesuaikan URL nya)
-  const postLink = document.getElementById('posttestLinkBtn');
-  if(postLink){
-    // GANTI URL POST TEST DI SINI sesuai kebutuhan
-    postLink.href = "soal_top_leadership.html";  // <-- GANTI DENGAN LINK POST TEST ANDA
-  }
-}
-
-renderVideos();
+  sections.forEach(sec => observer.observe(sec));
 </script>
+
 </body>
 </html>
