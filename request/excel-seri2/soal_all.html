@@ -30,6 +30,8 @@
   --white:      #FFFFFF;
   --shadow:     0 8px 40px rgba(13,31,20,.13);
   --radius:     18px;
+  --red-bg:     #FFF0EE;
+  --red-warn:   #C0392B;
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -53,6 +55,9 @@ body::before {
   pointer-events:none;
   z-index:0;
 }
+
+.disc-body { font-size: .9rem; color: #7A2A22; line-height: 1.6; }
+  .disc-body strong { color: var(--red-warn); }
 
 .page-wrap {
   position:relative;
@@ -286,6 +291,31 @@ body::before {
 }
 .btn-submit:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(29,106,53,.35); }
 
+/* ─── DISCLAIMER ─── */
+  .disclaimer {
+    background: var(--red-bg);
+    border: 1.5px solid #E8998F;
+    border-left: 5px solid var(--red-warn);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .disc-icon {
+    width: 38px; height: 38px; min-width: 38px;
+    background: var(--red-warn); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .disc-icon svg { width: 20px; height: 20px; fill: white; }
+  .disc-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: .9rem; color: var(--red-warn);
+    text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px;
+  }
+  .disc-body { font-size: .9rem; color: #7A2A22; line-height: 1.6; }
+  .disc-body strong { color: var(--red-warn); }
+
+
 /* ── RESULT ── */
 #hasilBox {
   text-align:center;
@@ -378,7 +408,17 @@ body::before {
   <header class="site-header">
     <div class="header-badge"><i class="bi bi-mortarboard-fill"></i> PT SSI</div>
     <h1>Pelatihan <span>Online</span><br>PT SSI</h1>
-    <p id="temaPelatihan">Post Test Microsoft Excel Skills </p>
+      <br>  
+
+    <div class="disclaimer">    
+      <div>
+        <div class="disc-title">Penting — Harap Dibaca !</div>
+        <div class="disc-body">
+          Post Test ini merupakan asesmen akhir yang mengintegrasikan seluruh kompetensi Microsoft Excel dan merupakan evaluasi komprehensif yang mencakup seluruh materi Microsoft Excel, mulai dari Level Basic, Intermediate, hingga Advanced.
+        </div>
+      </div>
+    </div>
+
     <div class="ornament">
       <div class="ornament-line"></div>
       <div class="ornament-diamond"></div>
@@ -633,7 +673,7 @@ function generateNoSertifikat(){
 /* ── SERTIFIKAT CANVA-STYLE ── */
 function cetakSertifikat(){
   const noSert   = generateNoSertifikat();
-  const tema     = document.getElementById("temaPelatihan").innerText.trim();
+  const tema     = document.getElementById("temaPelatihan") ? document.getElementById("temaPelatihan").innerText.trim() : "";
   const tglCetak = new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 
   const cert = `<!DOCTYPE html>
