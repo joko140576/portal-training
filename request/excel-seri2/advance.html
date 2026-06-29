@@ -569,8 +569,8 @@
       <h1>Kuasai <em>Excel Tingkat Advance</em><br>untuk Produktivitas Maksimal</h1>
       <p>Program pembelajaran terstruktur untuk meningkatkan kemampuan Excel dan dirancang khusus untuk kebutuhan tim PT SSI.</p>
       <div class="hero-stats">
-        <div class="hero-stat"><strong>3</strong><span>Modul</span></div>
-        <div class="hero-stat"><strong>15</strong><span>Total Video</span></div>
+        <div class="hero-stat"><strong>2</strong><span>Modul</span></div>
+        <div class="hero-stat"><strong>10</strong><span>Total Video</span></div>
         <div class="hero-stat"><strong>Self-paced</strong><span>Belajar Mandiri</span></div>
       </div>
     </div>
@@ -607,11 +607,11 @@
       <!-- Card 1: modul 1-->
       <div class="card">
         <div class="card-icon">📊</div>
-        <h3>Module Basic - 1</h3>
-        <p>pada Module ini kita akan belajar : Format tabel,Data validasi,Conditional Formating,Trim & Proper,dan fungsi Consolidate  </p>
+        <h3>Business Intelligence (BI) di Excel </h3>
+        <p>adalah sekumpulan fitur yang digunakan untuk mengumpulkan, mengolah, menganalisis, dan menyajikan data sehingga menjadi informasi yang membantu pengambilan keputusan. </p>
         <div class="card-meta">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
-          5 Video pembelajaran 
+          6 Video pembelajaran 
         </div>
         <button class="btn-learn" onclick="goToModule('modul_1')">▶ Klik untuk Belajar!</button>
       </div>
@@ -619,28 +619,17 @@
       <!-- Card 2: modul 2-->
       <div class="card">
         <div class="card-icon">🔍</div>
-        <h3>Modul Basic - 2</h3>
-        <p>belajar : Fungsi Sumif, Sumifs , Dsum, Count, Countif , Countifs,  Min , Max, Average, Averageif , AverageIfs, dan Text to colom , Flash Fill & transpose
+        <h3>DAX (Data Analysis Expressions)</h3>
+        <p>bahasa rumus (formula language) yang digunakan di Excel (Power Pivot), Microsoft Power BI, dan SQL Server Analysis Services untuk membuat perhitungan yang lebih canggih daripada rumus Excel biasa.
         </p>
         <div class="card-meta">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
-           5 video pembelajaran 
+           2 video pembelajaran 
         </div>
         <button class="btn-learn" onclick="goToModule('modul_2')">▶ Klik untuk Belajar!</button>
       </div>
 
-      <!-- Card 3:modul 3 -->
-      <div class="card">
-        <div class="card-icon">📈</div>
-        <h3>Modul basic - 3</h3>
-        <p>Belajar : Fungsi If , Ifs ,VlookUp, HlookUp, Unique, Filter, Sub Total, Index Match & Xlookup </p>
-        <div class="card-meta">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
-          5 Video Pembelajaran
-        </div>
-        <button class="btn-learn" onclick="goToModule('modul_3')">▶ Klik untuk Belajar!</button>
-      </div>
-
+      
     
     </div>
 
@@ -752,56 +741,37 @@
   // Ganti FILE_ID dengan ID file asli dari Google Drive Anda
   const modules = {
     modul_1: {
-      eyebrow: 'Modul 1',
-      title: 'Module Basic - 1',
-      desc: 'Format tabel,Data validasi,Conditional Formating,Trim & Proper,dan fungsi Consolidate',
+      eyebrow: 'Module 1',
+      title: 'Business Intelegence Excel - Part 1',
+      desc: 'proses, metode, dan teknologi yang digunakan untuk mengumpulkan, mengolah, menganalisis, dan menyajikan data sehingga menjadi informasi yang berguna untuk mendukung pengambilan keputusan bisnis.',
       icon: '📊',
       videos: [
-        { id: 1, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
+        { id: 1, title: 'Pengantar Business Intelegence pada Excel ',   duration: '10:09', url: 'https://drive.google.com/file/d/1aTir9O8N9n_My18QdO7OyX_p_PKy9Bk1/preview' },  
 
-        { id: 2, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
+        { id: 2, title: 'data Model dengan Power Pivot',   duration: '22:33', url: 'https://drive.google.com/file/d/1618M9rI6kb1IuCCnQEO6u5AEsiMG9rAf/preview' },  
             
-        { id: 3, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
+        { id: 3, title: 'Relasi data dengan Power Pivot',   duration: '27:15', url: 'https://drive.google.com/file/d/1A31IsAPgesdS2HWIjI8pwuvTMq3uetq9/preview' },  
           
-        { id: 4, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
+        { id: 4, title: 'Pengenalan DAX ',   duration: '18:44', url: 'https://drive.google.com/file/d/1nhAO-7mrLYmcLv_h_PbUEp_hUb1autzD/view?usp=drive_link/preview' },  
           
-        { id: 5, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },             
+        { id: 5, title: ' Mengenal Fungsi DAX Time Intelligence',   duration: '16:10', url: 'https://drive.google.com/file/d/1YN1d9JHIOqNGyW9XKbMG3HGspxBiWCh3/preview' }, 
+
+        { id: 6, title: 'Menggunakan Power Query Editor ',   duration: '23:05', url: 'https://drive.google.com/file/d/1P9-KwQx19IuuYK7AWncvjmd4TY1PCVfZ/preview' },                       
       ]
     },
     modul_2: {
-      eyebrow: 'Modul 2',
-      title: 'Module Basic - 2',
-      desc: 'Fungsi Sumif, Sumifs , Dsum, Count, Countif , Countifs,  Min , Max, Average, Averageif , AverageIfs, dan Text to colom , Flash Fill & transpose',
+      eyebrow: 'Module 2',
+      title: 'Pembahasan lebih dalam tentang DAX',
+      desc: 'adalah bahasa rumus yang digunakan untuk membuat perhitungan dan analisis data pada Power Pivot di Excel, Microsoft Power BI, dan SQL Server Analysis Services.',
       icon: '🔍',
       videos: [
         
-        { id: 1, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
+        { id: 1, title: 'Mengenal DAX Calculated Column',   duration: '37:12', url: 'https://drive.google.com/file/d/1tTuSZQWX4glqIdcGfdnY7GepaZL6oGB_/preview' },  
 
-        { id: 2, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
+        { id: 2, title: 'Mengenal DAX Calculated Field',   duration: '28:23', url: 'https://drive.google.com/file/d/1sFmhG9VM9yTaFvOnXPEGJBfXTRR1F9iJ/preview' },  
             
-        { id: 3, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
-          
-        { id: 4, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
-          
-        { id: 5, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
-                
-      ]
-    },
-    modul_3: {
-      eyebrow: 'Modul 3',
-      title: 'Module Basic - 3',
-      desc: 'Fungsi If , Ifs ,VlookUp, HlookUp, Unique, Filter, Sub Total, Index Match & Xlookup',
-      icon: '📈',
-      videos: [
-        { id: 1, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
-
-        { id: 2, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
-            
-        { id: 3, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
-          
-        { id: 4, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
-          
-        { id: 5, title: 'Manfaat Slicer untuk Visualisasi dan Analisis Data',   duration: '7:58', url: 'https://drive.google.com/file/d/1xxm0-pAMxjsbq-Z0KcAG8CrNDiDZT8Db/preview' },  
+    
+    
                 
       ]
     }
