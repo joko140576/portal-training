@@ -531,6 +531,104 @@
     padding: 20px; font-size: .78rem; color: rgba(255,255,255,.35);
   }
 
+   .module-action{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    margin-top:25px;
+}
+
+.action-card{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    background:#fff;
+    border-radius:16px;
+    padding:22px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.action-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.10);
+}
+
+.action-icon{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    flex-shrink:0;
+}
+
+.pdf-card .action-icon{
+    background:#fdecec;
+}
+
+.next-card .action-icon{
+    background:#eaf8ef;
+}
+
+.action-content{
+    flex:1;
+}
+
+.action-content h4{
+    margin:0;
+    color:#1f2937;
+    font-size:19px;
+}
+
+.action-content p{
+    margin-top:6px;
+    color:#6b7280;
+    line-height:1.5;
+}
+
+.btn-action{
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:10px;
+    font-weight:600;
+    color:#fff;
+    transition:.25s;
+    white-space:nowrap;
+}
+
+.btn-pdf{
+    background:#e53935;
+}
+
+.btn-pdf:hover{
+    background:#c62828;
+}
+
+.btn-next{
+    background:#2e7d32;
+}
+
+.btn-next:hover{
+    background:#1b5e20;
+}
+
+@media (max-width:768px){
+
+    .action-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .btn-action{
+        width:100%;
+    }
+
+} 
+    
   /* ─── RESPONSIVE ─── */
   @media (max-width: 600px) {
     .hero { padding: 48px 20px 40px; }
@@ -645,17 +743,54 @@
     
     </div>
 
-    <!-- Post Test Bar -->
-    <div class="posttest-bar">
-      <div class="posttest-text">
-        <h4>🏁 Selesai Menonton Semua Materi?</h4>
-        <p>Uji pemahaman Anda dengan mengerjakan soal Post Test.</p>
-      </div>
-      <button class="btn-posttest" onclick="openModal()">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        Post Test!
-      </button>
+ 
+
+    <div class="module-action">
+
+    <!-- Card PDF -->
+    <div class="action-card pdf-card">
+        <div class="action-icon">📄</div>
+
+        <div class="action-content">
+            <h4>File Materi PDF</h4>
+            <p>Unduh materi pembelajaran dalam format PDF sebagai bahan belajar dan referensi.</p>
+        </div>
+
+        <a href="https://drive.google.com/file/d/FILE_ID/view"
+           target="_blank"
+           class="btn-action btn-pdf">
+            Download PDF
+        </a>
     </div>
+
+    <!-- Card Next -->
+    <div class="action-card next-card">
+        <div class="action-icon">✅</div>
+
+        <div class="action-content">
+            <h4>Materi Telah Selesai</h4>
+            <p>Selamat! Anda telah menyelesaikan modul ini. Silakan lanjutkan ke materi berikutnya.</p>
+        </div>
+
+        <a href="module4.html"
+           class="btn-action btn-next">
+            Modul Berikutnya →
+        </a>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
   </div>
 
