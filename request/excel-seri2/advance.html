@@ -569,8 +569,8 @@
       <h1>Kuasai <em>Excel Tingkat Advance</em><br>untuk Produktivitas Maksimal</h1>
       <p>Program pembelajaran terstruktur untuk meningkatkan kemampuan Excel dan dirancang khusus untuk kebutuhan tim PT SSI.</p>
       <div class="hero-stats">
-        <div class="hero-stat"><strong>2</strong><span>Modul</span></div>
-        <div class="hero-stat"><strong>10</strong><span>Total Video</span></div>
+        <div class="hero-stat"><strong>3</strong><span>Modul</span></div>
+        <div class="hero-stat"><strong>14</strong><span>Total Video</span></div>
         <div class="hero-stat"><strong>Self-paced</strong><span>Belajar Mandiri</span></div>
       </div>
     </div>
@@ -628,6 +628,20 @@
         </div>
         <button class="btn-learn" onclick="goToModule('modul_2')">▶ Klik untuk Belajar!</button>
       </div>
+
+      <!-- Card 3: modul 3-->
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>What-If Analysis</h3>
+        <p>Adalah fitur untuk menganalisis berbagai kemungkinan hasil dengan mengubah nilai input pada suatu rumus, tanpa harus mengubah data secara permanen
+        </p>
+        <div class="card-meta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+           4 video pembelajaran 
+        </div>
+        <button class="btn-learn" onclick="goToModule('modul_3')">▶ Klik untuk Belajar!</button>
+      </div>
+      
 
       
     
@@ -742,7 +756,7 @@
   const modules = {
     modul_1: {
       eyebrow: 'Module 1',
-      title: 'Business Intelegence Excel - Part 1',
+      title: 'Business Intelegence Excel ',
       desc: 'proses, metode, dan teknologi yang digunakan untuk mengumpulkan, mengolah, menganalisis, dan menyajikan data sehingga menjadi informasi yang berguna untuk mendukung pengambilan keputusan bisnis.',
       icon: '📊',
       videos: [
@@ -759,6 +773,7 @@
         { id: 6, title: 'Menggunakan Power Query Editor ',   duration: '23:05', url: 'https://drive.google.com/file/d/1P9-KwQx19IuuYK7AWncvjmd4TY1PCVfZ/preview' },                       
       ]
     },
+
     modul_2: {
       eyebrow: 'Module 2',
       title: 'Pembahasan lebih dalam tentang DAX',
@@ -768,13 +783,29 @@
         
         { id: 1, title: 'Mengenal DAX Calculated Column',   duration: '37:12', url: 'https://drive.google.com/file/d/1tTuSZQWX4glqIdcGfdnY7GepaZL6oGB_/preview' },  
 
-        { id: 2, title: 'Mengenal DAX Calculated Field',   duration: '28:23', url: 'https://drive.google.com/file/d/1sFmhG9VM9yTaFvOnXPEGJBfXTRR1F9iJ/preview' },  
+        { id: 2, title: 'Mengenal DAX Calculated Field',   duration: '28:23', url: 'https://drive.google.com/file/d/1sFmhG9VM9yTaFvOnXPEGJBfXTRR1F9iJ/preview' },
+               
+      ]
+    },
+
+    modul_3: {
+      eyebrow: 'Module 3',
+      title: 'What-If Analysis',
+      desc: 'What-If Analysis di Excel adalah fitur untuk menganalisis berbagai kemungkinan hasil dengan mengubah nilai input pada suatu rumus, tanpa harus mengubah data secara permanen',
+      icon: '🎯',
+      videos: [
+        { id: 1, title: 'Part 1 : Pengenalan What If Analysis ',   duration: '15:37', url: 'https://drive.google.com/file/d/1WiDsAgSKnnBKi8FNNj8WvG4-sF51X3k4/preview' },  
+
+        { id: 2, title: 'Part 2 : Goal Seek ',   duration: '10:15', url: 'https://drive.google.com/file/d/1oEXtP9rkdt9RUZ9I8fwxW117ktAnPksJ/preview' },  
             
-    
-    
-                
+        { id: 3, title: 'Part 3 : Data table',   duration: '21:14', url: 'https://drive.google.com/file/d/1T14NOeZDRKUZogDe2XTlo0Lf6fwOJIDy/preview' },  
+          
+        { id: 4, title: 'Part 4 :  Solver  ',   duration: '37:51', url: 'https://drive.google.com/file/d/1K9deuzJ3M4Kp4dj8dSBe3ORjxrvgma13/preview' },  
+                        
       ]
     }
+
+
   };
 
   // ─── STATE ───
