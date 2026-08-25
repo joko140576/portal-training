@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pelatihan Desain Google SketchUp</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+  :root{
+    --navy: #0E1B2E;
+    --navy-deep: #081222;
+    --paper: #F5F1E6;
+    --paper-line: #E4DCC6;
+    --blue-line: #6FA8D8;
+    --orange: #FF7A3D;
+    --orange-deep: #E4611F;
+    --ink: #16202E;
+    --muted: #8393AA;
+    --green: #3F7D58;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.display-font{
+    font-family:'Space Grotesk', sans-serif;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:.08em;
+  }
+
+  /* ============ BLUEPRINT GRID BACKGROUND ============ */
+  .blueprint-bg{
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(rgba(111,168,216,.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(111,168,216,.14) 1px, transparent 1px),
+      linear-gradient(rgba(111,168,216,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(111,168,216,.06) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    position:relative;
+  }
+
+  .paper-texture{
+    background-image:
+      linear-gradient(rgba(14,27,46,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,27,46,.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    padding: 110px 0 90px;
+    color: var(--paper);
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color: var(--orange);
+    font-size:.78rem;
+    text-transform:uppercase;
+    padding: 6px 14px;
+    border:1px solid rgba(255,122,61,.5);
+    border-radius:100px;
+    background: rgba(255,122,61,.08);
+  }
+
+  .eyebrow .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--orange);
+    box-shadow:0 0 0 3px rgba(255,122,61,.25);
+  }
+
+  .hero h1{
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight:700;
+    line-height:1.05;
+    margin: 22px 0 8px;
+  }
+
+  .hero-sketch-underline{
+    display:block;
+    width: min(560px, 90%);
+    height: 22px;
+    margin-top:4px;
+  }
+
+  .hero-sketch-underline path{
+    fill:none;
+    stroke: var(--orange);
+    stroke-width:5;
+    stroke-linecap:round;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: draw 1.6s ease-out .4s forwards;
+  }
+
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .hero-lead{
+    color:#B9C6DA;
+    font-size:1.08rem;
+    max-width: 620px;
+    margin-top:26px;
+  }
+
+  .hero-visual{
+    position:relative;
+  }
+
+  .cube-wire{
+    width:100%;
+    max-width:420px;
+  }
+
+  .cube-wire .edge{
+    fill:none;
+    stroke: var(--blue-line);
+    stroke-width:1.6;
+    opacity:.85;
+  }
+  .cube-wire .edge-front{ stroke: var(--orange); stroke-width:2.2; }
+  .cube-wire .corner{ fill: var(--orange); }
+
+  .stat-tag{
+    position:absolute;
+    background: rgba(11,29,58,.85);
+    border:1px solid rgba(111,168,216,.4);
+    color:var(--paper);
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    padding:6px 10px;
+    border-radius:6px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ============ SECTION LABEL SYSTEM ============ */
+  .modul-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.8rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color: var(--orange-deep);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+  }
+
+  .modul-label::before{
+    content:"";
+    width:34px;
+    height:2px;
+    background: var(--orange-deep);
+  }
+
+  section{ padding: 90px 0; }
+
+  .section-title{
+    font-weight:700;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    color: var(--navy);
+    margin-bottom: 18px;
+  }
+
+  .divider-line{
+    border:none;
+    border-top:1.5px dashed var(--paper-line);
+    margin: 0 0 60px;
+  }
+
+  /* ============ DEFINISI CARDS (section 1) ============ */
+  .def-card{
+    background:#fff;
+    border:1px solid var(--paper-line);
+    border-radius:14px;
+    padding:28px 26px;
+    height:100%;
+    position:relative;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .def-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 16px 34px rgba(14,27,46,.10);
+    border-color: rgba(255,122,61,.4);
+  }
+  .def-card .icon-box{
+    width:52px;height:52px;
+    border-radius:10px;
+    background: var(--navy);
+    color: var(--orange);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.25rem;
+    margin-bottom:18px;
+  }
+  .def-card h3{
+    font-size:1.15rem;
+    font-weight:600;
+    margin-bottom:10px;
+    color: var(--navy);
+  }
+  .def-card p{
+    color:#5B6B80;
+    font-size:.95rem;
+    margin:0;
+  }
+
+  /* ============ DOWNLOAD SECTION ============ */
+  .download-panel{
+    background: var(--navy);
+    border-radius: 22px;
+    padding: 56px 46px;
+    position:relative;
+    overflow:hidden;
+    color: var(--paper);
+  }
+  .download-panel::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(111,168,216,.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(111,168,216,.12) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(ellipse at 70% 40%, black 0%, transparent 70%);
+  }
+  .download-panel .content{ position:relative; z-index:2; }
+
+  .btn-download{
+    background: var(--orange);
+    color:#1A0F06;
+    font-weight:700;
+    padding: 16px 34px;
+    border-radius: 12px;
+    border:none;
+    font-size:1.05rem;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    box-shadow: 0 12px 30px rgba(255,122,61,.35);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-download:hover{
+    background: #ff8b53;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 38px rgba(255,122,61,.5);
+    color:#1A0F06;
+  }
+  .btn-download i{ font-size:1.3rem; }
+
+  .file-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.76rem;
+    color:#B9C6DA;
+    border:1px solid rgba(111,168,216,.35);
+    padding:6px 12px;
+    border-radius:100px;
+    margin-top:22px;
+  }
+
+  /* ============ VIDEO CARDS ============ */
+  .video-card{
+    background:#fff;
+    border:1px solid var(--paper-line);
+    border-radius:16px;
+    overflow:hidden;
+    margin-bottom:48px;
+    box-shadow: 0 4px 14px rgba(14,27,46,.04);
+  }
+
+  .video-card:last-child{
+    margin-bottom:0;
+  }
+
+  .video-card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 24px;
+    background: var(--navy);
+    color: var(--paper);
+  }
+
+  .video-card-header .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    color: var(--orange);
+    display:block;
+    margin-bottom:2px;
+  }
+
+  .video-card-header h3{
+    font-size:1.15rem;
+    font-weight:600;
+    margin:0;
+  }
+
+  .video-card-header .zoom-btn{
+    background: rgba(255,122,61,.15);
+    border:1px solid rgba(255,122,61,.5);
+    color: var(--orange);
+    width:40px;height:40px;
+    border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .video-card-header .zoom-btn:hover{
+    background: var(--orange);
+    color: var(--navy-deep);
+    transform: scale(1.06);
+  }
+
+  .video-frame-wrap{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    background: #0B1420;
+  }
+  .video-frame-wrap iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+  }
+
+  .latihan-badge{
+    background: rgba(63,125,88,.15);
+    border:1px solid rgba(63,125,88,.5);
+    color: var(--green);
+  }
+  .latihan-badge-header{
+    background: #16302A;
+  }
+
+  /* ============ MODAL ZOOM ============ */
+  .modal-content{
+    background: var(--navy-deep);
+    border:none;
+    border-radius:16px;
+  }
+  .modal-header{
+    border-bottom:1px solid rgba(111,168,216,.2);
+    color: var(--paper);
+  }
+  .modal-header .btn-close{ filter: invert(1); }
+  .modal-video-wrap{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+  }
+  .modal-video-wrap iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+  }
+
+  /* ============ CLOSING SECTION ============ */
+  .closing{
+    background: var(--navy);
+    color: var(--paper);
+    text-align:center;
+    padding: 100px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .closing .checkmark-wrap{
+    width:84px;height:84px;
+    border-radius:50%;
+    border:2px solid var(--orange);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 28px;
+    background: rgba(255,122,61,.08);
+  }
+  .closing h2{
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight:700;
+    margin-bottom:16px;
+  }
+  .closing p{
+    color:#B9C6DA;
+    max-width:560px;
+    margin: 0 auto;
+    font-size:1.05rem;
+  }
+  .closing .signature{
+    margin-top:46px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.8rem;
+    color: var(--orange);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+
+  footer{
+    background: var(--navy-deep);
+    color:#7C8AA0;
+    font-size:.85rem;
+    text-align:center;
+    padding: 22px 0;
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  @media (max-width:767px){
+    .download-panel{ padding:40px 24px; }
+    section{ padding:64px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ SECTION 1 : HERO / DEFINISI ============ -->
+<header class="blueprint-bg">
+  <div class="container hero">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <span class="eyebrow"><span class="dot"></span> Program Pelatihan Desain 3D</span>
+        <h1>Pelatihan Desain<br>Google SketchUp</h1>
+        <svg class="hero-sketch-underline" viewBox="0 0 560 22" preserveAspectRatio="none">
+          <path d="M4,14 C120,4 200,20 300,10 C400,2 480,18 556,8"></path>
+        </svg>
+        <p class="hero-lead">
+          SketchUp adalah perangkat lunak pemodelan 3D yang digunakan untuk merancang bangunan, interior,
+          furnitur, hingga lanskap secara cepat dan intuitif. Pelatihan ini disusun agar peserta memahami
+          <em>arti</em>, <em>maksud</em>, dan <em>tujuan</em> penggunaan SketchUp dalam proses desain nyata,
+          mulai dari dasar hingga siap diterapkan pada proyek.
+        </p>
+      </div>
+      <div class="col-lg-5 hero-visual">
+        <svg class="cube-wire" viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="edge" points="90,120 250,80 250,240 90,280"></polygon>
+          <polygon class="edge-front" points="90,280 250,240 340,290 180,330"></polygon>
+          <polygon class="edge" points="250,80 340,130 340,290 250,240"></polygon>
+          <line class="edge" x1="90" y1="120" x2="180" y2="170"></line>
+          <line class="edge" x1="250" y1="80" x2="340" y2="130"></line>
+          <line class="edge" x1="90" y1="280" x2="180" y2="330"></line>
+          <line class="edge" x1="250" y1="240" x2="340" y2="290"></line>
+          <line class="edge-front" x1="180" y1="170" x2="180" y2="330"></line>
+          <line class="edge" x1="340" y1="130" x2="340" y2="290"></line>
+          <circle class="corner" cx="180" cy="170" r="5"></circle>
+          <circle class="corner" cx="180" cy="330" r="5"></circle>
+          <circle class="corner" cx="90" cy="120" r="4"></circle>
+          <circle class="corner" cx="250" cy="80" r="4"></circle>
+        </svg>
+        <span class="stat-tag" style="top:8%; left:2%;">MODEL.SKP</span>
+        <span class="stat-tag" style="bottom:14%; right:4%;">SCALE 1:50</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="paper-texture">
+  <div class="container">
+    <div class="modul-label">Definisi Pelatihan</div>
+    <h2 class="section-title">Arti, Maksud &amp; Tujuan</h2>
+    <hr class="divider-line" style="margin-bottom:36px;">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="def-card">
+          <div class="icon-box"><i class="fa-solid fa-cube"></i></div>
+          <h3>Arti Pelatihan</h3>
+          <p>Proses belajar terstruktur untuk mengenal dan menguasai perangkat lunak Google SketchUp
+          sebagai alat bantu menggambar dan memodelkan objek tiga dimensi.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="def-card">
+          <div class="icon-box"><i class="fa-solid fa-compass-drafting"></i></div>
+          <h3>Maksud Pelatihan</h3>
+          <p>Membekali peserta dengan kemampuan teknis dasar hingga menengah dalam membuat desain
+          3D yang akurat, efisien, dan siap digunakan untuk keperluan presentasi maupun produksi.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="def-card">
+          <div class="icon-box"><i class="fa-solid fa-bullseye"></i></div>
+          <h3>Tujuan Pelatihan</h3>
+          <p>Peserta mampu mengoperasikan tools dasar SketchUp secara mandiri dan menerapkannya
+          pada latihan maupun proyek desain sehari-hari.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 2 : DOWNLOAD SOFTWARE ============ -->
+<section class="paper-texture" style="padding-top:0;">
+  <div class="container">
+    <div class="modul-label">Persiapan</div>
+    <h2 class="section-title">Belum Punya Software SketchUp?</h2>
+    <div class="download-panel">
+      <div class="content row align-items-center g-4">
+        <div class="col-lg-8">
+          <h3 class="display-font" style="font-size:1.5rem; font-weight:600; margin-bottom:10px;">
+            Unduh Google SketchUp Sebelum Memulai
+          </h3>
+          <p style="color:#B9C6DA; max-width:560px; margin-bottom:0;">
+            Bagi peserta yang belum memiliki software-nya, silakan unduh terlebih dahulu melalui
+            tautan Google Drive di bawah ini agar dapat mengikuti seluruh materi praktik dengan lancar.
+          </p>
+          <span class="file-chip"><i class="fa-brands fa-google-drive"></i> Google Drive · Folder Instalasi</span>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="https://drive.google.com/drive/folders/1PK_nL3veSIwyv5ntaqaKzUnGjxjxLhQR?usp=drive_link"
+             target="_blank" rel="noopener noreferrer" class="btn-download">
+            <i class="fa-solid fa-download"></i> Download Software
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3 : MATERI SKETCHUP DASAR ============ -->
+<section class="paper-texture">
+  <div class="container">
+    <div class="modul-label">Materi Video · Modul 1–5</div>
+    <h2 class="section-title">SketchUp Dasar</h2>
+    <p style="color:#5B6B80; max-width:640px; margin-bottom:44px;">
+      Lima video pembelajaran berurutan yang membahas dasar-dasar penggunaan SketchUp.
+      Klik ikon perbesar pada tiap video untuk menonton dalam tampilan layar penuh.
+    </p>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <!-- Card 1 -->
+        <div class="video-card">
+          <div class="video-card-header">
+            <div>
+              <span class="num">MODUL 01 / 05</span>
+              <h3>SketchUp Dasar 1</h3>
+            </div>
+            <button class="zoom-btn" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="SketchUp Dasar 1"
+              data-src="https://drive.google.com/file/d/1ND8Pkq2KWEd--I5OpNzIkj4onc9yeohJ/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/1ND8Pkq2KWEd--I5OpNzIkj4onc9yeohJ/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="video-card">
+          <div class="video-card-header">
+            <div>
+              <span class="num">MODUL 02 / 05</span>
+              <h3>SketchUp Dasar 2</h3>
+            </div>
+            <button class="zoom-btn" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="SketchUp Dasar 2"
+              data-src="https://drive.google.com/file/d/14dlMl_JiVs1KWE8kNdvkBDwmPCFXH4iJ/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/14dlMl_JiVs1KWE8kNdvkBDwmPCFXH4iJ/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="video-card">
+          <div class="video-card-header">
+            <div>
+              <span class="num">MODUL 03 / 05</span>
+              <h3>SketchUp Dasar 3</h3>
+            </div>
+            <button class="zoom-btn" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="SketchUp Dasar 3"
+              data-src="https://drive.google.com/file/d/1HmmaSSUN7w52cfQBfZtNhxKwx8OKBqwA/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/1HmmaSSUN7w52cfQBfZtNhxKwx8OKBqwA/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="video-card">
+          <div class="video-card-header">
+            <div>
+              <span class="num">MODUL 04 / 05</span>
+              <h3>SketchUp Dasar 4</h3>
+            </div>
+            <button class="zoom-btn" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="SketchUp Dasar 4"
+              data-src="https://drive.google.com/file/d/15U_63g6h343Ltm47b0bI3f-1qETZ1yvG/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/15U_63g6h343Ltm47b0bI3f-1qETZ1yvG/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="video-card" style="margin-bottom:0;">
+          <div class="video-card-header">
+            <div>
+              <span class="num">MODUL 05 / 05</span>
+              <h3>SketchUp Dasar 5</h3>
+            </div>
+            <button class="zoom-btn" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="SketchUp Dasar 5"
+              data-src="https://drive.google.com/file/d/1HVt4Qgxww9uZnXP94SD5fDK7rofGGixZ/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/1HVt4Qgxww9uZnXP94SD5fDK7rofGGixZ/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4 : MATERI LATIHAN ============ -->
+<section class="paper-texture">
+  <div class="container">
+    <div class="modul-label">Materi Praktik · Latihan 1–4</div>
+    <h2 class="section-title">Latihan Terapan</h2>
+    <p style="color:#5B6B80; max-width:640px; margin-bottom:44px;">
+      Empat sesi latihan untuk mempraktikkan langsung teknik yang telah dipelajari pada modul dasar.
+    </p>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <!-- Latihan 1 -->
+        <div class="video-card">
+          <div class="video-card-header latihan-badge-header">
+            <div>
+              <span class="num" style="color:#6FBE8E;">LATIHAN 01 / 04</span>
+              <h3>Latihan 1</h3>
+            </div>
+            <button class="zoom-btn latihan-badge" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="Latihan 1"
+              data-src="https://drive.google.com/file/d/1c38WOX8rIcp9gKg1STZ5Lu8uF6qNOf6b/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/1c38WOX8rIcp9gKg1STZ5Lu8uF6qNOf6b/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Latihan 2 -->
+        <div class="video-card">
+          <div class="video-card-header latihan-badge-header">
+            <div>
+              <span class="num" style="color:#6FBE8E;">LATIHAN 02 / 04</span>
+              <h3>Latihan 2</h3>
+            </div>
+            <button class="zoom-btn latihan-badge" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="Latihan 2"
+              data-src="https://drive.google.com/file/d/1U_cas4nE93324C_h1_pvvBIYVNXorRSu/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/1U_cas4nE93324C_h1_pvvBIYVNXorRSu/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Latihan 3 -->
+        <div class="video-card">
+          <div class="video-card-header latihan-badge-header">
+            <div>
+              <span class="num" style="color:#6FBE8E;">LATIHAN 03 / 04</span>
+              <h3>Latihan 3</h3>
+            </div>
+            <button class="zoom-btn latihan-badge" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="Latihan 3"
+              data-src="https://drive.google.com/file/d/1JzIUD2X8IuFUmT6t7NT1AExDzekFzVeV/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/1JzIUD2X8IuFUmT6t7NT1AExDzekFzVeV/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Latihan 4 -->
+        <div class="video-card" style="margin-bottom:0;">
+          <div class="video-card-header latihan-badge-header">
+            <div>
+              <span class="num" style="color:#6FBE8E;">LATIHAN 04 / 04</span>
+              <h3>Latihan 4</h3>
+            </div>
+            <button class="zoom-btn latihan-badge" data-bs-toggle="modal" data-bs-target="#videoModal"
+              data-title="Latihan 4"
+              data-src="https://drive.google.com/file/d/1oNLLBZIrFzxnRAXrPHom59YcUxwwvw21/preview">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div class="video-frame-wrap">
+            <iframe src="https://drive.google.com/file/d/1oNLLBZIrFzxnRAXrPHom59YcUxwwvw21/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 5 : PENUTUP ============ -->
+<section class="closing blueprint-bg">
+  <div class="container">
+    <div class="checkmark-wrap">
+      <i class="fa-solid fa-check" style="color:var(--orange); font-size:1.8rem;"></i>
+    </div>
+    <h2>Terima Kasih Telah Mengikuti Pelatihan!</h2>
+    <p>
+      Selamat, Anda telah menyelesaikan seluruh rangkaian modul dan latihan SketchUp.
+      Teruslah berlatih dan bereksplorasi — setiap model yang Anda buat adalah langkah
+      menuju desain yang lebih baik.
+    </p>
+    <div class="signature">— Tim Pelatihan Desain SketchUp</div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Pelatihan Desain Google SketchUp. Seluruh materi untuk keperluan internal pelatihan.
+</footer>
+
+<!-- ============ MODAL ZOOM VIDEO ============ -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="videoModalTitle">Video</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="modal-video-wrap">
+          <iframe id="videoModalFrame" src="" allow="autoplay" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const videoModal = document.getElementById('videoModal');
+  videoModal.addEventListener('show.bs.modal', (event) => {
+    const btn = event.relatedTarget;
+    const src = btn.getAttribute('data-src');
+    const title = btn.getAttribute('data-title');
+    document.getElementById('videoModalTitle').textContent = title;
+    document.getElementById('videoModalFrame').src = src;
+  });
+  // stop playback when modal closes
+  videoModal.addEventListener('hidden.bs.modal', () => {
+    document.getElementById('videoModalFrame').src = '';
+  });
+</script>
+
+</body>
+</html>
