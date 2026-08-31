@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Portal — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy-950:#0b1220;
+    --navy-900:#111a2e;
+    --navy-800:#182645;
+    --navy-700:#22335c;
+    --bg:#eef1f7;
+    --card:#ffffff;
+    --line:#e2e6f0;
+    --ink:#141a2e;
+    --ink-soft:#5c6480;
+    --accent:#2f6feb;
+    --accent-ink:#1d4fbf;
+    --accent-soft:#e8f0ff;
+    --amber:#e0972a;
+    --amber-soft:#fdf2e2;
+    --teal:#1f9e8f;
+    --teal-soft:#e3f7f4;
+    --rose:#d1477a;
+    --rose-soft:#fbe8f0;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    display:flex;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent-soft);}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:248px;
+    flex-shrink:0;
+    background:linear-gradient(180deg,var(--navy-950),var(--navy-900) 60%,var(--navy-800));
+    color:#c6cee6;
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:20px 20px 16px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(135deg,var(--accent),#5fa1ff);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Plus Jakarta Sans';font-weight:800;color:#fff;font-size:15px;
+    flex-shrink:0;
+  }
+  .brand-text{line-height:1.2;}
+  .brand-text .t1{font-family:'Plus Jakarta Sans';font-weight:700;font-size:14.5px;color:#fff;}
+  .brand-text .t2{font-size:11px;color:#8b96b8;letter-spacing:.03em;}
+
+  .side-section-label{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    color:#5f6a8c;
+    padding:18px 20px 8px;
+    font-weight:600;
+  }
+  .nav-list{list-style:none;margin:0;padding:0 12px;display:flex;flex-direction:column;gap:2px;}
+  .nav-item{
+    display:flex;align-items:center;gap:11px;
+    padding:10px 12px;
+    border-radius:9px;
+    color:#aab4d4;
+    text-decoration:none;
+    font-size:13.6px;
+    font-weight:500;
+    cursor:pointer;
+    position:relative;
+    transition:background .15s ease,color .15s ease;
+  }
+  .nav-item i{width:18px;text-align:center;font-size:14.5px;color:#7986ac;transition:color .15s ease;}
+  .nav-item:hover{background:rgba(255,255,255,.05);color:#fff;}
+  .nav-item:hover i{color:#cfd8f2;}
+  .nav-item.active{background:linear-gradient(90deg,rgba(47,111,235,.28),rgba(47,111,235,.06));color:#fff;}
+  .nav-item.active i{color:#6fa2ff;}
+  .nav-item.active::before{
+    content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;
+    background:var(--accent);border-radius:3px;
+  }
+  .nav-item .badge{
+    margin-left:auto;font-size:10px;font-weight:700;background:rgba(255,255,255,.08);
+    color:#c6cee6;padding:2px 7px;border-radius:99px;
+  }
+
+  .sidebar-foot{
+    margin-top:auto;
+    padding:16px 20px 20px;
+    border-top:1px solid rgba(255,255,255,.06);
+    font-size:11.5px;color:#5f6a8c;
+  }
+  .sync-pill{
+    display:flex;align-items:center;gap:7px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:9px;padding:8px 10px;margin-bottom:10px;
+  }
+  .sync-dot{width:7px;height:7px;border-radius:50%;background:#3ec98a;flex-shrink:0;box-shadow:0 0 0 3px rgba(62,201,138,.18);}
+
+  /* ---------- MAIN ---------- */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{
+    position:sticky;top:0;z-index:5;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;
+    background:rgba(238,241,247,.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-title{font-family:'Plus Jakarta Sans';font-weight:700;font-size:19px;}
+  .topbar-sub{font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+  .topbar-actions{display:flex;align-items:center;gap:10px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:'Inter';font-weight:600;font-size:13px;
+    padding:9px 14px;border-radius:9px;border:1px solid var(--line);
+    background:#fff;color:var(--ink);cursor:pointer;transition:all .15s ease;
+  }
+  .btn:hover{border-color:#c9d1e6;}
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .btn-primary:hover{background:var(--accent-ink);}
+  .file-status{font-size:11.5px;color:var(--ink-soft);}
+  .avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:linear-gradient(135deg,#f0a13c,#e0972a);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:'Plus Jakarta Sans';
+  }
+
+  .content{padding:22px 28px 40px;}
+  .page{display:none;}
+  .page.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+  .kpi{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;position:relative;overflow:hidden;
+  }
+  .kpi .icon-wrap{
+    width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    margin-bottom:12px;font-size:14px;
+  }
+  .kpi .label{font-size:12px;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
+  .kpi .value{font-family:'Plus Jakarta Sans';font-weight:800;font-size:25px;letter-spacing:-.01em;}
+  .kpi .delta{font-size:11.5px;font-weight:600;margin-top:6px;display:flex;align-items:center;gap:4px;}
+  .delta.up{color:#1a9c6b;}
+  .delta.down{color:#d1477a;}
+
+  .grid-2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px 14px;
+  }
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .card-title{font-family:'Plus Jakarta Sans';font-weight:700;font-size:14.5px;}
+  .card-tag{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);background:#f2f4f9;padding:4px 8px;border-radius:99px;}
+  .chart-box{position:relative;height:250px;}
+  .chart-box.tall{height:300px;}
+
+  .empty-state{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    padding:70px 24px;background:var(--card);border:1px dashed #c9d1e6;border-radius:var(--radius);
+  }
+  .empty-state i{font-size:30px;color:#b8c1de;margin-bottom:14px;}
+  .empty-state h3{font-family:'Plus Jakarta Sans';font-size:16px;margin:0 0 6px;}
+  .empty-state p{font-size:13px;color:var(--ink-soft);max-width:360px;margin:0 0 18px;line-height:1.5;}
+
+  .conn-status{
+    display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:6px 10px;border-radius:99px;
+  }
+  .conn-status.ok{background:var(--teal-soft);color:var(--teal);}
+  .conn-status.off{background:#f2f4f9;color:var(--ink-soft);}
+  .conn-status.err{background:var(--rose-soft);color:var(--rose);}
+  .conn-status .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .conn-status a{color:inherit;text-decoration:underline;margin-left:4px;cursor:pointer;}
+
+  /* ---------- LOADING OVERLAY (dashboard data asli sedang dimuat) ---------- */
+  .loading-overlay{
+    position:fixed;inset:0;z-index:999;
+    background:rgba(238,241,247,.94);backdrop-filter:blur(2px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    transition:opacity .25s ease,visibility .25s ease;
+  }
+  .loading-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+
+  /* ---- Battery charge loader ---- */
+  .battery-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;}
+  .battery{
+    position:relative;
+    width:132px;height:58px;
+    border:3px solid var(--navy-800);
+    border-radius:10px;
+    background:#fff;
+    padding:5px;
+    transition:box-shadow .25s ease;
+  }
+  .battery::after{
+    content:"";
+    position:absolute;
+    right:-9px;top:50%;
+    transform:translateY(-50%);
+    width:6px;height:22px;
+    background:var(--navy-800);
+    border-radius:0 3px 3px 0;
+  }
+  .battery-cells{
+    position:relative;
+    width:100%;height:100%;
+    border-radius:5px;
+    overflow:hidden;
+    background:#f2f4f9;
+  }
+  .battery-fill{
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:0%;
+    border-radius:4px;
+    background:linear-gradient(90deg,#e0972a,#2f6feb 60%,#1f9e8f);
+    background-size:220% 100%;
+    background-position:100% 0;
+    transition:width .18s ease-out, background-position .3s ease;
+    overflow:hidden;
+  }
+  .battery-fill::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(100deg,rgba(255,255,255,0) 35%,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 65%);
+    background-size:60px 100%;
+    animation:batteryShine 1.3s linear infinite;
+  }
+  @keyframes batteryShine{
+    0%{background-position:-60px 0;}
+    100%{background-position:190px 0;}
+  }
+  .battery.charged{
+    box-shadow:0 0 0 4px var(--teal-soft);
+  }
+  .battery-percent{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;font-size:22px;
+    color:var(--ink);
+    letter-spacing:.02em;
+    min-width:74px;
+    text-align:center;
+    font-variant-numeric:tabular-nums;
+  }
+  .battery-percent .pct-sign{font-size:14px;color:var(--ink-soft);margin-left:1px;}
+  .loading-text{font-family:'Plus Jakarta Sans';font-weight:600;font-size:13.5px;color:var(--ink-soft);}
+  .loading-sub{font-size:12px;color:#8b93ac;}
+
+  @media (max-width:1100px){
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-2{grid-template-columns:1fr;}
+    .grid-3{grid-template-columns:1fr;}
+  }
+
+  /* ---------- TABEL TRAINING (data peserta + filter pencarian) ---------- */
+  .tbl-filter-bar{
+    display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;
+    padding-bottom:16px;margin-bottom:14px;border-bottom:1px solid var(--line);
+  }
+  .tbl-filter-item{display:flex;flex-direction:column;gap:5px;min-width:170px;flex:1;}
+  .tbl-filter-item label{font-size:11.5px;font-weight:600;color:var(--ink-soft);}
+  .tbl-filter-item .form-control,
+  .tbl-filter-item .form-select{
+    background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:9px;
+    font-size:13px;padding:8px 11px;font-family:'Inter',sans-serif;
+  }
+  .tbl-filter-item .form-control:focus,
+  .tbl-filter-item .form-select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+  .tbl-filter-actions{display:flex;gap:8px;}
+
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
+  .data-table{width:100%;border-collapse:collapse;font-size:13px;min-width:640px;}
+  .data-table thead th{
+    text-align:left;background:#f5f7fb;color:var(--ink-soft);font-weight:700;font-size:11.5px;
+    text-transform:uppercase;letter-spacing:.04em;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap;
+  }
+  .data-table tbody td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink);}
+  .data-table tbody tr:last-child td{border-bottom:none;}
+  .data-table tbody tr:hover{background:#f8f9fc;}
+  .tbl-footnote{font-size:12px;color:var(--ink-soft);margin-top:12px;}
+
+  /* ---------- ATP: sel Bulan yang di-merge (rowspan) ---------- */
+  .data-table td.atp-bulan-cell{
+    text-align:center;
+    vertical-align:middle;
+    background:linear-gradient(180deg,var(--accent-soft),#f7faff);
+    border-left:3px solid var(--accent);
+    border-right:1px solid var(--line);
+    border-top:1px solid var(--line);
+    border-bottom:3px solid var(--bg);
+  }
+  .data-table tr:last-child td.atp-bulan-cell{border-bottom:1px solid var(--line);}
+  .atp-bulan-pill{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:78px;
+    font-family:'Plus Jakarta Sans';font-weight:700;font-size:12px;
+    letter-spacing:.02em;
+    color:var(--accent-ink);
+    background:#fff;
+    border:1px solid rgba(47,111,235,.28);
+    border-radius:8px;
+    padding:6px 12px;
+    box-shadow:0 1px 2px rgba(20,26,46,.05);
+  }
+  .data-table td.atp-week-cell{text-align:center;}
+  @media (max-width:1100px){ .tbl-filter-item{min-width:100%;} }
+
+  /* ---------- PORTAL TRAINING (login + menu kotak) — mengikuti tema dashboard ---------- */
+  .pt-login-wrap{display:flex;justify-content:center;padding:48px 0 20px;}
+  .pt-login-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 26px;width:320px;
+  }
+  .pt-login-card h4{font-family:'Plus Jakarta Sans';font-weight:700;font-size:15.5px;color:var(--ink);margin:0 0 18px;}
+  .pt-login-card .form-label{font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:5px;display:block;}
+  .pt-login-card .form-control{
+    background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:9px;
+    font-size:13.5px;padding:9px 12px;width:100%;font-family:'Inter',sans-serif;
+  }
+  .pt-login-card .form-control:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+
+  .pt-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .pt-title-row h3{font-family:'Plus Jakarta Sans';font-weight:700;font-size:16px;color:var(--ink);margin:0;}
+  .pt-title-row p{font-size:12.5px;color:var(--ink-soft);margin:2px 0 0;}
+
+  .pt-menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media (max-width:1100px){ .pt-menu-grid{grid-template-columns:repeat(2,1fr);} }
+  .pt-menu-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;cursor:pointer;transition:border-color .15s ease,transform .15s ease,box-shadow .15s ease;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .pt-menu-card:hover{border-color:#c9d1e6;transform:translateY(-2px);box-shadow:0 8px 20px rgba(20,26,46,.06);}
+  .pt-menu-card .icon-wrap{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .pt-menu-card .title{font-family:'Plus Jakarta Sans';font-weight:700;font-size:13.5px;color:var(--ink);}
+  .pt-menu-card .desc{font-size:11.5px;color:var(--ink-soft);line-height:1.45;}
+
+  .pt-modal-header{background:var(--navy-900);color:#fff;}
+  .pt-modal-header .btn-close{filter:invert(1);opacity:1;}
+  .modal-content{border-radius:var(--radius);border:1px solid var(--line);}
+  .modal-body{font-size:13.5px;color:var(--ink);line-height:1.6;}
+  .modal-body p{margin:0 0 8px;}
+  .modal-body ul{margin:0;padding-left:20px;}
+
+  .pt-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);
+  }
+  .pt-footer-right{color:var(--ink-soft);font-size:12px;}
+
+  /* Modal fullscreen berisi halaman training (college.html / request.html) via iframe */
+  .modal-fullscreen .modal-content{border-radius:0;}
+  /* Subview inline (COLLEGE / Request Training) - menyatu langsung di frame dashboard, bukan modal */
+  .pt-subview{margin-top:4px;}
+  .pt-subview-bar{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line);
+  }
+  .pt-subview-title{font-family:'Plus Jakarta Sans';font-weight:700;font-size:15px;color:var(--ink);}
+  .pt-subview-title i{margin-right:6px;color:var(--accent);}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="battery-wrap">
+    <div class="battery" id="batteryEl">
+      <div class="battery-cells">
+        <div class="battery-fill" id="batteryFill"></div>
+      </div>
+    </div>
+    <div class="battery-percent" id="batteryPercent">0<span class="pct-sign">%</span></div>
+  </div>
+  <div class="loading-text">Sedang mempersiapkan database dashboard</div>
+  <div class="loading-sub">Mengambil data asli dari Google Sheet, mohon tunggu sebentar</div>
+</div>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">HCC</div>
+    <div class="brand-text">
+      <div class="t1">SMART</div>
+      <div class="t2">SSI &amp; Management & Resource Training</div>
+    </div>
+  </div>
+
+  <div class="side-section-label">Portal</div>
+  <ul class="nav-list">
+    <li class="nav-item active" data-page="dashboard"><i class="fa-solid fa-chalkboard-user"></i>Dashboard Training</li>
+    <li class="nav-item" data-page="tabeltraining"><i class="fa-solid fa-table"></i>Tabel Training</li>
+    <li class="nav-item" data-page="atp"><i class="fa-solid fa-calendar-days"></i>ATP</li>
+    <li class="nav-item" data-page="training"><i class="fa-solid fa-chalkboard-user"></i>Portal Training</li>
+    <li class="nav-item" data-page="recruitment"><i class="fa-solid fa-user-plus"></i>Portal Recruitment</li>
+    <li class="nav-item" data-page="jeda"><i class="fa-solid fa-hourglass-half"></i>Masa Jeda</li>
+  </ul>
+
+  <div class="side-section-label">Lainnya</div>
+  <ul class="nav-list">
+    <li class="nav-item" data-page="tools"><i class="fa-solid fa-gear"></i>Tools Web <span class="badge">HCC</span></li>
+  </ul>
+
+  <div class="sidebar-foot">
+    <div class="sync-pill">
+      <span class="sync-dot"></span>
+      <span id="syncLabel">Data contoh (belum ada file)</span>
+    </div>
+    © 2026 HCC SMART
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="topbar-title" id="pageTitle">Dasboard Training</div>
+      <div class="topbar-sub" id="pageSub">Ringkasan pelatihan &amp; peserta dari spreadsheet</div>
+    </div>
+    <div class="topbar-actions">
+      <span class="conn-status off" id="connStatus"><span class="dot"></span>Menghubungkan…</span>
+      <div class="avatar">HR</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ============ PAGE: DASHBOARD============ -->
+    <section class="page active" id="page-dashboard">
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="icon-wrap" style="background:var(--accent-soft);color:var(--accent-ink);"><i class="fa-solid fa-chalkboard"></i></div>
+          <div class="label">Total Pelatihan (Tahun Ini)</div>
+          <div class="value" id="kpiTotalTraining">–</div>
+          <div class="delta up"><i class="fa-solid fa-arrow-up"></i> dari 12 bulan berjalan</div>
+        </div>
+        <div class="kpi">
+          <div class="icon-wrap" style="background:var(--teal-soft);color:var(--teal);"><i class="fa-solid fa-users"></i></div>
+          <div class="label">Total Peserta</div>
+          <div class="value" id="kpiTotalPeserta">–</div>
+          <div class="delta up"><i class="fa-solid fa-arrow-up"></i> akumulasi tahun berjalan</div>
+        </div>
+        <div class="kpi">
+          <div class="icon-wrap" style="background:var(--amber-soft);color:var(--amber);"><i class="fa-solid fa-chart-simple"></i></div>
+          <div class="label">Rata-rata Peserta / Pelatihan</div>
+          <div class="value" id="kpiAvgPeserta">–</div>
+          <div class="delta down"><i class="fa-solid fa-scale-balanced"></i> per sesi pelatihan</div>
+        </div>
+        <div class="kpi">
+          <div class="icon-wrap" style="background:var(--rose-soft);color:var(--rose);"><i class="fa-solid fa-map-location-dot"></i></div>
+          <div class="label">Region Terbanyak Peserta</div>
+          <div class="value" id="kpiTopRegion" style="font-size:19px;">–</div>
+          <div class="delta up"><i class="fa-solid fa-star"></i> berdasarkan jumlah peserta</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Jumlah Pelatihan per Bulan</div>
+            <div class="card-tag">Sheet 1 · training</div>
+          </div>
+          <div class="chart-box tall"><canvas id="chartTrainingBulan"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Jumlah Peserta per Bulan</div>
+            <div class="card-tag">Sheet 2 · peserta</div>
+          </div>
+          <div class="chart-box tall"><canvas id="chartPesertaBulan"></canvas></div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Peserta per Region</div>
+            <div class="card-tag">peserta</div>
+          </div>
+          <div class="chart-box"><canvas id="chartRegion"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Peserta per Unit</div>
+            <div class="card-tag">peserta</div>
+          </div>
+          <div class="chart-box"><canvas id="chartUnit"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Peserta per Jabatan</div>
+            <div class="card-tag">peserta</div>
+          </div>
+          <div class="chart-box"><canvas id="chartJabatan"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ============ PAGE: TABEL TRAINING (data peserta dari sheet Peserta) ============ -->
+    <section class="page" id="page-tabeltraining">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Tabel Data Peserta Training</div>
+          <div class="card-tag">Sheet 2 · peserta</div>
+        </div>
+
+        <div class="tbl-filter-bar">
+          <div class="tbl-filter-item">
+            <label for="filterNama">Cari Nama Pegawai</label>
+            <input type="text" id="filterNama" class="form-control" placeholder="Ketik nama pegawai...">
+          </div>
+          <div class="tbl-filter-item">
+            <label for="filterJabatan">Jabatan</label>
+            <select id="filterJabatan" class="form-select">
+              <option value="">Semua Jabatan</option>
+            </select>
+          </div>
+          <div class="tbl-filter-item">
+            <label for="filterRegion">Region</label>
+            <select id="filterRegion" class="form-select">
+              <option value="">Semua Region</option>
+            </select>
+          </div>
+          <div class="tbl-filter-item">
+            <label for="filterUnit">Unit Kerja</label>
+            <select id="filterUnit" class="form-select">
+              <option value="">Semua Unit Kerja</option>
+            </select>
+          </div>
+          <div class="tbl-filter-actions">
+            <button class="btn btn-primary" id="btnCariTabel"><i class="fa-solid fa-magnifying-glass"></i>Cari</button>
+            <button class="btn" id="btnResetTabel"><i class="fa-solid fa-rotate-left"></i>Reset</button>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+          <table class="data-table" id="tabelPeserta">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Pegawai</th>
+                <th>NPP</th>
+                <th>Jabatan</th>
+                <th>Region</th>
+                <th>Unit Kerja</th>
+              </tr>
+            </thead>
+            <tbody id="tabelPesertaBody">
+              <tr><td colspan="6" style="text-align:center;color:var(--ink-soft);padding:24px;">Memuat data…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tbl-footnote" id="tabelInfo">Menampilkan 0 dari 0 peserta</div>
+      </div>
+    </section>
+
+    <!-- ============ PAGE: ATP (Annual Training Plan) ============ -->
+    <section class="page" id="page-atp">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">ATP — Annual Training Plan</div>
+          <div class="card-tag">Sheet 3 · ATP</div>
+        </div>
+
+        <div class="tbl-wrap">
+          <table class="data-table" id="tabelATP">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Week 1</th>
+                <th>Week 2</th>
+                <th>Week 3</th>
+                <th>Week 4</th>
+                <th>Nama Pelatihan</th>
+              </tr>
+            </thead>
+            <tbody id="tabelATPBody">
+              <tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Memuat data…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tbl-footnote" id="atpInfo">Menampilkan 0 baris</div>
+      </div>
+    </section>
+
+    <!-- ============ PAGE: PORTAL TRAINING ============ -->
+    <section class="page" id="page-training">
+      <div class="empty-state">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <h3>Halaman Portal Training </h3>
+        <p>Portal Training adalah platform untuk mengakses, mengelola, dan mendukung program pelatihan serta pengembangan kompetensi karyawan.</p>
+        <a href="https://portal-training.vercel.app" class="btn btn-primary">
+          <i class="fa-solid fa-plug"></i> Hubungkan ke Portal Training
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ PAGE: RECRUITMENT ============ -->
+    <section class="page" id="page-recruitment">
+      <div class="empty-state">
+        <i class="fa-solid fa-user-plus"></i>
+        <h3>Portal Recruitment belum terhubung</h3>
+        <p>Halaman ini akan menampilkan dashboard rekrutmen (jumlah lamaran, tahap seleksi, time-to-hire, dsb) begitu sumber data recruitment ditentukan. Beri tahu saya kolom/sheet yang tersedia dan saya akan buatkan chart-nya seperti Portal Training.</p>
+        <button class="btn btn-primary"><i class="fa-solid fa-plug"></i>Hubungkan Data Recruitment</button>
+      </div>
+    </section>
+
+    <!-- ============ PAGE: MASA JEDA ============ -->
+    <section class="page" id="page-jeda">
+      <div class="empty-state">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <h3>Portal Masa Jeda belum terhubung</h3>
+        <p>Halaman ini akan menampilkan dashboard masa jeda karyawan (jumlah karyawan jeda, durasi rata-rata, per unit/region, dsb) begitu sumber datanya ditentukan.</p>
+        <button class="btn btn-primary"><i class="fa-solid fa-plug"></i>Hubungkan Data Masa Jeda</button>
+      </div>
+    </section>
+
+
+    <!-- ============ PAGE: TOOLS WEB HCC  ============ -->
+    <section class="page" id="page-tools">
+      <div class="empty-state">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <h3>Tools Web HCC </h3>
+        <p>Halaman ini akan menampilkan beberapa tools by web yang pernah di deploy di Unit Development & Training .</p>
+        <button class="btn btn-primary"><i class="fa-solid fa-plug"></i>Hubungkan ke tools HCC </button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ================= NAVIGATION ================= */
+const titles = {
+  dashboard:{title:'Dashboard Training', sub:'Ringkasan pelatihan & peserta dari spreadsheet'},
+  tabeltraining:{title:'Tabel Training', sub:'Data peserta training dari sheet Peserta'},
+  atp:{title:'ATP', sub:'Rencana training tahunan dari sheet ATP'},
+  training:{title:'Portal Training', sub:'Belum terhubung ke sumber data'},
+  recruitment:{title:'Portal Recruitment', sub:'Belum terhubung ke sumber data'},
+  jeda:{title:'Masa Jeda', sub:'Belum terhubung ke sumber data'}
+};
+function switchPage(key){
+  document.querySelectorAll('.nav-item[data-page]').forEach(n=>n.classList.remove('active'));
+  const navItem = document.querySelector('.nav-item[data-page="'+key+'"]');
+  if(navItem) navItem.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+key).classList.add('active');
+  if(titles[key]){
+    document.getElementById('pageTitle').textContent = titles[key].title;
+    document.getElementById('pageSub').textContent = titles[key].sub;
+  }
+}
+
+document.querySelectorAll('.nav-item[data-page]').forEach(item=>{
+  item.addEventListener('click', ()=> switchPage(item.dataset.page));
+});
+
+/* ================= DUMMY / SAMPLE DATA ================= */
+const bulanLabel = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const bulanNames = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']; // referensi tetap, tidak ikut ter-mutasi
+
+let trainingPerBulan = [6,8,7,9,11,10,13,9,12,14,10,15];
+let pesertaPerBulan  = [72,95,88,110,130,118,150,101,142,168,120,175];
+// Total peserta "resmi" langsung dari SELURUH baris sheet peserta (tidak bergantung
+// pada kolom Bulan). null berarti belum ada data live -> pakai fallback dummy di updateKPI().
+let pesertaTotalResmi = null;
+let pesertaPerRegion = {'Jakarta':320,'Jawa Barat':210,'Jawa Timur':185,'Sumatera':160,'Kalimantan':95,'Sulawesi':80};
+let pesertaPerUnit   = {'Operasional':280,'Sales':240,'IT':150,'Finance':110,'HC':95};
+let pesertaPerJabatan= {'Staff':420,'Supervisor':260,'Manager':140,'Senior Manager':55};
+
+// Data contoh per-baris peserta (Nama/NPP/Jabatan/Region/Unit) untuk Tabel Training,
+// dipakai sebelum data live dari sheet Peserta masuk.
+let pesertaDetailRows = [
+  {nama:'Andi Saputra',    npp:'10023', jabatan:'Manager',    region:'Jakarta',     unit:'Distribusi'},
+  {nama:'Budi Santoso',    npp:'10045', jabatan:'Staf',        region:'Jawa Barat', unit:'Marketing'},
+  {nama:'Citra Dewi',      npp:'10078', jabatan:'Staf',        region:'Jawa Timur', unit:'Infrastruktur'},
+  {nama:'Dewi Lestari',    npp:'10091', jabatan:'Supervisor',  region:'Sumatera',   unit:'Akuntansi'},
+  {nama:'Eko Prasetyo',    npp:'10102', jabatan:'Manager',     region:'Kalimantan', unit:'Rekrutmen'},
+  {nama:'Fitri Handayani', npp:'10115', jabatan:'Staf',        region:'Sulawesi',   unit:'Produksi'},
+  {nama:'Gilang Ramadhan', npp:'10128', jabatan:'GM',          region:'Jakarta',    unit:'Business Development'},
+  {nama:'Hana Puspita',    npp:'10134', jabatan:'Staf',        region:'Jawa Barat', unit:'Aplikasi'}
+];
+
+// Data contoh untuk Tabel ATP (Bulan/Week1-4/Nama Pelatihan), dipakai sebelum sheet ATP live masuk.
+let atpDetailRows = [
+  {bulan:'Januari',  w1:true, w2:'',   w3:'',   w4:'',   pelatihan:'4 Skills Leadership (Customer Fokus, Managing Diversity, Capable Organization, Driving Execution)'},
+  {bulan:'Januari',  w1:'',   w2:true, w3:'',   w4:'',   pelatihan:'Onboarding Pegawai Baru'},
+  {bulan:'Februari', w1:'',   w2:'',   w3:true, w4:'',   pelatihan:'E-learning Excel Basic'},
+  {bulan:'Maret',    w1:true, w2:'',   w3:'',   w4:'',   pelatihan:'4 Skills Leadership'},
+  {bulan:'April',    w1:'',   w2:'',   w3:'',   w4:true, pelatihan:'Cyber Security Awareness Batch 1'}
+];
+
+/* ================= TABEL ATP: HELPER ================= */
+// Menandai sel bernilai boolean/teks "true" (mis. dari checkbox di spreadsheet) supaya ditampilkan sebagai ikon centang.
+function isChecked(v){
+  if(v === true) return true;
+  if(typeof v === 'string') return v.trim().toLowerCase() === 'true';
+  return false;
+}
+function renderWeekCell(v){
+  if(isChecked(v)) return '<i class="fa-solid fa-check" style="color:var(--teal);font-size:13px;"></i>';
+  return (v===undefined || v===null) ? '' : v;
+}
+
+/* ================= TABEL ATP: RENDER ================= */
+function renderTabelATP(){
+  const tbody = document.getElementById('tabelATPBody');
+  const info = document.getElementById('atpInfo');
+  if(!tbody || !info) return;
+
+  if(!atpDetailRows.length){
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Belum ada data ATP.</td></tr>';
+    info.textContent = 'Menampilkan 0 baris';
+    return;
+  }
+
+  // Hitung baris awal & panjang rowspan untuk kolom Bulan: baris berurutan dengan
+  // Bulan sama (atau kolom Bulan-nya kosong = kelanjutan dari baris di atasnya) digabung jadi satu sel.
+  const isGroupStart = [];
+  let groupStart = 0;
+  atpDetailRows.forEach((r,i)=>{
+    const b = (r.bulan||'').toString().trim();
+    if(i===0){ isGroupStart[i]=true; groupStart=0; return; }
+    const prevBulan = (atpDetailRows[groupStart].bulan||'').toString().trim();
+    if(b === '' || b === prevBulan){
+      isGroupStart[i] = false;
+    } else {
+      isGroupStart[i] = true;
+      groupStart = i;
+    }
+  });
+  const rowspanAt = {};
+  isGroupStart.forEach((isStart,i)=>{
+    if(!isStart) return;
+    let span = 1;
+    for(let j=i+1;j<atpDetailRows.length && !isGroupStart[j]; j++) span++;
+    rowspanAt[i] = span;
+  });
+
+  tbody.innerHTML = atpDetailRows.map((r,i)=>(
+      '<tr>'+
+        '<td>'+(i+1)+'</td>'+
+        (isGroupStart[i] ? '<td class="atp-bulan-cell" rowspan="'+rowspanAt[i]+'"><span class="atp-bulan-pill">'+(r.bulan||'')+'</span></td>' : '')+
+        '<td class="atp-week-cell">'+renderWeekCell(r.w1)+'</td>'+
+        '<td class="atp-week-cell">'+renderWeekCell(r.w2)+'</td>'+
+        '<td class="atp-week-cell">'+renderWeekCell(r.w3)+'</td>'+
+        '<td class="atp-week-cell">'+renderWeekCell(r.w4)+'</td>'+
+        '<td>'+(r.pelatihan||'-')+'</td>'+
+      '</tr>'
+    )).join('');
+
+  info.textContent = 'Menampilkan ' + atpDetailRows.length + ' baris rencana training';
+}
+
+/* ================= TABEL TRAINING: FILTER & RENDER ================= */
+function populateTabelFilters(){
+  const jabatanSel = document.getElementById('filterJabatan');
+  const regionSel = document.getElementById('filterRegion');
+  const unitSel = document.getElementById('filterUnit');
+  if(!jabatanSel || !regionSel || !unitSel) return;
+
+  const uniq = (field)=> [...new Set(pesertaDetailRows.map(r=>r[field]).filter(Boolean))].sort((a,b)=>a.toString().localeCompare(b.toString()));
+  const fill = (sel, values, placeholder)=>{
+    const current = sel.value;
+    sel.innerHTML = '<option value="">'+placeholder+'</option>' + values.map(v=>'<option value="'+v+'">'+v+'</option>').join('');
+    if(values.includes(current)) sel.value = current;
+  };
+  fill(jabatanSel, uniq('jabatan'), 'Semua Jabatan');
+  fill(regionSel, uniq('region'), 'Semua Region');
+  fill(unitSel, uniq('unit'), 'Semua Unit Kerja');
+}
+
+function renderTabelTraining(){
+  const tbody = document.getElementById('tabelPesertaBody');
+  const info = document.getElementById('tabelInfo');
+  if(!tbody || !info) return;
+
+  const namaQ = (document.getElementById('filterNama').value || '').trim().toLowerCase();
+  const jabatanQ = document.getElementById('filterJabatan').value;
+  const regionQ = document.getElementById('filterRegion').value;
+  const unitQ = document.getElementById('filterUnit').value;
+
+  const filtered = pesertaDetailRows.filter(r=>{
+    if(namaQ && !(r.nama||'').toString().toLowerCase().includes(namaQ)) return false;
+    if(jabatanQ && r.jabatan !== jabatanQ) return false;
+    if(regionQ && r.region != regionQ) return false;
+    if(unitQ && r.unit !== unitQ) return false;
+    return true;
+  });
+
+  tbody.innerHTML = filtered.length
+    ? filtered.map((r,i)=>(
+        '<tr>'+
+          '<td>'+(i+1)+'</td>'+
+          '<td>'+(r.nama||'-')+'</td>'+
+          '<td>'+(r.npp||'-')+'</td>'+
+          '<td>'+(r.jabatan||'-')+'</td>'+
+          '<td>'+(r.region||'-')+'</td>'+
+          '<td>'+(r.unit||'-')+'</td>'+
+        '</tr>'
+      )).join('')
+    : '<tr><td colspan="6" style="text-align:center;color:var(--ink-soft);padding:24px;">Tidak ada data yang cocok dengan filter.</td></tr>';
+
+  info.textContent = 'Menampilkan ' + filtered.length + ' dari ' + pesertaDetailRows.length + ' peserta';
+}
+
+function initTabelTrainingFilters(){
+  const namaEl = document.getElementById('filterNama');
+  const jabatanEl = document.getElementById('filterJabatan');
+  const regionEl = document.getElementById('filterRegion');
+  const unitEl = document.getElementById('filterUnit');
+  const btnCari = document.getElementById('btnCariTabel');
+  const btnReset = document.getElementById('btnResetTabel');
+  if(!namaEl) return;
+
+  btnCari.addEventListener('click', renderTabelTraining);
+  namaEl.addEventListener('input', renderTabelTraining);
+  namaEl.addEventListener('keyup', e=>{ if(e.key==='Enter') renderTabelTraining(); });
+  jabatanEl.addEventListener('change', renderTabelTraining);
+  regionEl.addEventListener('change', renderTabelTraining);
+  unitEl.addEventListener('change', renderTabelTraining);
+  btnReset.addEventListener('click', ()=>{
+    namaEl.value = '';
+    jabatanEl.value = '';
+    regionEl.value = '';
+    unitEl.value = '';
+    renderTabelTraining();
+  });
+}
+
+/* ================= CHART INSTANCES ================= */
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 11.5;
+Chart.defaults.color = '#5c6480';
+
+const palette = ['#2f6feb','#1f9e8f','#e0972a','#d1477a','#7c5cff','#2fb6c4'];
+
+function gridOpt(){
+  return { grid:{color:'#eef0f6', drawTicks:false}, border:{display:false} };
+}
+
+let cTrainingBulan, cPesertaBulan, cRegion, cUnit, cJabatan;
+
+function buildCharts(){
+  const ctxT = document.getElementById('chartTrainingBulan');
+  const ctxP = document.getElementById('chartPesertaBulan');
+  const ctxR = document.getElementById('chartRegion');
+  const ctxU = document.getElementById('chartUnit');
+  const ctxJ = document.getElementById('chartJabatan');
+
+  cTrainingBulan = new Chart(ctxT, {
+    type:'bar',
+    data:{ labels:bulanLabel, datasets:[{
+      label:'Jumlah Pelatihan', data:trainingPerBulan,
+      backgroundColor:'#2f6feb', borderRadius:6, maxBarThickness:26
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{ x:{grid:{display:false},border:{display:false}}, y:{beginAtZero:true, ...gridOpt()} }
+    }
+  });
+
+  cPesertaBulan = new Chart(ctxP, {
+    type:'line',
+    data:{ labels:bulanLabel, datasets:[{
+      label:'Jumlah Peserta', data:pesertaPerBulan,
+      borderColor:'#1f9e8f', backgroundColor:'rgba(31,158,143,.12)',
+      fill:true, tension:.35, pointRadius:3, pointBackgroundColor:'#1f9e8f'
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{ x:{grid:{display:false},border:{display:false}}, y:{beginAtZero:true, ...gridOpt()} }
+    }
+  });
+
+  cRegion = new Chart(ctxR, {
+    type:'bar',
+    data:{ labels:Object.keys(pesertaPerRegion), datasets:[{
+      data:Object.values(pesertaPerRegion), backgroundColor:palette, borderRadius:6, maxBarThickness:22
+    }]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{ x:{beginAtZero:true, ...gridOpt()}, y:{grid:{display:false},border:{display:false}} }
+    }
+  });
+
+  cUnit = new Chart(ctxU, {
+    type:'doughnut',
+    data:{ labels:Object.keys(pesertaPerUnit), datasets:[{
+      data:Object.values(pesertaPerUnit), backgroundColor:palette, borderWidth:0
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{legend:{position:'bottom', labels:{boxWidth:9, boxHeight:9, padding:10, font:{size:10.5}}}}
+    }
+  });
+
+  cJabatan = new Chart(ctxJ, {
+    type:'bar',
+    data:{ labels:Object.keys(pesertaPerJabatan), datasets:[{
+      data:Object.values(pesertaPerJabatan), backgroundColor:'#e0972a', borderRadius:6, maxBarThickness:26
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{ x:{grid:{display:false},border:{display:false}}, y:{beginAtZero:true, ...gridOpt()} }
+    }
+  });
+}
+
+function updateCharts(){
+  cTrainingBulan.data.labels = bulanLabel;
+  cTrainingBulan.data.datasets[0].data = trainingPerBulan;
+  cTrainingBulan.update();
+
+  cPesertaBulan.data.labels = bulanLabel;
+  cPesertaBulan.data.datasets[0].data = pesertaPerBulan;
+  cPesertaBulan.update();
+
+  cRegion.data.labels = Object.keys(pesertaPerRegion);
+  cRegion.data.datasets[0].data = Object.values(pesertaPerRegion);
+  cRegion.update();
+
+  cUnit.data.labels = Object.keys(pesertaPerUnit);
+  cUnit.data.datasets[0].data = Object.values(pesertaPerUnit);
+  cUnit.update();
+
+  cJabatan.data.labels = Object.keys(pesertaPerJabatan);
+  cJabatan.data.datasets[0].data = Object.values(pesertaPerJabatan);
+  cJabatan.update();
+
+  updateKPI();
+}
+
+function updateKPI(){
+  const totalTraining = trainingPerBulan.reduce((a,b)=>a+b,0);
+  // Pakai total resmi (dari semua baris sheet peserta) kalau data live sudah masuk;
+  // fallback ke sum per-bulan cuma dipakai untuk data contoh/dummy sebelum terhubung ke sheet.
+  const totalPeserta = (pesertaTotalResmi != null) ? pesertaTotalResmi : pesertaPerBulan.reduce((a,b)=>a+b,0);
+  const avg = totalTraining ? Math.round(totalPeserta/totalTraining) : 0;
+  const topRegion = Object.entries(pesertaPerRegion).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById('kpiTotalTraining').textContent = totalTraining.toLocaleString('id-ID');
+  document.getElementById('kpiTotalPeserta').textContent = totalPeserta.toLocaleString('id-ID');
+  document.getElementById('kpiAvgPeserta').textContent = avg.toLocaleString('id-ID');
+  document.getElementById('kpiTopRegion').textContent = topRegion ? topRegion[0] : '–';
+}
+
+/* ================= GOOGLE APPS SCRIPT CONNECTION ================= */
+// URL Web App Apps Script sudah menyatu di sini — tidak perlu tempel manual.
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx_SVosmwOCfGh55eGgcdsX8RxNMmJ6kpBj1SyQNANxu0qn0s_JBMaKgFXmDy7nxOeo/exec';
+
+const connStatus = document.getElementById('connStatus');
+const syncLabel = document.getElementById('syncLabel');
+const loadingOverlay = document.getElementById('loadingOverlay');
+
+/* ---- Animasi baterai charge 0-100% pada overlay loading ---- */
+const batteryEl = document.getElementById('batteryEl');
+const batteryFill = document.getElementById('batteryFill');
+const batteryPercent = document.getElementById('batteryPercent');
+let _batteryCurrent = 0;
+let _batteryTarget = 0;
+let _batteryRAF = null;
+
+function _batteryTick(){
+  _batteryCurrent += (_batteryTarget - _batteryCurrent) * 0.12;
+  if(Math.abs(_batteryTarget - _batteryCurrent) < 0.15) _batteryCurrent = _batteryTarget;
+  const shown = Math.round(_batteryCurrent);
+  batteryFill.style.width = shown + '%';
+  batteryPercent.childNodes[0].nodeValue = shown;
+  if(shown >= 100){
+    batteryEl.classList.add('charged');
+  } else {
+    batteryEl.classList.remove('charged');
+  }
+  if(_batteryCurrent !== _batteryTarget){
+    _batteryRAF = requestAnimationFrame(_batteryTick);
+  } else {
+    _batteryRAF = null;
+  }
+}
+function setBatteryTarget(pct){
+  _batteryTarget = Math.max(0, Math.min(100, pct));
+  if(!_batteryRAF) _batteryRAF = requestAnimationFrame(_batteryTick);
+}
+// Naik perlahan sampai maksimum 90% selama proses fetch masih berjalan,
+// supaya user tahu proses masih berjalan meski durasi fetch tidak pasti.
+let _batterySlowInterval = setInterval(()=>{
+  if(_batteryTarget < 90) setBatteryTarget(_batteryTarget + (2 + Math.random()*4));
+}, 260);
+function finishBatteryLoading(){
+  clearInterval(_batterySlowInterval);
+  setBatteryTarget(100);
+}
+
+function setConnStatus(state, label){
+  connStatus.className = 'conn-status ' + state;
+  connStatus.innerHTML = '<span class="dot"></span>' + label;
+  if(state === 'err'){
+    const retry = document.createElement('a');
+    retry.textContent = 'Coba lagi';
+    retry.addEventListener('click', ()=> loadFromScript(SCRIPT_URL));
+    connStatus.appendChild(retry);
+  }
+}
+
+function flashStatus(msg){
+  syncLabel.textContent = msg;
+}
+
+async function loadFromScript(url){
+  try{
+    setConnStatus('off', 'Memuat data…');
+    const res = await fetch(url, {redirect:'follow'});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    if(json && json.error) throw new Error(json.message || 'Script error');
+    applyRemoteData(json);
+    setConnStatus('ok', 'Terhubung');
+    flashStatus('Data live dari Google Sheet · diperbarui ' + new Date().toLocaleTimeString('id-ID'));
+    return true;
+  }catch(err){
+    console.error(err);
+    setConnStatus('err', 'Gagal terhubung');
+    flashStatus('Gagal memuat data live — menampilkan data contoh');
+    return false;
+  }finally{
+    // Selesaikan animasi baterai ke 100% dulu, baru sembunyikan overlay,
+    // supaya transisi terasa mulus dan tidak terpotong di tengah animasi.
+    finishBatteryLoading();
+    setTimeout(()=>{ loadingOverlay.classList.add('hidden'); }, 450);
+  }
+}
+
+function applyRemoteData(json){
+  const sheetNames = Object.keys(json);
+  const trainingSheetName = sheetNames.find(n=>/train|latih/i.test(n)) || sheetNames[0];
+  const pesertaSheetName = sheetNames.find(n=>/peserta|partisip|particip/i.test(n)) || sheetNames[1] || sheetNames[0];
+  const atpSheetName = sheetNames.find(n=>/atp/i.test(n)) || sheetNames[2];
+
+  const trainingRows = json[trainingSheetName] || [];
+  const pesertaRows = json[pesertaSheetName] || [];
+  const atpRows = atpSheetName ? (json[atpSheetName] || []) : [];
+
+  if(trainingRows.length){
+    const bulanKey = findKey(trainingRows[0], ['bulan','month','periode','period','tanggal','tgl','date','waktu','tanggalpelaksanaan','tanggaltraining','tglpelaksanaan','tgltraining','waktupelaksanaan']);
+    let jmlKey = findKey(trainingRows[0], ['jumlahpelatihan','jumlahtraining','jumlah','totalpelatihan','totaltraining','jmlpelatihan','jmltraining','total','jml','qty','count']);
+    // Kalau tidak ada kolom "jumlah" yang jelas, anggap 1 baris = 1 pelatihan (hitung baris, bukan menebak kolom angka lain).
+    console.log('[Dashboard] Sheet "' + trainingSheetName + '" — kolom Bulan/Tanggal terdeteksi:', bulanKey, '| kolom Jumlah terdeteksi:', jmlKey, '| header tersedia:', Object.keys(trainingRows[0]));
+    if(bulanKey){
+      const grouped = aggregate(trainingRows.map(r=>({...r,[bulanKey]:normalizeBulan(r[bulanKey])})), bulanKey, jmlKey);
+      const ordered = {}; bulanNames.forEach(b=>{ ordered[b] = grouped[b] || 0; });
+      bulanLabel.length = 0; bulanNames.forEach(l=>bulanLabel.push(l));
+      trainingPerBulan = bulanLabel.map(b=>ordered[b]);
+    } else {
+      console.warn('[Dashboard] PERINGATAN: kolom Bulan/Tanggal tidak ditemukan di sheet "' + trainingSheetName + '". Chart "Jumlah Pelatihan per Bulan" di-nol-kan (bukan pakai data contoh) supaya tidak menyesatkan. Cek nama header kolom bulan/tanggal di sheet ini.');
+      bulanLabel.length = 0; bulanNames.forEach(l=>bulanLabel.push(l));
+      trainingPerBulan = bulanLabel.map(()=>0);
+    }
+  }
+
+  if(pesertaRows.length){
+    const sample = pesertaRows[0];
+    const bulanKey = findKey(sample, ['bulan','month','periode','period','tanggal','tgl','date','waktu','tanggalpelaksanaan','tanggaltraining','tglpelaksanaan','tgltraining','waktupelaksanaan']);
+    const regionKey = findKey(sample, ['region','wilayah','area']);
+    const unitKey = findKey(sample, ['unit','divisi','division','department','departemen']);
+    const jabatanKey = findKey(sample, ['jabatan','posisi','position','level','role']);
+    let jmlKey = findKey(sample, ['jumlahpeserta','jumlah','totalpeserta','jmlpeserta','total','jml','qty','count']);
+    // Kalau tidak ada kolom "jumlah" yang jelas, anggap 1 baris = 1 peserta (hitung baris).
+
+    // PENTING: total resmi dihitung dari SEMUA baris peserta (tidak difilter oleh bulanKey),
+    // supaya baris yang kolom Bulan-nya kosong/gak kebaca tetap ikut terhitung di KPI Total Peserta.
+    // Chart "per bulan" boleh kehilangan baris seperti itu, tapi KPI total tidak boleh.
+    pesertaTotalResmi = jmlKey
+      ? pesertaRows.reduce((sum,r)=> sum + (Number(r[jmlKey])||0), 0)
+      : pesertaRows.length;
+
+    console.log('[Dashboard] Sheet "' + pesertaSheetName + '" — kolom Bulan/Tanggal terdeteksi:', bulanKey, '| kolom Jumlah terdeteksi:', jmlKey, '| kolom Region/Unit/Jabatan:', regionKey, unitKey, jabatanKey, '| header tersedia:', Object.keys(sample));
+    if(bulanKey){
+      const grouped = aggregate(pesertaRows.map(r=>({...r,[bulanKey]:normalizeBulan(r[bulanKey])})), bulanKey, jmlKey);
+      pesertaPerBulan = bulanLabel.map(b=> grouped[b] || 0);
+    } else {
+      console.warn('[Dashboard] PERINGATAN: kolom Bulan/Tanggal tidak ditemukan di sheet "' + pesertaSheetName + '". Chart "Jumlah Peserta per Bulan" di-nol-kan (bukan pakai data contoh) supaya tidak menyesatkan. Cek nama header kolom bulan/tanggal di sheet Peserta — beri tahu saya nama kolomnya kalau masih kosong.');
+      pesertaPerBulan = bulanLabel.map(()=>0);
+    }
+    if(regionKey) pesertaPerRegion = aggregate(pesertaRows, regionKey, jmlKey);
+    if(unitKey)   pesertaPerUnit   = aggregate(pesertaRows, unitKey, jmlKey);
+    if(jabatanKey)pesertaPerJabatan= aggregate(pesertaRows, jabatanKey, jmlKey);
+
+    // Kolom untuk Tabel Training (data per-baris peserta, bukan agregat)
+    // Jabatan pakai jabatanKey yang sama dengan chart "Peserta per Jabatan" di atas.
+    const namaKey = findKey(sample, ['namapegawai','nama','namakaryawan','employeename','name']);
+    const nppKey = findKey(sample, ['npp','nip','idpegawai','employeeid','nomorpegawai','nomorinduk']);
+    const unitKerjaKey = findKey(sample, ['unitkerja','unit','department','departemen']);
+
+    if(namaKey || nppKey){
+      pesertaDetailRows = pesertaRows
+        .map(r=>({
+          nama: namaKey ? r[namaKey] : '',
+          npp: nppKey ? r[nppKey] : '',
+          jabatan: jabatanKey ? r[jabatanKey] : '',
+          region: regionKey ? r[regionKey] : '',
+          unit: unitKerjaKey ? r[unitKerjaKey] : ''
+        }))
+        .filter(r=> r.nama || r.npp);
+      console.log('[Dashboard] Tabel Training — kolom Nama/NPP/Jabatan/Unit Kerja terdeteksi:', namaKey, nppKey, jabatanKey, unitKerjaKey);
+    } else {
+      console.warn('[Dashboard] PERINGATAN: kolom Nama/NPP tidak ditemukan di sheet "' + pesertaSheetName + '". Tabel Training tetap memakai data contoh. Cek nama header kolom nama pegawai / NPP di sheet ini.');
+    }
+    populateTabelFilters();
+    renderTabelTraining();
+  }
+
+  if(atpRows.length){
+    const sample = atpRows[0];
+    const bulanKey = findKey(sample, ['bulan','month','periode','period']);
+    const w1Key = findKey(sample, ['week1','minggu1','w1']);
+    const w2Key = findKey(sample, ['week2','minggu2','w2']);
+    const w3Key = findKey(sample, ['week3','minggu3','w3']);
+    const w4Key = findKey(sample, ['week4','minggu4','w4']);
+    const pelatihanKey = findKey(sample, ['namapelatihan','pelatihan','namatraining','training','judulpelatihan']);
+
+    atpDetailRows = atpRows
+      .map(r=>({
+        bulan: bulanKey ? (r[bulanKey] || '') : '',
+        w1: w1Key ? (r[w1Key] || '') : '',
+        w2: w2Key ? (r[w2Key] || '') : '',
+        w3: w3Key ? (r[w3Key] || '') : '',
+        w4: w4Key ? (r[w4Key] || '') : '',
+        pelatihan: pelatihanKey ? (r[pelatihanKey] || '') : ''
+      }))
+      .filter(r=> r.bulan || r.pelatihan || r.w1 || r.w2 || r.w3 || r.w4);
+
+    console.log('[Dashboard] Sheet "' + atpSheetName + '" — kolom Bulan/Week1-4/Nama Pelatihan terdeteksi:', bulanKey, w1Key, w2Key, w3Key, w4Key, pelatihanKey, '| header tersedia:', Object.keys(sample));
+  } else {
+    console.warn('[Dashboard] PERINGATAN: sheet ATP tidak ditemukan/kosong. Tabel ATP tetap memakai data contoh.');
+  }
+  renderTabelATP();
+
+  updateCharts();
+}
+
+function findKey(row, candidates){
+  const keys = Object.keys(row);
+  const normalized = keys.map(k => ({ raw:k, norm:k.toString().trim().toLowerCase().replace(/[^a-z0-9]/g,'') }));
+  // 1) exact match dulu
+  for(const c of candidates){
+    const hit = normalized.find(n => n.norm === c);
+    if(hit) return hit.raw;
+  }
+  // 2) fallback: header MENGANDUNG kata kunci (mis. "Jumlah Training (org)" mengandung "jumlah")
+  for(const c of candidates){
+    const hit = normalized.find(n => n.norm.includes(c) || c.includes(n.norm));
+    if(hit) return hit.raw;
+  }
+  return null;
+}
+
+function normalizeBulan(v){
+  if(v==null || v==='') return null;
+
+  // Angka bulan (1-12), termasuk kalau datang sebagai string "1", "01", dst.
+  if(typeof v === 'number' || /^\d{1,2}$/.test(v.toString().trim())){
+    const n = Number(v);
+    if(n>=1 && n<=12) return bulanNames[n-1];
+  }
+
+  const s = v.toString().trim();
+
+  // Format tanggal ISO dari Apps Script, mis. "2026-01-15" atau "2026-01-15T00:00:00.000Z"
+  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(iso){
+    const n = Number(iso[2]);
+    if(n>=1 && n<=12) return bulanNames[n-1];
+  }
+
+  // Format tanggal umum lain, mis. "15/1/2026" atau "1/15/2026"
+  const slash = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-]\d{2,4}$/);
+  if(slash){
+    // asumsikan format Indonesia: DD/MM/YYYY
+    const n = Number(slash[2]);
+    if(n>=1 && n<=12) return bulanNames[n-1];
+  }
+
+  const map = {jan:'Jan',januari:'Jan',feb:'Feb',februari:'Feb',mar:'Mar',maret:'Mar',apr:'Apr',april:'Apr',
+    mei:'Mei',may:'Mei',jun:'Jun',juni:'Jun',jul:'Jul',juli:'Jul',agu:'Agu',agustus:'Agu',aug:'Agu',
+    sep:'Sep',september:'Sep',okt:'Okt',oktober:'Okt',oct:'Okt',nov:'Nov',november:'Nov',des:'Des',desember:'Des',dec:'Des'};
+  const key = s.toLowerCase().slice(0,3);
+  return map[key] || map[s.toLowerCase()] || s;
+}
+
+function aggregate(rows, dimKey, valKey){
+  const out = {};
+  rows.forEach(r=>{
+    const dim = r[dimKey];
+    if(dim==null || dim==='') return;
+    const val = valKey ? Number(r[valKey])||0 : 1;
+    out[dim] = (out[dim]||0) + val;
+  });
+  return out;
+}
+
+function sortByBulan(obj){
+  const ordered = {};
+  bulanLabel.forEach(b=>{ if(obj[b]!==undefined) ordered[b]=obj[b]; });
+  Object.keys(obj).forEach(k=>{ if(ordered[k]===undefined) ordered[k]=obj[k]; });
+  return ordered;
+}
+
+/* ================= INIT ================= */
+buildCharts();
+updateKPI();
+initTabelTrainingFilters();
+populateTabelFilters();
+renderTabelTraining();
+renderTabelATP();
+loadFromScript(SCRIPT_URL);
+</script>
+</body>
+</html>
