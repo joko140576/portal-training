@@ -247,8 +247,10 @@ body{
 }
 
 .brand{ display:flex; align-items:center; gap:16px; }
-
-
+.brand .mark{ display:flex; align-items:center; }
+.brand .mark img{
+  width:80px; height:60px;
+  object-fit:contain;
 }
 .brand .wordmark{ line-height:1.25; }
 .brand .wordmark .name{ font-family:'Fraunces', serif; font-size:19px; font-weight:600; color:var(--ink); }
@@ -459,7 +461,20 @@ body{
 .modal-content{ border:none; border-radius:12px; overflow:hidden; background:var(--surface); color:var(--ink); }
 .modal-header{ background:var(--surface-tint); color:var(--ink); border-bottom:3px solid var(--amber); padding:22px 28px; }
 .modal-header .modal-title{ font-family:'Fraunces', serif; font-size:20px; font-weight:600; }
-.modal-header .btn-close{ opacity:.8; filter:invert(1) grayscale(1); }
+.modal-header .btn-close{
+  opacity:1;
+  background-color:var(--danger);
+  background-image:none;
+  -webkit-mask-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+  mask-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-position:center;
+  mask-position:center;
+  -webkit-mask-size:1em auto;
+  mask-size:1em auto;
+}
+.modal-header .btn-close:hover{ background-color:#A93838; }
 .modal-body{ padding:28px; color:var(--ink-soft); font-size:15px; line-height:1.65; }
 .modal-body ul{ padding-left:20px; }
 .modal-body li{ margin-bottom:6px; }
@@ -525,13 +540,15 @@ body{
   </div>
 
   <div class="login-center">
-    <div class="login-logo"><img src="logo_ssi.png" alt="Logo PT SSI" width="80" height="60"></div>
-    <p class="login-tagline serif">Training Today , Excellence Tomorrow.</p>
+    <div class="login-logo"><img src="logossi.png" alt="Logo PT SSI" width="76" height="57"></div>
+    <p class="login-tagline serif">Continuous learning, go to your journey.</p>
 
     <div class="login-card">
       <div id="particles-js"></div>
-      <div class="login-card-inner">   
-        <h2 class="serif">Portal Training HCC</h2>
+      <div class="login-card-inner">
+        <div class="eyebrow">Portal internal</div>
+        <h2 class="serif">Masuk ke akun Anda</h2>
+
         <div class="field">
           <label for="username">Username</label>
           <div class="input-icon">
@@ -561,7 +578,7 @@ body{
 
   <div class="top-bar">
     <div class="brand">
-      <img src="logo_ssi.png" alt="Logo PT SSI" width="80" height="60">
+      <div class="mark"><img src="logossi.png" alt="Logo PT SSI" width="80" height="60"></div>
       <div class="wordmark">
         <div class="name serif">Unit Development & Training</div>
         <div class="sub">Pusat pengembangan pegawai PT SSI</div>
