@@ -178,7 +178,7 @@
     display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:'Plus Jakarta Sans';
   }
 
-  .content{padding:22px 28px 40px;overflow-x:auto;}
+  .content{padding:22px 28px 40px;overflow-x:auto;position:relative;min-height:70vh;}
   .page{display:none;}
   .page.active{display:block;animation:fade .25s ease;}
   @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
@@ -232,12 +232,17 @@
   .conn-status .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
   .conn-status a{color:inherit;text-decoration:underline;margin-left:4px;cursor:pointer;}
 
-  /* ---------- LOADING OVERLAY (dashboard data asli sedang dimuat) ---------- */
+  /* ---------- LOADING OVERLAY (dashboard data asli sedang dimuat) ----------
+     Catatan: overlay ini SENGAJA position:absolute (bukan fixed) dan diletakkan
+     di dalam .content, supaya animasi loading hanya menutupi area konten
+     dashboard saja — sidebar, topbar, dan navbar tetap langsung terlihat
+     dan tidak ikut "menunggu". */
   .loading-overlay{
-    position:fixed;inset:0;z-index:999;
+    position:absolute;inset:0;z-index:50;
     background:rgba(238,241,247,.94);backdrop-filter:blur(2px);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
     transition:opacity .25s ease,visibility .25s ease;
+    border-radius:var(--radius);
   }
   .loading-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none;}
 
@@ -472,19 +477,6 @@
 </head>
 <body>
 
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="battery-wrap">
-    <div class="battery" id="batteryEl">
-      <div class="battery-cells">
-        <div class="battery-fill" id="batteryFill"></div>
-      </div>
-    </div>
-    <div class="battery-percent" id="batteryPercent">0<span class="pct-sign">%</span></div>
-  </div>
-  <div class="loading-text">Sedang mempersiapkan database dashboard</div>
-  <div class="loading-sub">Mengambil data asli dari Google Sheet, mohon tunggu sebentar</div>
-</div>
-
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <aside class="sidebar" id="sidebarEl">
@@ -537,6 +529,22 @@
   </div>
 
   <div class="content">
+
+    <!-- Loading overlay hanya menutupi area konten dashboard ini,
+         bukan seluruh halaman — sidebar & topbar tetap langsung terlihat -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="battery-wrap">
+        <div class="battery" id="batteryEl">
+          <div class="battery-cells">
+            <div class="battery-fill" id="batteryFill"></div>
+          </div>
+        </div>
+        <div class="battery-percent" id="batteryPercent">0<span class="pct-sign">%</span></div>
+      </div>
+      <div class="loading-text">Sedang mempersiapkan database dashboard</div>
+      <div class="loading-sub">Mengambil data asli dari Google Sheet, mohon tunggu sebentar</div>
+    </div>
+
     <div class="content-scroll">
     <div class="page-scroll">
 
