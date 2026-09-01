@@ -1,562 +1,847 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Development & Training — PT SSI</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: Calibri, sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-        }
+<style>
+:root{
+  --bg:#F3F5FA;
+  --surface:#FFFFFF;
+  --surface-tint:#EEF2FB;
+  --ink:#14213A;
+  --ink-soft:#4B5876;
+  --muted:#8992A8;
+  --navy:#1D3B73;
+  --navy-deep:#122A56;
+  --amber:#F0A93E;
+  --amber-deep:#D48A1E;
+  --emerald:#1F9D7C;
+  --line:#E1E5F0;
+  --danger:#D64545;
+  --shadow:0 22px 44px -24px rgba(18,42,86,.28);
+}
 
-        /* Background Login */
-        #loginPage {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80')
-                        center/cover no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-        }
+*{ box-sizing:border-box; }
 
-        /* Background Dashboard */
-        #dashboardPage {
-            display: none;
-            min-height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                        url('https://crehana-blog.imgix.net/media/filer_public/22/fe/22feb5f2-763b-4218-a1ad-e1312564c7f1/publicidad-digital.jpg?auto=format&q=50')
-                        center/cover no-repeat;
-            padding-bottom: 50px;
-            animation: fadeIn 1s ease-in-out;
-        }
+body{
+  font-family:'Inter', sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+}
 
-        /* Fade In */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
+.serif{ font-family:'Fraunces', serif; }
 
-        /* Login Card */
-        .login-card {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 40px;
-            border-radius: 16px;
-            width: 350px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                        0 0 20px rgba(100, 149, 237, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: fadeIn 1s ease-in-out, glow 3s infinite alternate;
-            color: white;
-        }
+/* ============ LOGIN ============ */
+#loginPage{
+  min-height:100vh;
+  display:flex;
+  flex-wrap:wrap;
+}
 
-        .modal-header-custom {color: white;
-            background: linear-gradient(90deg,
-                        rgba(24, 242, 235, 1) 0%,
-                        rgba(23, 23, 189, 1) 25%,
-                        rgba(2, 15, 18, 1) 100%);
-        }
+.login-visual{
+  flex:1 1 480px;
+  position:relative;
+  min-height:340px;
+  overflow:hidden;
+}
+.login-visual img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.login-visual .visual-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(200deg, rgba(18,42,86,.15) 10%, rgba(18,42,86,.72) 75%, rgba(18,42,86,.9) 100%);
+}
+.login-visual-copy{
+  position:relative;
+  z-index:2;
+  height:100%;
+  min-height:340px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:56px 48px;
+}
+.login-visual-copy .mark{
+  width:44px; height:44px;
+  border:1.5px solid var(--amber);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  color:var(--amber);
+  margin-bottom:26px;
+  font-size:16px;
+}
+.login-visual-copy h1{
+  font-size:33px;
+  font-weight:600;
+  line-height:1.22;
+  max-width:440px;
+  margin-bottom:14px;
+  color:#fff;
+}
+.login-visual-copy p{
+  color:#D7DEEE;
+  max-width:400px;
+  font-size:15px;
+  line-height:1.65;
+}
 
+.login-form-side{
+  flex:1 1 380px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+  background:var(--surface);
+}
 
-        /* Button close warna putih */
-        .modal-header-custom .btn-close {
-        filter: invert(1);
-        opacity: 1;
-        }
+.login-card{
+  width:100%;
+  max-width:360px;
+}
 
+.login-card .eyebrow{
+  color:var(--muted);
+  font-size:13.5px;
+  margin-bottom:6px;
+  font-weight:600;
+}
 
-        @keyframes glow {
-            from { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                            0 0 20px rgba(100, 149, 237, 0.5); }
-            to   { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                            0 0 30px rgba(100, 149, 237, 0.8); }
-        }
+.login-card h2{
+  font-size:29px;
+  font-weight:600;
+  margin-bottom:32px;
+  color:var(--ink);
+}
 
-        .title-box {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 15px 40px;
-            display: inline-block;
-            border-radius: 12px;
-            margin-top: 30px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
-                        0 0 15px rgba(255, 255, 255, 0.2);
-            animation: fadeIn 1.5s ease-in-out;
-            color: white;
-        }
+.field{ margin-bottom:24px; }
+.field label{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:8px;
+  font-weight:600;
+}
+.field input{
+  width:100%;
+  border:none;
+  border-bottom:2px solid var(--line);
+  background:transparent;
+  padding:8px 2px 10px;
+  font-size:16px;
+  color:var(--ink);
+  outline:none;
+  transition:border-color .25s;
+}
+.field input::placeholder{ color:#B7BEcf; }
+.field input:focus{ border-color:var(--navy); }
 
-        /* MENU BOX */
-        .menu-box {
-            color: white;
-            padding: 40px 20px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            text-align: left;
-            font-size: 20px;
-            font-weight: 600;
-            min-height: 180px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1),
-                        0 0 30px rgba(0, 0, 0, 0.4);
-            animation: fadeIn 1s ease-in-out;
-            opacity: 0;
-            animation-fill-mode: forwards;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
+.btn-gold{
+  width:100%;
+  background:var(--amber);
+  color:#3A2405;
+  border:none;
+  padding:14px;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.2px;
+  transition:background .25s, transform .15s;
+}
+.btn-gold:hover{ background:var(--amber-deep); color:#fff; }
+.btn-gold:active{ transform:scale(.98); }
+.btn-gold:disabled{ opacity:.6; }
 
-        /* Hilangkan pseudo-element */
-        .menu-box::before {
-            content: none !important;
-        }
+#errorMsg{
+  color:var(--danger);
+  font-size:13.5px;
+  margin-bottom:18px;
+  display:none;
+}
 
-        .menu-box:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.7),
-                        0 0 35px currentColor,
-                        0 0 50px currentColor;
-        }
+/* ============ DASHBOARD ============ */
+#dashboardPage{
+  display:none;
+  min-height:100vh;
+  background:var(--bg);
+}
 
-        .menu-icon {
-            font-size: 60px;
-            line-height: 1;
-        }
+.top-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px 48px;
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
+  flex-wrap:wrap;
+  gap:14px;
+}
 
-        /* Warna Box */
-        .menu-box:nth-child(1) { background: rgba(0, 128, 255, 0.25); border: 2px solid #008cff; }
-        .menu-box:nth-child(2) { background: rgba(255, 0, 128, 0.25); border: 2px solid #ff0080;; }
-        .menu-box:nth-child(3) { background: rgba(0, 255, 128, 0.25); border: 2px solid #00ff80;; }
-        .menu-box:nth-child(4) { background: rgba(255, 128, 0, 0.25); border: 2px solid #ff8000;; }
+.brand{ display:flex; align-items:center; gap:16px; }
+.brand .mark{
+  width:42px; height:42px;
+  border-radius:12px;
+  background:var(--navy);
+  color:var(--amber);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Fraunces',serif;
+  font-weight:600;
+}
+.brand .wordmark{ line-height:1.25; }
+.brand .wordmark .name{ font-family:'Fraunces', serif; font-size:19px; font-weight:600; color:var(--ink); }
+.brand .wordmark .sub{ font-size:12.5px; color:var(--muted); }
 
-        .library-box {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.8),
-                                              rgba(255, 215, 0, 0.8));
-            color: white;
-            border-radius: 12px;
-            padding: 25px;
-            width: 230px;
-            margin: 40px auto 0 auto;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.5),
-                        0 0 15px rgba(255, 215, 0, 0.5);
-            transition: all 0.4s ease;
-            animation: fadeIn 1.5s ease-in-out;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+.user-chip{ display:flex; align-items:center; gap:12px; font-size:14px; color:var(--ink-soft); }
+.user-chip button{
+  border:1px solid var(--line);
+  background:transparent;
+  border-radius:20px;
+  padding:6px 16px;
+  font-size:13px;
+  color:var(--ink-soft);
+  transition:border-color .2s, color .2s;
+}
+.user-chip button:hover{ border-color:var(--navy); color:var(--navy); }
 
-        .library-box:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 165, 0, 0.6),
-                        0 0 20px rgba(255, 215, 0, 0.6);
-        }
+/* HERO */
+.hero{
+  display:flex;
+  align-items:center;
+  gap:48px;
+  padding:56px 48px 30px;
+  flex-wrap:wrap;
+}
+.hero-text{ flex:1 1 320px; max-width:520px; }
+.hero-text .eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--navy-deep);
+  font-size:13px;
+  font-weight:700;
+  background:var(--surface-tint);
+  padding:6px 14px;
+  border-radius:20px;
+  margin-bottom:16px;
+}
+.hero-text h1{ font-size:34px; font-weight:600; margin-bottom:14px; color:var(--ink); }
+.hero-text p{ color:var(--ink-soft); font-size:15.5px; line-height:1.6; }
+.hero-art-frame{
+  flex:0 0 240px;
+  width:240px; height:240px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  padding:10px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.hero-art-frame img{ width:100%; height:100%; object-fit:contain; border-radius:10px; }
 
-        .form-control {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-        }
+/* ============ ZIGZAG JOURNEY TIMELINE ============ */
+.journey-wrap{
+  padding:16px 48px 130px;
+  max-width:1000px;
+  margin:0 auto;
+}
+.zz-track{ position:relative; }
+.zz-track::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:6px;
+  bottom:6px;
+  width:3px;
+  transform:translateX(-50%);
+  background:repeating-linear-gradient(to bottom, var(--line) 0 7px, transparent 7px 15px);
+}
+.zz-fill{
+  position:absolute;
+  left:50%;
+  top:6px;
+  width:3px;
+  height:0;
+  transform:translateX(-50%);
+  background:linear-gradient(to bottom, var(--amber), var(--navy));
+  transition:height 1.8s cubic-bezier(.2,.7,.3,1);
+}
+.zz-track.in-view .zz-fill{ height:calc(100% - 12px); }
 
-        /* FOOTER DASHBOARD */
-        .dashboard-footer {
-            position: fixed;
-            bottom: 15px;
-            left: 0;
-            width: 100%;
-            padding: 0 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 999;
-        }
+.zz-item{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:28px;
+  padding:26px 0;
+  opacity:0;
+  transition:opacity .6s ease, transform .6s ease;
+}
+.zz-item:nth-child(odd){ transform:translateX(-22px); }
+.zz-item:nth-child(even){ flex-direction:row-reverse; transform:translateX(22px); }
+.zz-track.in-view .zz-item{ opacity:1; transform:translateX(0); }
+.zz-item:nth-child(1){ transition-delay:.08s; }
+.zz-item:nth-child(2){ transition-delay:.22s; }
+.zz-item:nth-child(3){ transition-delay:.36s; }
+.zz-item:nth-child(4){ transition-delay:.50s; }
+.zz-item:nth-child(5){ transition-delay:.64s; }
+.zz-item:nth-child(6){ transition-delay:.78s; }
+.zz-item:nth-child(7){ transition-delay:.92s; }
 
-        .dashboard-footer button {
-            border-radius: 30px;
-            padding: 8px 20px;
-        }
+.zz-card-slot{ flex:1 1 0; display:flex; min-width:0; }
+.zz-spacer{ flex:1 1 0; min-width:0; }
+.zz-item:nth-child(odd) .zz-card-slot{ justify-content:flex-end; }
+.zz-item:nth-child(even) .zz-card-slot{ justify-content:flex-start; }
 
-        .footer-right {
-            opacity: 0.85;
-        }
+.zz-node{
+  flex:0 0 64px;
+  width:64px; height:64px;
+  border-radius:50%;
+  background:var(--surface);
+  border:3px solid var(--surface);
+  box-shadow:0 0 0 2px var(--line);
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  z-index:2;
+  transition:transform .25s, box-shadow .25s;
+}
+.zz-node img{ width:38px; height:38px; }
+.zz-item:hover .zz-node{ transform:scale(1.08); box-shadow:0 0 0 2px var(--amber); }
+.zz-node .zz-num{
+  position:absolute;
+  top:-6px; right:-6px;
+  width:23px; height:23px;
+  border-radius:50%;
+  background:var(--navy);
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  font-family:'Inter',sans-serif;
+  display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--surface);
+}
 
-    </style>
+.zz-card{
+  position:relative;
+  width:100%;
+  max-width:400px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px 24px;
+  cursor:pointer;
+  box-shadow:0 10px 26px -20px rgba(18,42,86,.35);
+  transition:box-shadow .25s, transform .25s, border-color .25s;
+}
+.zz-item:hover .zz-card{
+  border-color:var(--amber);
+  box-shadow:0 20px 38px -20px rgba(18,42,86,.3);
+  transform:translateY(-3px);
+}
+.zz-item:nth-child(odd) .zz-card{ margin-right:8px; border-left:4px solid var(--amber); }
+.zz-item:nth-child(even) .zz-card{ margin-left:8px; border-right:4px solid var(--emerald); }
+
+.zz-card .t-title{
+  font-family:'Fraunces', serif;
+  font-size:18px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.zz-card .t-desc{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+.zz-card .t-cta{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--navy);
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.zz-item:hover .t-cta{ color:var(--amber-deep); }
+.zz-item:nth-child(even) .t-cta{ flex-direction:row-reverse; }
+
+/* FOOTER */
+.dash-footer{
+  position:fixed;
+  bottom:0; left:0; width:100%;
+  padding:16px 48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  background:linear-gradient(0deg, var(--bg) 60%, transparent);
+}
+.pill-btn{
+  border:1.5px solid var(--line);
+  background:var(--surface);
+  color:var(--ink-soft);
+  border-radius:24px;
+  padding:9px 20px;
+  font-size:13.5px;
+  font-weight:600;
+  margin-right:12px;
+  transition:border-color .2s, color .2s;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.pill-btn:hover{ border-color:var(--navy); color:var(--navy); }
+.footer-credit{ font-size:12.5px; color:var(--muted); }
+
+/* ============ MODALS ============ */
+.modal-content{ border:none; border-radius:12px; overflow:hidden; background:var(--surface); }
+.modal-header{ background:var(--surface-tint); color:var(--ink); border-bottom:3px solid var(--amber); padding:22px 28px; }
+.modal-header .modal-title{ font-family:'Fraunces', serif; font-size:20px; font-weight:600; }
+.modal-header .btn-close{ opacity:.7; }
+.modal-body{ padding:28px; color:var(--ink-soft); font-size:15px; line-height:1.65; }
+.modal-body ul{ padding-left:20px; }
+.modal-body li{ margin-bottom:6px; }
+.modal-footer{ border-top:1px solid var(--line); padding:18px 28px; }
+.modal-footer .btn-primary{ background:var(--navy); border:none; color:#fff; font-weight:700; padding:9px 22px; border-radius:24px; }
+.modal-footer .btn-primary:hover{ background:var(--navy-deep); }
+
+.tool-card{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:26px 20px;
+  height:100%;
+  text-align:center;
+  background:var(--surface-tint);
+  transition:box-shadow .25s, transform .25s, border-color .25s;
+}
+.tool-card:hover{ box-shadow:0 14px 28px -18px rgba(18,42,86,.35); transform:translateY(-4px); border-color:var(--amber); }
+.tool-card h5{ font-family:'Fraunces', serif; font-weight:600; margin-bottom:12px; color:var(--ink); }
+.tool-card p, .tool-card ul{ color:var(--ink-soft); font-size:14px; text-align:left; }
+.tool-card .btn{ border-radius:24px; font-weight:700; padding:9px 20px; border:none; }
+.tool-card .btn-primary{ background:var(--navy); color:#fff; }
+.tool-card .btn-primary:hover{ background:var(--navy-deep); }
+.tool-card .btn-danger{ background:var(--danger); color:#fff; }
+.tool-card .btn-danger:hover{ background:#A93838; }
+.modal-secondary-btn{ background:transparent; border:1px solid var(--line); color:var(--ink-soft); border-radius:24px; padding:9px 20px; }
+.modal-secondary-btn:hover{ border-color:var(--navy); color:var(--navy); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 900px){
+  .top-bar{ padding:18px 20px; }
+  .hero{ padding:36px 20px 6px; }
+  .hero-art-frame{ width:130px; height:130px; flex-basis:130px; }
+  .journey-wrap{ padding:14px 16px 130px; }
+
+  .zz-track::before, .zz-fill{ left:26px; transform:none; }
+
+  .zz-item, .zz-item:nth-child(even){
+    flex-direction:row;
+    align-items:flex-start;
+    transform:translateX(0) !important;
+    gap:16px;
+  }
+  .zz-spacer{ display:none; }
+  .zz-card-slot{ justify-content:flex-start !important; flex:1 1 auto; order:2; }
+  .zz-node{ flex:0 0 52px; width:52px; height:52px; order:1; }
+  .zz-node img{ width:30px; height:30px; }
+  .zz-card{ max-width:none; margin:0 !important; }
+  .zz-item:nth-child(even) .t-cta{ flex-direction:row; }
+
+  .dash-footer{ padding:14px 20px; flex-direction:column; align-items:flex-start; }
+}
+
+@media (max-width: 560px){
+  .login-visual-copy h1{ font-size:26px; }
+  .hero-text h1{ font-size:27px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .zz-fill, .zz-item{ transition:none !important; opacity:1 !important; transform:none !important; }
+  .zz-fill{ height:calc(100% - 12px) !important; }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- LOGIN PAGE -->
-    <div id="loginPage">
-        <div class="login-card">
-            <h4 class="text-center mb-4"><b>Login Sistem</b></h4>
-
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" id="username" class="form-control" placeholder="Masukkan username">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="Masukkan password">
-            </div>
-
-            <div id="errorMsg" class="text-danger mb-3" style="display:none;">
-                Username atau password salah!
-            </div>
-
-            <button class="btn btn-primary w-100" onclick="login()">Login</button>
-        </div>
+<!-- ============ LOGIN PAGE ============ -->
+<div id="loginPage">
+  <div class="login-visual">
+    <img src="assets/login-art.png" alt="Ilustrasi perjalanan belajar PT SSI">
+    <div class="visual-overlay"></div>
+    <div class="login-visual-copy">
+      <div class="mark">UD</div>
+      <h1 class="serif">Continuous learning, go to your journey.</h1>
+      <p>Program COLLEGE menemani setiap pegawai PT SSI dari hari pertama bergabung hingga jenjang kepemimpinan, satu langkah pembelajaran pada satu waktu.</p>
     </div>
+  </div>
 
-    <!-- DASHBOARD -->
-    <div id="dashboardPage">
-        <div class="container text-center">
+  <div class="login-form-side">
+    <div class="login-card">
+      <div class="eyebrow">Portal internal</div>
+      <h2 class="serif">Masuk ke akun Anda</h2>
 
-            <div class="title-box mt-5">
-                <h3><i>Unit Development & Training</i></h3>
-            </div>
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Masukkan username">
+      </div>
 
-            <div class="row justify-content-center g-3">
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Masukkan password">
+      </div>
 
-                <div class="col-md-3">
-                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal1">
-                        <i class="bi bi-people-fill menu-icon"></i>
-                        <span>Training<br>On Boarding<br>New Employee</span>
-                    </div>
-                </div>
+      <div id="errorMsg">Username atau password salah. Silakan coba lagi.</div>
 
-                <div class="col-md-3">
-                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal2">
-                        <i class="bi bi-journal-text menu-icon"></i>
-                        <span>Training Mandatory<br>& Refreshment</span>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal3">
-                        <i class="bi bi-award-fill menu-icon"></i>
-                        <span>Training Leadership<br>& Culture</span>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal4">
-                        <i class="bi bi-lightbulb-fill menu-icon"></i>
-                        <span>Training<br>Development</span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal5">
-                        <i class="bi bi-lightbulb-fill menu-icon"></i>
-                        <span>Event<br>Training</span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal6">
-                        <i class="bi bi-patch-check-fill menu-icon"></i>
-                        <span>Sertifikasi<br>pegawai</span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="menu-box" data-bs-toggle="modal" data-bs-target="#modal7">
-                        <i class="bi bi-database-fill menu-icon"></i>
-                        <span>Dashboard<br>training</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FOOTER ACTION -->
-            <div class="dashboard-footer">
-                
-                <!-- KIRI : KAMUS -->
-                <div class="footer-left">
-                    <button class="btn btn-warning fw-bold"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalhcc">
-                        📘 Tool HCC
-                    </button>
-                </div>
-
-                <div class="footer-left">
-                    <a href="atp.html"  class="btn btn-success fw-bold" >
-                        📘 ATP Annual Training Program
-                    </a>
-                </div>
-
-                <!-- KANAN : CREATE BY HCC 2025-->
-                <div class="footer-right text-white">
-                    
-                      <i class="bi bi-person-fill me-1"></i>
-                      <small>Create By Unit Development</small>
-                     
-                </div>
-
-
-        </div>
+      <button class="btn-gold" id="loginBtn" onclick="login()">Masuk</button>
     </div>
+  </div>
+</div>
 
-    <!-- INI MODALS -->
-    <div class="modal fade" id="modal1">
-        <div class="modal-dialog">
-            <div class="modal-content">
+<!-- ============ DASHBOARD / COLLEGE ============ -->
+<div id="dashboardPage">
 
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Training On Boarding New Employee</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>Informasi mengenai pelatihan onboarding karyawan baru</p>
-                    <p>program pelatihan nya disebut COLLEGE " Continuos Learning Go To Your Journey "</p>
-                    <p>Program ini adalah pelatihan berjenjang yang meliputi :</p>
-                    <ul>
-                        <li>Training kasir</li>
-                        <li>Training custody</li>
-                        <li>Training FLM</li>
-                        <li>Training SLM</li>
-                        <li>Training Admin</li>
-                    </ul>
-                </div>
-
-                <div class="modal-footer">
-                    <a href="onboarding/college.html" button class="btn btn-primary">Let's Going to Training !</button></a>
-                </div>
-
-            </div>
-        </div>
+  <div class="top-bar">
+    <div class="brand">
+      <div class="mark">UD</div>
+      <div class="wordmark">
+        <div class="name serif">Unit Development & Training</div>
+        <div class="sub">Pusat pengembangan pegawai PT SSI</div>
+      </div>
     </div>
-
-    <div class="modal fade" id="modal2">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Training Mandatory & Refreshment</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>Training mandatory adalah training yang wajib diikuti untuk setiap pegawai yang melekat pada jabatannya</p>
-                    <p>Training ini merupakan kelanjutan setelah pegawai melakukan On-Boarding Training</p>
-                    <p>Materi materi yang diberikan berupa Up-Scalling dari materi yang sudah ada</p>
-                    <p>Materi ini juga bisa digunakan untuk Refrestment Knowledge & Skill Pegawai</p>
-                    <ul>
-                        <li>Materi Lanjutan Kasir</li>
-                        <li>Materi Lanjutan Custody</li>
-                        <li>Materi Lanjutan FLM/SLM</li>
-                        <li>Materi Lanjutan Admin</li>
-                    </ul>
-                </div>
-
-                <div class="modal-footer">
-                    <a href="refreshment/index.html"button class="btn btn-primary">Let's Going to Refreshment !</button></a>
-                </div>
-
-            </div>
-        </div>
+    <div class="user-chip">
+      <i class="bi bi-person-circle"></i>
+      <span id="userLabel">ptssi</span>
+      <button onclick="logout()"><i class="bi bi-box-arrow-right me-1"></i>Keluar</button>
     </div>
+  </div>
 
-    <div class="modal fade" id="modal3">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Training Leadership & Culture</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>Training Leadership diberikan untuk para pemimpin dari Level Asmen hingga GM</p>
-                    <p>Training Leadership terdiri dari dasar Leadership dan 10 Competency menurut standar BUMN</p>
-                    <p>Materi Culture adalah materi dasar untuk setiap pegawai terkait dengan budaya perusahaan</p>
-                </div>
-
-                <div class="modal-footer">
-                    <a href="leadership/leadership.html" button class="btn btn-primary">Let's Going to training !</button></a>
-                </div>
-
-            </div>
-        </div>
+  <div class="hero">
+    <div class="hero-text">
+      <div class="eyebrow"><i class="bi bi-stars"></i>Program COLLEGE</div>
+      <h1 class="serif">Perjalanan belajar Anda dimulai di sini.</h1>
+      <p>Pilih satu titik pada perjalanan untuk melihat program, materi, dan langkah berikutnya.</p>
     </div>
-
-    <div class="modal fade" id="modal4">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Training Development</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>Materi yang dibuat untuk pengembangan diri pegawai</p>
-                    <p>Materi yang bersifat Non operasinal</p>
-                    <p>Tujuan training adalah menambah skill, kompetensi, knowledge diluar pekerjaan operasional</p>
-                </div>
-
-                <div class="modal-footer">
-                    <a href="development/develop.html" button class="btn btn-primary">Let's Going to Training !</button></a>
-                </div>
-
-            </div>
-        </div>
+    <div class="hero-art-frame">
+      <img src="assets/hero-art.png" alt="Ilustrasi jenjang belajar COLLEGE">
     </div>
+  </div>
 
-    <div class="modal fade" id="modal5">
-        <div class="modal-dialog">
-            <div class="modal-content">
+  <div class="journey-wrap">
+    <div class="zz-track" id="journeyPath">
+      <div class="zz-fill"></div>
 
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Request Training </h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal1">
+        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Onboarding karyawan baru</div><div class="t-desc">Program COLLEGE untuk pegawai yang baru bergabung, dari dasar kasir hingga admin.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
+        <div class="zz-node"><img src="assets/badge-1.png" alt="Onboarding"><span class="zz-num">1</span></div>
+        <div class="zz-spacer"></div>
+      </div>
 
-                <div class="modal-body">
-                    <p>Pelatihan khusus yang diadakan oleh divisi HCC</p>
-                    <p>Sesuai permintaan request dari Divisi </p>
-                    <p>Tujuan training adalah menambah skill, kompetensi, knowledge pegawai  </p>
-                </div>
+      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal2">
+        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Mandatory & refreshment</div><div class="t-desc">Pelatihan wajib berkelanjutan untuk menyegarkan pengetahuan dan keterampilan sesuai jabatan.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
+        <div class="zz-node"><img src="assets/badge-2.png" alt="Mandatory & Refreshment"><span class="zz-num">2</span></div>
+        <div class="zz-spacer"></div>
+      </div>
 
-                <div class="modal-footer">
-                    <a href="request/index.html" button class="btn btn-primary">Get Started  !</button></a>
-                </div>
+      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal3">
+        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Leadership & culture</div><div class="t-desc">Dasar leadership dan budaya perusahaan untuk pemimpin level Asisten Manajer hingga GM.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
+        <div class="zz-node"><img src="assets/badge-3.png" alt="Leadership & Culture"><span class="zz-num">3</span></div>
+        <div class="zz-spacer"></div>
+      </div>
 
-            </div>
-        </div>
+      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal4">
+        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Training development</div><div class="t-desc">Materi non-operasional untuk pengembangan diri, skill, dan kompetensi pegawai.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
+        <div class="zz-node"><img src="assets/badge-4.png" alt="Training Development"><span class="zz-num">4</span></div>
+        <div class="zz-spacer"></div>
+      </div>
+
+      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal5">
+        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Event training</div><div class="t-desc">Pelatihan khusus dari Divisi HCC sesuai permintaan masing-masing divisi.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
+        <div class="zz-node"><img src="assets/badge-5.png" alt="Event Training"><span class="zz-num">5</span></div>
+        <div class="zz-spacer"></div>
+      </div>
+
+      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal6">
+        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Sertifikasi pegawai</div><div class="t-desc">Proses sertifikasi yang disesuaikan dengan jabatan pegawai saat ini.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
+        <div class="zz-node"><img src="assets/badge-6.png" alt="Sertifikasi Pegawai"><span class="zz-num">6</span></div>
+        <div class="zz-spacer"></div>
+      </div>
+
+      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal7">
+        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Dashboard training</div><div class="t-desc">Tabel dan grafik data peserta training berdasarkan divisi, COU, dan jabatan.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
+        <div class="zz-node"><img src="assets/badge-7.png" alt="Dashboard Training"><span class="zz-num">7</span></div>
+        <div class="zz-spacer"></div>
+      </div>
+
     </div>
+  </div>
 
-    <div class="modal fade" id="modal6">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Sertifikasi Pegawai </h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>Pelatihan khusus yang diadakan untuk mendapatkan Sertifikasi pegawai</p>
-                    <p>Sesuaikan dengan jabatan pegawai saat ini </p>
-                    <p>Tujuan training adalah agar pegawai mendapatkan sertifikasi sesuai jabatannya saat ini  </p>
-                </div>
-
-                <div class="modal-footer">
-                    <a href="sertifikasi/index.html" button class="btn btn-primary">Get Started  !</button></a>
-                </div>
-
-            </div>
-        </div>
+  <div class="dash-footer">
+    <div>
+      <button class="pill-btn" data-bs-toggle="modal" data-bs-target="#modalhcc">
+        <i class="bi bi-tools"></i>Tool HCC
+      </button>
+      <a href="atp.html" class="pill-btn">
+        <i class="bi bi-journal-bookmark"></i>ATP Annual Training Program
+      </a>
     </div>
+    <div class="footer-credit">Dibuat oleh Tim Unit Development</div>
+  </div>
+</div>
 
-    <div class="modal fade" id="modal7">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title">Dashboard Training</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p>Anda bisa melihat " Tabel Data Peserta Training  " </p>
-                    <p>Ditampilkan juga Data Grafik Berdasarkan : Divisi , COU dan Jabatan </p>                 
-                </div>
-
-                <div class="modal-footer">
-                    <a href="dashboard/index.html" button class="btn btn-primary">Get Started  !</button></a>
-                </div>
-
-            </div>
-        </div>
+<!-- ============ MODALS ============ -->
+<div class="modal fade" id="modal1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Training Onboarding Karyawan Baru</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Informasi mengenai pelatihan onboarding karyawan baru.</p>
+        <p>Program ini disebut COLLEGE — Continuous Learning Go To Your Journey.</p>
+        <p>Program pelatihan berjenjang ini meliputi:</p>
+        <ul>
+          <li>Training kasir</li>
+          <li>Training custody</li>
+          <li>Training FLM</li>
+          <li>Training SLM</li>
+          <li>Training Admin</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <a href="onboarding/college.html" class="btn btn-primary">Mulai Training Onboarding</a>
+      </div>
     </div>
+  </div>
+</div>
 
- <div class="modal fade" id="modalhcc">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- HEADER -->
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">🛠️ Tools HCC</h5>
-                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <!-- BODY -->
-            <div class="modal-body">
-                <div class="row">
-                    <!-- TOOL 1 -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body text-center">
-                                <h5>📘 Kamus PT SSI</h5>
-                                <p>
-                                    Tool ini membantu pegawai baru memahami istilah-istilah 
-                                    di dunia ATM dan operasional PT SSI.
-                                </p>
-                                <a href="https://kamus-ssi.vercel.app/" target="_blank" class="btn btn-primary">
-                                    Klik Kamus
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- TOOL 2 -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body text-center">
-
-                                <h5>🎓 Generator Sertifikat</h5>
-                                <ul class="text-start">
-                                    <li>Tool untuk membuat sertifikat training pegawai secara cepat dan otomatis.</li>
-                                    <li>Hanya untuk mengenerate sertifikat yang hilang berdasarkan laporan pegawai.</li>
-                                    <li>Tools ini hanya dipakai oleh petugas HCC!</li>
-                                </ul>
-                                
-                                <a href="dashboard/generator_sertifikat.html" target="_blank" class="btn btn-danger">
-                                    Klik Generate !
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FOOTER -->
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-
-        </div>
+<div class="modal fade" id="modal2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Training Mandatory & Refreshment</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Training mandatory wajib diikuti oleh setiap pegawai sesuai jabatannya.</p>
+        <p>Training ini merupakan kelanjutan setelah pegawai menyelesaikan On-Boarding Training.</p>
+        <p>Materi yang diberikan berupa peningkatan dari materi yang sudah ada, dan dapat digunakan untuk menyegarkan kembali pengetahuan serta keterampilan pegawai.</p>
+        <ul>
+          <li>Materi lanjutan kasir</li>
+          <li>Materi lanjutan custody</li>
+          <li>Materi lanjutan FLM/SLM</li>
+          <li>Materi lanjutan admin</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <a href="refreshment/index.html" class="btn btn-primary">Buka Materi Refreshment</a>
+      </div>
     </div>
-</div>   
-        
+  </div>
+</div>
 
-    
+<div class="modal fade" id="modal3">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Training Leadership & Culture</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Training Leadership ditujukan bagi para pemimpin dari level Asisten Manajer hingga General Manager.</p>
+        <p>Materi mencakup dasar-dasar leadership dan 10 kompetensi sesuai standar BUMN.</p>
+        <p>Materi Culture adalah materi dasar bagi setiap pegawai terkait budaya perusahaan.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="leadership/leadership.html" class="btn btn-primary">Mulai Training Leadership</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="modal fade" id="modal4">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Training Development</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Materi disusun untuk pengembangan diri pegawai di luar pekerjaan operasional.</p>
+        <p>Bersifat non-operasional dan berfokus pada penambahan skill, kompetensi, serta pengetahuan baru.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="development/develop.html" class="btn btn-primary">Mulai Training Development</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <script>
-        function login() {
-            let user = document.getElementById("username").value;
-            let pass = document.getElementById("password").value;
+<div class="modal fade" id="modal5">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Request Training</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Pelatihan khusus yang diadakan oleh Divisi HCC.</p>
+        <p>Diselenggarakan sesuai permintaan dari masing-masing divisi.</p>
+        <p>Bertujuan menambah skill, kompetensi, dan pengetahuan pegawai.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="request/index.html" class="btn btn-primary">Ajukan Request Training</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-            if (user === "ptssi" && pass === "siap") {
-                document.getElementById("loginPage").style.display = "none";
-                document.getElementById("dashboardPage").style.display = "block";
-            } else {
-                document.getElementById("errorMsg").style.display = "block";
-            }
-        }
-    </script>
+<div class="modal fade" id="modal6">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sertifikasi Pegawai</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Pelatihan khusus untuk memperoleh sertifikasi pegawai.</p>
+        <p>Disesuaikan dengan jabatan pegawai saat ini.</p>
+        <p>Bertujuan agar pegawai memperoleh sertifikasi yang sesuai dengan jabatannya.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="sertifikasi/index.html" class="btn btn-primary">Mulai Proses Sertifikasi</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal7">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Dashboard Training</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Lihat tabel data peserta training secara lengkap.</p>
+        <p>Tersedia juga grafik data berdasarkan divisi, COU, dan jabatan.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="dashboard/index.html" class="btn btn-primary">Buka Dashboard Training</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalhcc">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tool HCC</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="tool-card">
+              <h5>Kamus PT SSI</h5>
+              <p>Membantu pegawai baru memahami istilah-istilah di dunia ATM dan operasional PT SSI.</p>
+              <a href="https://kamus-ssi.vercel.app/" target="_blank" class="btn btn-primary">Buka Kamus</a>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="tool-card">
+              <h5>Generator Sertifikat</h5>
+              <ul>
+                <li>Membuat sertifikat training pegawai secara cepat dan otomatis.</li>
+                <li>Digunakan untuk menerbitkan ulang sertifikat yang hilang berdasarkan laporan pegawai.</li>
+                <li>Hanya digunakan oleh petugas HCC.</li>
+              </ul>
+              <a href="dashboard/generator_sertifikat.html" target="_blank" class="btn btn-danger">Buat Sertifikat</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-secondary-btn" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+  // GANTI dengan URL Web App hasil deploy Google Apps Script kamu.
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbxZN02jN9CyBfOQyb2rMq0YePS5ypWStLlc_KYSjdNUOlE5njfKXwWDHAasFHfTm4fj/exec";
+
+  async function login(){
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value;
+    const btn = document.getElementById("loginBtn");
+    const errorEl = document.getElementById("errorMsg");
+
+    if(!user || !pass){
+      errorEl.textContent = "Isi username dan password terlebih dahulu.";
+      errorEl.style.display = "block";
+      return;
+    }
+
+    errorEl.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Memeriksa...";
+
+    try{
+      const res = await fetch(GAS_URL, {
+        method: "POST",
+        body: new URLSearchParams({ user, pass })
+      });
+      const data = await res.json();
+
+      if(data.success){
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboardPage").style.display = "block";
+        document.getElementById("userLabel").textContent = user;
+        requestAnimationFrame(() => {
+          setTimeout(() => document.getElementById("journeyPath").classList.add("in-view"), 50);
+        });
+      } else {
+        errorEl.textContent = "Username atau password salah. Silakan coba lagi.";
+        errorEl.style.display = "block";
+      }
+    } catch(err){
+      errorEl.textContent = "Tidak bisa menghubungi server. Coba lagi sebentar.";
+      errorEl.style.display = "block";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Masuk";
+    }
+  }
+
+  function logout(){
+    document.getElementById("dashboardPage").style.display = "none";
+    document.getElementById("journeyPath").classList.remove("in-view");
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("loginPage").style.display = "flex";
+  }
+
+  document.getElementById("password").addEventListener("keydown", e => {
+    if(e.key === "Enter") login();
+  });
+</script>
 
 </body>
 </html>
