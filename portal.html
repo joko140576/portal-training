@@ -12,23 +12,51 @@
 
 <style>
 :root{
-  --bg:#F3F5FA;
+  --bg:#F5F6FB;
   --surface:#FFFFFF;
-  --surface-tint:#EEF2FB;
-  --ink:#14213A;
-  --ink-soft:#4B5876;
-  --muted:#8992A8;
-  --navy:#1D3B73;
-  --navy-deep:#122A56;
+  --surface-tint:#EEF2FC;
+  --ink:#182349;
+  --ink-soft:#525E82;
+  --muted:#6A7599;
+  --navy:#3D63C4;
+  --navy-deep:#2A4A9E;
   --amber:#F0A93E;
-  --amber-deep:#D48A1E;
-  --emerald:#1F9D7C;
-  --line:#E1E5F0;
+  --amber-deep:#C97D14;
+  --emerald:#1E9E77;
+  --line:#E2E6F3;
   --danger:#D64545;
-  --shadow:0 22px 44px -24px rgba(18,42,86,.28);
+  --shadow:0 24px 50px -22px rgba(24,35,73,.16);
+}
+
+/* Dashboard (setelah login) selalu memakai mode gelap */
+#dashboardPage{
+  --bg:#0B0F1C;
+  --surface:#131A2C;
+  --surface-tint:#1B2440;
+  --ink:#EDF0FB;
+  --ink-soft:#B7C0E0;
+  --muted:#8792B4;
+  --navy:#6C93E8;
+  --navy-deep:#8FB0FF;
+  --amber:#F0A93E;
+  --amber-deep:#F7C266;
+  --emerald:#33D6A6;
+  --line:#28304C;
+  --danger:#FF7676;
+  --shadow:0 24px 50px -22px rgba(0,0,0,.55);
 }
 
 *{ box-sizing:border-box; }
+
+@property --border-angle{
+  syntax:'<angle>';
+  inherits:false;
+  initial-value:0deg;
+}
+
+@keyframes spin-glow{
+  to{ --border-angle:360deg; }
+}
 
 body{
   font-family:'Inter', sans-serif;
@@ -42,114 +70,137 @@ body{
 
 /* ============ LOGIN ============ */
 #loginPage{
+  position:relative;
   min-height:100vh;
   display:flex;
-  flex-wrap:wrap;
-}
-
-.login-visual{
-  flex:1 1 480px;
-  position:relative;
-  min-height:340px;
+  align-items:center;
+  justify-content:center;
+  padding:48px 20px;
   overflow:hidden;
 }
-.login-visual img{
+
+.login-bg{
   position:absolute;
   inset:0;
+  z-index:0;
+}
+.login-bg img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
-.login-visual .visual-overlay{
+.login-bg::after{
+  content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(200deg, rgba(18,42,86,.15) 10%, rgba(18,42,86,.72) 75%, rgba(18,42,86,.9) 100%);
-}
-.login-visual-copy{
-  position:relative;
-  z-index:2;
-  height:100%;
-  min-height:340px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding:56px 48px;
-}
-.login-visual-copy .mark{
-  width:44px; height:44px;
-  border:1.5px solid var(--amber);
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Fraunces', serif;
-  font-weight:600;
-  color:var(--amber);
-  margin-bottom:26px;
-  font-size:16px;
-}
-.login-visual-copy h1{
-  font-size:33px;
-  font-weight:600;
-  line-height:1.22;
-  max-width:440px;
-  margin-bottom:14px;
-  color:#fff;
-}
-.login-visual-copy p{
-  color:#D7DEEE;
-  max-width:400px;
-  font-size:15px;
-  line-height:1.65;
+  background:linear-gradient(190deg, rgba(8,12,24,.42) 0%, rgba(8,12,24,.54) 55%, rgba(8,12,24,.66) 100%);
 }
 
-.login-form-side{
-  flex:1 1 380px;
+.login-center{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:400px;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
-  padding:40px 24px;
-  background:var(--surface);
+}
+
+.login-logo{
+  margin-bottom:20px;
+}
+.login-logo img{
+  width:76px;
+  height:57px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.4));
+}
+
+.login-tagline{
+  text-align:center;
+  color:#EAEEFB;
+  font-size:14px;
+  line-height:1.6;
+  max-width:360px;
+  margin-bottom:28px;
+  text-shadow:0 2px 10px rgba(0,0,0,.35);
 }
 
 .login-card{
+  --card-ink:#F1F4FE;
+  --card-ink-soft:#B9C3E4;
+  --card-muted:#8792B4;
+  --card-line:#2B3559;
+  position:relative;
+  isolation:isolate;
   width:100%;
-  max-width:360px;
+  overflow:hidden;
+  background:#0F1526;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  padding:38px 32px 32px;
+  box-shadow:0 40px 70px -26px rgba(0,0,0,.6);
+}
+
+#particles-js{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+.login-card-inner{
+  position:relative;
+  z-index:1;
 }
 
 .login-card .eyebrow{
-  color:var(--muted);
+  color:var(--card-muted);
   font-size:13.5px;
   margin-bottom:6px;
   font-weight:600;
 }
 
 .login-card h2{
-  font-size:29px;
+  font-size:26px;
   font-weight:600;
-  margin-bottom:32px;
-  color:var(--ink);
+  margin-bottom:28px;
+  color:var(--card-ink);
 }
 
 .field{ margin-bottom:24px; }
 .field label{
   display:block;
   font-size:13px;
-  color:var(--muted);
+  color:var(--card-muted, var(--muted));
   margin-bottom:8px;
   font-weight:600;
 }
+.input-icon{ position:relative; }
+.input-icon i{
+  position:absolute;
+  left:2px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:15.5px;
+  color:var(--card-muted, var(--muted));
+  transition:color .25s;
+  pointer-events:none;
+}
+.input-icon:focus-within i{ color:var(--amber); }
 .field input{
   width:100%;
   border:none;
-  border-bottom:2px solid var(--line);
+  border-bottom:2px solid var(--card-line, #CBD2E8);
   background:transparent;
   padding:8px 2px 10px;
   font-size:16px;
-  color:var(--ink);
+  color:var(--card-ink, var(--ink));
   outline:none;
   transition:border-color .25s;
 }
-.field input::placeholder{ color:#B7BEcf; }
-.field input:focus{ border-color:var(--navy); }
+.input-icon input{ padding-left:26px; }
+.field input::placeholder{ color:var(--card-muted, var(--muted)); }
+.field input:focus{ border-color:var(--amber); }
 
 .btn-gold{
   width:100%;
@@ -168,7 +219,7 @@ body{
 .btn-gold:disabled{ opacity:.6; }
 
 #errorMsg{
-  color:var(--danger);
+  color:#FF8F8F;
   font-size:13.5px;
   margin-bottom:18px;
   display:none;
@@ -177,30 +228,27 @@ body{
 /* ============ DASHBOARD ============ */
 #dashboardPage{
   display:none;
-  min-height:100vh;
+  height:100vh;
   background:var(--bg);
+  flex-direction:column;
+  overflow:hidden;
 }
 
 .top-bar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:22px 48px;
+  padding:16px 48px;
   border-bottom:1px solid var(--line);
   background:var(--surface);
   flex-wrap:wrap;
   gap:14px;
+  flex:0 0 auto;
 }
 
 .brand{ display:flex; align-items:center; gap:16px; }
-.brand .mark{
-  width:42px; height:42px;
-  border-radius:12px;
-  background:var(--navy);
-  color:var(--amber);
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Fraunces',serif;
-  font-weight:600;
+
+
 }
 .brand .wordmark{ line-height:1.25; }
 .brand .wordmark .name{ font-family:'Fraunces', serif; font-size:19px; font-weight:600; color:var(--ink); }
@@ -222,169 +270,172 @@ body{
 .hero{
   display:flex;
   align-items:center;
-  gap:48px;
-  padding:56px 48px 30px;
+  gap:28px;
+  padding:22px 48px 10px;
   flex-wrap:wrap;
+  flex:0 0 auto;
 }
-.hero-text{ flex:1 1 320px; max-width:520px; }
+.hero-text{ flex:1 1 320px; max-width:560px; }
 .hero-text .eyebrow{
   display:inline-flex;
   align-items:center;
   gap:8px;
   color:var(--navy-deep);
-  font-size:13px;
+  font-size:12px;
   font-weight:700;
   background:var(--surface-tint);
-  padding:6px 14px;
+  padding:5px 12px;
   border-radius:20px;
-  margin-bottom:16px;
+  margin-bottom:10px;
 }
-.hero-text h1{ font-size:34px; font-weight:600; margin-bottom:14px; color:var(--ink); }
-.hero-text p{ color:var(--ink-soft); font-size:15.5px; line-height:1.6; }
+.hero-text h1{ font-size:24px; font-weight:600; margin-bottom:6px; color:var(--ink); }
+.hero-text p{ color:var(--ink-soft); font-size:13.5px; line-height:1.5; }
 .hero-art-frame{
-  flex:0 0 240px;
-  width:240px; height:240px;
-  border-radius:16px;
+  flex:0 0 78px;
+  width:78px; height:78px;
+  border-radius:14px;
   border:1px solid var(--line);
-  padding:10px;
+  padding:8px;
   background:var(--surface);
   box-shadow:var(--shadow);
 }
 .hero-art-frame img{ width:100%; height:100%; object-fit:contain; border-radius:10px; }
 
-/* ============ ZIGZAG JOURNEY TIMELINE ============ */
+/* ============ PROGRAM GRID (3 + 3, wider, fit viewport) ============ */
 .journey-wrap{
-  padding:16px 48px 130px;
-  max-width:1000px;
-  margin:0 auto;
-}
-.zz-track{ position:relative; }
-.zz-track::before{
-  content:'';
-  position:absolute;
-  left:50%;
-  top:6px;
-  bottom:6px;
-  width:3px;
-  transform:translateX(-50%);
-  background:repeating-linear-gradient(to bottom, var(--line) 0 7px, transparent 7px 15px);
-}
-.zz-fill{
-  position:absolute;
-  left:50%;
-  top:6px;
-  width:3px;
-  height:0;
-  transform:translateX(-50%);
-  background:linear-gradient(to bottom, var(--amber), var(--navy));
-  transition:height 1.8s cubic-bezier(.2,.7,.3,1);
-}
-.zz-track.in-view .zz-fill{ height:calc(100% - 12px); }
-
-.zz-item{
-  position:relative;
+  flex:1 1 auto;
+  min-height:0;
   display:flex;
   align-items:center;
-  gap:28px;
-  padding:26px 0;
-  opacity:0;
-  transition:opacity .6s ease, transform .6s ease;
-}
-.zz-item:nth-child(odd){ transform:translateX(-22px); }
-.zz-item:nth-child(even){ flex-direction:row-reverse; transform:translateX(22px); }
-.zz-track.in-view .zz-item{ opacity:1; transform:translateX(0); }
-.zz-item:nth-child(1){ transition-delay:.08s; }
-.zz-item:nth-child(2){ transition-delay:.22s; }
-.zz-item:nth-child(3){ transition-delay:.36s; }
-.zz-item:nth-child(4){ transition-delay:.50s; }
-.zz-item:nth-child(5){ transition-delay:.64s; }
-.zz-item:nth-child(6){ transition-delay:.78s; }
-.zz-item:nth-child(7){ transition-delay:.92s; }
-
-.zz-card-slot{ flex:1 1 0; display:flex; min-width:0; }
-.zz-spacer{ flex:1 1 0; min-width:0; }
-.zz-item:nth-child(odd) .zz-card-slot{ justify-content:flex-end; }
-.zz-item:nth-child(even) .zz-card-slot{ justify-content:flex-start; }
-
-.zz-node{
-  flex:0 0 64px;
-  width:64px; height:64px;
-  border-radius:50%;
-  background:var(--surface);
-  border:3px solid var(--surface);
-  box-shadow:0 0 0 2px var(--line);
-  display:flex; align-items:center; justify-content:center;
-  position:relative;
-  z-index:2;
-  transition:transform .25s, box-shadow .25s;
-}
-.zz-node img{ width:38px; height:38px; }
-.zz-item:hover .zz-node{ transform:scale(1.08); box-shadow:0 0 0 2px var(--amber); }
-.zz-node .zz-num{
-  position:absolute;
-  top:-6px; right:-6px;
-  width:23px; height:23px;
-  border-radius:50%;
-  background:var(--navy);
-  color:#fff;
-  font-size:11px;
-  font-weight:700;
-  font-family:'Inter',sans-serif;
-  display:flex; align-items:center; justify-content:center;
-  border:2px solid var(--surface);
-}
-
-.zz-card{
-  position:relative;
+  justify-content:center;
+  padding:6px 48px;
+  max-width:1320px;
   width:100%;
-  max-width:400px;
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:22px 24px;
-  cursor:pointer;
-  box-shadow:0 10px 26px -20px rgba(18,42,86,.35);
-  transition:box-shadow .25s, transform .25s, border-color .25s;
+  margin:0 auto;
 }
-.zz-item:hover .zz-card{
-  border-color:var(--amber);
-  box-shadow:0 20px 38px -20px rgba(18,42,86,.3);
-  transform:translateY(-3px);
-}
-.zz-item:nth-child(odd) .zz-card{ margin-right:8px; border-left:4px solid var(--amber); }
-.zz-item:nth-child(even) .zz-card{ margin-left:8px; border-right:4px solid var(--emerald); }
 
-.zz-card .t-title{
+.program-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-content:center;
+  gap:20px;
+  width:100%;
+}
+
+.p-card{
+  --border-angle:0deg;
+  position:relative;
+  isolation:isolate;
+  flex:1 1 calc(33.333% - 14px);
+  max-width:380px;
+  min-width:250px;
+  background:var(--surface);
+  border-radius:18px;
+  padding:20px 20px 16px;
+  cursor:pointer;
+  box-shadow:0 14px 32px -22px rgba(24,35,73,.18);
+  border:1px solid var(--line);
+  opacity:0;
+  transform:translateY(18px) scale(.98);
+  transition:opacity .55s ease, transform .3s ease, box-shadow .3s ease;
+}
+.p-card::before,
+.p-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  border-radius:inherit;
+  padding:1.5px;
+  background:conic-gradient(from var(--border-angle), transparent 0deg, var(--accent, var(--navy)) 55deg, transparent 130deg, var(--accent, var(--navy)) 230deg, transparent 300deg, var(--accent, var(--navy)) 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+  animation:spin-glow 4.5s linear infinite;
+}
+.p-card::after{
+  filter:blur(7px);
+  opacity:.85;
+}
+.program-grid.in-view .p-card{ opacity:1; transform:translateY(0) scale(1); }
+.p-card:nth-child(1){ transition-delay:.05s; }
+.p-card:nth-child(2){ transition-delay:.11s; }
+.p-card:nth-child(3){ transition-delay:.17s; }
+.p-card:nth-child(4){ transition-delay:.23s; }
+.p-card:nth-child(5){ transition-delay:.29s; }
+.p-card:nth-child(6){ transition-delay:.35s; }
+.p-card:nth-child(7){ transition-delay:.41s; }
+
+.p-card:hover{
+  box-shadow:0 24px 44px -20px rgba(24,35,73,.22);
+  transform:translateY(-6px) scale(1);
+}
+.p-card:hover::after{ filter:blur(11px); opacity:1; }
+
+.p-card .p-num{
+  position:absolute;
+  top:16px; right:18px;
   font-family:'Fraunces', serif;
-  font-size:18px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.02em;
+  color:var(--muted);
+}
+
+.p-icon{
+  width:44px; height:44px;
+  border-radius:50%;
+  background:linear-gradient(150deg, var(--accent-tint, var(--surface-tint)), var(--surface));
+  border:1px solid var(--accent-soft, var(--line));
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:14px;
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.p-card:hover .p-icon{ transform:scale(1.08); box-shadow:0 10px 20px -10px var(--accent, var(--navy)); }
+.p-icon i{ font-size:20px; color:var(--accent-deep, var(--navy)); }
+
+.p-card .t-title{
+  font-family:'Fraunces', serif;
+  font-size:16px;
   font-weight:600;
   color:var(--ink);
   margin-bottom:6px;
+  padding-right:14px;
+  line-height:1.3;
 }
-.zz-card .t-desc{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
-.zz-card .t-cta{
-  margin-top:12px;
+.p-card .t-desc{
   font-size:13px;
-  color:var(--navy);
-  font-weight:700;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
+  color:var(--ink-soft);
+  line-height:1.5;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
 }
-.zz-item:hover .t-cta{ color:var(--amber-deep); }
-.zz-item:nth-child(even) .t-cta{ flex-direction:row-reverse; }
+.p-card .t-cta{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--line);
+  font-size:12.5px;
+  color:var(--accent-deep, var(--navy));
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.p-card .t-cta i{ transition:transform .25s ease; }
+.p-card:hover .t-cta i{ transform:translateX(4px); }
 
 /* FOOTER */
 .dash-footer{
-  position:fixed;
-  bottom:0; left:0; width:100%;
-  padding:16px 48px;
+  flex:0 0 auto;
+  padding:10px 48px 16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
   gap:10px;
-  background:linear-gradient(0deg, var(--bg) 60%, transparent);
 }
 .pill-btn{
   border:1.5px solid var(--line);
@@ -405,10 +456,10 @@ body{
 .footer-credit{ font-size:12.5px; color:var(--muted); }
 
 /* ============ MODALS ============ */
-.modal-content{ border:none; border-radius:12px; overflow:hidden; background:var(--surface); }
+.modal-content{ border:none; border-radius:12px; overflow:hidden; background:var(--surface); color:var(--ink); }
 .modal-header{ background:var(--surface-tint); color:var(--ink); border-bottom:3px solid var(--amber); padding:22px 28px; }
 .modal-header .modal-title{ font-family:'Fraunces', serif; font-size:20px; font-weight:600; }
-.modal-header .btn-close{ opacity:.7; }
+.modal-header .btn-close{ opacity:.8; filter:invert(1) grayscale(1); }
 .modal-body{ padding:28px; color:var(--ink-soft); font-size:15px; line-height:1.65; }
 .modal-body ul{ padding-left:20px; }
 .modal-body li{ margin-bottom:6px; }
@@ -437,38 +488,30 @@ body{
 .modal-secondary-btn:hover{ border-color:var(--navy); color:var(--navy); }
 
 /* ============ RESPONSIVE ============ */
+/* Layar pendek: izinkan scroll normal, TAPI tetap 3 kolom (jangan ubah layout) */
+@media (max-height: 760px){
+  #dashboardPage{ height:auto; min-height:100vh; overflow:visible; }
+}
+
+/* Layar sempit: baru di sini jumlah kolom berkurang */
 @media (max-width: 900px){
-  .top-bar{ padding:18px 20px; }
-  .hero{ padding:36px 20px 6px; }
-  .hero-art-frame{ width:130px; height:130px; flex-basis:130px; }
-  .journey-wrap{ padding:14px 16px 130px; }
-
-  .zz-track::before, .zz-fill{ left:26px; transform:none; }
-
-  .zz-item, .zz-item:nth-child(even){
-    flex-direction:row;
-    align-items:flex-start;
-    transform:translateX(0) !important;
-    gap:16px;
-  }
-  .zz-spacer{ display:none; }
-  .zz-card-slot{ justify-content:flex-start !important; flex:1 1 auto; order:2; }
-  .zz-node{ flex:0 0 52px; width:52px; height:52px; order:1; }
-  .zz-node img{ width:30px; height:30px; }
-  .zz-card{ max-width:none; margin:0 !important; }
-  .zz-item:nth-child(even) .t-cta{ flex-direction:row; }
-
-  .dash-footer{ padding:14px 20px; flex-direction:column; align-items:flex-start; }
+  .top-bar{ padding:16px 20px; }
+  .hero{ padding:20px 20px 8px; }
+  .journey-wrap{ padding:10px 16px 24px; }
+  .program-grid{ gap:16px; }
+  .p-card{ flex-basis:calc(50% - 8px); max-width:none; padding:18px 16px 14px; }
 }
 
 @media (max-width: 560px){
-  .login-visual-copy h1{ font-size:26px; }
-  .hero-text h1{ font-size:27px; }
+  .p-card{ flex-basis:100%; }
+  .login-tagline{ font-size:13px; }
+  .login-card{ padding:32px 24px 26px; }
+  .hero-text h1{ font-size:22px; }
 }
 
 @media (prefers-reduced-motion: reduce){
-  .zz-fill, .zz-item{ transition:none !important; opacity:1 !important; transform:none !important; }
-  .zz-fill{ height:calc(100% - 12px) !important; }
+  .p-card{ transition:none !important; opacity:1 !important; transform:none !important; }
+  .p-card::before, .p-card::after{ animation:none !important; }
 }
 </style>
 </head>
@@ -477,34 +520,38 @@ body{
 
 <!-- ============ LOGIN PAGE ============ -->
 <div id="loginPage">
-  <div class="login-visual">
-    <img src="assets/login-art.png" alt="Ilustrasi perjalanan belajar PT SSI">
-    <div class="visual-overlay"></div>
-    <div class="login-visual-copy">
-      <div class="mark">UD</div>
-      <h1 class="serif">Continuous learning, go to your journey.</h1>
-      <p>Program COLLEGE menemani setiap pegawai PT SSI dari hari pertama bergabung hingga jenjang kepemimpinan, satu langkah pembelajaran pada satu waktu.</p>
-    </div>
+  <div class="login-bg">
+    <img src="siap.png" alt="gedungssi">
   </div>
 
-  <div class="login-form-side">
+  <div class="login-center">
+    <div class="login-logo"><img src="logo_ssi.png" alt="Logo PT SSI" width="80" height="60"></div>
+    <p class="login-tagline serif">Training Today , Excellence Tomorrow.</p>
+
     <div class="login-card">
-      <div class="eyebrow">Portal internal</div>
-      <h2 class="serif">Masuk ke akun Anda</h2>
+      <div id="particles-js"></div>
+      <div class="login-card-inner">   
+        <h2 class="serif">Portal Training HCC</h2>
+        <div class="field">
+          <label for="username">Username</label>
+          <div class="input-icon">
+            <i class="bi bi-person"></i>
+            <input type="text" id="username" placeholder="Masukkan username">
+          </div>
+        </div>
 
-      <div class="field">
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Masukkan username">
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input-icon">
+            <i class="bi bi-lock"></i>
+            <input type="password" id="password" placeholder="Masukkan password">
+          </div>
+        </div>
+
+        <div id="errorMsg">Username atau password salah. Silakan coba lagi.</div>
+
+        <button class="btn-gold" id="loginBtn" onclick="login()">Masuk</button>
       </div>
-
-      <div class="field">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Masukkan password">
-      </div>
-
-      <div id="errorMsg">Username atau password salah. Silakan coba lagi.</div>
-
-      <button class="btn-gold" id="loginBtn" onclick="login()">Masuk</button>
     </div>
   </div>
 </div>
@@ -514,7 +561,7 @@ body{
 
   <div class="top-bar">
     <div class="brand">
-      <div class="mark">UD</div>
+      <img src="logo_ssi.png" alt="Logo PT SSI" width="80" height="60">
       <div class="wordmark">
         <div class="name serif">Unit Development & Training</div>
         <div class="sub">Pusat pengembangan pegawai PT SSI</div>
@@ -527,62 +574,59 @@ body{
     </div>
   </div>
 
-  <div class="hero">
-    <div class="hero-text">
-      <div class="eyebrow"><i class="bi bi-stars"></i>Program COLLEGE</div>
-      <h1 class="serif">Perjalanan belajar Anda dimulai di sini.</h1>
-      <p>Pilih satu titik pada perjalanan untuk melihat program, materi, dan langkah berikutnya.</p>
-    </div>
-    <div class="hero-art-frame">
-      <img src="assets/hero-art.png" alt="Ilustrasi jenjang belajar COLLEGE">
-    </div>
-  </div>
-
+  
   <div class="journey-wrap">
-    <div class="zz-track" id="journeyPath">
-      <div class="zz-fill"></div>
+    <div class="program-grid" id="journeyPath">
 
-      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal1">
-        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Onboarding karyawan baru</div><div class="t-desc">Program COLLEGE untuk pegawai yang baru bergabung, dari dasar kasir hingga admin.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
-        <div class="zz-node"><img src="assets/badge-1.png" alt="Onboarding"><span class="zz-num">1</span></div>
-        <div class="zz-spacer"></div>
+      <div class="p-card" style="--accent:var(--amber); --accent-tint:rgba(240,169,62,.16); --accent-deep:var(--amber-deep); --accent-soft:rgba(240,169,62,.5);" data-bs-toggle="modal" data-bs-target="#modal1">
+        <div class="p-num">01</div>
+        <div class="p-icon"><i class="bi bi-signpost-split"></i></div>
+        <div class="t-title">Onboarding karyawan baru</div>
+        <div class="t-desc">Program COLLEGE untuk pegawai yang baru bergabung, dari dasar kasir hingga admin.</div>
+        <div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal2">
-        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Mandatory & refreshment</div><div class="t-desc">Pelatihan wajib berkelanjutan untuk menyegarkan pengetahuan dan keterampilan sesuai jabatan.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
-        <div class="zz-node"><img src="assets/badge-2.png" alt="Mandatory & Refreshment"><span class="zz-num">2</span></div>
-        <div class="zz-spacer"></div>
+      <div class="p-card" style="--accent:var(--emerald); --accent-tint:rgba(43,203,152,.16); --accent-deep:var(--emerald); --accent-soft:rgba(43,203,152,.5);" data-bs-toggle="modal" data-bs-target="#modal2">
+        <div class="p-num">02</div>
+        <div class="p-icon"><i class="bi bi-arrow-repeat"></i></div>
+        <div class="t-title">Mandatory & refreshment</div>
+        <div class="t-desc">Pelatihan wajib berkelanjutan untuk menyegarkan pengetahuan dan keterampilan sesuai jabatan.</div>
+        <div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal3">
-        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Leadership & culture</div><div class="t-desc">Dasar leadership dan budaya perusahaan untuk pemimpin level Asisten Manajer hingga GM.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
-        <div class="zz-node"><img src="assets/badge-3.png" alt="Leadership & Culture"><span class="zz-num">3</span></div>
-        <div class="zz-spacer"></div>
+      <div class="p-card" style="--accent:var(--navy); --accent-tint:rgba(91,135,237,.18); --accent-deep:var(--navy); --accent-soft:rgba(91,135,237,.5);" data-bs-toggle="modal" data-bs-target="#modal3">
+        <div class="p-num">03</div>
+        <div class="p-icon"><i class="bi bi-compass"></i></div>
+        <div class="t-title">Leadership & culture</div>
+        <div class="t-desc">Dasar leadership dan budaya perusahaan untuk pemimpin level Asisten Manajer hingga GM.</div>
+        <div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal4">
-        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Training development</div><div class="t-desc">Materi non-operasional untuk pengembangan diri, skill, dan kompetensi pegawai.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
-        <div class="zz-node"><img src="assets/badge-4.png" alt="Training Development"><span class="zz-num">4</span></div>
-        <div class="zz-spacer"></div>
+      <div class="p-card" style="--accent:var(--amber); --accent-tint:rgba(240,169,62,.16); --accent-deep:var(--amber-deep); --accent-soft:rgba(240,169,62,.5);" data-bs-toggle="modal" data-bs-target="#modal4">
+        <div class="p-num">04</div>
+        <div class="p-icon"><i class="bi bi-graph-up-arrow"></i></div>
+        <div class="t-title">Training development</div>
+        <div class="t-desc">Materi non-operasional untuk pengembangan diri, skill, dan kompetensi pegawai.</div>
+        <div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal5">
-        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Event training</div><div class="t-desc">Pelatihan khusus dari Divisi HCC sesuai permintaan masing-masing divisi.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
-        <div class="zz-node"><img src="assets/badge-5.png" alt="Event Training"><span class="zz-num">5</span></div>
-        <div class="zz-spacer"></div>
+      <div class="p-card" style="--accent:var(--emerald); --accent-tint:rgba(43,203,152,.16); --accent-deep:var(--emerald); --accent-soft:rgba(43,203,152,.5);" data-bs-toggle="modal" data-bs-target="#modal5">
+        <div class="p-num">05</div>
+        <div class="p-icon"><i class="bi bi-calendar-event"></i></div>
+        <div class="t-title">Event training</div>
+        <div class="t-desc">Pelatihan khusus dari Divisi HCC sesuai permintaan masing-masing divisi.</div>
+        <div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal6">
-        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Sertifikasi pegawai</div><div class="t-desc">Proses sertifikasi yang disesuaikan dengan jabatan pegawai saat ini.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
-        <div class="zz-node"><img src="assets/badge-6.png" alt="Sertifikasi Pegawai"><span class="zz-num">6</span></div>
-        <div class="zz-spacer"></div>
+      <div class="p-card" style="--accent:var(--navy); --accent-tint:rgba(91,135,237,.18); --accent-deep:var(--navy); --accent-soft:rgba(91,135,237,.5);" data-bs-toggle="modal" data-bs-target="#modal6">
+        <div class="p-num">06</div>
+        <div class="p-icon"><i class="bi bi-patch-check"></i></div>
+        <div class="t-title">Sertifikasi pegawai</div>
+        <div class="t-desc">Proses sertifikasi yang disesuaikan dengan jabatan pegawai saat ini.</div>
+        <div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <div class="zz-item" data-bs-toggle="modal" data-bs-target="#modal7">
-        <div class="zz-card-slot"><div class="zz-card"><div class="t-title">Dashboard training</div><div class="t-desc">Tabel dan grafik data peserta training berdasarkan divisi, COU, dan jabatan.</div><div class="t-cta">Lihat detail <i class="bi bi-arrow-right"></i></div></div></div>
-        <div class="zz-node"><img src="assets/badge-7.png" alt="Dashboard Training"><span class="zz-num">7</span></div>
-        <div class="zz-spacer"></div>
-      </div>
+      
 
     </div>
   </div>
@@ -592,9 +636,7 @@ body{
       <button class="pill-btn" data-bs-toggle="modal" data-bs-target="#modalhcc">
         <i class="bi bi-tools"></i>Tool HCC
       </button>
-      <a href="atp.html" class="pill-btn">
-        <i class="bi bi-journal-bookmark"></i>ATP Annual Training Program
-      </a>
+      
     </div>
     <div class="footer-credit">Dibuat oleh Tim Unit Development</div>
   </div>
@@ -727,23 +769,7 @@ body{
   </div>
 </div>
 
-<div class="modal fade" id="modal7">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Dashboard Training</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <p>Lihat tabel data peserta training secara lengkap.</p>
-        <p>Tersedia juga grafik data berdasarkan divisi, COU, dan jabatan.</p>
-      </div>
-      <div class="modal-footer">
-        <a href="dashboard/index.html" class="btn btn-primary">Buka Dashboard Training</a>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <div class="modal fade" id="modalhcc">
   <div class="modal-dialog modal-lg">
@@ -781,7 +807,38 @@ body{
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+  if(window.particlesJS){
+    particlesJS("particles-js", {
+      particles:{
+        number:{ value:52, density:{ enable:true, value_area:820 } },
+        color:{ value:["#5B87ED", "#F0A93E", "#2BCB98"] },
+        shape:{ type:"circle" },
+        opacity:{ value:0.5, random:true, anim:{ enable:true, speed:0.4, opacity_min:0.12, sync:false } },
+        size:{ value:2.6, random:true },
+        line_linked:{ enable:true, distance:120, color:"#5B87ED", opacity:0.3, width:1 },
+        move:{ enable:true, speed:1, direction:"none", random:true, straight:false, out_mode:"out", bounce:false }
+      },
+      interactivity:{
+        detect_on:"canvas",
+        events:{
+          onhover:{ enable:true, mode:"grab" },
+          onclick:{ enable:true, mode:"push" },
+          resize:true
+        },
+        modes:{
+          grab:{ distance:140, line_linked:{ opacity:0.5 } },
+          push:{ particles_nb:3 }
+        }
+      },
+      retina_detect:true
+    });
+  }
+
+</script>
 <script>
 
   // GANTI dengan URL Web App hasil deploy Google Apps Script kamu.
@@ -812,7 +869,7 @@ body{
 
       if(data.success){
         document.getElementById("loginPage").style.display = "none";
-        document.getElementById("dashboardPage").style.display = "block";
+        document.getElementById("dashboardPage").style.display = "flex";
         document.getElementById("userLabel").textContent = user;
         requestAnimationFrame(() => {
           setTimeout(() => document.getElementById("journeyPath").classList.add("in-view"), 50);
