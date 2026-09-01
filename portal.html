@@ -461,20 +461,29 @@ body{
 .modal-content{ border:none; border-radius:12px; overflow:hidden; background:var(--surface); color:var(--ink); }
 .modal-header{ background:var(--surface-tint); color:var(--ink); border-bottom:3px solid var(--amber); padding:22px 28px; }
 .modal-header .modal-title{ font-family:'Fraunces', serif; font-size:20px; font-weight:600; }
-.modal-header .btn-close{
-  opacity:1;
-  background-color:var(--danger);
-  background-image:none;
-  -webkit-mask-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
-  mask-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
-  -webkit-mask-repeat:no-repeat;
-  mask-repeat:no-repeat;
-  -webkit-mask-position:center;
-  mask-position:center;
-  -webkit-mask-size:1em auto;
-  mask-size:1em auto;
+.modal-header{ position:relative; }
+.modal-close-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:none;
+  background:var(--surface);
+  color:var(--danger);
+  font-size:15px;
+  box-shadow:0 6px 16px -8px rgba(0,0,0,.35);
+  transition:background .25s ease, color .25s ease, transform .3s ease, box-shadow .25s ease;
+  flex:0 0 auto;
 }
-.modal-header .btn-close:hover{ background-color:#A93838; }
+.modal-close-btn:hover{
+  background:var(--danger);
+  color:#fff;
+  transform:rotate(90deg) scale(1.08);
+  box-shadow:0 8px 20px -8px var(--danger);
+}
+.modal-close-btn:active{ transform:rotate(90deg) scale(.94); }
 .modal-body{ padding:28px; color:var(--ink-soft); font-size:15px; line-height:1.65; }
 .modal-body ul{ padding-left:20px; }
 .modal-body li{ margin-bottom:6px; }
@@ -541,13 +550,13 @@ body{
 
   <div class="login-center">
     <div class="login-logo"><img src="logo_ssi.png" alt="Logo PT SSI" width="76" height="57"></div>
-    <p class="login-tagline serif">Continuous learning, go to your journey.</p>
+    <p class="login-tagline serif">Training Today, Excellence Tomorrow</p>
 
     <div class="login-card">
       <div id="particles-js"></div>
       <div class="login-card-inner">
-        <div class="eyebrow">Portal internal</div>
-        <h2 class="serif">Masuk ke akun Anda</h2>
+       
+        <h2 class="serif">Portal Training PT SSI</h2>
 
         <div class="field">
           <label for="username">Username</label>
@@ -578,7 +587,7 @@ body{
 
   <div class="top-bar">
     <div class="brand">
-      <div class="mark"><img src="logo_ssi.png" alt="Logo PT SSI" width="80" height="60"></div>
+      <img src="logo_ssi.png" alt="Logo PT SSI" width="80" height="60">
       <div class="wordmark">
         <div class="name serif">Unit Development & Training</div>
         <div class="sub">Pusat pengembangan pegawai PT SSI</div>
@@ -665,7 +674,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Training Onboarding Karyawan Baru</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
       </div>
       <div class="modal-body">
         <p>Informasi mengenai pelatihan onboarding karyawan baru.</p>
@@ -691,7 +700,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Training Mandatory & Refreshment</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
       </div>
       <div class="modal-body">
         <p>Training mandatory wajib diikuti oleh setiap pegawai sesuai jabatannya.</p>
@@ -716,7 +725,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Training Leadership & Culture</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
       </div>
       <div class="modal-body">
         <p>Training Leadership ditujukan bagi para pemimpin dari level Asisten Manajer hingga General Manager.</p>
@@ -735,7 +744,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Training Development</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
       </div>
       <div class="modal-body">
         <p>Materi disusun untuk pengembangan diri pegawai di luar pekerjaan operasional.</p>
@@ -753,7 +762,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Request Training</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
       </div>
       <div class="modal-body">
         <p>Pelatihan khusus yang diadakan oleh Divisi HCC.</p>
@@ -772,7 +781,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Sertifikasi Pegawai</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
       </div>
       <div class="modal-body">
         <p>Pelatihan khusus untuk memperoleh sertifikasi pegawai.</p>
@@ -793,7 +802,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Tool HCC</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
       </div>
       <div class="modal-body">
         <div class="row g-3">
