@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sertifikasi Custody &amp; Pengisian Uang ATM</title>
+
+<!-- Bootstrap CSS (grid & utilities only) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:        #16211c;
+    --emerald:    #0e4d3c;
+    --emerald-2:  #123f33;
+    --gold:       #b8893a;
+    --gold-soft:  #e7cf9b;
+    --paper:      #fbf9f3;
+    --paper-2:    #f2efe4;
+    --mint:       #e7efe8;
+    --line:       #d8d2c0;
+    --white:      #ffffff;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height:1.6;
+  }
+
+  h1,h2,h3,h4,.display-serif{
+    font-family:'Fraunces', serif;
+    letter-spacing: -0.01em;
+  }
+
+  .container-narrow{
+    max-width: 980px;
+    margin:0 auto;
+    padding: 0 20px;
+  }
+
+  /* ---------- SECURITY-RIBBON TOP BAR ---------- */
+  .ribbon{
+    height:6px;
+    width:100%;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--gold) 0 14px,
+      var(--emerald) 14px 28px
+    );
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      linear-gradient(160deg, rgba(14,77,60,0.80), rgba(18,63,51,0.75)),
+      url('https://storage.googleapis.com/arsitagx-master/img-small/24394/13738/lineamarca-atm-center-deli-park-medan1582879249-s.jpeg')
+        center 35% / cover no-repeat;
+    color: var(--paper);
+    padding: 88px 20px 96px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1.4px, transparent 1.4px);
+    background-size: 22px 22px;
+    opacity:0.6;
+  }
+  .hero-inner{
+    position:relative;
+    z-index:1;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align:center;
+  }
+  .seal{
+    width:92px; height:92px;
+    margin: 0 auto 28px;
+    border-radius:50%;
+    background: var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 4px rgba(251,249,243,0.15), 0 14px 30px rgba(0,0,0,0.25);
+  }
+  .seal i{
+    font-size: 40px;
+    color: var(--emerald-2);
+  }
+  .hero-kicker{
+    font-size:0.92rem;
+    color: var(--gold-soft);
+    margin-bottom:14px;
+    font-weight:500;
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    font-weight:600;
+    margin-bottom: 16px;
+  }
+  .hero p.lead{
+    color: rgba(251,249,243,0.85);
+    font-size: 1.1rem;
+    font-family:'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ---------- SECTION HEADINGS ---------- */
+  .section-title{
+    font-size: 1.5rem;
+    font-weight:600;
+    color: var(--emerald);
+    display:flex; align-items:center; gap:12px;
+    margin-bottom: 20px;
+  }
+  .section-title i{
+    color: var(--gold);
+    font-size:1.3rem;
+  }
+
+  /* ---------- CARD ---------- */
+  .panel{
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 44px;
+    margin: 56px auto;
+    max-width: 980px;
+  }
+
+  .info-tile{
+    background: var(--mint);
+    border-left: 3px solid var(--emerald);
+    padding: 22px 24px;
+    height:100%;
+  }
+  .info-tile i{
+    color: var(--emerald);
+    font-size:1.4rem;
+  }
+  .info-tile strong{
+    display:block;
+    margin: 8px 0 4px;
+    font-family:'Fraunces', serif;
+    font-size:1.05rem;
+    color: var(--ink);
+  }
+
+  .material-link{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 12px;
+    padding: 13px 18px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--emerald);
+    text-decoration:none;
+    font-weight:600;
+    font-size: 0.94rem;
+    margin-top: 12px;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .material-link:hover{
+    border-color: var(--gold);
+    background: var(--paper-2);
+    color: var(--emerald-2);
+  }
+  .material-link .bank-name{
+    color: var(--ink);
+    font-weight:500;
+  }
+  .material-link i.bi-download{ color:var(--gold); }
+
+  /* ---------- VIDEO BLOCK ---------- */
+  .video-block{
+    max-width: 980px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+  .video-card{
+    background: var(--white);
+    border:1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px;
+  }
+  .video-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background: var(--emerald);
+    color: var(--gold-soft);
+    font-size: 0.78rem;
+    font-weight:600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .video-card h4{
+    font-size:1.2rem;
+    color: var(--ink);
+    margin-bottom: 18px;
+    font-weight:600;
+  }
+  video, iframe{ border-radius: 3px; }
+
+  .brand-divider{
+    max-width: 980px;
+    margin: 64px auto 8px;
+    padding: 0 20px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .brand-divider .line{
+    flex:1;
+    height:1px;
+    background: var(--line);
+  }
+  .brand-divider span{
+    font-family:'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size:1.05rem;
+    white-space:nowrap;
+  }
+  /* ---------- CONFIDENTIAL NOTICE ---------- */
+  .notice{
+    --warn: #8a2b22;
+    --warn-soft: #f6e9e2;
+    max-width: 980px;
+    margin: 0 auto 48px;
+    padding: 0 20px;
+  }
+  .notice-inner{
+    position:relative;
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+    background: var(--warn-soft);
+    border: 1px solid #e0c3ae;
+    border-left: 5px solid var(--warn);
+    border-radius: 4px;
+    padding: 26px 30px;
+    overflow:hidden;
+  }
+  .notice-inner::before{
+    content:"";
+    position:absolute;
+    top:0; right:0; bottom:0;
+    width: 46px;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--gold) 0 8px,
+      var(--warn) 8px 16px
+    );
+    opacity:0.55;
+  }
+  .notice-icon{
+    flex:0 0 auto;
+    width:46px; height:46px;
+    border-radius:50%;
+    background: var(--warn);
+    color: var(--warn-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.35rem;
+  }
+  .notice-text{
+    position:relative;
+    z-index:1;
+    padding-right: 30px;
+  }
+  .notice-text .notice-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.05rem;
+    color: var(--warn);
+    margin-bottom: 6px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .notice-text p{
+    margin:0;
+    color:#4a2c25;
+    font-size:0.94rem;
+  }
+
+  /* ---------- SESSION HEADER ---------- */
+  .session-header{
+    max-width: 980px;
+    margin: 92px auto 26px;
+    padding: 0 20px;
+    display:flex;
+    align-items:center;
+    gap: 20px;
+  }
+  .session-header.first{ margin-top: 56px; }
+  .session-badge{
+    flex:0 0 auto;
+    width:60px; height:60px;
+    border-radius:50%;
+    background: var(--emerald);
+    color: var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.5rem;
+    box-shadow: 0 8px 18px rgba(14,77,60,0.22);
+  }
+  .session-header-text h3{
+    font-size:1.4rem;
+    color: var(--emerald);
+    margin-bottom: 2px;
+    font-weight:600;
+  }
+  .session-header-text p{
+    margin:0;
+    color:#8a8578;
+    font-size:0.92rem;
+  }
+  .session-rule{
+    max-width: 980px;
+    margin: 0 auto 6px;
+    padding: 0 20px;
+  }
+  .session-rule .line{
+    height:1px;
+    background: var(--line);
+  }
+
+  /* ---------- PLACEHOLDER VIDEO ---------- */
+  .video-card.placeholder{
+    border-style:dashed;
+    border-color: var(--line);
+    background: var(--paper-2);
+    text-align:center;
+    padding: 46px 32px;
+    color:#8a8578;
+  }
+  .video-card.placeholder i{
+    font-size:1.8rem;
+    color: var(--gold);
+    display:block;
+    margin-bottom: 10px;
+  }
+  .video-card.placeholder .ph-title{
+    font-family:'Fraunces', serif;
+    color: var(--ink);
+    font-size:1.05rem;
+    margin-bottom: 6px;
+  }
+  .video-card.placeholder small{
+    display:block;
+    margin-top:8px;
+    font-size:0.78rem;
+    color:#a39d8c;
+  }
+
+  /* ---------- POST TEST ---------- */
+  /* ---------- POST TEST ---------- */
+  .posttest{
+    background: var(--emerald);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 52px 44px;
+    text-align:center;
+    max-width: 980px;
+    margin: 60px auto 90px;
+  }
+  .posttest h4{
+    color: var(--gold-soft);
+    font-weight:600;
+    margin-bottom: 14px;
+  }
+  .posttest p{
+    color: rgba(251,249,243,0.85);
+    max-width: 620px;
+    margin: 0 auto 28px;
+  }
+  .btn-gold{
+    --bs-btn-color:               var(--emerald-2);
+    --bs-btn-bg:                  var(--gold);
+    --bs-btn-border-color:        var(--gold);
+    --bs-btn-hover-color:         var(--emerald-2);
+    --bs-btn-hover-bg:            var(--gold-soft);
+    --bs-btn-hover-border-color:  var(--gold-soft);
+    --bs-btn-active-color:        var(--emerald-2);
+    --bs-btn-active-bg:           var(--gold-soft);
+    --bs-btn-active-border-color: var(--gold);
+    --bs-btn-disabled-color:      var(--emerald-2);
+    --bs-btn-disabled-bg:         var(--gold);
+    --bs-btn-disabled-border-color: var(--gold);
+    --bs-btn-focus-shadow-rgb:    184,137,58;
+    font-weight:700;
+    padding: 13px 40px;
+    border-radius: 3px;
+    font-size: 1.02rem;
+  }
+
+
+  footer{
+    text-align:center;
+    color:#8a8578;
+    font-size:0.85rem;
+    padding: 30px 20px 50px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="ribbon"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <img src="restok.png" width="250" height="180">
+    <div class="hero-kicker">PT SSI — Program Sertifikasi Internal</div>
+    <h1>&#9733; Sertifikasi Custody &#9733;</h1>
+    <h4> Tim Pengisian Uang ATM</h4>
+    <p class="lead">Standar kompetensi bagi petugas penanggung jawab kas dalam proses pengisian uang tunai pada mesin ATM dan CRM .</p>
+  </div>
+</section>
+
+<!-- DESKRIPSI -->
+<section class="container-narrow">
+  <div class="panel">
+    <div class="section-title"><i class="bi bi-journal-check"></i> Deskripsi Sertifikasi Custody</div>
+    <p>
+      Sertifikasi <strong>Custody / Tim Pengisian Uang ATM</strong> merupakan program pengakuan kompetensi bagi petugas yang bertanggung jawab atas pengelolaan kas, mulai dari proses pengambilan, penghitungan, pengisian, hingga rekonsiliasi uang tunai pada mesin ATM.
+      Sertifikasi ini dirancang untuk memastikan setiap petugas memahami prosedur pengamanan kas, dual custody, serta penanganan selisih dan gangguan yang mungkin terjadi selama proses pengisian berlangsung.
+    </p>
+
+    <div class="row g-3 my-4">
+      <div class="col-md-6">
+        <div class="info-tile">
+          <i class="bi bi-play-circle-fill"></i>
+          <strong>Video Interaktif</strong>
+          Simulasi visual prosedur pengisian uang secara online
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="info-tile">
+          <i class="bi bi-file-earmark-text-fill"></i>
+          <strong>Modul PDF</strong>
+          Materi tertulis terstruktur per jenis mesin ATM
+
+          <div class="mt-3">
+            <a href="https://drive.google.com/file/d/12_ehj_g1hD42fLM-QOC-j1Q2Tvba_DkR/view" class="material-link">
+              <span class="bank-name">Modul Custody — ATM NCR</span>
+              <i class="bi bi-download"></i>
+            </a>
+            <a href="https://drive.google.com/file/d/15OyPPerlJEuX63nLIHa_wmQqBAoBW95s/view" class="material-link">
+              <span class="bank-name">Modul Custody — ATM Wincor</span>
+              <i class="bi bi-download"></i>
+            </a>
+            <a href="https://drive.google.com/file/d/12Flp5UGMwFR-CO1V6_XYsqHmSqMxJXFn/view" class="material-link">
+              <span class="bank-name">Modul Custody — ATM Hyosung</span>
+              <i class="bi bi-download"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0">
+      Peserta diharapkan mampu meningkatkan kompetensi custody dan menerapkan prosedur pengamanan kas secara konsisten di lingkungan kerja.
+    </p>
+  </div>
+</section>
+
+<!-- PERINGATAN KERAHASIAAN -->
+<div class="notice">
+  <div class="notice-inner">
+    <div class="notice-icon"><i class="bi bi-shield-exclamation"></i></div>
+    <div class="notice-text">
+      <div class="notice-title"><i class="bi bi-lock-fill"></i> Materi Rahasia — Khusus Internal</div>
+      <p>
+        Seluruh video dan modul di bawah ini bersifat rahasia dan hanya diperuntukkan bagi peserta sertifikasi internal PT SSI.
+        Dilarang keras merekam, mengunduh ulang, membagikan tautan, atau menyebarluaskan materi ini ke pihak luar dalam bentuk apa pun.
+        Pelanggaran atas ketentuan ini dapat dikenakan sanksi sesuai kebijakan perusahaan.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SESI 1 : SLA & TUPOKSI ================= -->
+<div class="session-header first">
+  <div class="session-badge">1</div>
+  <div class="session-header-text">
+    <h3>SLA &amp; Tupoksi</h3>
+    <p>Pemahaman standar layanan dan tugas pokok petugas custody</p>
+  </div>
+</div>
+<div class="session-rule"><div class="line"></div></div>
+
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 1 dari 2</span>
+    <h4>SLA</h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1g7sZPeEJqxVCD_oNsJ_kBq7dFPP2JRq_/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 2 dari 2</span>
+    <h4>Tupoksi Custody </h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/18QeLO-uJhEOCl9dQwE8a_vQrcycWFPHT/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SESI 2 : REPLENISHMENT MESIN ATM ================= -->
+<div class="session-header">
+  <div class="session-badge">2</div>
+  <div class="session-header-text">
+    <h3>Replenishment Mesin ATM</h3>
+    <p>Prosedur pengisian uang pada ATM NCR, Wincor, dan Hyosung</p>
+  </div>
+</div>
+<div class="session-rule"><div class="line"></div></div>
+
+<div class="brand-divider"><span>ATM NCR</span><div class="line"></div></div>
+
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 1 dari 2</span>
+    <h4>Prosedur Pengisian Uang — ATM NCR, bagian 1</h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1g7sZPeEJqxVCD_oNsJ_kBq7dFPP2JRq_/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 2 dari 2</span>
+    <h4>Prosedur Pengisian Uang — ATM NCR, bagian 2</h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/18QeLO-uJhEOCl9dQwE8a_vQrcycWFPHT/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="brand-divider"><span>ATM Wincor</span><div class="line"></div></div>
+
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 1 dari 2</span>
+    <h4>Prosedur Pengisian Uang — ATM Wincor, bagian 1</h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1-dL8AS0aQ3xOq4WytedMMgpp_OgVUkn9/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 2 dari 2</span>
+    <h4>Prosedur Pengisian Uang — ATM Wincor, bagian 2</h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1Wq_x_PaMgXO1nfbBRmilqB_4OaUKl183/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="brand-divider"><span>ATM Hyosung</span><div class="line"></div></div>
+
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 1 dari 2</span>
+    <h4>Prosedur Pengisian Uang — ATM Hyosung, bagian 1</h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1nZD0_4F1niNAjqxeonBlhjq1JoSXP_8I/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 2 dari 2</span>
+    <h4>Prosedur Pengisian Uang — ATM Hyosung, bagian 2</h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1b5s9ZkYIMnpta3HFu3gT9Dz39zNy_hO7/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SESI 3 : REPLENISHMENT & COLLECTING MESIN CRM ================= -->
+<div class="session-header">
+  <div class="session-badge">3</div>
+  <div class="session-header-text">
+    <h3>Replenishment &amp; Collecting Mesin CRM</h3>
+    <p>Prosedur pengisian dan penarikan uang pada CRM Hitachi, OKI, dan Hyosung</p>
+  </div>
+</div>
+<div class="session-rule"><div class="line"></div></div>
+
+<div class="brand-divider"><span>CRM Hitachi</span><div class="line"></div></div>
+
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 1 dari 3</span>
+    <h4>CRM Hitachi </h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1b5s9ZkYIMnpta3HFu3gT9Dz39zNy_hO7/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="brand-divider"><span>CRM OKI</span><div class="line"></div></div>
+
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 2 dari 3</span>
+    <h4>CRM OKI </h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1b5s9ZkYIMnpta3HFu3gT9Dz39zNy_hO7/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="brand-divider"><span>CRM Hyosung </span><div class="line"></div></div>
+
+<div class="video-block">
+  <div class="video-card">
+    <span class="video-eyebrow"><i class="bi bi-camera-video-fill"></i> Video 3 dari 3</span>
+    <h4>CRM Hyosung </h4>
+    <div class="ratio ratio-16x9">
+      <iframe src="https://drive.google.com/file/d/1b5s9ZkYIMnpta3HFu3gT9Dz39zNy_hO7/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- ================= SESI 4 : POST TEST ================= -->
+<div class="session-header">
+  <div class="session-badge">4</div>
+  <div class="session-header-text">
+    <h3>Post Test</h3>
+    <p>Evaluasi akhir setelah seluruh sesi materi diselesaikan</p>
+  </div>
+</div>
+<div class="session-rule"><div class="line"></div></div>
+
+<!-- POST TEST -->
+<section class="container-narrow">
+  <div class="posttest">
+    <h4><i class="bi bi-award-fill"></i> Post Test Sertifikasi</h4>
+    <p>
+      Post test merupakan tahap evaluasi akhir setelah peserta menyelesaikan seluruh materi dan video pelatihan. Tujuannya adalah mengukur pemahaman dan kesiapan petugas dalam menjalankan prosedur custody dan pengisian uang ATM sesuai standar keamanan.
+    </p>
+    <a href="soal.html" class="btn btn-gold">
+      <i class="bi bi-arrow-right-circle me-1"></i> Mulai Post Test
+    </a>
+  </div>
+</section>
+
+<footer>
+  PT SSI · Program Sertifikasi Custody &amp; Pengisian Uang ATM
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
