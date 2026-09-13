@@ -1,0 +1,572 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sertifikasi Custody ATM &amp; CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E33;
+    --navy-2:#122A47;
+    --steel:#445168;
+    --steel-light:#7C8AA0;
+    --gold:#C9A24A;
+    --gold-dark:#9C7B32;
+    --paper:#F3F1EA;
+    --paper-2:#FFFFFF;
+    --ink:#17202B;
+    --line:#D8D3C4;
+    --warn-bg:#F6E9E4;
+    --warn-line:#B5502F;
+    --warn-ink:#7A331A;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3{
+    font-family:'Source Serif 4', serif;
+    margin:0;
+    color:var(--navy);
+    font-weight:600;
+  }
+  a{color:inherit;}
+  .container{max-width:980px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- HEADER / SESI 1 ---------- */
+  header.hero{
+    background:linear-gradient(180deg,var(--navy) 0%, var(--navy-2) 100%);
+    color:#EDEFF3;
+    padding:64px 0 56px;
+    border-bottom:4px solid var(--gold);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    align-items:center;
+  }
+  .eyebrow-mark{
+    display:flex;align-items:center;gap:10px;
+    color:var(--gold);
+    font-size:14px;letter-spacing:.02em;
+    margin-bottom:18px;
+  }
+  .eyebrow-mark .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;display:inline-block;}
+  .hero h1{
+    font-size:40px;
+    line-height:1.15;
+    color:#FFFFFF;
+  }
+  .hero p.lead{
+    margin-top:18px;
+    font-size:16.5px;
+    color:#C7CEDB;
+    max-width:52ch;
+  }
+  .hero-def{
+    margin-top:26px;
+    padding:18px 20px;
+    background:rgba(255,255,255,0.05);
+    border-left:3px solid var(--gold);
+    font-size:15px;
+    color:#DDE2EA;
+  }
+  .hero-def strong{color:#fff;}
+  .hero-cta{
+    margin-top:30px;
+    display:inline-block;
+    background:var(--gold);
+    color:var(--navy);
+    padding:13px 26px;
+    font-weight:600;
+    text-decoration:none;
+    border-radius:var(--radius);
+  }
+  /* ATM illustration */
+  .atm-wrap{display:flex;justify-content:center;}
+  .atm-note{
+    text-align:center;font-size:11.5px;color:#8C99AF;margin-top:10px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:60px 0;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px;
+    margin-bottom:28px;
+  }
+  .section-head h2{font-size:26px;}
+  .section-head span.tag{
+    font-size:13px;color:var(--steel);
+  }
+  .section-desc{color:#4A5568;max-width:70ch;margin-bottom:26px;font-size:15px;}
+
+  /* Warning box */
+  .warning{
+    background:var(--warn-bg);
+    border:1px solid var(--warn-line);
+    border-left:5px solid var(--warn-line);
+    color:var(--warn-ink);
+    padding:16px 20px;
+    font-size:14.5px;
+    margin-bottom:26px;
+    border-radius:var(--radius);
+  }
+  .warning b{display:block;font-size:14px;margin-bottom:4px;letter-spacing:.01em;}
+
+  /* Tables */
+  table.material-table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--paper-2);
+    font-size:14.5px;
+  }
+  table.material-table th{
+    text-align:left;
+    font-family:'Source Serif 4',serif;
+    font-weight:600;
+    background:var(--navy);
+    color:#EDEFF3;
+    padding:12px 14px;
+    font-size:13.5px;
+  }
+  table.material-table td{
+    padding:13px 14px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  table.material-table tr:last-child td{border-bottom:none;}
+  table.material-table td.col-no{width:44px;color:var(--steel);}
+  table.material-table td.col-title{width:22%;font-weight:600;color:var(--navy);}
+  table.material-table td.col-def{color:#4A5568;}
+  table.material-table td.col-btn{width:170px;text-align:center;}
+
+  .btn-mini{
+    display:inline-block;
+    padding:8px 14px;
+    font-size:13.5px;
+    font-weight:600;
+    text-decoration:none;
+    border-radius:var(--radius);
+    border:1px solid var(--navy);
+    color:var(--navy);
+    background:transparent;
+    cursor:pointer;
+  }
+  .btn-mini:hover{background:var(--navy);color:#fff;}
+  .btn-mini.gold{border-color:var(--gold-dark);color:var(--gold-dark);}
+  .btn-mini.gold:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+
+  /* Video modal */
+  .modal-overlay{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(11,30,51,0.78);
+    z-index:100;
+    align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.active{display:flex;}
+  .video-frame{
+    background:var(--navy);
+    border:2px solid var(--gold);
+    border-radius:4px;
+    width:100%;
+    max-width:780px;
+    overflow:hidden;
+  }
+  .video-frame-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 16px;
+    background:var(--navy-2);
+    color:#EDEFF3;
+    font-size:14px;
+    font-weight:600;
+  }
+  .video-frame-bar .vid-title{font-family:'Source Serif 4',serif;}
+  .video-body{
+    background:#000;
+    aspect-ratio:16/9;
+    width:100%;
+  }
+  .video-body iframe{width:100%;height:100%;border:0;display:block;}
+  .video-controls{
+    display:flex;gap:10px;
+    padding:12px 16px;
+    background:var(--navy-2);
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .video-controls button{
+    flex:1;
+    padding:9px 0;
+    font-size:13.5px;
+    font-weight:600;
+    border-radius:var(--radius);
+    border:1px solid var(--gold);
+    background:transparent;
+    color:var(--gold);
+    cursor:pointer;
+  }
+  .video-controls button.close-btn{border-color:#B5502F;color:#E5A78D;}
+  .video-controls button:hover{background:var(--gold);color:var(--navy);}
+  .video-controls button.close-btn:hover{background:#B5502F;color:#fff;}
+
+  /* Final CTA session */
+  .final-cta{
+    background:var(--navy);
+    color:#EDEFF3;
+    text-align:center;
+    padding:56px 28px;
+    border-radius:4px;
+    border:1px solid var(--gold);
+  }
+  .final-cta h2{color:#fff;font-size:28px;}
+  .final-cta p{color:#C7CEDB;max-width:60ch;margin:14px auto 26px;font-size:15px;}
+  .final-cta a.big-cta{
+    display:inline-block;
+    background:var(--gold);
+    color:var(--navy);
+    padding:15px 34px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:var(--radius);
+    font-size:15.5px;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px;
+    font-size:12.5px;
+    color:var(--steel);
+  }
+
+  @media (max-width:820px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:30px;}
+    table.material-table{font-size:13px;}
+    table.material-table td.col-def{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- =============== SESI 1 : JUDUL & DEFINISI =============== -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow-mark"><span class="dot"></span>Program E-Training Internal</div>
+      <h1>Sertifikasi Custody<br>ATM &amp; CRM</h1>
+      <p class="lead">Pelatihan dan uji kompetensi bagi petugas custody yang bertanggung jawab melakukan pengisian uang tunai pada mesin ATM dan CRM.</p>
+      <div class="hero-def">
+        <strong>Definisi:</strong> Petugas Custody adalah petugas yang melakukan pengisian (replenishment) uang tunai pada mesin ATM atau CRM (Cash Recycle Machine), memastikan keakuratan jumlah, keamanan proses, serta kelancaran dan kenyamanan nasabah dalam bertransaksi tunai.
+      </div>
+      <a href="#materi" class="hero-cta">Mulai Pelatihan</a>
+    </div>
+    <div>
+      <div class="atm-wrap">
+        <!-- Ilustrasi ATM (SVG asli — ganti dengan foto sendiri bila perlu, lihat komentar di bawah) -->
+        <svg width="280" height="360" viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="260" height="340" rx="10" fill="#1B3350" stroke="#C9A24A" stroke-width="2"/>
+          <rect x="30" y="34" width="220" height="130" rx="4" fill="#0B1E33" stroke="#3A4B63"/>
+          <rect x="42" y="46" width="196" height="90" rx="2" fill="#7FB9C9" opacity="0.85"/>
+          <rect x="52" y="56" width="120" height="8" rx="2" fill="#0B1E33" opacity="0.4"/>
+          <rect x="52" y="72" width="90" height="6" rx="2" fill="#0B1E33" opacity="0.3"/>
+          <rect x="52" y="86" width="140" height="6" rx="2" fill="#0B1E33" opacity="0.3"/>
+          <!-- keypad -->
+          <g fill="#C9A24A">
+            <circle cx="58" cy="182" r="7"/><circle cx="84" cy="182" r="7"/><circle cx="110" cy="182" r="7"/>
+            <circle cx="58" cy="206" r="7"/><circle cx="84" cy="206" r="7"/><circle cx="110" cy="206" r="7"/>
+            <circle cx="58" cy="230" r="7"/><circle cx="84" cy="230" r="7"/><circle cx="110" cy="230" r="7"/>
+          </g>
+          <!-- card slot -->
+          <rect x="150" y="178" width="90" height="14" rx="3" fill="#0B1E33" stroke="#3A4B63"/>
+          <rect x="160" y="182" width="60" height="6" rx="1" fill="#C9A24A" opacity="0.7"/>
+          <!-- cash slot -->
+          <rect x="150" y="212" width="90" height="26" rx="3" fill="#0B1E33" stroke="#3A4B63"/>
+          <rect x="160" y="220" width="70" height="4" fill="#C9A24A" opacity="0.5"/>
+          <rect x="160" y="228" width="70" height="4" fill="#C9A24A" opacity="0.5"/>
+          <!-- base -->
+          <rect x="30" y="270" width="220" height="60" rx="4" fill="#122A47" stroke="#3A4B63"/>
+          <rect x="46" y="284" width="188" height="32" rx="3" fill="#0B1E33"/>
+          <text x="140" y="305" font-family="IBM Plex Sans" font-size="11" fill="#C9A24A" text-anchor="middle" letter-spacing="1">CASH / DEPOSIT UNIT</text>
+        </svg>
+      </div>
+      <p class="atm-note">Ilustrasi ATM — dapat diganti dengan foto unit ATM/CRM perusahaan Anda.</p>
+    </div>
+  </div>
+</header>
+
+<!-- =============== SESI 2 : MATERI PDF & VIDEO =============== -->
+<section id="materi">
+  <div class="container">
+
+    <div class="warning">
+      <b>Peringatan — Materi Internal &amp; Rahasia</b>
+      Seluruh materi pada bagian ini bersifat internal dan hanya untuk keperluan pelatihan petugas custody. Dilarang keras menggandakan, mengunggah ulang, memfoto, atau menyebarluaskan materi ini kepada pihak yang tidak berkepentingan tanpa izin resmi dari manajemen.
+    </div>
+
+    <div class="section-head" style="margin-top:56px;">
+      <h2>Materi Pembelajaran — Video</h2>
+      <span class="tag">Sesi 1</span>
+    </div>
+    <p class="section-desc">Video pelatihan tersimpan di Google Drive. Klik tombol "Tonton Video" untuk membuka pemutar video di tengah layar.</p>
+
+    <table class="material-table">
+      <thead>
+        <tr>
+          <th class="col-no">No</th>
+          <th class="col-title">Judul Materi</th>
+          <th>Definisi</th>
+          <th class="col-btn">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="video-table-body">
+        <!-- Baris diisi dari array JS materiVideo di bawah -->
+      </tbody>
+    </table>
+
+
+    <div class="section-head" style="margin-top:56px;">
+      <h2>Materi Pembelajaran — Dokumen</h2>
+      <span class="tag">Sesi 2</span>
+    </div>
+
+    <table class="material-table">
+      <thead>
+        <tr>
+          <th class="col-no">No</th>
+          <th class="col-title">Judul Materi</th>
+          <th>Definisi</th>
+          <th class="col-btn">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="pdf-table-body">
+        <!-- Baris diisi dari array JS materiPDF di bawah agar mudah diedit -->
+      </tbody>
+    </table>
+
+    
+  </div>
+</section>
+
+<!-- =============== SESI 3 : LINK POST-TEST =============== -->
+
+<section>
+
+  <div class="container">
+    <div class="section-head">
+      <h2>Uji Kompetensi Custody</h2>
+        <span class="tag">Sesi 2</span>
+    </div>
+
+    <div class="final-cta">
+      
+      <p>Setelah mempelajari seluruh materi, lanjutkan ke post-test untuk mendapatkan Sertifikat Kompetensi Custody. Post-test terdiri dari 25 soal pilihan ganda. Nilai minimum kelulusan adalah 70.</p>
+      
+
+      <a href="posttest.html" class="big-cta">Mulai Post-Test →</a>
+    </div>
+  </div>
+</section>
+
+<footer>Program E-Training Sertifikasi Custody ATM &amp; CRM · Internal Use Only</footer>
+
+<!-- =============== MODAL VIDEO PLAYER =============== -->
+<div class="modal-overlay" id="videoModal">
+  <div class="video-frame">
+    <div class="video-frame-bar">
+      <span class="vid-title" id="modalVidTitle">Video Pelatihan</span>
+    </div>
+    <div class="video-body">
+      <iframe id="videoIframe" src="" allow="autoplay" allowfullscreen></iframe>
+    </div>
+    <div class="video-controls">
+      <button id="btnPlay">▶ Play</button>
+      <button id="btnStop">■ Stop</button>
+      <button class="close-btn" id="btnClose">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA MATERI — edit di sini untuk menambah/mengubah materi
+   ========================================================= */
+
+// PDF: ganti "file" dengan URL PDF asli (Drive share-link "anyone with link"
+// atau link hosting lain). Gunakan format Drive:
+// https://drive.google.com/file/d/FILE_ID/view
+const materiPDF = [
+  {
+    judul: " SLA Service Level Agreement ",
+    definisi: "Standar atau kesepakatan waktu dan kualitas layanan yang harus dipenuhi dalam pelaksanaan pekerjaan",
+    file: "https://drive.google.com/file/d/1ZZQoFxpY62R_amD8prDGT90t7Pq8Lzec/view"
+  },
+  {
+    judul: "Prosedur Rekonsiliasi Kaset CRM",
+    definisi: "Panduan pencocokan jumlah fisik uang dengan catatan sistem pada kaset Cash Recycle Machine (CRM).",
+    file: "https://drive.google.com/file/d/GANTI_FILE_ID_2/view"
+  },
+  {
+    judul: "Standar Keselamatan & Keamanan Custody",
+    definisi: "Ketentuan keamanan fisik dan prosedural selama proses pengisian, termasuk penanganan situasi darurat.",
+    file: "https://drive.google.com/file/d/GANTI_FILE_ID_3/view"
+  },
+  {
+    judul: "Panduan Penanganan Uang Diragukan Keasliannya",
+    definisi: "Langkah identifikasi dan pelaporan uang yang diduga tidak asli saat proses pengisian atau penarikan kaset.",
+    file: "https://drive.google.com/file/d/GANTI_FILE_ID_4/view"
+  },
+  {
+    judul: "Etika dan Pelayanan Nasabah",
+    definisi: "Standar sikap dan komunikasi petugas custody terhadap nasabah selama proses pengisian berlangsung di lokasi ATM.",
+    file: "https://drive.google.com/file/d/GANTI_FILE_ID_5/view"
+  }
+];
+
+// Video: gunakan FILE_ID dari Google Drive (video di-share "anyone with link").
+// URL embed otomatis dibentuk dari FILE_ID.
+const materiVideo = [
+  {
+    judul: "SLA  Service level Agreement",
+    definisi: "Standar atau kesepakatan waktu dan kualitas layanan yang harus dipenuhi dalam pelaksanaan pekerjaan",
+    fileId: "1ZZQoFxpY62R_amD8prDGT90t7Pq8Lzec"
+  },
+  {
+    judul: "Tupoksi Tugas Pokok & Fungsi Custody ",
+    definisi: "Penjelasan mengenai tugas pokok dan fungsi petugas Custody, termasuk tanggung jawab dalam pengelolaan, pengamanan, pengisian, dan pemeriksaan uang pada mesin ATM/CRM sesuai prosedur.",
+    fileId: "14OXjCP76hV_8VJR9XsQ6-crSgXEYJTry"
+  },
+  {
+    judul: "Pengenalan Mesin NCR",
+    definisi: "Materi untuk mengenal bagian, fungsi, karakteristik, dan cara kerja dasar mesin ATM merek NCR.",
+    fileId: "18l8N4tFrqEGhlm1BWFnz4gPWrBHO6_g8"
+  },
+  {
+    judul: "Pengenalan Mesin Wincor",
+    definisi: "Materi untuk mengenal bagian, fungsi, karakteristik, dan cara kerja dasar mesin ATM merek Wincor.",
+    fileId: "1nLA5ODvKZGk2-K-LUg-nA2zp5SHQ0Cxk"
+  },
+  {
+    judul: "Pengenalan Mesin Hyosung",
+    definisi: "Materi untuk mengenal bagian, fungsi, karakteristik, dan cara kerja dasar mesin ATM merek Hyosung",
+    fileId: "1TvnTv8AcrKe28uIaLz9gAZrbRbpg45EL"
+  },
+ 
+  {
+    judul: "Pengenalan Mesin CRM Hitachi ",
+    definisi: "Materi untuk mengenal bagian, fungsi, karakteristik, dan cara kerja dasar mesin CRM Hitachi ",
+    fileId: "1mbYQa4_HfzI1ozFZIqKwnw7nfMT3wR_Z"
+  },
+  {
+    judul: "Cara pengisian Mesin ATM NCR ",
+    definisi: "Materi mengenai prosedur pengisian uang pada mesin ATM NCR secara benar, aman, dan sesuai SOP, termasuk persiapan, penempatan uang, pemeriksaan, dan penyelesaian proses.",
+    fileId: "1NizS3vZ8cvmHoSIEn0UC9WR_0V63FlJR"
+  },
+  {
+    judul: "Cara pengsian mesin ATM Wincor  ",
+    definisi: "Materi mengenai prosedur pengisian uang pada mesin ATM Wincor secara benar, aman, dan sesuai SOP, termasuk persiapan, penempatan uang, pemeriksaan, dan penyelesaian proses.",
+    fileId: "1WSwwgYi91SSlUWQBs5rmbHqwCu9oGndx"
+  },
+  {
+    judul: "Cara pengisian mesin ATM Hyosung ",
+    definisi: "Materi mengenai prosedur pengisian uang pada mesin ATM Hyosung secara benar, aman, dan sesuai SOP, termasuk persiapan, penempatan uang, pemeriksaan, dan penyelesaian proses.",
+    fileId: "1VR3P-0YUMkO3ebdHAfO4ZPQYngJtXgnm"
+  },
+  {
+    judul: "Cara Pengisian mesin ATM CRM OKI ",
+    definisi: "Materi mengenai prosedur pengisian uang pada mesin CRM OKI secara benar, aman, dan sesuai SOP, termasuk persiapan, penempatan uang, pemeriksaan, dan penyelesaian proses.",
+    fileId: "18Wc-4RTyA-qr7OSky8ZKW93Ru1W4vQ9-"
+  },
+  {
+    judul: "Cara Pengisian mesin CRM Hitachi ",
+    definisi: "Materi mengenai prosedur pengisian uang pada mesin CRM Hitachi  secara benar, aman, dan sesuai SOP, termasuk persiapan, penempatan uang, pemeriksaan, dan penyelesaian proses.",
+    fileId: "1llEXTT_JkRTTqvyB7DCB7ZqIh6QQfF5r"
+  }
+
+];
+
+function renderPDFTable(){
+  const body = document.getElementById('pdf-table-body');
+  body.innerHTML = materiPDF.map((m,i)=>`
+    <tr>
+      <td class="col-no">${i+1}</td>
+      <td class="col-title">${m.judul}</td>
+      <td class="col-def">${m.definisi}</td>
+      <td class="col-btn"><a class="btn-mini" href="${m.file}" target="_blank" rel="noopener">Lihat / Unduh</a></td>
+    </tr>`).join('');
+}
+
+function renderVideoTable(){
+  const body = document.getElementById('video-table-body');
+  body.innerHTML = materiVideo.map((m,i)=>`
+    <tr>
+      <td class="col-no">${i+1}</td>
+      <td class="col-title">${m.judul}</td>
+      <td class="col-def">${m.definisi}</td>
+      <td class="col-btn"><button class="btn-mini gold" onclick="openVideo('${m.fileId}','${m.judul.replace(/'/g,"\\'")}')">Tonton Video</button></td>
+    </tr>`).join('');
+}
+
+renderPDFTable();
+renderVideoTable();
+
+/* =========================================================
+   MODAL VIDEO — Play / Stop / Close
+   Catatan teknis: pemutar Google Drive berjalan di dalam iframe
+   lintas-domain, sehingga tombol Play/Stop kustom TIDAK bisa
+   mengontrol playback internal iframe secara langsung (batasan
+   keamanan browser / cross-origin). Sebagai solusi fungsional:
+   - Play  = memuat ulang iframe (video mulai diputar dari awal)
+   - Stop  = mengosongkan src iframe (video benar-benar berhenti/unload)
+   - Close = menutup modal sekaligus menghentikan video
+   Kontrol native play/pause/seek Google Drive tetap tersedia di
+   dalam frame video itu sendiri.
+   ========================================================= */
+let currentFileId = null;
+
+function driveEmbedUrl(fileId){
+  return `https://drive.google.com/file/d/${fileId}/preview`;
+}
+
+function openVideo(fileId, title){
+  currentFileId = fileId;
+  document.getElementById('modalVidTitle').textContent = title;
+  document.getElementById('videoIframe').src = driveEmbedUrl(fileId);
+  document.getElementById('videoModal').classList.add('active');
+}
+
+document.getElementById('btnPlay').addEventListener('click', ()=>{
+  if(currentFileId){ document.getElementById('videoIframe').src = driveEmbedUrl(currentFileId); }
+});
+document.getElementById('btnStop').addEventListener('click', ()=>{
+  document.getElementById('videoIframe').src = '';
+});
+document.getElementById('btnClose').addEventListener('click', closeVideo);
+
+function closeVideo(){
+  document.getElementById('videoIframe').src = '';
+  document.getElementById('videoModal').classList.remove('active');
+  currentFileId = null;
+}
+
+// klik di luar frame video juga menutup modal
+document.getElementById('videoModal').addEventListener('click', (e)=>{
+  if(e.target.id === 'videoModal'){ closeVideo(); }
+});
+</script>
+
+</body>
+</html>
