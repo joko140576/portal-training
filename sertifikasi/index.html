@@ -31,6 +31,7 @@ body {
 header {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -42,6 +43,8 @@ header::after {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 0;
+    pointer-events: none;
     background: linear-gradient(
         135deg,
         rgba(0, 0, 0, 0.10),
@@ -54,6 +57,7 @@ header h1 {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
     position: relative;
+    z-index: 1;
     font-size: 5rem;
     letter-spacing: 2px;
 
@@ -84,6 +88,31 @@ header h1 {
 @keyframes fadeDown {
     from {opacity: 0; transform: translateY(-50px);}
     to {opacity: 1; transform: translateY(0);}
+}
+
+/* TOMBOL LET'S STARTED DI HEADER */
+.header-cta {
+    position: relative;
+    z-index: 1;
+    margin-top: 30px;
+    padding: 14px 36px;
+    border-radius: 30px;
+    background: #00e6ff;
+    color: black;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 230, 255, 0.4);
+    transition: 0.3s;
+    animation: fadeDown 3s ease;
+}
+
+.header-cta:hover {
+    background: #00bcd4;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 230, 255, 0.6);
 }
 
 /* SECTION */
@@ -213,10 +242,11 @@ section {
 <!-- HEADER -->
 <header>
     <h1>SERTIFIKASI PEGAWAI<br>PT SSI</h1>
+    <button class="header-cta" onclick="document.getElementById('section2').scrollIntoView({behavior:'smooth'})">Let's Started</button>
 </header>
 
 <!-- SECTION 2 -->
-<section>
+<section id="section2">
     <h2 class="section-title fade-in">Apa itu Sertifikasi Pegawai?</h2>
     <p class="fade-in">
         Sertifikasi pegawai di PT SSI merupakan proses penilaian kompetensi karyawan 
