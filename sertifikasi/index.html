@@ -41,20 +41,44 @@ header {
 header::after {
     content: "";
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.10),
+        rgba(0, 40, 60, 0.18),
+        rgba(0, 0, 0, 0.12)
+    );
 }
 
 header h1 {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    color: white; /* warna isi teks */
-    -webkit-text-stroke: 2.5px black; /* stroke */
     position: relative;
     font-size: 5rem;
+    letter-spacing: 2px;
+
+    /* Warna putih premium */
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #ffffff 45%,
+        #e8f9ff 75%,
+        #c9f2ff 100%
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    /* Outline tipis */
+    -webkit-text-stroke: 1px rgba(255,255,255,0.35);
+
+    /* Glow */
+    filter: drop-shadow(0 0 4px rgba(255,255,255,0.9))
+            drop-shadow(0 0 12px rgba(200,245,255,0.7))
+            drop-shadow(0 4px 12px rgba(0,0,0,0.65));
+
     animation: fadeDown 2.5s ease;
-    
 }
 
 @keyframes fadeDown {
