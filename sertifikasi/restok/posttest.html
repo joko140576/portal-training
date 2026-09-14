@@ -1,381 +1,659 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post-Test — Sertifikasi Custody</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<style>
-  :root{
-    --navy:#0B1E33; --navy-2:#122A47; --steel:#445168;
-    --gold:#C9A24A; --gold-dark:#9C7B32;
-    --paper:#F3F1EA; --paper-2:#FFFFFF; --ink:#17202B; --line:#D8D3C4;
-    --err:#B5502F;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.55;}
-  h1,h2,h3{font-family:'Source Serif 4',serif;color:var(--navy);margin:0;font-weight:600;}
-  .topbar{background:var(--navy);color:#EDEFF3;padding:20px 0;border-bottom:4px solid var(--gold);}
-  .container{max-width:760px;margin:0 auto;padding:0 26px;}
-  .topbar h1{color:#fff;font-size:22px;}
-  .topbar a{color:var(--gold);text-decoration:none;font-size:13.5px;}
-  main{padding:44px 0 80px;}
-  .card{background:var(--paper-2);border:1px solid var(--line);border-radius:4px;padding:30px 32px;margin-bottom:24px;}
-  .card h2{font-size:20px;margin-bottom:6px;}
-  .card .sub{color:#4A5568;font-size:14px;margin-bottom:22px;}
-  label{display:block;font-size:13.5px;font-weight:600;color:var(--steel);margin-bottom:6px;}
-  input, select{
-    width:100%;padding:11px 12px;font-size:14.5px;border:1px solid var(--line);
-    border-radius:3px;margin-bottom:18px;font-family:'IBM Plex Sans',sans-serif;background:#fff;
-  }
-  input:focus, select:focus{outline:2px solid var(--gold);border-color:var(--gold);}
-  .btn{
-    display:inline-block;padding:13px 26px;background:var(--navy);color:#fff;font-weight:600;
-    border:none;border-radius:3px;cursor:pointer;font-size:14.5px;
-  }
-  .btn:hover{background:var(--navy-2);}
-  .btn.gold{background:var(--gold);color:var(--navy);}
-  .btn.gold:hover{background:var(--gold-dark);color:#fff;}
-  .btn:disabled{opacity:.5;cursor:not-allowed;}
-  .error-box{background:#F6E9E4;border:1px solid var(--err);color:#7A331A;padding:12px 16px;border-radius:3px;font-size:14px;margin-bottom:18px;display:none;}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post Test Sertifikasi Custody</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root{
+      --navy:#0b2545;
+      --navy-2:#13315c;
+      --gold:#c9a227;
+      --gold-light:#e8c766;
+      --bg:#f4f6fb;
+      --danger:#c0392b;
+      --success:#1e7d4a;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:'Segoe UI', Arial, sans-serif;
+      background:var(--bg);
+      color:#1c2b3a;
+    }
+    .wrap{max-width:840px;margin:0 auto;padding:0 0 60px;}
 
-  /* Quiz */
-  .q-progress{font-size:13px;color:var(--steel);margin-bottom:18px;}
-  .q-block{border-bottom:1px solid var(--line);padding:22px 0;}
-  .q-block:last-child{border-bottom:none;}
-  .q-num{font-family:'Source Serif 4',serif;color:var(--gold-dark);font-weight:600;font-size:14px;margin-bottom:6px;}
-  .q-text{font-size:15.5px;margin-bottom:14px;color:var(--ink);}
-  .opt{
-    display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1px solid var(--line);
-    border-radius:3px;margin-bottom:8px;cursor:pointer;font-size:14.5px;
-  }
-  .opt:hover{border-color:var(--gold);}
-  .opt input{width:auto;margin:2px 0 0;}
-  .opt.selected{border-color:var(--gold);background:#FBF6EB;}
+    /* ---------- SESSION 1 : HEADLINE ---------- */
+    .headline{
+      background:linear-gradient(135deg,var(--navy) 0%, var(--navy-2) 60%, #1a4a7a 100%);
+      color:#fff;
+      padding:56px 24px 64px;
+      text-align:center;
+      border-bottom:6px solid var(--gold);
+    }
+    .headline .badge{
+      display:inline-block;
+      padding:6px 18px;
+      border:1px solid var(--gold-light);
+      border-radius:999px;
+      font-size:13px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--gold-light);
+      margin-bottom:18px;
+    }
+    .headline h1{
+      font-size:32px;
+      margin:0 0 12px;
+      line-height:1.3;
+    }
+    .headline h1 span{color:var(--gold-light);}
+    .headline p{
+      font-size:15px;
+      opacity:.85;
+      max-width:520px;
+      margin:0 auto;
+    }
 
-  /* Result */
-  .result-score{font-size:52px;font-family:'Source Serif 4',serif;color:var(--navy);}
-  .result-status{font-weight:700;font-size:16px;margin-top:4px;}
-  .status-pass{color:#2F6F4E;}
-  .status-fail{color:var(--err);}
+    /* ---------- CARD (session 2 & 3 container) ---------- */
+    .card{
+      background:#fff;
+      margin:-32px 20px 24px;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(10,30,60,.12);
+      padding:28px 24px;
+      position:relative;
+      z-index:2;
+    }
+    .card h2{
+      font-size:18px;
+      margin:0 0 4px;
+      color:var(--navy);
+    }
+    .card .sub{
+      font-size:13px;
+      color:#66748c;
+      margin-bottom:20px;
+    }
+    .step-tag{
+      display:inline-block;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:1px;
+      color:#fff;
+      background:var(--navy);
+      padding:3px 10px;
+      border-radius:6px;
+      margin-bottom:10px;
+    }
 
-  /* Certificate */
-  #certWrap{display:none;text-align:center;margin-top:26px;}
-  canvas#certCanvas{max-width:100%;border:1px solid var(--line);}
-  .hidden{display:none !important;}
+    label{
+      display:block;
+      font-size:13px;
+      font-weight:600;
+      margin:14px 0 6px;
+      color:#33465e;
+    }
+    input[type=text], select{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid #d3dae5;
+      border-radius:8px;
+      font-size:14px;
+      background:#fafbfd;
+    }
+    input[type=text]:focus, select:focus{
+      outline:none;
+      border-color:var(--navy-2);
+      background:#fff;
+    }
 
-  .spinner{
-    width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;
-    display:inline-block;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;
-  }
-  @keyframes spin{to{transform:rotate(360deg);}}
-</style>
+    .btn{
+      display:inline-block;
+      border:none;
+      cursor:pointer;
+      padding:13px 28px;
+      border-radius:8px;
+      font-size:15px;
+      font-weight:700;
+      letter-spacing:.3px;
+    }
+    .btn-primary{
+      background:var(--navy);
+      color:#fff;
+      width:100%;
+      margin-top:22px;
+    }
+    .btn-primary:hover{background:var(--navy-2);}
+    .btn-gold{
+      background:var(--gold);
+      color:#2a2005;
+    }
+    .btn-outline{
+      background:transparent;
+      border:1px solid #c7cfdb;
+      color:#33465e;
+    }
+    .btn:disabled{opacity:.5;cursor:not-allowed;}
+
+    /* ---------- QUIZ ---------- */
+    #quizArea{display:none;}
+    .progress-bar{
+      height:8px;
+      background:#e7ebf3;
+      border-radius:99px;
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+    .progress-fill{
+      height:100%;
+      background:var(--gold);
+      width:0%;
+      transition:width .25s ease;
+    }
+    .q-counter{
+      font-size:13px;
+      color:#66748c;
+      margin-bottom:6px;
+    }
+    .q-text{
+      font-size:16px;
+      font-weight:600;
+      margin-bottom:16px;
+      color:var(--navy);
+    }
+    .option{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border:1px solid #dde3ee;
+      border-radius:10px;
+      margin-bottom:10px;
+      cursor:pointer;
+      font-size:14px;
+      transition:.15s;
+    }
+    .option:hover{border-color:var(--navy-2);background:#f6f9ff;}
+    .option.selected{
+      border-color:var(--navy);
+      background:#eaf0fb;
+      font-weight:600;
+    }
+    .option .letter{
+      width:26px;height:26px;flex:0 0 26px;
+      border-radius:50%;
+      background:#eef1f7;
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:700;color:var(--navy);
+    }
+    .option.selected .letter{background:var(--navy);color:#fff;}
+
+    .quiz-nav{
+      display:flex;
+      justify-content:space-between;
+      margin-top:20px;
+      gap:10px;
+    }
+
+    .loader{
+      text-align:center;
+      padding:30px 0;
+      color:#66748c;
+      font-size:14px;
+    }
+
+    /* ---------- MODAL ---------- */
+    .overlay{
+      display:none;
+      position:fixed;inset:0;
+      background:rgba(10,20,35,.55);
+      align-items:center;justify-content:center;
+      z-index:50;
+      padding:16px;
+    }
+    .modal{
+      background:#fff;
+      border-radius:14px;
+      max-width:420px;
+      width:100%;
+      padding:28px 24px;
+      text-align:center;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);
+    }
+    .modal .icon{
+      width:56px;height:56px;
+      border-radius:50%;
+      margin:0 auto 16px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:28px;
+      color:#fff;
+    }
+    .modal.fail .icon{background:var(--danger);}
+    .modal h3{margin:0 0 10px;font-size:18px;color:#1c2b3a;}
+    .modal p{font-size:14px;color:#5a6a80;line-height:1.5;margin-bottom:6px;}
+    .modal .score-fail{
+      font-size:34px;font-weight:800;color:var(--danger);
+      margin:10px 0;
+    }
+
+    /* ---------- CERTIFICATE ---------- */
+    #certSection{display:none;}
+    .cert-actions{
+      display:flex;gap:10px;justify-content:center;margin:18px 0 30px;flex-wrap:wrap;
+    }
+    .cert-outer{
+      background:#fff;
+      padding:14px;
+      border-radius:10px;
+      box-shadow:0 10px 30px rgba(10,30,60,.15);
+    }
+    .certificate{
+      position:relative;
+      width:100%;
+      aspect-ratio: 1.414 / 1;
+      background:
+        radial-gradient(circle at top left, #fdf6e3 0, transparent 45%),
+        radial-gradient(circle at bottom right, #fdf6e3 0, transparent 45%),
+        #fffdf7;
+      border:10px solid var(--navy);
+      outline:3px solid var(--gold);
+      outline-offset:-18px;
+      padding:36px 30px;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      font-family:'Georgia', 'Times New Roman', serif;
+      color:var(--navy);
+    }
+    .certificate .co{
+      font-size:12px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      color:#8a6d00;
+      margin-bottom:6px;
+    }
+    .certificate .title{
+      font-size:26px;
+      font-weight:700;
+      letter-spacing:1px;
+      margin:4px 0 2px;
+      color:var(--navy);
+    }
+    .certificate .title small{
+      display:block;
+      font-size:13px;
+      font-weight:400;
+      letter-spacing:3px;
+      color:var(--gold);
+      margin-top:4px;
+      text-transform:uppercase;
+    }
+    .certificate .given-to{
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:#7a8699;
+      margin-top:22px;
+    }
+    .certificate .name{
+      font-size:30px;
+      font-weight:700;
+      color:var(--gold);
+      margin:8px 0 4px;
+      border-bottom:1.5px solid var(--gold);
+      padding-bottom:8px;
+      display:inline-block;
+      min-width:60%;
+    }
+    .certificate .npp{
+      font-size:12px;color:#7a8699;margin-bottom:10px;
+    }
+    .certificate .desc{
+      font-size:13px;
+      max-width:80%;
+      color:#3c4a5e;
+      line-height:1.6;
+      margin-top:10px;
+    }
+    .certificate .desc b{color:var(--navy);}
+    .certificate .foot{
+      display:flex;
+      justify-content:space-between;
+      width:100%;
+      margin-top:auto;
+      padding-top:26px;
+      font-size:11px;
+      color:#5a6a80;
+    }
+    .certificate .foot div{text-align:center;flex:1;}
+    .certificate .foot .line{
+      border-top:1px solid #99a4b5;
+      margin-top:30px;
+      padding-top:6px;
+    }
+    .certificate .seal{
+      position:absolute;
+      bottom:22px;
+      right:30px;
+      width:64px;height:64px;
+      border-radius:50%;
+      background:radial-gradient(circle, var(--gold-light), var(--gold));
+      display:flex;align-items:center;justify-content:center;
+      color:#3a2e00;
+      font-size:9px;
+      font-weight:700;
+      text-align:center;
+      line-height:1.2;
+      box-shadow:0 4px 10px rgba(0,0,0,.2);
+      transform:rotate(-8deg);
+    }
+
+    footer{
+      text-align:center;
+      font-size:12px;
+      color:#8a97ab;
+      padding:20px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;">
-    <h1>Post-Test Sertifikasi Custody</h1>
-    <a href="index.html">← Kembali ke materi</a>
+  <!-- ================= SESSION 1 : HEADLINE ================= -->
+  <div class="headline">
+    <div class="badge">Post Test</div>
+    <h1>Post Test<br><span>Sertifikasi Custody</span></h1>
+    <p>PT Swadharma Sarana Informatika — Uji pemahaman Anda mengenai materi Custody
+      dan dapatkan Sertifikat Kelulusan resmi setelah menyelesaikan test ini.</p>
   </div>
-</div>
 
-<main>
-  <div class="container">
+  <div class="wrap">
 
-    <!-- ============ STEP 1: BIODATA ============ -->
-    <div class="card" id="stepBiodata">
-      <h2>Data Peserta</h2>
-      <div class="sub">Lengkapi data berikut sebelum memulai post-test. NPP akan diverifikasi ke database pegawai.</div>
+    <!-- ================= SESSION 2 : BIODATA ================= -->
+    <div class="card" id="biodataSection">
+      <div class="step-tag">SESI 1 DARI 2</div>
+      <h2>Data Diri Peserta</h2>
+      <div class="sub">Mohon isi data berikut dengan benar, data ini akan tercetak pada sertifikat Anda.</div>
 
-      <div class="error-box" id="biodataError"></div>
+      <form id="biodataForm">
+        <label for="nama">Nama Pegawai</label>
+        <input type="text" id="nama" placeholder="Contoh: Budi Santoso" required>
 
-      <label for="nama">Nama Pegawai</label>
-      <input type="text" id="nama" placeholder="Sesuai identitas pegawai">
+        <label for="npp">NPP</label>
+        <input type="text" id="npp" placeholder="Contoh: 123456" required>
 
-      <label for="npp">NPP (Nomor Pokok Pegawai)</label>
-      <input type="text" id="npp" placeholder="Contoh: 20231045">
+        <label for="region">Region</label>
+        <select id="region" required>
+          <option value="" disabled selected>Pilih Region</option>
+          <option value="Region 1">Region 1</option>
+          <option value="Region 2">Region 2</option>
+          <option value="Region 3">Region 3</option>
+          <option value="Region 4">Region 4</option>
+          <option value="Region 5">Region 5</option>
+          <option value="Region 6">Region 6</option>
+          <option value="Region 7">Region 7</option>
+          <option value="Region 8">Region 8</option>
+          <option value="Region 9">Region 9</option>
+          <option value="Region 10">Region 10</option>
+        </select>
 
-      <label for="region">Region</label>
-      <select id="region">
-        <option value="">Pilih region</option>
-        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-      </select>
+        <label for="kantor">Kantor</label>
+        <input type="text" id="kantor" placeholder="Contoh: Kantor Cabang Jakarta" required>
 
-      <label for="kantor">Kantor</label>
-      <input type="text" id="kantor" placeholder="Nama kantor cabang / unit kerja">
-
-      <button class="btn gold" id="btnStartTest">Verifikasi & Mulai Post-Test</button>
+        <button type="submit" class="btn btn-primary">Lanjut ke Test &rarr;</button>
+      </form>
     </div>
 
-    <!-- ============ STEP 2: QUIZ ============ -->
-    <div class="card hidden" id="stepQuiz">
-      <h2>Soal Post-Test</h2>
-      <div class="q-progress" id="qProgress">Memuat soal...</div>
-      <div id="quizContainer"></div>
-      <button class="btn gold" id="btnSubmitTest" style="margin-top:10px;">Kirim Jawaban</button>
+    <!-- ================= SESSION 3 : TEST ================= -->
+    <div class="card" id="testSection" style="display:none;">
+      <div class="step-tag">SESI 2 DARI 2</div>
+      <h2>Post Test Pilihan Ganda</h2>
+      <div class="sub">Test terdiri dari 25 soal pilihan ganda. Pastikan koneksi internet Anda stabil.</div>
+
+      <div id="startArea">
+        <button id="btnStart" class="btn btn-primary">Mulai Test</button>
+      </div>
+
+      <div id="loadingArea" class="loader" style="display:none;">Memuat soal, mohon tunggu...</div>
+
+      <div id="quizArea">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="q-counter" id="qCounter"></div>
+        <div class="q-text" id="qText"></div>
+        <div id="optionsArea"></div>
+        <div class="quiz-nav">
+          <button class="btn btn-outline" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext" style="margin-top:0;">Berikutnya &rarr;</button>
+        </div>
+      </div>
     </div>
 
-    <!-- ============ STEP 3: RESULT ============ -->
-    <div class="card hidden" id="stepResult">
-      <h2>Hasil Post-Test</h2>
-      <div class="sub" id="resultName"></div>
-      <div class="result-score" id="resultScore">-</div>
-      <div class="result-status" id="resultStatus"></div>
+    <!-- ================= CERTIFICATE (session hasil lulus) ================= -->
+    <div class="card" id="certSection">
+      <div class="step-tag" style="background:var(--success);">SELAMAT, ANDA LULUS</div>
+      <h2>Sertifikat Anda Telah Terbit</h2>
+      <div class="sub">Nilai Anda: <b id="skorLulusText"></b> — silakan unduh sertifikat Anda di bawah ini.</div>
 
-      <div id="certWrap">
-        <canvas id="certCanvas" width="1200" height="850"></canvas><br>
-        <button class="btn gold" id="btnDownloadPng" style="margin-top:16px;">Unduh Sertifikat (PNG)</button>
-        <button class="btn" id="btnDownloadPdf" style="margin-top:16px;">Unduh Sertifikat (PDF)</button>
+      <div class="cert-outer">
+        <div class="certificate" id="certificateNode">
+          <div class="co">PT Swadharma Sarana Informatika</div>
+          <div class="title">SERTIFIKAT KELULUSAN
+            <small>Post Test</small>
+          </div>
+          <div class="given-to">Diberikan kepada</div>
+          <div class="name" id="certNama">-</div>
+          <div class="npp" id="certNpp">NPP: -</div>
+          <div class="desc">
+            Atas keberhasilannya menyelesaikan dan dinyatakan <b>LULUS</b> pada<br>
+            <b id="certTema">Sertifikasi Custody PT Swadharma Sarana Informatika</b><br>
+            dengan perolehan nilai <b id="certNilai">-</b>
+          </div>
+          <div class="foot">
+            <div><div id="certTanggal">-</div><div class="line">Tanggal</div></div>
+            <div><div id="certKantorRegion">-</div><div class="line">Kantor / Region</div></div>
+          </div>
+          <div class="seal">RESMI<br>LULUS</div>
+        </div>
+      </div>
+
+      <div class="cert-actions">
+        <button class="btn btn-gold" id="btnDownloadPng">Unduh Sertifikat (PNG)</button>
+        <button class="btn btn-outline" id="btnDownloadPdf">Unduh Sertifikat (PDF)</button>
       </div>
     </div>
 
   </div>
-</main>
 
-<script>
-/* =========================================================
-   KONFIGURASI ENDPOINT (GAS)
-   - GAS_URL_LOCAL  : dipakai saat menjalankan mock server lokal
-                       (lihat folder local-test/) → node server.js
-   - GAS_URL_PROD   : ganti dengan URL Web App hasil deploy
-                       Apps Script (Deploy > New deployment > Web app)
-   Set USE_LOCAL = true untuk mode uji coba lokal.
-   ========================================================= */
-const USE_LOCAL = true;
-const GAS_URL_LOCAL = "http://localhost:8080";
-const GAS_URL_PROD  = "https://script.google.com/macros/s/GANTI_DENGAN_DEPLOYMENT_ID/exec";
-const API_BASE = USE_LOCAL ? GAS_URL_LOCAL : GAS_URL_PROD;
+  <footer>&copy; <span id="yearNow"></span> PT Swadharma Sarana Informatika — Sistem Post Test Sertifikasi Custody</footer>
 
-const PASS_SCORE = 70;
-let SOAL = [];
-let jawabanPeserta = {};
-let biodataTerverifikasi = null;
-
-/* -----------------------------------------------------------
-   Semua panggilan ke GAS memakai HTTP GET dengan parameter di
-   query string (bukan POST + header custom). Ini menghindari
-   CORS preflight (OPTIONS) yang tidak didukung Apps Script,
-   sehingga fetch() lintas-origin tetap berjalan normal
-   ("anti-CORS" pattern untuk GAS web app).
-   ----------------------------------------------------------- */
-async function gasGet(action, params={}){
-  const qs = new URLSearchParams({action, ...params});
-  const res = await fetch(`${API_BASE}?${qs.toString()}`, { method:'GET' });
-  if(!res.ok) throw new Error('Gagal menghubungi server (' + res.status + ')');
-  return res.json();
-}
-
-/* ================= STEP 1: VERIFIKASI BIODATA ================= */
-document.getElementById('btnStartTest').addEventListener('click', async () => {
-  const nama = document.getElementById('nama').value.trim();
-  const npp = document.getElementById('npp').value.trim();
-  const region = document.getElementById('region').value;
-  const kantor = document.getElementById('kantor').value.trim();
-  const errBox = document.getElementById('biodataError');
-  errBox.style.display = 'none';
-
-  if(!nama || !npp || !region || !kantor){
-    errBox.textContent = 'Mohon lengkapi seluruh data peserta.';
-    errBox.style.display = 'block';
-    return;
-  }
-
-  const btn = document.getElementById('btnStartTest');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Memverifikasi...';
-
-  try{
-    const verif = await gasGet('verifyPegawai', { npp });
-    if(!verif.found){
-      errBox.textContent = 'NPP tidak ditemukan di database pegawai. Hubungi admin training.';
-      errBox.style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Verifikasi & Mulai Post-Test';
-      return;
-    }
-    biodataTerverifikasi = {
-      npp, nama: verif.nama || nama, region, kantor
-    };
-    await loadSoal();
-    document.getElementById('stepBiodata').classList.add('hidden');
-    document.getElementById('stepQuiz').classList.remove('hidden');
-  }catch(err){
-    errBox.textContent = 'Tidak dapat terhubung ke server: ' + err.message;
-    errBox.style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Verifikasi & Mulai Post-Test';
-  }
-});
-
-/* ================= STEP 2: SOAL ================= */
-async function loadSoal(){
-  const data = await gasGet('getSoal');
-  SOAL = data.soal || [];
-  renderQuiz();
-}
-
-function renderQuiz(){
-  document.getElementById('qProgress').textContent = `${SOAL.length} soal pilihan ganda — jawab seluruhnya sebelum mengirim.`;
-  const box = document.getElementById('quizContainer');
-  box.innerHTML = SOAL.map((q, idx) => `
-    <div class="q-block">
-      <div class="q-num">Soal ${idx+1} dari ${SOAL.length}</div>
-      <div class="q-text">${q.soal}</div>
-      ${['a','b','c','d'].map(opt => `
-        <label class="opt" data-id="${q.id}" data-opt="${opt}">
-          <input type="radio" name="q_${q.id}" value="${opt}">
-          <span><b>${opt.toUpperCase()}.</b> ${q['opsi_'+opt]}</span>
-        </label>
-      `).join('')}
+  <!-- ================= MODAL GAGAL ================= -->
+  <div class="overlay" id="failOverlay">
+    <div class="modal fail">
+      <div class="icon">&#10007;</div>
+      <h3>Belum Memenuhi Passing Grade</h3>
+      <div class="score-fail" id="failScore">-</div>
+      <p>Nilai Anda belum passing grade 70 atau lebih, tolong ulangi post test-nya.</p>
+      <button class="btn btn-primary" id="btnRetry" style="margin-top:16px;">Ulangi Post Test</button>
     </div>
-  `).join('');
+  </div>
 
-  box.querySelectorAll('.opt').forEach(label => {
-    label.addEventListener('click', () => {
-      const qid = label.dataset.id;
-      const opt = label.dataset.opt;
-      jawabanPeserta[qid] = opt;
-      label.querySelector('input').checked = true;
-      document.querySelectorAll(`.opt[data-id="${qid}"]`).forEach(l => l.classList.remove('selected'));
-      label.classList.add('selected');
-    });
-  });
-}
+  <script>
+    /* =====================================================================
+     *  KONFIGURASI - WAJIB DIISI
+     *  Tempel di sini URL Web App Apps Script Anda (harus berakhiran /exec)
+     *  Contoh: https://script.google.com/macros/s/AKfycb.../exec
+     * ===================================================================== */
+    const CONFIG = {
+      APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyIBtxmht-_W0WelqXrEg8MQSJtf3iao4iOUgpKIrJsTSFM5A0iMlntIjAZAZNyMHdIgA/exec'
+    };
 
-document.getElementById('btnSubmitTest').addEventListener('click', async () => {
-  if(Object.keys(jawabanPeserta).length < SOAL.length){
-    alert('Mohon jawab seluruh ' + SOAL.length + ' soal sebelum mengirim.');
-    return;
-  }
-  const btn = document.getElementById('btnSubmitTest');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Mengirim...';
+    document.getElementById('yearNow').textContent = new Date().getFullYear();
 
-  try{
-    const payload = { ...biodataTerverifikasi, jawaban: jawabanPeserta };
-    const result = await gasGet('submitTest', { data: JSON.stringify(payload) });
-    showResult(result);
-  }catch(err){
-    alert('Gagal mengirim jawaban: ' + err.message);
-    btn.disabled = false; btn.textContent = 'Kirim Jawaban';
-  }
-});
-
-/* ================= STEP 3: HASIL & SERTIFIKAT ================= */
-function showResult(result){
-  document.getElementById('stepQuiz').classList.add('hidden');
-  document.getElementById('stepResult').classList.remove('hidden');
-
-  document.getElementById('resultName').textContent =
-    `${result.nama} · NPP ${biodataTerverifikasi.npp} · Region ${biodataTerverifikasi.region} · ${biodataTerverifikasi.kantor}`;
-  document.getElementById('resultScore').textContent = result.skor;
-
-  const lulus = result.skor >= PASS_SCORE;
-  const statusEl = document.getElementById('resultStatus');
-  statusEl.textContent = lulus ? 'LULUS — Sertifikat dapat diunduh di bawah ini' : `TIDAK LULUS (minimum ${PASS_SCORE})`;
-  statusEl.className = 'result-status ' + (lulus ? 'status-pass' : 'status-fail');
-
-  if(lulus){
-    document.getElementById('certWrap').style.display = 'block';
-    drawCertificate(result.nama, biodataTerverifikasi, result.skor);
-  }
-}
-
-function drawCertificate(nama, bio, skor){
-  const c = document.getElementById('certCanvas');
-  const ctx = c.getContext('2d');
-  const W = c.width, H = c.height;
-
-  // background
-  ctx.fillStyle = '#F3F1EA';
-  ctx.fillRect(0,0,W,H);
-
-  // outer gold border
-  ctx.strokeStyle = '#C9A24A';
-  ctx.lineWidth = 10;
-  ctx.strokeRect(30,30,W-60,H-60);
-  ctx.strokeStyle = '#0B1E33';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(48,48,W-96,H-96);
-
-  ctx.textAlign = 'center';
-
-  ctx.fillStyle = '#9C7B32';
-  ctx.font = '20px "IBM Plex Sans", sans-serif';
-  ctx.fillText('SERTIFIKAT PREMIUM', W/2, 140);
-
-  ctx.fillStyle = '#0B1E33';
-  ctx.font = '600 44px "Source Serif 4", serif';
-  ctx.fillText('Sertifikasi Custody ATM & CRM', W/2, 200);
-
-  ctx.font = '17px "IBM Plex Sans", sans-serif';
-  ctx.fillStyle = '#445168';
-  ctx.fillText('Diberikan kepada', W/2, 270);
-
-  ctx.font = '600 46px "Source Serif 4", serif';
-  ctx.fillStyle = '#0B1E33';
-  ctx.fillText(nama, W/2, 335);
-
-  ctx.font = '16px "IBM Plex Sans", sans-serif';
-  ctx.fillStyle = '#445168';
-  ctx.fillText(`NPP ${bio.npp}  ·  Region ${bio.region}  ·  ${bio.kantor}`, W/2, 370);
-
-  ctx.font = '16.5px "IBM Plex Sans", sans-serif';
-  ctx.fillStyle = '#17202B';
-  wrapText(ctx, 'atas kelulusan uji kompetensi sebagai Petugas Custody yang bertanggung jawab melakukan pengisian uang tunai pada mesin ATM/CRM dengan aman, akurat, dan mengutamakan kenyamanan nasabah.', W/2, 420, W-360, 26);
-
-  ctx.font = '600 22px "IBM Plex Sans", sans-serif';
-  ctx.fillStyle = '#9C7B32';
-  ctx.fillText(`Skor Post-Test: ${skor} / 100`, W/2, 545);
-
-  const today = new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
-  ctx.font = '15px "IBM Plex Sans", sans-serif';
-  ctx.fillStyle = '#445168';
-  ctx.fillText(`Diterbitkan pada ${today}`, W/2, 700);
-
-  ctx.beginPath();
-  ctx.moveTo(W/2-120, 745); ctx.lineTo(W/2+120, 745);
-  ctx.strokeStyle = '#0B1E33'; ctx.lineWidth = 1; ctx.stroke();
-  ctx.font = '13.5px "IBM Plex Sans", sans-serif';
-  ctx.fillText('Manajemen Learning & Development', W/2, 765);
-}
-
-function wrapText(ctx, text, x, y, maxWidth, lineHeight){
-  const words = text.split(' ');
-  let line = '';
-  let cy = y;
-  ctx.textAlign = 'center';
-  for(let n=0;n<words.length;n++){
-    const test = line + words[n] + ' ';
-    if(ctx.measureText(test).width > maxWidth && n>0){
-      ctx.fillText(line, x, cy);
-      line = words[n] + ' ';
-      cy += lineHeight;
-    } else {
-      line = test;
+    if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.indexOf('PASTE_URL') !== -1) {
+      document.getElementById('startArea').innerHTML =
+        '<p style="color:#c0392b;font-size:13px;">Konfigurasi belum lengkap: isi CONFIG.APPS_SCRIPT_URL pada index.html dengan URL /exec dari Apps Script Anda.</p>';
     }
-  }
-  ctx.fillText(line, x, cy);
-}
 
-document.getElementById('btnDownloadPng').addEventListener('click', () => {
-  const c = document.getElementById('certCanvas');
-  const link = document.createElement('a');
-  link.download = 'Sertifikat-Custody.png';
-  link.href = c.toDataURL('image/png');
-  link.click();
-});
+    let biodata = {};
+    let questions = [];
+    let currentIndex = 0;
+    let answers = {}; // { indexSoal: 'A' }
 
-document.getElementById('btnDownloadPdf').addEventListener('click', () => {
-  const c = document.getElementById('certCanvas');
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({ orientation:'landscape', unit:'px', format:[c.width, c.height] });
-  pdf.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, c.width, c.height);
-  pdf.save('Sertifikat-Custody.pdf');
-});
-</script>
+    // ---------- SESI BIODATA ----------
+    document.getElementById('biodataForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      biodata = {
+        nama: document.getElementById('nama').value.trim(),
+        npp: document.getElementById('npp').value.trim(),
+        region: document.getElementById('region').value,
+        kantor: document.getElementById('kantor').value.trim()
+      };
+      document.getElementById('biodataSection').style.display = 'none';
+      document.getElementById('testSection').style.display = 'block';
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
 
+    // ---------- MULAI TEST : ambil soal dari spreadsheet ----------
+    document.getElementById('btnStart').addEventListener('click', function(){
+      document.getElementById('startArea').style.display = 'none';
+      document.getElementById('loadingArea').style.display = 'block';
+
+      fetch(CONFIG.APPS_SCRIPT_URL + '?action=getQuestions')
+        .then(function(res){ return res.json(); })
+        .then(function(json){
+          if (!json.ok) throw new Error(json.error || 'Gagal memuat soal');
+          questions = json.data;
+          document.getElementById('loadingArea').style.display = 'none';
+          document.getElementById('quizArea').style.display = 'block';
+          currentIndex = 0;
+          renderQuestion();
+        })
+        .catch(function(err){
+          document.getElementById('loadingArea').textContent = 'Gagal memuat soal: ' + err.message;
+        });
+    });
+
+    function renderQuestion(){
+      const q = questions[currentIndex];
+      document.getElementById('progressFill').style.width = (((currentIndex)/questions.length)*100) + '%';
+      document.getElementById('qCounter').textContent = 'Soal ' + (currentIndex+1) + ' dari ' + questions.length;
+      document.getElementById('qText').textContent = q.soal;
+
+      const optArea = document.getElementById('optionsArea');
+      optArea.innerHTML = '';
+      ['A','B','C','D'].forEach(function(letter){
+        const teksPilihan = q.pilihan[letter];
+        if (teksPilihan === undefined || teksPilihan === '') return;
+        const div = document.createElement('div');
+        div.className = 'option' + (answers[q.index] === letter ? ' selected' : '');
+        div.innerHTML = '<span class="letter">' + letter + '</span><span>' + teksPilihan + '</span>';
+        div.addEventListener('click', function(){
+          answers[q.index] = letter;
+          renderQuestion();
+        });
+        optArea.appendChild(div);
+      });
+
+      document.getElementById('btnPrev').disabled = currentIndex === 0;
+      document.getElementById('btnNext').textContent = (currentIndex === questions.length - 1) ? 'Selesai & Kirim' : 'Berikutnya \u2192';
+    }
+
+    document.getElementById('btnPrev').addEventListener('click', function(){
+      if (currentIndex > 0){ currentIndex--; renderQuestion(); }
+    });
+
+    document.getElementById('btnNext').addEventListener('click', function(){
+      if (currentIndex < questions.length - 1){
+        currentIndex++;
+        renderQuestion();
+      } else {
+        submitAnswers();
+      }
+    });
+
+    function submitAnswers(){
+      document.getElementById('quizArea').innerHTML = '<div class="loader">Menghitung nilai Anda...</div>';
+      const payload = {
+        nama: biodata.nama,
+        npp: biodata.npp,
+        region: biodata.region,
+        kantor: biodata.kantor,
+        jawaban: answers
+      };
+
+      // Sengaja pakai URLSearchParams (form-urlencoded) supaya request
+      // dianggap "simple request" oleh browser dan tidak memicu CORS
+      // preflight (OPTIONS) - Apps Script tidak melayani OPTIONS.
+      const body = new URLSearchParams();
+      body.set('action', 'submitTest');
+      body.set('payload', JSON.stringify(payload));
+
+      fetch(CONFIG.APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: body
+      })
+        .then(function(res){ return res.json(); })
+        .then(function(json){
+          if (!json.ok) throw new Error(json.error || 'Gagal mengirim jawaban');
+          handleResult(json.data);
+        })
+        .catch(function(err){
+          document.getElementById('quizArea').innerHTML = '<div class="loader">Terjadi kesalahan: ' + err.message + '</div>';
+        });
+    }
+
+    function handleResult(result){
+      document.getElementById('testSection').style.display = 'none';
+      if (!result.lulus){
+        document.getElementById('failScore').textContent = result.nilai;
+        document.getElementById('failOverlay').style.display = 'flex';
+      } else {
+        document.getElementById('skorLulusText').textContent = result.nilai;
+        document.getElementById('certNama').textContent = result.nama;
+        document.getElementById('certNpp').textContent = 'NPP: ' + result.npp;
+        document.getElementById('certTema').textContent = result.tema;
+        document.getElementById('certNilai').textContent = result.nilai;
+        document.getElementById('certTanggal').textContent = result.tanggal;
+        document.getElementById('certKantorRegion').textContent = result.kantor + ' / ' + result.region;
+        document.getElementById('certSection').style.display = 'block';
+      }
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    document.getElementById('btnRetry').addEventListener('click', function(){
+      document.getElementById('failOverlay').style.display = 'none';
+      answers = {};
+      currentIndex = 0;
+      document.getElementById('testSection').style.display = 'block';
+      document.getElementById('quizArea').style.display = 'none';
+      document.getElementById('startArea').style.display = 'block';
+    });
+
+    // ---------- UNDUH SERTIFIKAT ----------
+    document.getElementById('btnDownloadPng').addEventListener('click', function(){
+      const node = document.getElementById('certificateNode');
+      html2canvas(node, {scale:3, backgroundColor:'#fffdf7'}).then(function(canvas){
+        const link = document.createElement('a');
+        link.download = 'Sertifikat-Custody-' + (biodata.nama || 'peserta') + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    });
+
+    document.getElementById('btnDownloadPdf').addEventListener('click', function(){
+      const node = document.getElementById('certificateNode');
+      html2canvas(node, {scale:3, backgroundColor:'#fffdf7'}).then(function(canvas){
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation:'landscape', unit:'px', format:[canvas.width, canvas.height] });
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save('Sertifikat-Custody-' + (biodata.nama || 'peserta') + '.pdf');
+      });
+    });
+  </script>
 </body>
 </html>
