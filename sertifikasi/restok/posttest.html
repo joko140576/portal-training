@@ -511,7 +511,7 @@
      *  Contoh: https://script.google.com/macros/s/AKfycb.../exec
      * ===================================================================== */
     const CONFIG = {
-      APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbysbsT5sLvLrtvmcZHIwUSrXQfs5E83GeXf-ud7Fn9uH1OLRE7GmyRIc2tpDtxzAMP2bw/exec'
+      APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzuXa9JAFIhreU6CXazT_u2q3VB3IaEAHdWYKBeR7_Wa5hLRCZOx9nMn8L38vFIBXhgKA/exec'
     };
 
     document.getElementById('yearNow').textContent = new Date().getFullYear();
@@ -525,6 +525,43 @@
     let questions = [];
     let currentIndex = 0;
     let answers = {}; // { indexSoal: 'A' }
+
+    // Helper: melakukan fetch dengan percobaan ulang otomatis. Berguna
+    // untuk error transient (misal server Apps Script sedang sibuk
+    // karena banyak peserta akses bersamaan) - biasanya berhasil kalau
+    // dicoba lagi setelah jeda singkat.
+    function fetchWithRetry(url, options, retriesLeft){
+      if (retriesLeft === undefined) retriesLeft = 2;
+      return fetch(url, options)
+        .then(parseJsonResponse)
+        .catch(function(err){
+          if (retriesLeft > 0) {
+            return new Promise(function(resolve){
+              setTimeout(resolve, 1200);
+            }).then(function(){
+              return fetchWithRetry(url, options, retriesLeft - 1);
+            });
+          }
+          throw err;
+        });
+    }
+
+    // Helper: parse response sebagai JSON, tapi kalau ternyata server
+    // mengirim HTML (misal halaman login Google atau halaman error Apps
+    // Script) -> lempar pesan error yang jelas, bukan "Unexpected token '<'".
+    function parseJsonResponse(res){
+      return res.text().then(function(text){
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          const isHtml = text.trim().indexOf('<') === 0;
+          if (isHtml) {
+            throw new Error('Server mengembalikan halaman HTML, bukan data (kemungkinan deployment Apps Script belum "Anyone can access", atau URL /exec sudah tidak berlaku - deploy ulang sebagai versi baru).');
+          }
+          throw new Error('Format respon dari server tidak dikenali.');
+        }
+      });
+    }
 
     // ---------- SESI BIODATA ----------
     document.getElementById('biodataForm').addEventListener('submit', function(e){
@@ -551,8 +588,7 @@
       loadArea.innerHTML = '<div class="spinner"></div>Memuat soal, mohon tunggu...';
       loadArea.style.display = 'block';
 
-      fetch(CONFIG.APPS_SCRIPT_URL + '?action=getQuestions')
-        .then(function(res){ return res.json(); })
+      fetchWithRetry(CONFIG.APPS_SCRIPT_URL + '?action=getQuestions', undefined, 2)
         .then(function(json){
           if (!json.ok) throw new Error(json.error || 'Gagal memuat soal');
           questions = json.data;
@@ -630,11 +666,10 @@
       body.set('action', 'submitTest');
       body.set('payload', JSON.stringify(payload));
 
-      fetch(CONFIG.APPS_SCRIPT_URL, {
+      fetchWithRetry(CONFIG.APPS_SCRIPT_URL, {
         method: 'POST',
         body: body
-      })
-        .then(function(res){ return res.json(); })
+      }, 1)
         .then(function(json){
           if (!json.ok) throw new Error(json.error || 'Gagal mengirim jawaban');
           calcArea.style.display = 'none';
