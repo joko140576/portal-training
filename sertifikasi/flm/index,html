@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sertifikasi First Level Maintenance ATM & CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#171F1B;
+    --graphite-2:#1F2A22;
+    --steel:#5B6B63;
+    --steel-light:#96A69C;
+    --rust:#D3672E;
+    --rust-dark:#A34E22;
+    --paper:#EFEFE9;
+    --paper-2:#FFFFFF;
+    --ink:#1A211D;
+    --line:#DBDBCF;
+    --warn-bg:#FBEADC;
+    --warn-line:#C1552C;
+    --warn-ink:#7A3517;
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.55;}
+  h1,h2{font-family:'Archivo',sans-serif;margin:0;color:var(--graphite);font-weight:700;}
+  a{color:inherit;}
+  .container{max-width:980px;margin:0 auto;padding:0 28px;}
+
+  header.hero{background:linear-gradient(165deg,var(--graphite) 0%,var(--graphite-2) 100%);color:#EDEFE8;padding:64px 0 56px;border-bottom:4px solid var(--rust);position:relative;overflow:hidden;}
+  header.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:36px 36px;pointer-events:none;}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  .eyebrow-mark{display:flex;align-items:center;gap:8px;color:var(--rust);font-size:13.5px;font-family:'IBM Plex Mono',monospace;margin-bottom:18px;}
+  .hero h1{font-size:38px;line-height:1.18;color:#fff;}
+  .hero h1 em{font-style:normal;color:var(--rust);}
+  .hero p.lead{margin-top:18px;font-size:16px;color:#C6CDC5;max-width:52ch;}
+  .hero-def{margin-top:26px;padding:18px 20px;background:rgba(255,255,255,.05);border-left:3px solid var(--rust);font-size:14.5px;color:#DCE2D9;}
+  .hero-def strong{color:#fff;}
+  .hero-cta{margin-top:30px;display:inline-block;background:var(--rust);color:#fff;padding:13px 26px;font-weight:700;text-decoration:none;border-radius:var(--radius);}
+  .rig-wrap{display:flex;justify-content:center;}
+  .rig-note{text-align:center;font-size:11.5px;color:#8A968C;margin-top:10px;font-family:'IBM Plex Mono',monospace;}
+
+  section{padding:60px 0;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:28px;}
+  .section-head h2{font-size:25px;}
+  .section-head span.tag{font-size:12.5px;color:var(--steel);font-family:'IBM Plex Mono',monospace;}
+  .section-desc{color:#4A5148;max-width:70ch;margin-bottom:26px;font-size:15px;}
+
+  .warning{background:var(--warn-bg);border:1px solid var(--warn-line);border-left:5px solid var(--warn-line);color:var(--warn-ink);padding:16px 20px;font-size:14.5px;margin-bottom:26px;border-radius:var(--radius);}
+  .warning b{display:block;font-size:13.5px;margin-bottom:4px;font-family:'IBM Plex Mono',monospace;letter-spacing:.02em;}
+
+  table.material-table{width:100%;border-collapse:collapse;background:var(--paper-2);font-size:14.5px;}
+  table.material-table th{text-align:left;font-family:'Archivo',sans-serif;font-weight:700;background:var(--graphite);color:#EDEFE8;padding:12px 14px;font-size:13px;}
+  table.material-table td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.material-table tr:last-child td{border-bottom:none;}
+  table.material-table td.col-no{width:44px;color:var(--steel);font-family:'IBM Plex Mono',monospace;}
+  table.material-table td.col-title{width:22%;font-weight:600;color:var(--graphite);}
+  table.material-table td.col-def{color:#4A5148;}
+  table.material-table td.col-btn{width:170px;text-align:center;}
+
+  .btn-mini{display:inline-block;padding:8px 14px;font-size:13.5px;font-weight:600;text-decoration:none;border-radius:var(--radius);border:1px solid var(--graphite);color:var(--graphite);background:transparent;cursor:pointer;}
+  .btn-mini:hover{background:var(--graphite);color:#fff;}
+  .btn-mini.rust{border-color:var(--rust-dark);color:var(--rust-dark);}
+  .btn-mini.rust:hover{background:var(--rust);color:#fff;border-color:var(--rust);}
+
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(23,31,27,.8);z-index:100;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.active{display:flex;}
+  .video-frame{background:var(--graphite);border:2px solid var(--rust);border-radius:4px;width:100%;max-width:780px;overflow:hidden;}
+  .video-frame-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--graphite-2);color:#EDEFE8;font-size:14px;font-weight:600;}
+  .video-frame-bar .vid-title{font-family:'Archivo',sans-serif;}
+  .video-body{background:#000;aspect-ratio:16/9;width:100%;}
+  .video-body iframe{width:100%;height:100%;border:0;display:block;}
+  .video-controls{display:flex;gap:10px;padding:12px 16px;background:var(--graphite-2);border-top:1px solid rgba(255,255,255,.08);}
+  .video-controls button{flex:1;padding:9px 0;font-size:13.5px;font-weight:600;border-radius:var(--radius);border:1px solid var(--rust);background:transparent;color:var(--rust);cursor:pointer;}
+  .video-controls button.close-btn{border-color:#B5502F;color:#E5A78D;}
+  .video-controls button:hover{background:var(--rust);color:#fff;}
+  .video-controls button.close-btn:hover{background:#B5502F;color:#fff;}
+
+  .final-cta{background:var(--graphite);color:#EDEFE8;text-align:center;padding:56px 28px;border-radius:4px;border:1px solid var(--rust);}
+  .final-cta h2{color:#fff;font-size:27px;}
+  .final-cta p{color:#C6CDC5;max-width:60ch;margin:14px auto 26px;font-size:15px;}
+  .final-cta a.big-cta{display:inline-block;background:var(--rust);color:#fff;padding:15px 34px;font-weight:700;text-decoration:none;border-radius:var(--radius);font-size:15.5px;}
+
+  footer{text-align:center;padding:30px 20px;font-size:12.5px;color:var(--steel);font-family:'IBM Plex Mono',monospace;}
+
+  @media (max-width:820px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:29px;}
+    table.material-table{font-size:13px;}
+    table.material-table td.col-def{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2a1 1 0 0 1 1 1v1.3a7 7 0 0 1 2.1.9l.9-.9a1 1 0 0 1 1.4 1.4l-.9.9a7 7 0 0 1 .9 2.1H18a1 1 0 0 1 0 2h-1.3a7 7 0 0 1-.9 2.1l.9.9a1 1 0 0 1-1.4 1.4l-.9-.9a7 7 0 0 1-2.1.9V17a1 1 0 0 1-2 0v-1.3a7 7 0 0 1-2.1-.9l-.9.9a1 1 0 0 1-1.4-1.4l.9-.9a7 7 0 0 1-.9-2.1H6a1 1 0 0 1 0-2h1.3a7 7 0 0 1 .9-2.1l-.9-.9a1 1 0 0 1 1.4-1.4l.9.9a7 7 0 0 1 2.1-.9V3a1 1 0 0 1 1-1Zm0 6.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" fill="currentColor"/></svg>
+        Program E-Training Internal
+      </div>
+      <h1>Sertifikasi<br><em>First Level Maintenance</em><br>ATM &amp; CRM</h1>
+      <p class="lead">Pelatihan dan uji kompetensi bagi teknisi lapangan yang menangani gangguan tingkat pertama, pemeliharaan preventif, dan troubleshooting dasar pada mesin ATM dan CRM.</p>
+      <div class="hero-def">
+        <strong>Definisi:</strong> Teknisi First Level Maintenance (FLM) adalah petugas yang melakukan identifikasi awal gangguan, troubleshooting dasar, reset, dan pemeliharaan preventif pada mesin ATM/CRM, sebelum melakukan eskalasi ke tim maintenance lanjutan (Level 2) apabila gangguan tidak dapat diselesaikan di lapangan.
+      </div>
+      <a href="#materi" class="hero-cta">Mulai Pelatihan</a>
+    </div>
+    <div>
+      <div class="rig-wrap">
+        <svg width="270" height="360" viewBox="0 0 270 360" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="14" width="200" height="332" rx="8" fill="#233229" stroke="#5B6B63" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <rect x="26" y="30" width="168" height="120" rx="4" fill="#0F1512" stroke="#3A473E"/>
+          <rect x="36" y="40" width="148" height="80" rx="2" fill="#4A6A57" opacity=".7"/>
+          <rect x="46" y="50" width="90" height="7" rx="2" fill="#0F1512" opacity=".4"/>
+          <rect x="46" y="64" width="70" height="6" rx="2" fill="#0F1512" opacity=".3"/>
+          <!-- open access panel, hinged -->
+          <path d="M194 60 L246 40 L246 190 L194 168 Z" fill="#1B2622" stroke="#D3672E" stroke-width="1.5"/>
+          <circle cx="220" cy="80" r="14" fill="none" stroke="#D3672E" stroke-width="2"/>
+          <circle cx="220" cy="80" r="5" fill="#D3672E"/>
+          <rect x="205" y="110" width="30" height="18" rx="2" fill="#0F1512" stroke="#5B6B63"/>
+          <path d="M210 140 l20 10 M230 140 l-20 10" stroke="#5B6B63" stroke-width="2"/>
+          <!-- keypad -->
+          <g fill="#5B6B63"><circle cx="52" cy="182" r="6"/><circle cx="76" cy="182" r="6"/><circle cx="100" cy="182" r="6"/>
+          <circle cx="52" cy="204" r="6"/><circle cx="76" cy="204" r="6"/><circle cx="100" cy="204" r="6"/></g>
+          <rect x="130" y="176" width="70" height="12" rx="3" fill="#0F1512" stroke="#3A473E"/>
+          <rect x="130" y="200" width="70" height="22" rx="3" fill="#0F1512" stroke="#3A473E"/>
+          <rect x="26" y="252" width="168" height="60" rx="4" fill="#1B2622" stroke="#3A473E"/>
+          <rect x="38" y="264" width="144" height="30" rx="3" fill="#0F1512"/>
+          <text x="110" y="283" font-family="IBM Plex Mono" font-size="10.5" fill="#D3672E" text-anchor="middle" letter-spacing="1">DIAGNOSTIC PANEL</text>
+          <!-- wrench crossing -->
+          <g transform="translate(150,300) rotate(-28)">
+            <rect x="-70" y="-6" width="140" height="12" rx="6" fill="#D3672E"/>
+            <circle cx="-70" cy="0" r="16" fill="none" stroke="#D3672E" stroke-width="9"/>
+            <rect x="60" y="-11" width="26" height="22" rx="3" fill="#D3672E"/>
+          </g>
+        </svg>
+      </div>
+      <p class="rig-note">Panel diagnostik ATM — ilustrasi teknis, dapat diganti sesuai unit perusahaan Anda.</p>
+    </div>
+  </div>
+</header>
+
+<section id="materi">
+  <div class="container">
+
+    <div class="warning">
+      <b>Peringatan — Materi Internal &amp; Rahasia</b>
+      Seluruh materi pelatihan FLM ini bersifat internal dan hanya untuk keperluan pengembangan kompetensi teknisi. Dilarang keras menggandakan, mengunggah ulang, memfoto, atau menyebarluaskan materi ini kepada pihak yang tidak berkepentingan tanpa izin resmi dari manajemen.
+    </div>
+
+    <div class="section-head" style="margin-top:56px;">
+      <h2>Materi Pembelajaran — Video</h2>
+      <span class="tag">Sesi 1</span>
+    </div>
+    <p class="section-desc">Video pelatihan tersimpan di Google Drive. Klik "Tonton Video" untuk membuka pemutar video di tengah layar.</p>
+
+    <table class="material-table">
+      <thead><tr><th class="col-no">No</th><th class="col-title">Judul Materi</th><th>Definisi</th><th class="col-btn">Aksi</th></tr></thead>
+      <tbody id="video-table-body"></tbody>
+    </table>
+
+    <div class="section-head" style="margin-top:56px;">
+      <h2>Materi Pembelajaran — Dokumen</h2>
+      <span class="tag">Sesi 2</span>
+    </div>
+
+    <table class="material-table">
+      <thead><tr><th class="col-no">No</th><th class="col-title">Judul Materi</th><th>Definisi</th><th class="col-btn">Aksi</th></tr></thead>
+      <tbody id="pdf-table-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head"><h2>Uji Kompetensi FLM</h2><span class="tag">Sesi 3</span></div>
+    <div class="final-cta">
+      <p>Setelah mempelajari seluruh materi, lanjutkan ke post-test untuk mendapatkan Sertifikat Kompetensi First Level Maintenance. Post-test terdiri dari 25 soal pilihan ganda. Nilai minimum kelulusan adalah 70.</p>
+      <a href="flm-posttest.html" class="big-cta">Mulai Post-Test →</a>
+    </div>
+  </div>
+</section>
+
+<footer>Program E-Training Sertifikasi First Level Maintenance ATM &amp; CRM · Internal Use Only</footer>
+
+<div class="modal-overlay" id="videoModal">
+  <div class="video-frame">
+    <div class="video-frame-bar"><span class="vid-title" id="modalVidTitle">Video Pelatihan</span></div>
+    <div class="video-body"><iframe id="videoIframe" src="" allow="autoplay" allowfullscreen></iframe></div>
+    <div class="video-controls">
+      <button id="btnPlay">▶ Play</button>
+      <button id="btnStop">■ Stop</button>
+      <button class="close-btn" id="btnClose">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Ganti "file" (PDF) dan "fileId" (video) di bawah dengan link Google Drive
+   materi FLM Anda yang sesungguhnya (mode share: anyone with the link). */
+const materiPDF = [
+  { judul:"SLA & Response Time FLM", definisi:"Standar dan target waktu penanganan gangguan tingkat pertama pada mesin ATM/CRM sesuai perjanjian layanan dengan bank mitra.", file:"https://drive.google.com/file/d/16iWbZ-NVmEWzbDZGSviFpck7bwF4s9fA/view?usp=drive_link" },
+  { judul:"Tupoksi Teknisi FLM", definisi:"Tugas pokok dan fungsi teknisi FLM: identifikasi gangguan, troubleshooting dasar, eskalasi ke Level 2, serta pelaporan hasil penanganan.", file:"https://drive.google.com/file/d/1rPiT3Et-KjZb44cyNWVyZBanAVtR98GI/view?usp=drive_link" },
+  { judul:"K3 & Keselamatan Kerja Teknisi", definisi:"Panduan keselamatan kerja saat membuka panel mesin, penggunaan APD, dan penanganan risiko kelistrikan di lokasi mesin.", file:"https://drive.google.com/file/d/12EqgJDe4CS91xTlgmI9BeHWPMMepaICs/view?usp=drive_link" },
+  { judul:"Troubleshooting Mesin ATM NCR", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin ATM NCR, termasuk reset, pembersihan sensor, dan penggantian consumable.", file:"https://drive.google.com/file/d/1GaulpvXW7uyKxpJ3ohKZIUiIalXjqx0b/view?usp=drive_link" },
+  { judul:"Troubleshooting Mesin ATM Wincor", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin ATM Wincor secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1kjSWm93BdckPMHjh9IA1nILN11Cpvyga/view?usp=drive_link" },
+  { judul:"Troubleshooting Mesin ATM Hyosung", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin ATM Hyosung secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1Bz02a_Apj2vRaiS1qtMcFCAzxKimXfRK/view?usp=drive_link" },
+  { judul:"Troubleshooting Mesin CRM OKI", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM OKI secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" },
+  { judul:"Troubleshooting Mesin CRM Hitachi", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM Hitachi secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" }
+];
+
+const materiVideo = [
+  { judul:"SLA & Response Time FLM", definisi:"Standar dan target waktu penanganan gangguan tingkat pertama pada mesin ATM/CRM.", fileId:"1ZZQoFxpY62R_amD8prDGT90t7Pq8Lzec" },
+  { judul:"Tupoksi Teknisi FLM", definisi:"Tugas pokok dan fungsi teknisi FLM dalam identifikasi, penanganan, dan eskalasi gangguan mesin.", fileId:"14OXjCP76hV_8VJR9XsQ6-crSgXEYJTry" },
+  { judul:"K3 & Keselamatan Kerja Teknisi", definisi:"Prosedur keselamatan kerja saat membuka panel dan menangani komponen kelistrikan mesin.", fileId:"18l8N4tFrqEGhlm1BWFnz4gPWrBHO6_g8" },
+  { judul:"Komponen Internal Mesin NCR", definisi:"Pengenalan bagian, fungsi, dan cara kerja komponen internal mesin ATM NCR.", fileId:"1nLA5ODvKZGk2-K-LUg-nA2zp5SHQ0Cxk" },
+  { judul:"Komponen Internal Mesin Wincor", definisi:"Pengenalan bagian, fungsi, dan cara kerja komponen internal mesin ATM Wincor.", fileId:"1TvnTv8AcrKe28uIaLz9gAZrbRbpg45EL" },
+  { judul:"Komponen Internal Mesin Hyosung", definisi:"Pengenalan bagian, fungsi, dan cara kerja komponen internal mesin ATM Hyosung.", fileId:"1mbYQa4_HfzI1ozFZIqKwnw7nfMT3wR_Z" },
+  { judul:"Komponen Internal Mesin CRM Hitachi", definisi:"Pengenalan bagian, fungsi, dan cara kerja komponen internal mesin CRM Hitachi.", fileId:"1NizS3vZ8cvmHoSIEn0UC9WR_0V63FlJR" },
+  { judul:"Cara Troubleshooting Mesin ATM NCR", definisi:"Langkah diagnosa dan penanganan gangguan umum pada mesin ATM NCR di lapangan.", fileId:"1WSwwgYi91SSlUWQBs5rmbHqwCu9oGndx" },
+  { judul:"Cara Troubleshooting Mesin ATM Wincor", definisi:"Langkah diagnosa dan penanganan gangguan umum pada mesin ATM Wincor di lapangan.", fileId:"1VR3P-0YUMkO3ebdHAfO4ZPQYngJtXgnm" },
+  { judul:"Cara Troubleshooting Mesin CRM OKI", definisi:"Langkah diagnosa dan penanganan gangguan umum pada mesin CRM OKI di lapangan.", fileId:"18Wc-4RTyA-qr7OSky8ZKW93Ru1W4vQ9-" },
+  { judul:"Cara Troubleshooting Mesin CRM Hitachi", definisi:"Langkah diagnosa dan penanganan gangguan umum pada mesin CRM Hitachi di lapangan.", fileId:"1llEXTT_JkRTTqvyB7DCB7ZqIh6QQfF5r" }
+];
+
+function renderPDFTable(){
+  document.getElementById('pdf-table-body').innerHTML = materiPDF.map((m,i)=>`
+    <tr><td class="col-no">${i+1}</td><td class="col-title">${m.judul}</td><td class="col-def">${m.definisi}</td>
+    <td class="col-btn"><a class="btn-mini" href="${m.file}" target="_blank" rel="noopener">Lihat / Unduh</a></td></tr>`).join('');
+}
+function renderVideoTable(){
+  document.getElementById('video-table-body').innerHTML = materiVideo.map((m,i)=>`
+    <tr><td class="col-no">${i+1}</td><td class="col-title">${m.judul}</td><td class="col-def">${m.definisi}</td>
+    <td class="col-btn"><button class="btn-mini rust" onclick="openVideo('${m.fileId}','${m.judul.replace(/'/g,"\\'")}')">Tonton Video</button></td></tr>`).join('');
+}
+renderPDFTable(); renderVideoTable();
+
+let currentFileId = null;
+function driveEmbedUrl(fileId){ return `https://drive.google.com/file/d/${fileId}/preview`; }
+function openVideo(fileId, title){
+  currentFileId = fileId;
+  document.getElementById('modalVidTitle').textContent = title;
+  document.getElementById('videoIframe').src = driveEmbedUrl(fileId);
+  document.getElementById('videoModal').classList.add('active');
+}
+document.getElementById('btnPlay').addEventListener('click', ()=>{ if(currentFileId){ document.getElementById('videoIframe').src = driveEmbedUrl(currentFileId); }});
+document.getElementById('btnStop').addEventListener('click', ()=>{ document.getElementById('videoIframe').src = ''; });
+document.getElementById('btnClose').addEventListener('click', closeVideo);
+function closeVideo(){ document.getElementById('videoIframe').src=''; document.getElementById('videoModal').classList.remove('active'); currentFileId=null; }
+document.getElementById('videoModal').addEventListener('click',(e)=>{ if(e.target.id==='videoModal'){ closeVideo(); }});
+</script>
+</body>
+</html>
