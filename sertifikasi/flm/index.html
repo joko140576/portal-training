@@ -204,22 +204,35 @@
 /* Ganti "file" (PDF) dan "fileId" (video) di bawah dengan link Google Drive
    materi FLM Anda yang sesungguhnya (mode share: anyone with the link). */
 const materiPDF = [
-  { judul:"SLA & Response Time FLM", definisi:"Standar dan target waktu penanganan gangguan tingkat pertama pada mesin ATM/CRM sesuai perjanjian layanan dengan bank mitra.", file:"https://drive.google.com/file/d/1ZZQoFxpY62R_amD8prDGT90t7Pq8Lzec/view?usp=drive_link " },
-  { judul:"Elektricity/kelistrikan ", definisi:"memahami dasar-dasar kelistrikan pada mesin ATM, mengenali fungsi komponen kelistrikan, serta melakukan pemeriksaan dan penanganan gangguan listrik ", file:"https://drive.google.com/file/d/1PhsIU6g7x9ndBRCn-tHn-F4r1js_pKAn/view?usp=drive_link" },
-  { judul:"Jarkom/ Jaringan Komunikasi", definisi:"memahami dasar-dasar jaringan komunikasi pada mesin ATM, mengenali fungsi dan koneksi perangkat jaringan, serta melakukan pemeriksaan gangguan komunikasi ATM secara aman dan tepat.", file:"https://drive.google.com/file/d/1ZJfuzg9vdENR8bNBxafMjkwDR-rXxYSK/view?usp=drive_link
-" },
-  { judul:"Cara kerja  Mesin ATM NCR", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin ATM NCR, termasuk reset, pembersihan sensor, dan penggantian consumable.", file:"https://drive.google.com/file/d/1GaulpvXW7uyKxpJ3ohKZIUiIalXjqx0b/view?usp=drive_link" },
-  { judul:"Troubleshooting Mesin ATM NCR ", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin ATM Wincor secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1kjSWm93BdckPMHjh9IA1nILN11Cpvyga/view?usp=drive_link" },
-  { judul:"cara kerja Mesin ATM Wincor", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin ATM Hyosung secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1Bz02a_Apj2vRaiS1qtMcFCAzxKimXfRK/view?usp=drive_link" },
-  { judul:"Troubleshooting Mesin ATM Wincor", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM OKI secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" },
-  { judul:"Cara kerja Mesin ATM Hyosung", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM Hitachi secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" },
-  { judul:"TroubleShooting Mesin ATM Hyosung", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM Hitachi secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" },
-  { judul:"Cara kerja & Troubleshooting Mesin CRM OKI ", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM Hitachi secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" },
-  { judul:"Cara kerja & Troubleshooting Mesin CRM Hyosung", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM Hitachi secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" },
-  { judul:"Cara kerja & Troubleshooting Mesin CRM Hitachi ", definisi:"Prosedur identifikasi dan penanganan gangguan umum pada mesin CRM Hitachi secara aman dan sesuai SOP.", file:"https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" }
+  { judul:"SLA", definisi:"Standar dan target waktu penanganan gangguan tingkat pertama pada mesin ATM/CRM sesuai perjanjian layanan dengan bank mitra.", file:"https://drive.google.com/file/d/16iWbZ-NVmEWzbDZGSviFpck7bwF4s9fA/view?usp=drive_link" },
+  { judul:"Elektricity/kelistrikan ", definisi:"Memahami dasar-dasar kelistrikan pada mesin ATM, mengenali fungsi komponen kelistrikan, serta melakukan pemeriksaan dan penanganan gangguan listrik ", file:"1PhsIU6g7x9ndBRCn-tHn-F4r1js_pKAn" },
+  { judul:"Jarkom/ Jaringan Komunikasi", definisi:"Memahami dasar-dasar jaringan komunikasi pada mesin ATM, mengenali fungsi dan koneksi perangkat jaringan, serta melakukan pemeriksaan gangguan komunikasi ATM secara aman dan tepat.", fileID:"1ZJfuzg9vdENR8bNBxafMjkwDR-rXxYSK" },
+  { judul:"FLM Mesin ATM NCR", definisi:"Memahami alur dan prinsip kerja mesin ATM NCR, mulai dari proses transaksi hingga kerja setiap komponen utama.", file:"1D3Iboopn3W3eUYztZMPFcdoQzqoglviq" },
+  { judul:"FLM  ATM Wincor", definisi:"Memahami alur dan prinsip kerja mesin ATM Wincor, mulai dari proses transaksi hingga kerja setiap komponen utama.", file:"1Bz02a_Apj2vRaiS1qtMcFCAzxKimXfRK" },
+  { judul:"FLM Mesin ATM Hyosung", definisi:"Memahami alur dan prinsip kerja mesin ATM Hyosung, mulai dari proses transaksi hingga kerja setiap komponen utama.", file:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"FLM Mesin CRM OKI ", definisi:"Memahami alur , prinsip kerja mesin CRM OKI dan Mampu menangani gangguan secara tepat dan sistematis", file:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"FLM Mesin CRM Hyosung", definisi:"Memahami alur , prinsip kerja mesin CRM Hyosung dan Mampu menangani gangguan secara tepat dan sistematis", file:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"FLM Mesin CRM Hitachi ", definisi:"Memahami alur , prinsip kerja mesin CRM Hitachi  dan Mampu menangani gangguan secara tepat dan sistematis", file:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" }
 ];
 
 const materiVideo = [
+  { judul:"SLA & Response Time FLM", definisi:"Standar dan target waktu penanganan gangguan tingkat pertama pada mesin ATM/CRM sesuai perjanjian layanan dengan bank mitra.", fileID:"1ZZQoFxpY62R_amD8prDGT90t7Pq8Lzec" },
+  { judul:"Elektricity/kelistrikan ", definisi:"Memahami dasar-dasar kelistrikan pada mesin ATM, mengenali fungsi komponen kelistrikan, serta melakukan pemeriksaan dan penanganan gangguan listrik ", fileID:"1PhsIU6g7x9ndBRCn-tHn-F4r1js_pKAn" },
+  { judul:"Jarkom/ Jaringan Komunikasi", definisi:"Memahami dasar-dasar jaringan komunikasi pada mesin ATM, mengenali fungsi dan koneksi perangkat jaringan, serta melakukan pemeriksaan gangguan komunikasi ATM secara aman dan tepat.", fileID:"1ZJfuzg9vdENR8bNBxafMjkwDR-rXxYSK" },
+  { judul:"Cara kerja  Mesin ATM NCR", definisi:"Memahami alur dan prinsip kerja mesin ATM NCR, mulai dari proses transaksi hingga kerja setiap komponen utama.", fileID:"1D3Iboopn3W3eUYztZMPFcdoQzqoglviq" },
+  { judul:"Troubleshooting Mesin ATM NCR ", definisi:"Mampu mengidentifikasi dan menangani gangguan pada mesin ATM NCR secara tepat dan sistematis", fileID:"1kjSWm93BdckPMHjh9IA1nILN11Cpvyga" },
+  { judul:"cara kerja Mesin ATM Wincor", definisi:"Memahami alur dan prinsip kerja mesin ATM Wincor, mulai dari proses transaksi hingga kerja setiap komponen utama.", fileID:"1Bz02a_Apj2vRaiS1qtMcFCAzxKimXfRK" },
+  { judul:"Troubleshooting Mesin ATM Wincor", definisi:"Mampu mengidentifikasi dan menangani gangguan pada mesin ATM Wincor secara tepat dan sistematis", fileID:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"Cara kerja Mesin ATM Hyosung", definisi:"Memahami alur dan prinsip kerja mesin ATM Hyosung, mulai dari proses transaksi hingga kerja setiap komponen utama.", fileID:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"TroubleShooting Mesin ATM Hyosung", definisi:"Mampu mengidentifikasi dan menangani gangguan pada mesin ATM Hyosung secara tepat dan sistematis", fileID:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"Cara kerja & Troubleshooting Mesin CRM OKI ", definisi:"Memahami alur , prinsip kerja mesin CRM OKI dan Mampu menangani gangguan secara tepat dan sistematis", fileID:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"Cara kerja & Troubleshooting Mesin CRM Hyosung", definisi:"Memahami alur , prinsip kerja mesin CRM Hyosung dan Mampu menangani gangguan secara tepat dan sistematis", fileID:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" },
+  { judul:"Cara kerja & Troubleshooting Mesin CRM Hitachi ", definisi:"Memahami alur , prinsip kerja mesin CRM Hitachi  dan Mampu menangani gangguan secara tepat dan sistematis", fileID:"1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV" }
+
+
+
+
+  
   { judul:"SLA & Response Time FLM", definisi:"Standar dan target waktu penanganan gangguan tingkat pertama pada mesin ATM/CRM.", fileId:"1ZZQoFxpY62R_amD8prDGT90t7Pq8Lzec" },
   { judul:"Tupoksi Teknisi FLM", definisi:"Tugas pokok dan fungsi teknisi FLM dalam identifikasi, penanganan, dan eskalasi gangguan mesin.", fileId:"14OXjCP76hV_8VJR9XsQ6-crSgXEYJTry" },
   { judul:"K3 & Keselamatan Kerja Teknisi", definisi:"Prosedur keselamatan kerja saat membuka panel dan menangani komponen kelistrikan mesin.", fileId:"18l8N4tFrqEGhlm1BWFnz4gPWrBHO6_g8" },
