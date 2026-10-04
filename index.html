@@ -754,10 +754,11 @@
                 <th>Jabatan</th>
                 <th>Region</th>
                 <th>Unit Kerja</th>
+                <th>Training</th>
               </tr>
             </thead>
             <tbody id="tabelPesertaBody">
-              <tr><td colspan="6" style="text-align:center;color:var(--ink-soft);padding:24px;">Memuat data…</td></tr>
+              <tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Memuat data…</td></tr>
             </tbody>
           </table>
         </div>
@@ -944,17 +945,17 @@ let pesertaPerRegion = {'Jakarta':320,'Jawa Barat':210,'Jawa Timur':185,'Sumater
 let pesertaPerUnit   = {'Operasional':280,'Sales':240,'IT':150,'Finance':110,'HC':95};
 let pesertaPerJabatan= {'Staff':420,'Supervisor':260,'Manager':140,'Senior Manager':55};
 
-// Data contoh per-baris peserta (Nama/NPP/Jabatan/Region/Unit) untuk Tabel Training,
+// Data contoh per-baris peserta (Nama/NPP/Jabatan/Region/Unit/Training) untuk Tabel Training,
 // dipakai sebelum data live dari sheet Peserta masuk.
 let pesertaDetailRows = [
-  {nama:'Andi Saputra',    npp:'10023', jabatan:'Manager',    region:'Jakarta',     unit:'Distribusi'},
-  {nama:'Budi Santoso',    npp:'10045', jabatan:'Staf',        region:'Jawa Barat', unit:'Marketing'},
-  {nama:'Citra Dewi',      npp:'10078', jabatan:'Staf',        region:'Jawa Timur', unit:'Infrastruktur'},
-  {nama:'Dewi Lestari',    npp:'10091', jabatan:'Supervisor',  region:'Sumatera',   unit:'Akuntansi'},
-  {nama:'Eko Prasetyo',    npp:'10102', jabatan:'Manager',     region:'Kalimantan', unit:'Rekrutmen'},
-  {nama:'Fitri Handayani', npp:'10115', jabatan:'Staf',        region:'Sulawesi',   unit:'Produksi'},
-  {nama:'Gilang Ramadhan', npp:'10128', jabatan:'GM',          region:'Jakarta',    unit:'Business Development'},
-  {nama:'Hana Puspita',    npp:'10134', jabatan:'Staf',        region:'Jawa Barat', unit:'Aplikasi'}
+  {nama:'Andi Saputra',    npp:'10023', jabatan:'Manager',    region:'Jakarta',     unit:'Distribusi',           training:'4 Skills Leadership'},
+  {nama:'Budi Santoso',    npp:'10045', jabatan:'Staf',        region:'Jawa Barat', unit:'Marketing',            training:'Onboarding Pegawai Baru'},
+  {nama:'Citra Dewi',      npp:'10078', jabatan:'Staf',        region:'Jawa Timur', unit:'Infrastruktur',        training:'E-learning Excel Basic'},
+  {nama:'Dewi Lestari',    npp:'10091', jabatan:'Supervisor',  region:'Sumatera',   unit:'Akuntansi',            training:'4 Skills Leadership'},
+  {nama:'Eko Prasetyo',    npp:'10102', jabatan:'Manager',     region:'Kalimantan', unit:'Rekrutmen',            training:'Cyber Security Awareness Batch 1'},
+  {nama:'Fitri Handayani', npp:'10115', jabatan:'Staf',        region:'Sulawesi',   unit:'Produksi',             training:'Onboarding Pegawai Baru'},
+  {nama:'Gilang Ramadhan', npp:'10128', jabatan:'GM',          region:'Jakarta',    unit:'Business Development', training:'4 Skills Leadership'},
+  {nama:'Hana Puspita',    npp:'10134', jabatan:'Staf',        region:'Jawa Barat', unit:'Aplikasi',             training:'E-learning Excel Basic'}
 ];
 
 // Data contoh untuk Tabel ATP (Bulan/Week1-4/Nama Pelatihan), dipakai sebelum sheet ATP live masuk.
@@ -1073,9 +1074,10 @@ function renderTabelTraining(){
           '<td>'+(r.jabatan||'-')+'</td>'+
           '<td>'+(r.region||'-')+'</td>'+
           '<td>'+(r.unit||'-')+'</td>'+
+          '<td>'+(r.training||'-')+'</td>'+
         '</tr>'
       )).join('')
-    : '<tr><td colspan="6" style="text-align:center;color:var(--ink-soft);padding:24px;">Tidak ada data yang cocok dengan filter.</td></tr>';
+    : '<tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Tidak ada data yang cocok dengan filter.</td></tr>';
 
   info.textContent = 'Menampilkan ' + filtered.length + ' dari ' + pesertaDetailRows.length + ' peserta';
 }
@@ -1227,7 +1229,7 @@ function updateKPI(){
 
 /* ================= GOOGLE APPS SCRIPT CONNECTION ================= */
 // URL Web App Apps Script sudah menyatu di sini — tidak perlu tempel manual.
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZN02jN9CyBfOQyb2rMq0YePS5ypWStLlc_KYSjdNUOlE5njfKXwWDHAasFHfTm4fj/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwunz_1qj7ek5rk8tgejLbr31DQ2yV2Eh4KEDp_vQsYb1IFLAkLMBb4qFeoheiGUyN8/exec';
 
 const connStatus = document.getElementById('connStatus');
 const syncLabel = document.getElementById('syncLabel');
@@ -1371,6 +1373,12 @@ function applyRemoteData(json){
     const namaKey = findKey(sample, ['namapegawai','nama','namakaryawan','employeename','name']);
     const nppKey = findKey(sample, ['npp','nip','idpegawai','employeeid','nomorpegawai','nomorinduk']);
     const unitKerjaKey = findKey(sample, ['unitkerja','unit','department','departemen']);
+    // Kolom Training: cocokkan header persis "training"/"pelatihan" dulu, lalu yang mengandung kata itu.
+    // (Tidak memakai findKey agar tidak salah menangkap kolom "Nama Pegawai".)
+    const _normKeys = Object.keys(sample).map(k=>({raw:k, norm:k.toString().trim().toLowerCase().replace(/[^a-z0-9]/g,'')}));
+    const _trainExact = _normKeys.find(n=>['training','namatraining','pelatihan','namapelatihan','judultraining','judulpelatihan'].includes(n.norm));
+    const _trainLoose = _normKeys.find(n=>n.norm.includes('training') || n.norm.includes('pelatihan'));
+    const trainingColKey = (_trainExact || _trainLoose || {}).raw || null;
 
     if(namaKey || nppKey){
       pesertaDetailRows = pesertaRows
@@ -1379,10 +1387,11 @@ function applyRemoteData(json){
           npp: nppKey ? r[nppKey] : '',
           jabatan: jabatanKey ? r[jabatanKey] : '',
           region: regionKey ? r[regionKey] : '',
-          unit: unitKerjaKey ? r[unitKerjaKey] : ''
+          unit: unitKerjaKey ? r[unitKerjaKey] : '',
+          training: trainingColKey ? r[trainingColKey] : ''
         }))
         .filter(r=> r.nama || r.npp);
-      console.log('[Dashboard] Tabel Training — kolom Nama/NPP/Jabatan/Unit Kerja terdeteksi:', namaKey, nppKey, jabatanKey, unitKerjaKey);
+      console.log('[Dashboard] Tabel Training — kolom Nama/NPP/Jabatan/Unit Kerja/Training terdeteksi:', namaKey, nppKey, jabatanKey, unitKerjaKey, trainingColKey);
     } else {
       console.warn('[Dashboard] PERINGATAN: kolom Nama/NPP tidak ditemukan di sheet "' + pesertaSheetName + '". Tabel Training tetap memakai data contoh. Cek nama header kolom nama pegawai / NPP di sheet ini.');
     }
