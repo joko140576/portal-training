@@ -446,6 +446,10 @@
   .jumbotron-jeda::before{
     background-image:linear-gradient(120deg, rgba(11,18,32,.88) 10%, rgba(51,32,55,.55) 55%, rgba(224,151,42,.35) 100%), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1400&q=80');
   }
+  .jumbotron-tools::before{
+  background-image:linear-gradient(120deg, rgba(11,18,32,.88) 10%, rgba(51,32,55,.55) 55%, rgba(224,151,42,.35) 100%), url('https://unsplash.com/photos/faEfWCdOKIg/download?force=true&w=1400');
+}
+  
   .jumbotron-inner{position:relative;z-index:2;max-width:620px;color:#fff;}
   .jumbotron-eyebrow{
     display:inline-flex;align-items:center;gap:8px;
@@ -841,15 +845,39 @@
 
     <!-- ============ PAGE: TOOLS WEB HCC  ============ -->
     <section class="page" id="page-tools">
-      <div class="empty-state">
-        <i class="fa-solid fa-hourglass-half"></i>
-        <h3>Tools Web HCC </h3>
-        <p>Halaman ini akan menampilkan beberapa tools by web yang pernah di deploy di Unit Development & Training .</p>
-        <a href="https://ssi-hcc.vercel.app/" class="btn btn-primary">
-          <i class="fa-solid fa-plug"></i> Hubungkan ke Tools HCC
-        </a>
-      </div>
-    </section>
+      <div class="jumbotron jumbotron-tools">
+        <div class="jumbotron-inner">
+          
+          <span class="jumbotron-eyebrow">
+            <i class="fa-solid fa-screwdriver-wrench"></i> Tools Web HCC
+          </span>
+
+          <h2>
+            Tools Web HCC <span>Unit Development & Training</span>
+          </h2>
+
+          <p>
+            Akses berbagai tools berbasis web yang telah dikembangkan dan 
+            di-deploy oleh Unit Development & Training untuk mendukung kebutuhan 
+            operasional, administrasi, monitoring, dan pengembangan Human Capital.
+          </p>
+
+          <div class="jumbotron-cta-row">
+            <a href="https://ssi-hcc.vercel.app/" 
+               class="jumbotron-cta"
+               target="_blank">
+              Let's Get Started, Click Here 
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <div class="jumbotron-note">
+            <i class="fa-solid fa-circle-info"></i>
+            Anda akan diarahkan ke Portal Tools HCC
+          </div>
+        </div>
+       </div>
+     </section>
 
     </div>
     </div>
