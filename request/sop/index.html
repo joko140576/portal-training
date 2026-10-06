@@ -1,1 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Learning SOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213d; --paper:#f6f7f9; --card:#ffffff; --line:#d9dee7;
+    --accent:#f2b705; --muted:#5b6578; --blue:#2748a3;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.65}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 
+  /* Hero / Section 1 */
+  header{
+    /* Overlay navy ~88% di atas foto Unsplash = gambar terlihat tipis.
+       Ubah angka 0.88 (makin kecil = foto makin jelas). Warna --ink jadi fallback jika gambar gagal dimuat. */
+    background:
+      linear-gradient(rgba(20,33,61,.88),rgba(20,33,61,.88)),
+      url("ssi bg.jpg") center 70%/cover no-repeat,
+      var(--ink);
+    color:#fff;padding:72px 0 64px;border-bottom:8px solid var(--accent)}
+  header h1{font-size:clamp(2.4rem,7vw,4.5rem);line-height:1.05;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+  header p.sub{margin:0;color:#c5cde0;font-size:1.1rem;max-width:56ch}
+  section{padding:56px 0}
+  h2{font-size:1.8rem;margin:0 0 20px;font-weight:800;letter-spacing:-.01em}
+  .intro{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .box{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--accent);padding:24px;border-radius:6px}
+  .box h3{margin:0 0 10px;font-size:1.2rem}
+  .box p,.box li{color:var(--muted);margin:0}
+  .box ul{margin:0;padding-left:20px}
+  .box li{margin-bottom:6px}
+
+  /* Tables */
+  .table-scroll{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:6px}
+  table{width:100%;border-collapse:collapse;min-width:420px}
+  th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}
+  th{background:#eef1f6;font-size:.95rem}
+  tr:last-child td{border-bottom:0}
+  th:first-child,td:first-child{width:60px;text-align:center;color:var(--muted)}
+  .open{background:none;border:0;padding:0;font:inherit;color:var(--blue);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
+  .open:hover{color:var(--ink)}
+
+  /* Post test */
+  .cta{background:var(--ink);color:#fff;text-align:center;padding:64px 0}
+  .cta h2{margin-bottom:8px}
+  .cta p{color:#c5cde0;margin:0 0 28px}
+  .btn{display:inline-block;background:var(--accent);color:var(--ink);font-weight:800;font-size:1.15rem;padding:16px 40px;border-radius:6px;text-decoration:none;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:.9rem}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(10,16,32,.82);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal.show{display:flex}
+  .frame{width:min(960px,100%);background:#000;border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--ink);color:#fff;padding:10px 14px}
+  .bar strong{font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bar .tools{display:flex;gap:8px;flex-shrink:0}
+  .bar button,.bar a{background:#2a3a63;color:#fff;border:0;border-radius:4px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer;text-decoration:none}
+  .bar button:hover,.bar a:hover{background:#3b4f85}
+  .bar .close{background:var(--accent);color:var(--ink);font-weight:800}
+  .ratio{position:relative;aspect-ratio:16/9;background:#000}
+  .ratio.doc{aspect-ratio:auto;height:78vh}
+  .ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+  @media(max-width:700px){.intro{grid-template-columns:1fr}header{padding:48px 0}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>E-Learning SOP</h1>
+    <p class="sub">Pelajari prosedur kerja standar secara mandiri: tonton video, baca dokumen, lalu kerjakan post-test.</p>
+  </div>
+</header>
+
+<!-- SECTION 1: Definisi & Tujuan -->
+<section id="tentang">
+  <div class="wrap">
+    <h2>Definisi &amp; Tujuan Training</h2>
+    <div class="intro">
+      <div class="box">
+        <h3>Apa itu SOP?</h3>
+        <p>Standard Operating Procedure (SOP) adalah panduan tertulis yang menjelaskan langkah-langkah kerja secara berurutan dan seragam, agar setiap pekerjaan dilakukan dengan benar, aman, dan konsisten oleh siapa pun yang mengerjakannya.</p>
+      </div>
+      <div class="box">
+        <h3>Tujuan Training</h3>
+        <ul>
+          <li>Memahami isi dan alur SOP yang berlaku.</li>
+          <li>Menerapkan prosedur kerja sesuai standar.</li>
+          <li>Mengurangi kesalahan dan risiko kerja.</li>
+          <li>Mengukur pemahaman melalui post-test.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: Materi Video -->
+<section id="video" style="padding-top:0">
+  <div class="wrap">
+    <h2>Materi Video</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>No</th><th>Judul Film</th><th>Link Video</th></tr></thead>
+        <tbody id="video-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: Materi Dokumen -->
+<section id="dokumen" style="padding-top:0">
+  <div class="wrap">
+    <h2>Materi Dokumen</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>No</th><th>Judul Dokumen</th><th>Link Dokumen</th></tr></thead>
+        <tbody id="doc-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION TERAKHIR: Post Test -->
+<div class="cta" id="posttest">
+  <div class="wrap">
+    <h2>Siap Mengerjakan Post-Test?</h2>
+    <p>Pastikan semua video dan dokumen sudah Anda pelajari.</p>
+    <a class="btn" href="post-test.html">Mulai Post-Test</a>
+  </div>
+</div>
+
+<footer>&copy; <span id="year"></span> E-Learning SOP</footer>
+
+<!-- Modal pemutar video / dokumen -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="frame">
+    <div class="bar">
+      <strong id="modal-title"></strong>
+      <div class="tools">
+        <button type="button" id="btn-full">Layar Penuh</button>
+        <a id="btn-newtab" href="#" target="_blank" rel="noopener">Buka di Tab Baru</a>
+        <button type="button" class="close" id="btn-close">Tutup</button>
+      </div>
+    </div>
+    <div class="ratio" id="ratio"></div>
+  </div>
+</div>
+
+<script>
+/* ===== EDIT DATA DI SINI =====
+   Ganti "link" dengan link share Google Drive (Anyone with the link -> Viewer).
+   Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing */
+const videos = [
+  { title: "Video 1 - Monitoring Saldo,Status,Proyeksi Kas Atm",      link: "https://drive.google.com/file/d/14FLvtfBwOGVQLhSVB9Qp5c-GU-x6jctJ/view?usp=drive_link" },
+  { title: "Video 2 - Prosedur cash Supply ",    link: "https://drive.google.com/file/d/1-Iq-y5DEkpvOC3NS5E-U2uGaVGsmHHZs/view?usp=drive_link" },
+  { title: "Video 3 - Prosedur Sortir ",   link: "https://drive.google.com/file/d/1uys7-6G27-v7EkMCo_A4hWLPct3oztuA/view?usp=drive_link" },
+  { title: "Video 4 - Prosedur Pengisian Kas ATM ",   link: "https://drive.google.com/file/d/1OntVQ99M3kGRabtViIUYqFk6IKgjYOse/view?usp=drive_link" }
+  
+];
+const docs = [
+  { title: "Dokumen 1 - Monitoring Saldo,Status,Proyeksi Kas Atm",  link: "https://drive.google.com/file/d/1wlbf3T9jrJsTgkPfx3tq2QvvHsdJiidM/view?usp=drive_link" },
+  { title: "Dokumen 2 - Prosedur cash Supply",   link: "https://drive.google.com/file/d/1Qku3hzbZc3h8ARZ5n6nN4aZHLknCF95G/view?usp=sharing" },
+  { title: "Dokumen 3 - Prosedur Sortir",  link: "https://drive.google.com/file/d/186CP00jY7FwqMNZTdkWYJxvSNCufcmKA/view?usp=drive_link" },
+  { title: "Dokumen 3 - Prosedur Pengisian Kas ATM",  link: "https://drive.google.com/file/d/1a7jDQexWdItgUO4EGp3A_OIM3HJVSW3k/view?usp=drive_link" }
+
+];
+/* ============================== */
+
+const modal = document.getElementById('modal');
+const ratio = document.getElementById('ratio');
+const titleEl = document.getElementById('modal-title');
+const newTab = document.getElementById('btn-newtab');
+let lastFocus = null;
+
+// Ubah link Drive (/view atau ?id=) menjadi link /preview untuk di-embed
+function toPreview(url){
+  const m = url.match(/\/d\/([\w-]+)/) || url.match(/[?&]id=([\w-]+)/);
+  return m ? 'https://drive.google.com/file/d/' + m[1] + '/preview' : url;
+}
+
+function openModal(item, isDoc){
+  lastFocus = document.activeElement;
+  titleEl.textContent = item.title;
+  newTab.href = item.link;
+  ratio.className = 'ratio' + (isDoc ? ' doc' : '');
+  const f = document.createElement('iframe');
+  f.src = toPreview(item.link);
+  f.allow = 'autoplay; fullscreen';
+  f.allowFullscreen = true;
+  f.title = item.title;
+  ratio.appendChild(f);
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('btn-close').focus();
+}
+
+function closeModal(){
+  modal.classList.remove('show');
+  ratio.innerHTML = '';          // hapus iframe = video berhenti
+  document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
+}
+
+function render(list, bodyId, label, isDoc){
+  const body = document.getElementById(bodyId);
+  list.forEach((item, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + (i + 1) + '</td><td></td><td></td>';
+    tr.children[1].textContent = item.title;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'open'; b.textContent = label;
+    b.addEventListener('click', () => openModal(item, isDoc));
+    tr.children[2].appendChild(b);
+    body.appendChild(tr);
+  });
+}
+
+render(videos, 'video-body', 'Putar video', false);
+render(docs, 'doc-body', 'Buka dokumen', true);
+
+document.getElementById('btn-close').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+document.getElementById('btn-full').addEventListener('click', () => {
+  const f = ratio.querySelector('iframe');
+  if (f && f.requestFullscreen) f.requestFullscreen();
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
