@@ -345,6 +345,22 @@
   .data-table tbody tr:hover{background:#f8f9fc;}
   .tbl-footnote{font-size:12px;color:var(--ink-soft);margin-top:12px;}
 
+  /* ---------- PAGINATION TABEL TRAINING ---------- */
+  .tbl-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:12px;}
+  .tbl-footer .tbl-footnote{margin-top:0;}
+  .pagination-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .pg-btn{
+    min-width:34px;height:34px;padding:0 10px;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:'Inter';font-size:12.5px;font-weight:600;
+    border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);
+    cursor:pointer;transition:all .15s ease;
+  }
+  .pg-btn:hover:not(:disabled):not(.active){border-color:#c9d1e6;background:#f8f9fc;}
+  .pg-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;cursor:default;}
+  .pg-btn:disabled{opacity:.45;cursor:not-allowed;}
+  .pg-gap{color:var(--ink-soft);padding:0 2px;font-size:13px;}
+
   /* ---------- ATP: sel Bulan yang di-merge (rowspan) ---------- */
   .data-table td.atp-bulan-cell{
     text-align:center;
@@ -774,7 +790,10 @@
           </table>
         </div>
 
-        <div class="tbl-footnote" id="tabelInfo">Menampilkan 0 dari 0 peserta</div>
+        <div class="tbl-footer">
+          <div class="tbl-footnote" id="tabelInfo">Menampilkan 0 dari 0 peserta</div>
+          <div class="pagination-bar" id="tabelPagination"></div>
+        </div>
       </div>
     </section>
 
@@ -1077,10 +1096,17 @@ function renderTabelTraining(){
     return true;
   });
 
-  tbody.innerHTML = filtered.length
-    ? filtered.map((r,i)=>(
+  // Pagination: 100 baris per halaman
+  const totalPages = Math.max(1, Math.ceil(filtered.length / TABEL_PAGE_SIZE));
+  if(tabelPage > totalPages) tabelPage = totalPages;
+  if(tabelPage < 1) tabelPage = 1;
+  const startIdx = (tabelPage - 1) * TABEL_PAGE_SIZE;
+  const pageRows = filtered.slice(startIdx, startIdx + TABEL_PAGE_SIZE);
+
+  tbody.innerHTML = pageRows.length
+    ? pageRows.map((r,i)=>(
         '<tr>'+
-          '<td>'+(i+1)+'</td>'+
+          '<td>'+(startIdx+i+1)+'</td>'+
           '<td>'+(r.nama||'-')+'</td>'+
           '<td>'+(r.npp||'-')+'</td>'+
           '<td>'+(r.jabatan||'-')+'</td>'+
@@ -1091,7 +1117,35 @@ function renderTabelTraining(){
       )).join('')
     : '<tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Tidak ada data yang cocok dengan filter.</td></tr>';
 
-  info.textContent = 'Menampilkan ' + filtered.length + ' dari ' + pesertaDetailRows.length + ' peserta';
+  info.textContent = filtered.length
+    ? 'Menampilkan ' + (startIdx+1) + '–' + (startIdx + pageRows.length) + ' dari ' + filtered.length + ' peserta' +
+      (filtered.length !== pesertaDetailRows.length ? ' (difilter dari ' + pesertaDetailRows.length + ')' : '')
+    : 'Menampilkan 0 dari ' + pesertaDetailRows.length + ' peserta';
+
+  renderTabelPagination(totalPages);
+}
+
+const TABEL_PAGE_SIZE = 100;
+let tabelPage = 1;
+
+function renderTabelPagination(totalPages){
+  const el = document.getElementById('tabelPagination');
+  if(!el) return;
+  if(totalPages <= 1){ el.innerHTML = ''; return; }
+
+  // Tampilkan halaman pertama, terakhir, dan sekitar halaman aktif; sisanya diganti "…"
+  const set = new Set([1, totalPages, tabelPage-1, tabelPage, tabelPage+1]);
+  const list = [...set].filter(p=>p>=1 && p<=totalPages).sort((a,b)=>a-b);
+
+  let html = '<button class="pg-btn" data-page="'+(tabelPage-1)+'" aria-label="Sebelumnya"'+(tabelPage===1?' disabled':'')+'><i class="fa-solid fa-chevron-left"></i></button>';
+  let prev = 0;
+  list.forEach(p=>{
+    if(prev && p - prev > 1) html += '<span class="pg-gap">…</span>';
+    html += '<button class="pg-btn'+(p===tabelPage?' active':'')+'" data-page="'+p+'">'+p+'</button>';
+    prev = p;
+  });
+  html += '<button class="pg-btn" data-page="'+(tabelPage+1)+'" aria-label="Berikutnya"'+(tabelPage===totalPages?' disabled':'')+'><i class="fa-solid fa-chevron-right"></i></button>';
+  el.innerHTML = html;
 }
 
 function initTabelTrainingFilters(){
@@ -1103,19 +1157,34 @@ function initTabelTrainingFilters(){
   const btnReset = document.getElementById('btnResetTabel');
   if(!namaEl) return;
 
-  btnCari.addEventListener('click', renderTabelTraining);
-  namaEl.addEventListener('input', renderTabelTraining);
-  namaEl.addEventListener('keyup', e=>{ if(e.key==='Enter') renderTabelTraining(); });
-  jabatanEl.addEventListener('change', renderTabelTraining);
-  regionEl.addEventListener('change', renderTabelTraining);
-  unitEl.addEventListener('change', renderTabelTraining);
+  // Setiap perubahan filter kembali ke halaman 1
+  const applyFilter = ()=>{ tabelPage = 1; renderTabelTraining(); };
+
+  btnCari.addEventListener('click', applyFilter);
+  namaEl.addEventListener('input', applyFilter);
+  namaEl.addEventListener('keyup', e=>{ if(e.key==='Enter') applyFilter(); });
+  jabatanEl.addEventListener('change', applyFilter);
+  regionEl.addEventListener('change', applyFilter);
+  unitEl.addEventListener('change', applyFilter);
   btnReset.addEventListener('click', ()=>{
     namaEl.value = '';
     jabatanEl.value = '';
     regionEl.value = '';
     unitEl.value = '';
-    renderTabelTraining();
+    applyFilter();
   });
+
+  // Klik tombol pagination
+  const pagEl = document.getElementById('tabelPagination');
+  if(pagEl){
+    pagEl.addEventListener('click', e=>{
+      const btn = e.target.closest('.pg-btn');
+      if(!btn || btn.disabled || btn.classList.contains('active')) return;
+      tabelPage = Number(btn.dataset.page) || 1;
+      renderTabelTraining();
+      document.getElementById('tabelPeserta').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  }
 }
 
 /* ================= CHART INSTANCES ================= */
