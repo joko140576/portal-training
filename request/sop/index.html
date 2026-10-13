@@ -38,6 +38,16 @@
   .box ul{margin:0;padding-left:20px}
   .box li{margin-bottom:6px}
 
+  /* Tabs hari */
+  .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:14px;scrollbar-width:thin}
+  .day-tab{flex:0 0 auto;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer;min-width:84px;text-align:center}
+  .day-tab:hover{border-color:var(--ink)}
+  .day-tab[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:inset 0 -4px 0 var(--accent)}
+  .day-info{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+  .day-info h3{margin:0;font-size:1.25rem}
+  .day-info span{color:var(--muted);font-size:.95rem}
+  .empty{padding:28px 18px;text-align:center;color:var(--muted)}
+
   /* Tables */
   .table-scroll{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:6px}
   table{width:100%;border-collapse:collapse;min-width:420px}
@@ -105,15 +115,21 @@
   </div>
 </section>
 
-<!-- SECTION 2: Materi Video -->
+<!-- SECTION 2: Materi Video (10 hari, maks. 5 video per hari) -->
 <section id="video" style="padding-top:0">
   <div class="wrap">
     <h2>Materi Video</h2>
-    <div class="table-scroll">
+    <div class="days" id="day-tabs" role="tablist" aria-label="Pilih hari pembelajaran"></div>
+    <div class="day-info">
+      <h3 id="day-title"></h3>
+      <span id="day-count"></span>
+    </div>
+    <div class="table-scroll" role="tabpanel" id="day-panel" aria-live="polite">
       <table>
         <thead><tr><th>No</th><th>Judul Film</th><th>Link Video</th></tr></thead>
         <tbody id="video-body"></tbody>
       </table>
+      <div class="empty" id="video-empty" hidden>Materi untuk hari ini belum tersedia.</div>
     </div>
   </div>
 </section>
@@ -160,20 +176,35 @@
 <script>
 /* ===== EDIT DATA DI SINI =====
    Ganti "link" dengan link share Google Drive (Anyone with the link -> Viewer).
-   Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing */
-const videos = [
-  { title: "Video 1 - Monitoring Saldo,Status,Proyeksi Kas Atm",      link: "https://drive.google.com/file/d/14FLvtfBwOGVQLhSVB9Qp5c-GU-x6jctJ/view?usp=drive_link" },
-  { title: "Video 2 - Prosedur cash Supply ",    link: "https://drive.google.com/file/d/1-Iq-y5DEkpvOC3NS5E-U2uGaVGsmHHZs/view?usp=drive_link" },
-  { title: "Video 3 - Prosedur Sortir ",   link: "https://drive.google.com/file/d/1uys7-6G27-v7EkMCo_A4hWLPct3oztuA/view?usp=drive_link" },
-  { title: "Video 4 - Prosedur Kaset ATM,CDM & CRM  ",   link: "https://drive.google.com/file/d/1zXark1zyCHwfMumBSBP15hJZ1uVLHJpz/view?usp=drive_link" },
-  { title: "Video 5 - Prosedur serah terima Tas kaset masuk & keluar  ",   link: "https://drive.google.com/file/d/1gwLzqDs7xasIYQz0cCTM_I4Hypu-huE1/view?usp=drive_link" },
-  { title: "Video 6 - Prosedur pengelolaan segel kunci tombak ATM/CRM   ",   link: "https://drive.google.com/file/d/1bj5jMDCFoYHUHtuRnLe699x4SibLTgYJ/view?usp=drive_link" },
-  { title: "Video 7 - Prosedur pengelolaan kunci tombak ATM/CRM   ",   link: "https://drive.google.com/file/d/1LPkga4o5JgaX2TSSWL6dtuVuI89h4eRt/view?usp=drive_link" },
-  { title: "Video 8 - Prosedur Collecting CDM & CRM   ",   link: "https://drive.google.com/file/d/1hVcOR_VMetK3nIOOpgNK4c2awHJHGc8h/view?usp=drive_link" },
-  { title: "Video 9 - Prosedur Cash Collecting Center  ",   link: "https://drive.google.com/file/d/1XrWyO9IT-PcKo89OF7LP16hSuumHJ8vs/view?usp=drive_link" },
-  { title: "Video 10 - Prosedur Pengisian Kas ATM ",   link: "https://drive.google.com/file/d/1OntVQ99M3kGRabtViIUYqFk6IKgjYOse/view?usp=drive_link" }
-  
+   Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+
+   MATERI VIDEO: 10 hari, tiap hari maksimal 5 video.
+   Tambahkan video baru di dalam array "videos" pada hari yang sesuai. */
+const videoDays = [
+  { day: 1, videos: [
+    { title: "Video 1 - Monitoring Saldo,Status,Proyeksi Kas Atm",      link: "https://drive.google.com/file/d/14FLvtfBwOGVQLhSVB9Qp5c-GU-x6jctJ/view?usp=drive_link" },
+    { title: "Video 2 - Prosedur cash Supply ",    link: "https://drive.google.com/file/d/1-Iq-y5DEkpvOC3NS5E-U2uGaVGsmHHZs/view?usp=drive_link" },
+    { title: "Video 3 - Prosedur Sortir ",   link: "https://drive.google.com/file/d/1uys7-6G27-v7EkMCo_A4hWLPct3oztuA/view?usp=drive_link" },
+    { title: "Video 4 - Prosedur Kaset ATM,CDM & CRM  ",   link: "https://drive.google.com/file/d/1zXark1zyCHwfMumBSBP15hJZ1uVLHJpz/view?usp=drive_link" },
+    { title: "Video 5 - Prosedur serah terima Tas kaset masuk & keluar  ",   link: "https://drive.google.com/file/d/1gwLzqDs7xasIYQz0cCTM_I4Hypu-huE1/view?usp=drive_link" }
+  ]},
+  { day: 2, videos: [
+    { title: "Video 6 - Prosedur pengelolaan segel kunci tombak ATM/CRM   ",   link: "https://drive.google.com/file/d/1bj5jMDCFoYHUHtuRnLe699x4SibLTgYJ/view?usp=drive_link" },
+    { title: "Video 7 - Prosedur pengelolaan kunci tombak ATM/CRM   ",   link: "https://drive.google.com/file/d/1LPkga4o5JgaX2TSSWL6dtuVuI89h4eRt/view?usp=drive_link" },
+    { title: "Video 8 - Prosedur Collecting CDM & CRM   ",   link: "https://drive.google.com/file/d/1hVcOR_VMetK3nIOOpgNK4c2awHJHGc8h/view?usp=drive_link" },
+    { title: "Video 9 - Prosedur Cash Collecting Center  ",   link: "https://drive.google.com/file/d/1XrWyO9IT-PcKo89OF7LP16hSuumHJ8vs/view?usp=drive_link" },
+    { title: "Video 10 - Prosedur Pengisian Kas ATM ",   link: "https://drive.google.com/file/d/1OntVQ99M3kGRabtViIUYqFk6IKgjYOse/view?usp=drive_link" }
+  ]},
+  { day: 3,  videos: [] },
+  { day: 4,  videos: [] },
+  { day: 5,  videos: [] },
+  { day: 6,  videos: [] },
+  { day: 7,  videos: [] },
+  { day: 8,  videos: [] },
+  { day: 9,  videos: [] },
+  { day: 10, videos: [] }
 ];
+
 const docs = [
   { title: "Dokumen 1 - Monitoring Saldo,Status,Proyeksi Kas Atm",  link: "https://drive.google.com/file/d/1wlbf3T9jrJsTgkPfx3tq2QvvHsdJiidM/view?usp=drive_link" },
   { title: "Dokumen 2 - Prosedur cash Supply",   link: "https://drive.google.com/file/d/1Qku3hzbZc3h8ARZ5n6nN4aZHLknCF95G/view?usp=sharing" },
@@ -185,9 +216,10 @@ const docs = [
   { title: "Dokumen 8 - Prosedur Collecting CDM/CRM ",  link: "https://drive.google.com/file/d/1Tsp_YctoZzilYgDfaDj3PwlZpTZ5LgwC/view?usp=drive_link" },
   { title: "Dokumen 9 - Prosedur Cash Collecting center ",  link: "https://drive.google.com/file/d/1Tj5fnHOsU_QkUQs3vhLvapcaD6vP52E4/view?usp=drive_link" },
   { title: "Dokumen 10 - Prosedur Pengisian Kas ATM",  link: "https://drive.google.com/file/d/14EpMFn_wquX6Hy_fSgItJyOrt2nn-Xg_/view?usp=drive_link" }
-
 ];
 /* ============================== */
+
+const MAX_PER_DAY = 5;
 
 const modal = document.getElementById('modal');
 const ratio = document.getElementById('ratio');
@@ -226,6 +258,7 @@ function closeModal(){
 
 function render(list, bodyId, label, isDoc){
   const body = document.getElementById(bodyId);
+  body.innerHTML = '';
   list.forEach((item, i) => {
     const tr = document.createElement('tr');
     tr.innerHTML = '<td>' + (i + 1) + '</td><td></td><td></td>';
@@ -238,7 +271,46 @@ function render(list, bodyId, label, isDoc){
   });
 }
 
-render(videos, 'video-body', 'Putar video', false);
+/* ===== Tab hari untuk materi video ===== */
+const tabsEl = document.getElementById('day-tabs');
+const dayTitle = document.getElementById('day-title');
+const dayCount = document.getElementById('day-count');
+const videoEmpty = document.getElementById('video-empty');
+const videoTable = document.querySelector('#day-panel table');
+let activeDay = 0;
+
+function showDay(idx){
+  activeDay = idx;
+  const d = videoDays[idx];
+  const list = d.videos.slice(0, MAX_PER_DAY);   // maksimal 5 video per hari
+  tabsEl.querySelectorAll('.day-tab').forEach((t, i) => {
+    t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    t.tabIndex = i === idx ? 0 : -1;
+  });
+  dayTitle.textContent = 'Hari ' + d.day;
+  dayCount.textContent = list.length + ' dari ' + MAX_PER_DAY + ' video';
+  render(list, 'video-body', 'Putar video', false);
+  videoTable.hidden = list.length === 0;
+  videoEmpty.hidden = list.length !== 0;
+}
+
+videoDays.forEach((d, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'day-tab';
+  b.setAttribute('role', 'tab');
+  b.textContent = 'Hari ' + d.day;
+  b.addEventListener('click', () => showDay(i));
+  b.addEventListener('keydown', e => {
+    let n = null;
+    if (e.key === 'ArrowRight') n = (i + 1) % videoDays.length;
+    if (e.key === 'ArrowLeft')  n = (i - 1 + videoDays.length) % videoDays.length;
+    if (n !== null){ e.preventDefault(); showDay(n); tabsEl.children[n].focus(); }
+  });
+  tabsEl.appendChild(b);
+});
+
+showDay(0);
 render(docs, 'doc-body', 'Buka dokumen', true);
 
 document.getElementById('btn-close').addEventListener('click', closeModal);
