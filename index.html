@@ -233,6 +233,14 @@
   .conn-status.err{background:var(--rose-soft);color:var(--rose);}
   .conn-status .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
   .conn-status a{color:inherit;text-decoration:underline;margin-left:4px;cursor:pointer;}
+  
+  /* ---------- TABEL JADWAL TRAINING (di bawah grafik dashboard) ---------- */
+  .jadwal-card{margin-bottom:16px;}
+  .jadwal-card .tbl-wrap{max-height:420px;overflow:auto;}
+  .jadwal-card .data-table{min-width:760px;}
+  .jadwal-card .data-table thead th{position:sticky;top:0;z-index:1;}
+  .jadwal-card .col-center{text-align:center;} 
+
 
   /* ---------- LOADING OVERLAY (dashboard data asli sedang dimuat) ----------
      Overlay dipasang position:fixed pada area di kanan sidebar dan di bawah topbar,
@@ -730,6 +738,35 @@
           <div class="chart-box"><canvas id="chartJabatan"></canvas></div>
         </div>
       </div>
+
+
+      <!-- Tabel Jadwal Training (sheet training) -->
+      <div class="card jadwal-card">
+        <div class="card-head">
+          <div class="card-title">Tabel Jadwal Pelatihan</div>
+          <div class="card-tag">Sheet 1 · training</div>
+        </div>
+        <div class="tbl-wrap">
+          <table class="data-table" id="tabelJadwalTraining">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Week</th>
+                <th>Nama Pelatihan</th>
+                <th>Metode</th>
+                <th>Peserta</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody id="tabelJadwalBody">
+              <tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Memuat data…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-footnote" id="jadwalInfo">Menampilkan 0 baris</div>
+      </div>
+
     </section>
 
 
@@ -1611,6 +1648,84 @@ function sortByBulan(obj){
   Object.keys(obj).forEach(k=>{ if(ordered[k]===undefined) ordered[k]=obj[k]; });
   return ordered;
 }
+
+/* ================= TABEL JADWAL TRAINING (tambahan) ================= */
+const BULAN_PENUH = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+function escHtml(v){
+  return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function fmtBulanJadwal(v){
+  if(v==null || v==='') return '-';
+  const s = v.toString().trim();
+  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(iso){
+    const n = Number(iso[2]);
+    if(n>=1 && n<=12) return BULAN_PENUH[n-1];
+  }
+  if(/^\d{1,2}$/.test(s)){
+    const n = Number(s);
+    if(n>=1 && n<=12) return BULAN_PENUH[n-1];
+  }
+  return s;
+}
+function fmtCellJadwal(v){
+  if(v==null || v==='') return '-';
+  if(isChecked(v)) return '<i class="fa-solid fa-check" style="color:var(--teal);font-size:13px;"></i>';
+  return escHtml(v);
+}
+
+function renderTabelJadwalTraining(json){
+  const tbody = document.getElementById('tabelJadwalBody');
+  const info = document.getElementById('jadwalInfo');
+  if(!tbody || !info || !json) return;
+
+  const sheetNames = Object.keys(json);
+  const trainingSheetName = sheetNames.find(n=>/train|latih/i.test(n)) || sheetNames[0];
+  const rows = json[trainingSheetName] || [];
+
+  if(!rows.length){
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Belum ada data pelatihan.</td></tr>';
+    info.textContent = 'Menampilkan 0 baris';
+    return;
+  }
+
+  const sample = rows[0];
+  const bulanKey = findKey(sample, ['bulan','month','periode','tanggal']);
+  const weekKey = findKey(sample, ['week','minggu']);
+  const namaKey = findKey(sample, ['namapelatihan','namatraining','pelatihan','training','judul']);
+  const metodeKey = findKey(sample, ['metode','method']);
+  const pesertaKey = findKey(sample, ['peserta','jumlahpeserta','participant']);
+  const ketKey = findKey(sample, ['keterangan','ket','catatan','note']);
+
+  console.log('[Dashboard] Tabel Jadwal — kolom terdeteksi:', bulanKey, weekKey, namaKey, metodeKey, pesertaKey, ketKey, '| header tersedia:', Object.keys(sample));
+
+  const data = rows.filter(r => (bulanKey && r[bulanKey]) || (namaKey && r[namaKey]));
+
+  tbody.innerHTML = data.map((r,i)=>(
+    '<tr>'+
+      '<td>'+(i+1)+'</td>'+
+      '<td>'+escHtml(bulanKey ? fmtBulanJadwal(r[bulanKey]) : '-')+'</td>'+
+      '<td class="col-center">'+(weekKey ? fmtCellJadwal(r[weekKey]) : '-')+'</td>'+
+      '<td>'+(namaKey ? fmtCellJadwal(r[namaKey]) : '-')+'</td>'+
+      '<td>'+(metodeKey ? fmtCellJadwal(r[metodeKey]) : '-')+'</td>'+
+      '<td class="col-center">'+(pesertaKey ? fmtCellJadwal(r[pesertaKey]) : '-')+'</td>'+
+      '<td>'+(ketKey ? fmtCellJadwal(r[ketKey]) : '-')+'</td>'+
+    '</tr>'
+  )).join('') || '<tr><td colspan="7" style="text-align:center;color:var(--ink-soft);padding:24px;">Belum ada data pelatihan.</td></tr>';
+
+  info.textContent = 'Menampilkan ' + data.length + ' baris pelatihan';
+}
+
+// Sambungkan ke alur data yang sudah ada TANPA mengubah fungsi asli:
+// applyRemoteData asli tetap dijalankan, lalu tabel jadwal ikut dirender.
+(function(){
+  const _applyRemoteDataOrig = applyRemoteData;
+  applyRemoteData = function(json){
+    _applyRemoteDataOrig(json);
+    try{ renderTabelJadwalTraining(json); }catch(e){ console.warn('Tabel jadwal gagal dirender', e); }
+  };
+})();
 
 /* ================= INIT ================= */
 buildCharts();
