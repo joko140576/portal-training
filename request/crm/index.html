@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Training CRM – SLM &amp; TWU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#08212e; --deep2:#0d3342; --teal:#14b8a6; --gold:#d4af5f; --blue:#0f766e;
+  --bg:#f2f5f7; --card:#fff; --text:#0b2230; --muted:#53697a; --line:#d8e1e7; --head:#e8eff3; --link:#0b6b63;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#071820; --card:#0d2530; --text:#e6f0f4; --muted:#93aab7; --line:#1d3b49; --head:#12313f; --link:#5eead4}}
+:root[data-theme="dark"]{--bg:#071820; --card:#0d2530; --text:#e6f0f4; --muted:#93aab7; --line:#1d3b49; --head:#12313f; --link:#5eead4}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* Hero */
+header{background:radial-gradient(900px 400px at 85% 20%,#14606a55,transparent 70%),linear-gradient(135deg,var(--deep),var(--deep2));color:#fff;padding:64px 0 56px;border-bottom:6px solid var(--gold)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid #d4af5f88;color:var(--gold);border-radius:99px;padding:4px 14px;font-weight:700;font-size:.85rem}
+header h1{font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.05;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
+header p.sub{margin:0;color:#c3d6de;max-width:50ch}
+
+section{padding:56px 0 0}
+h2{font-size:1.7rem;margin:0 0 20px;font-weight:800;letter-spacing:-.01em;display:flex;gap:10px;align-items:center}
+h2 .i{color:var(--teal)}
+.def{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:10px;padding:24px;margin-bottom:20px}
+.def h3{margin:0 0 8px;font-size:1.15rem}.def p{margin:0;color:var(--muted)}
+.goals{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.goal{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+.goal .ic{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--deep),var(--deep2));color:var(--gold);margin-bottom:12px;font-size:1.3rem}
+.goal h3{margin:0 0 6px;font-size:1rem}.goal p{margin:0;color:var(--muted);font-size:.92rem}
+
+/* Machine tabs */
+.days{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.day-tab{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px 10px;font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.day-tab .mono{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--head);font-family:Sora;font-weight:800;font-size:.85rem;color:var(--link)}
+.day-tab:hover{border-color:var(--teal)}
+.day-tab[aria-selected="true"]{background:linear-gradient(135deg,var(--deep),var(--deep2));color:#fff;border-color:var(--deep);box-shadow:inset 0 -4px 0 var(--gold)}
+.day-tab[aria-selected="true"] .mono{background:var(--gold);color:var(--deep)}
+.day-info{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.day-info h3{margin:0;font-size:1.2rem}.day-info span{color:var(--muted);font-size:.95rem}
+.empty{padding:28px 18px;text-align:center;color:var(--muted)}
+
+.table-scroll{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:440px}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}
+th{background:var(--head);font-size:.92rem}
+tr:last-child td{border-bottom:0}
+th:first-child,td:first-child{width:60px;text-align:center;color:var(--muted)}
+.open{display:inline-flex;gap:6px;align-items:center;background:none;border:0;padding:0;font:inherit;color:var(--link);font-weight:700;cursor:pointer}
+.open:hover:not(:disabled){text-decoration:underline;text-underline-offset:3px}
+.open:disabled{color:var(--muted);cursor:not-allowed;font-weight:600}
+
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}
+.pager[hidden]{display:none}
+.pager .info{color:var(--muted);font-size:.95rem}
+.pager .pages{display:flex;gap:6px;flex-wrap:wrap}
+.pager button{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer;min-width:40px}
+.pager button:hover:not(:disabled){border-color:var(--teal)}
+.pager button:disabled{opacity:.45;cursor:not-allowed}
+.pager button[aria-current="page"]{background:var(--deep);color:#fff;border-color:var(--deep);box-shadow:inset 0 -3px 0 var(--gold)}
+
+.cta{margin-top:64px;background:linear-gradient(135deg,var(--deep),var(--deep2));color:#fff;text-align:center;padding:64px 0;border-top:6px solid var(--gold)}
+.cta h2{justify-content:center;margin-bottom:8px}.cta p{color:#c3d6de;margin:0 0 28px}
+.btn{display:inline-flex;gap:8px;align-items:center;background:linear-gradient(135deg,#e6c677,var(--gold));color:var(--deep);font-weight:800;font-size:1.1rem;padding:16px 38px;border-radius:10px;text-decoration:none;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+footer{text-align:center;padding:24px;color:var(--muted);font-size:.9rem}
+
+.modal{position:fixed;inset:0;background:rgba(4,12,18,.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal.show{display:flex}
+.frame{width:min(960px,100%);background:#000;border-radius:10px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--deep);color:#fff;padding:10px 14px}
+.bar strong{font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .tools{display:flex;gap:8px;flex-shrink:0}
+.bar button,.bar a{background:#1c4452;color:#fff;border:0;border-radius:6px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer;text-decoration:none}
+.bar button:hover,.bar a:hover{background:#27596a}
+.bar .close{background:var(--gold);color:var(--deep);font-weight:800}
+.ratio{position:relative;aspect-ratio:16/9;background:#000}
+.ratio.doc{aspect-ratio:auto;height:78vh}
+.ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
+.hero>*{min-width:0}
+header h1{overflow-wrap:break-word}
+.art{display:block;width:100%;max-width:420px;height:auto;margin-inline:auto;filter:drop-shadow(0 18px 30px rgba(0,0,0,.4))}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;gap:28px}
+  .art{max-width:340px}
+  .goals{grid-template-columns:1fr 1fr}
+  .days{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  header{padding:40px 0 36px}
+  header h1{font-size:clamp(1.8rem,8.5vw,2.4rem)}
+  .art{max-width:260px}
+  .goals{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12l2-1-1-3-2 .5-1.5-1.5.5-2-3-1-1 2h-2l-1-2-3 1 .5 2L6 8.5 4 8l-1 3 2 1v0l-2 1 1 3 2-.5L7.5 17l-.5 2 3 1 1-2h2l1 2 3-1-.5-2 1.5-1.5 2 .5 1-3z"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-4-4 8-8zM3 21l4-4"/><path d="M15 4l3 3"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap hero">
+    <div>
+      <h1>Training Cash Recycling Machine</h1>
+      <p class="sub">Perbarui skill dan knowledge Anda: pahami cara kerja mesin CRM, kenali setiap modul, dan kuasai troubleshooting. Tonton video, baca dokumen, lalu kerjakan post-test.</p>
+    </div>
+    <img class="art" src="crm.png" alt="Ilustrasi mesin Cash Recycling Machine" width="320" height="360">
+  </div>
+</header>
+
+<!-- Definisi & Tujuan -->
+<section id="tentang">
+  <div class="wrap">
+    <h2><svg class="i"><use href="#i-target"/></svg>Definisi &amp; Tujuan Training</h2>
+    <div class="def">
+      <h3>Apa itu CRM?</h3>
+      <p>Cash Recycling Machine (CRM) adalah mesin yang dapat menerima setoran uang tunai sekaligus mengeluarkan uang tunai. Uang yang disetor divalidasi, disimpan di dalam kaset, lalu digunakan kembali untuk penarikan. Pelatihan ini ditujukan bagi teknisi level SLM dan TWU.</p>
+    </div>
+    <div class="goals">
+      <div class="goal"><div class="ic"><svg class="i"><use href="#i-book"/></svg></div><h3>Update skill &amp; knowledge</h3><p>Menyegarkan kompetensi teknis sesuai perkembangan mesin dan prosedur terbaru.</p></div>
+      <div class="goal"><div class="ic"><svg class="i"><use href="#i-gear"/></svg></div><h3>Cara kerja mesin</h3><p>Memahami alur deposit, penyimpanan, dan penarikan uang pada mesin CRM.</p></div>
+      <div class="goal"><div class="ic"><svg class="i"><use href="#i-chip"/></svg></div><h3>Modul &amp; part</h3><p>Mengenali fungsi setiap modul dan part CRM beserta posisinya.</p></div>
+      <div class="goal"><div class="ic"><svg class="i"><use href="#i-wrench"/></svg></div><h3>Troubleshooting</h3><p>Mampu menganalisa dan menangani problem yang terjadi pada mesin CRM.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Materi Video per Mesin -->
+<section id="video">
+  <div class="wrap">
+    <h2><svg class="i"><use href="#i-video"/></svg>Materi Video</h2>
+    <div class="days" id="day-tabs" role="tablist" aria-label="Pilih merk mesin"></div>
+    <div class="day-info">
+      <h3 id="day-title"></h3>
+      <span id="day-count"></span>
+    </div>
+    <div class="table-scroll" role="tabpanel" id="day-panel" aria-live="polite">
+      <table>
+        <thead><tr><th>No</th><th>Judul Video</th><th>Link Video</th></tr></thead>
+        <tbody id="video-body"></tbody>
+      </table>
+      <div class="empty" id="video-empty" hidden>Materi untuk mesin ini belum tersedia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Materi Dokumen -->
+<section id="dokumen">
+  <div class="wrap">
+    <h2><svg class="i"><use href="#i-doc"/></svg>Materi Dokumen</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>No</th><th>Judul Dokumen</th><th>Link Dokumen</th></tr></thead>
+        <tbody id="doc-body"></tbody>
+      </table>
+    </div>
+    <nav class="pager" id="doc-pager" aria-label="Navigasi halaman dokumen" hidden>
+      <span class="info" id="doc-info"></span>
+      <div class="pages" id="doc-pages"></div>
+    </nav>
+  </div>
+</section>
+
+<div class="cta" id="posttest">
+  <div class="wrap">
+    <h2><svg class="i"><use href="#i-check"/></svg>Siap Mengerjakan Post-Test?</h2>
+    <p>Pastikan semua video dan dokumen sudah Anda pelajari.</p>
+    <a class="btn" href="post-test.html">Mulai Post-Test</a>
+  </div>
+</div>
+
+<footer>&copy; <span id="year"></span> Training CRM – SLM &amp; TWU</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="frame">
+    <div class="bar">
+      <strong id="modal-title"></strong>
+      <div class="tools">
+        <button type="button" id="btn-full">Layar Penuh</button>
+        <a id="btn-newtab" href="#" target="_blank" rel="noopener">Buka di Tab Baru</a>
+        <button type="button" class="close" id="btn-close">Tutup</button>
+      </div>
+    </div>
+    <div class="ratio" id="ratio"></div>
+  </div>
+</div>
+
+<script>
+/* ===== EDIT DATA DI SINI =====
+   Isi "link" dengan link share Google Drive (Anyone with the link -> Viewer).
+   Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+   Link kosong ("") akan tampil sebagai "Segera hadir".
+   MATERI VIDEO: 4 mesin, tiap mesin maksimal 5 video. */
+const machines = [
+  { name: "Hitachi", mono: "HT", videos: [
+    { title: "Video 1 - Cara Kerja CRM Hitachi", link: "https://drive.google.com/file/d/1tUMWKYQH1rrN0pGX2aGzqOX2NNGJbMGx/view?usp=drive_link" },
+    { title: "Video 2 - Menu Replenishment CRM Hitachi", link: "https://drive.google.com/file/d/1llEXTT_JkRTTqvyB7DCB7ZqIh6QQfF5r/view?usp=drive_link" },
+    { title: "Video 3 - Pengenalan mesin Hitachi", link: "https://drive.google.com/file/d/1mbYQa4_HfzI1ozFZIqKwnw7nfMT3wR_Z/view?usp=drive_link" },
+    { title: "Video 4 - Preventive Maintenance", link: "https://drive.google.com/file/d/15w5G2mrcfZuzQ5d88ztZV1c-ukhEAgtC/view?usp=drive_link" }
+  ]},
+  { name: "OKI", mono: "OK", videos: [
+    { title: "Video 1 - Pengenalan & Cara Kerja CRM OKI", link: "https://drive.google.com/file/d/1tou5kf-7vrzimCq-u9dZGj05iWOEAduP/view?usp=drive_link" },
+    { title: "Video 2 - Menu Replenishment CRM OKI", link: "https://drive.google.com/file/d/18Wc-4RTyA-qr7OSky8ZKW93Ru1W4vQ9-/view?usp=drive_link" },
+    { title: "Video 3 - Preventive Maintenance", link: "https://drive.google.com/file/d/1DSk7hpTZTp3xrM9RZvaFjpQkayK2NOJs/view?usp=drive_link" }
+  ]},
+  { name: "Hyosung", mono: "HS", videos: [
+    { title: "Video 1 - Pengenalan & Cara Kerja CRM Hyosung", link: "https://drive.google.com/file/d/1naFvXFXbtg43-JduretOQWO_yc_GaT1P/view?usp=drive_link" },
+    { title: "Video 2 - Menu Replenishment CRM Hyosung", link: "" },
+    { title: "Video 3 - Preventive Maintenance", link: "https://drive.google.com/file/d/1SSf31093Rk8gQzgXJRNHeNExsvQWO9Gw/view?usp=drive_link" },
+    { title: "Video 4 - Troubleshooting Jam & Error Code", link: "" },
+    { title: "Video 5 - Kalibrasi & Test Mesin", link: "" }
+  ]},
+  { name: "DN", mono: "DN", videos: [
+    { title: "Video 1 - Pengenalan & Cara Kerja CRM DN", link: "https://drive.google.com/file/d/1_at_leoX6ftnzuASRM9s3OxYywqD6klj/view?usp=drive_link" },
+    { title: "Video 2 - Modul & Part CRM DN", link: "" },
+    { title: "Video 3 - Preventive Maintenance", link: "" },
+    { title: "Video 4 - Troubleshooting Jam & Error Code", link: "" },
+    { title: "Video 5 - Kalibrasi & Test Mesin", link: "" }
+  ]}
+];
+
+const docs = [
+    { title: "Dokumen 1 - Pengenalan & Cara Kerja CRM Hitachi SR 7500", link: "https://drive.google.com/file/d/1hbNPUhAB1egKxSEsy0FVBfhbmks146xL/view?usp=drive_link" },
+    { title: "Dokumen 2 - Pengenalan & Cara Kerja CRM Hitachi VS 7500", link: "https://drive.google.com/file/d/1dHxUW4sKCt8zVGe216ZeSGmjaVrW-hxy/view?usp=drive_link" },
+    { title: "Dokumen 3 - Pengisian Mesin CRM Hitachi", link: "https://drive.google.com/file/d/1KgxxB07wz-DD1top0m_QfLgq2TYx0wvV/view?usp=drive_link" },
+    { title: "Dokumen 4 - Pengisian Mesin CRM OKI", link: "https://drive.google.com/file/d/1Bz02a_Apj2vRaiS1qtMcFCAzxKimXfRK/view?usp=drive_link" },
+    { title: "Dokumen 5 - Pengenalan & Cara Kerja CRM OKI RG-8", link: "https://drive.google.com/file/d/1WlThgqqjNsYUSh88hzKRtuLTwDruYZHo/view?usp=drive_link" },
+    { title: "Dokumen 6 - Pengenalan & Cara Kerja CRM DN", link: "https://drive.google.com/file/d/1ARsiGNxE0eJWq19Mm1GbRBpT0aoPJW74/view?usp=drive_link" },
+    { title: "Dokumen 7 - Troubleshooting Jam Uang", link: "" },
+    { title: "Dokumen 8 - Daftar Error Code", link: "" },
+    { title: "Dokumen 9 - Kalibrasi & Test Mesin", link: "" },
+    { title: "Dokumen 10 - Keselamatan Kerja SLM/TWU", link: "" }
+];
+/* ============================== */
+
+const MAX_PER_MACHINE = 5;
+const icon = n => '<svg class="i"><use href="#i-' + n + '"/></svg>';
+
+const modal = document.getElementById('modal');
+const ratio = document.getElementById('ratio');
+const titleEl = document.getElementById('modal-title');
+const newTab = document.getElementById('btn-newtab');
+let lastFocus = null;
+
+function toPreview(url){
+  const m = url.match(/\/d\/([\w-]+)/) || url.match(/[?&]id=([\w-]+)/);
+  return m ? 'https://drive.google.com/file/d/' + m[1] + '/preview' : url;
+}
+
+function openModal(item, isDoc){
+  lastFocus = document.activeElement;
+  titleEl.textContent = item.title;
+  newTab.href = item.link;
+  ratio.className = 'ratio' + (isDoc ? ' doc' : '');
+  const f = document.createElement('iframe');
+  f.src = toPreview(item.link);
+  f.allow = 'autoplay; fullscreen';
+  f.allowFullscreen = true;
+  f.title = item.title;
+  ratio.appendChild(f);
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('btn-close').focus();
+}
+
+function closeModal(){
+  modal.classList.remove('show');
+  ratio.innerHTML = '';
+  document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
+}
+
+function render(list, bodyId, label, isDoc, offset = 0){
+  const body = document.getElementById(bodyId);
+  body.innerHTML = '';
+  list.forEach((item, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + (offset + i + 1) + '</td><td></td><td></td>';
+    tr.children[1].textContent = item.title;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'open';
+    if (item.link){
+      b.innerHTML = icon(isDoc ? 'doc' : 'play') + '<span>' + label + '</span>';
+      b.addEventListener('click', () => openModal(item, isDoc));
+    } else {
+      b.innerHTML = icon('lock') + '<span>Segera hadir</span>';
+      b.disabled = true;
+    }
+    tr.children[2].appendChild(b);
+    body.appendChild(tr);
+  });
+}
+
+/* ===== Tab mesin ===== */
+const tabsEl = document.getElementById('day-tabs');
+const dayTitle = document.getElementById('day-title');
+const dayCount = document.getElementById('day-count');
+const videoEmpty = document.getElementById('video-empty');
+const videoTable = document.querySelector('#day-panel table');
+
+function showMachine(idx){
+  const m = machines[idx];
+  const list = m.videos.slice(0, MAX_PER_MACHINE);
+  tabsEl.querySelectorAll('.day-tab').forEach((t, i) => {
+    t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    t.tabIndex = i === idx ? 0 : -1;
+  });
+  dayTitle.textContent = 'Mesin ' + m.name;
+  dayCount.textContent = list.length + ' dari ' + MAX_PER_MACHINE + ' video';
+  render(list, 'video-body', 'Putar video', false);
+  videoTable.hidden = list.length === 0;
+  videoEmpty.hidden = list.length !== 0;
+}
+
+machines.forEach((m, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'day-tab';
+  b.setAttribute('role', 'tab');
+  b.innerHTML = '<span class="mono">' + m.mono + '</span><span>' + m.name + '</span>';
+  b.addEventListener('click', () => showMachine(i));
+  b.addEventListener('keydown', e => {
+    let n = null;
+    if (e.key === 'ArrowRight') n = (i + 1) % machines.length;
+    if (e.key === 'ArrowLeft')  n = (i - 1 + machines.length) % machines.length;
+    if (n !== null){ e.preventDefault(); showMachine(n); tabsEl.children[n].focus(); }
+  });
+  tabsEl.appendChild(b);
+});
+showMachine(0);
+
+/* ===== Pagination dokumen ===== */
+const DOCS_PER_PAGE = 10;
+const docPager = document.getElementById('doc-pager');
+const docInfo = document.getElementById('doc-info');
+const docPages = document.getElementById('doc-pages');
+const totalPages = Math.max(1, Math.ceil(docs.length / DOCS_PER_PAGE));
+let docPage = 1;
+
+function pagerBtn(text, onClick, opts = {}){
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = text;
+  if (opts.label) b.setAttribute('aria-label', opts.label);
+  if (opts.disabled) b.disabled = true;
+  if (opts.current) b.setAttribute('aria-current', 'page');
+  b.addEventListener('click', onClick);
+  return b;
+}
+
+function showDocPage(page){
+  docPage = Math.min(Math.max(1, page), totalPages);
+  const start = (docPage - 1) * DOCS_PER_PAGE;
+  const slice = docs.slice(start, start + DOCS_PER_PAGE);
+  render(slice, 'doc-body', 'Buka dokumen', true, start);
+  docPager.hidden = docs.length <= DOCS_PER_PAGE;
+  docInfo.textContent = 'Menampilkan ' + (start + 1) + '–' + (start + slice.length) + ' dari ' + docs.length + ' dokumen';
+  docPages.innerHTML = '';
+  docPages.appendChild(pagerBtn('Sebelumnya', () => showDocPage(docPage - 1), { disabled: docPage === 1 }));
+  for (let p = 1; p <= totalPages; p++){
+    docPages.appendChild(pagerBtn(String(p), () => showDocPage(p), { current: p === docPage, label: 'Halaman ' + p }));
+  }
+  docPages.appendChild(pagerBtn('Berikutnya', () => showDocPage(docPage + 1), { disabled: docPage === totalPages }));
+}
+showDocPage(1);
+
+document.getElementById('btn-close').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+document.getElementById('btn-full').addEventListener('click', () => {
+  const f = ratio.querySelector('iframe');
+  if (f && f.requestFullscreen) f.requestFullscreen();
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
