@@ -1,0 +1,467 @@
+<title>Galeri Training CRM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Manrope:wght@400;500;700&display=swap">
+<style>
+/* Konsep tata letak: kolase 12 kolom dengan potret dan lanskap berselang-seling,
+   sedikit miring dan bergeser agar terasa seperti foto yang ditebar di meja. */
+:root {
+  --bg: #0a0920;
+  --ink: #f6f3ff;
+  --muted: #b9b4d6;
+  --teal: #22d3c5;
+  --amber: #ffb64d;
+  --pink: #ff4f9a;
+  --violet: #8b6bff;
+  --glass: rgba(255, 255, 255, 0.09);
+  --glass-line: rgba(255, 255, 255, 0.2);
+  --display: "Unbounded", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100%;
+}
+/* Latar aurora */
+.aurora {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(60% 50% at 12% 8%, rgba(34, 211, 197, 0.30), transparent 70%),
+    radial-gradient(55% 45% at 92% 18%, rgba(255, 79, 154, 0.26), transparent 70%),
+    radial-gradient(60% 50% at 70% 88%, rgba(139, 107, 255, 0.30), transparent 70%),
+    radial-gradient(45% 40% at 8% 80%, rgba(255, 182, 77, 0.20), transparent 70%);
+}
+.aurora i {
+  position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%;
+  filter: blur(70px); opacity: 0.35;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.aurora i:nth-child(1) { background: var(--teal); left: -12vmax; top: 18vh; }
+.aurora i:nth-child(2) { background: var(--pink); right: -14vmax; top: 48vh; animation-delay: -9s; }
+.aurora i:nth-child(3) { background: var(--violet); left: 30vw; bottom: -22vmax; animation-delay: -16s; }
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(6vmax, -5vmax, 0) scale(1.15); }
+}
+.wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+
+/* Hero */
+.hero { padding: 64px 0 28px; display: grid; gap: 18px; }
+.eyebrow {
+  font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal);
+  font-weight: 700; display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::before { content: ""; width: 40px; height: 2px; background: linear-gradient(90deg, var(--teal), var(--amber)); }
+h1 {
+  font-family: var(--display); font-weight: 800; margin: 0;
+  font-size: clamp(2.3rem, 7.4vw, 5.6rem); line-height: 1.02; letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+h1 span {
+  background: linear-gradient(95deg, var(--teal) 0%, var(--amber) 45%, var(--pink) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero p { margin: 0; max-width: 58ch; color: var(--muted); font-size: 1.05rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.chip {
+  padding: 8px 16px; border-radius: 999px; border: 1px solid var(--glass-line);
+  background: var(--glass); backdrop-filter: blur(10px);
+  font-size: 13px; font-weight: 700; color: var(--ink);
+}
+.chip a { color: inherit; text-decoration: none; }
+.chip:hover, .chip:focus-within { border-color: var(--amber); }
+
+/* Sesi */
+.sesi { --a: var(--teal); --b: var(--amber); padding-top: 56px; }
+.sesi[data-s="2"] { --a: var(--pink); --b: var(--violet); }
+.sesi-head {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 28px;
+  justify-content: space-between; margin-bottom: 30px;
+}
+.sesi-title { display: flex; align-items: center; gap: 22px; min-width: 0; }
+.ghost {
+  font-family: var(--display); font-weight: 800; line-height: 0.85;
+  font-size: clamp(3.8rem, 11vw, 8rem);
+  color: transparent; -webkit-text-stroke: 2px var(--a);
+  filter: drop-shadow(0 0 22px color-mix(in oklab, var(--a) 55%, transparent));
+}
+.sesi-title h2 {
+  font-family: var(--display); font-weight: 500; margin: 0;
+  font-size: clamp(1.15rem, 2.6vw, 1.7rem); line-height: 1.2; text-wrap: balance; min-width: 0;
+}
+.sesi-title small {
+  display: block; margin-top: 6px; font-family: var(--body); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--b);
+}
+.tools { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.count { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.count b { color: var(--ink); }
+button { font: inherit; color: inherit; cursor: pointer; }
+.btn {
+  border: 0; padding: 11px 22px; border-radius: 999px; font-weight: 700; font-size: 14px;
+  color: #0a0920; background: linear-gradient(100deg, var(--a), var(--b));
+  box-shadow: 0 10px 30px -10px color-mix(in oklab, var(--a) 70%, transparent);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.status { min-height: 1.4em; font-size: 13px; color: var(--b); margin: -16px 0 18px; }
+
+/* Papan kolase */
+.board {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: clamp(44px, 5.2vw, 62px); gap: 16px; grid-auto-flow: dense;
+  padding-bottom: 18px;
+}
+.ph {
+  grid-column: span var(--c); grid-row: span var(--r);
+  position: relative; margin: 0; padding: 6px; border-radius: 10px;
+  background: var(--glass); border: 1px solid var(--glass-line);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 26px 50px -22px rgba(0, 0, 0, 0.75);
+  transform: translateY(var(--ty)) rotate(var(--rot));
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease, border-color 0.3s ease;
+  cursor: pointer; min-width: 0;
+  animation: rise 0.7s ease both; animation-delay: calc(var(--i) * 60ms);
+}
+@keyframes rise { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
+.ph:hover, .ph:focus-visible, .ph.over {
+  transform: translateY(calc(var(--ty) - 6px)) rotate(0deg) scale(1.025);
+  z-index: 5; border-color: var(--b);
+  box-shadow: 0 34px 60px -20px color-mix(in oklab, var(--a) 55%, #000);
+}
+.in { position: absolute; inset: 6px; border-radius: 5px; overflow: hidden; background: #15133a; }
+.in img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; }
+.ph:hover .in img { transform: scale(1.06); }
+.empty {
+  position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 6px;
+  padding: 12px; background: linear-gradient(var(--ang), var(--g1), var(--g2));
+}
+.empty::after {
+  content: ""; position: absolute; inset: 10px; border: 1.5px dashed rgba(255, 255, 255, 0.35); border-radius: 4px;
+}
+.empty strong { font-family: var(--display); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 800; color: #fff; }
+.empty span { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); }
+.empty em { font-style: normal; font-size: 12px; color: rgba(255, 255, 255, 0.75); }
+.cap {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 14px 12px;
+  background: linear-gradient(transparent, rgba(5, 4, 20, 0.85));
+  font-size: 13px; font-weight: 700; opacity: 0; transition: opacity 0.3s ease;
+}
+.ph:hover .cap, .ph:focus-visible .cap { opacity: 1; }
+.tag {
+  position: absolute; top: 14px; left: 14px; z-index: 2; padding: 3px 10px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: #0a0920;
+  background: linear-gradient(100deg, var(--a), var(--b)); font-variant-numeric: tabular-nums;
+}
+.swap {
+  position: absolute; top: 12px; right: 12px; z-index: 3; border: 1px solid var(--glass-line);
+  background: rgba(10, 9, 32, 0.7); backdrop-filter: blur(6px);
+  padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.ph:hover .swap, .swap:focus-visible { opacity: 1; }
+@media (hover: none) { .swap { opacity: 1; } }
+
+/* Lightbox */
+.lb {
+  position: fixed; inset: 0; z-index: 50; background: rgba(6, 5, 22, 0.92); backdrop-filter: blur(14px);
+  display: grid; grid-template-rows: 1fr auto; padding: 24px 16px 20px; gap: 14px;
+}
+.lb img { max-width: 100%; max-height: 100%; margin: auto; border-radius: 8px; object-fit: contain; min-height: 0; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6); }
+.lb-stage { min-height: 0; display: grid; }
+.lb-bar { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; }
+.lb-bar button { border: 1px solid var(--glass-line); background: var(--glass); padding: 8px 20px; border-radius: 999px; font-weight: 700; }
+.lb-bar button:hover { border-color: var(--amber); }
+.lb-info { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+footer { margin-top: 70px; padding-top: 24px; border-top: 1px solid var(--glass-line); color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+@media (max-width: 860px) {
+  .hero { padding-top: 44px; }
+  .board { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; gap: 14px; }
+  .ph { grid-column: span 1; grid-row: auto; transform: translateY(0) rotate(calc(var(--rot) / 2)); }
+  .ph.L { grid-column: span 2; aspect-ratio: 3 / 2; }
+  .ph.P { aspect-ratio: 3 / 4; }
+  .ph:hover, .ph:focus-visible, .ph.over { transform: scale(1.02); }
+  .sesi-title { gap: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .aurora i, .ph { animation: none; }
+  .ph, .in img { transition: none; }
+}
+</style>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Galeri Dokumentasi</div>
+    <h1>Training <span>CRM</span><br>Batch 1</h1>
+    <p>Kumpulan momen selama pelatihan Customer Relationship Management, Januari sampai Februari 2024. Dua sesi, masing-masing sepuluh foto potret dan lanskap.</p>
+    <div class="facts">
+      <span class="chip">Jan – Feb 2024</span>
+      <span class="chip">2 sesi · 20 foto</span>
+      <span class="chip"><a href="#sesi-1">Ke Sesi 1</a></span>
+      <span class="chip"><a href="#sesi-2">Ke Sesi 2</a></span>
+    </div>
+  </header>
+
+  <main id="sections"></main>
+
+  <footer>
+    <span>Training CRM Batch 1 · Januari – Februari 2024</span>
+    <span>Klik kotak foto atau seret foto ke dalamnya untuk mengisi galeri.</span>
+  </footer>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Pratinjau foto">
+  <div class="lb-stage"><img id="lbImg" alt=""></div>
+  <div class="lb-bar">
+    <button type="button" id="lbPrev">Sebelumnya</button>
+    <span class="lb-info" id="lbInfo"></span>
+    <button type="button" id="lbNext">Berikutnya</button>
+    <button type="button" id="lbClose">Tutup</button>
+  </div>
+</div>
+
+<input type="file" id="pickOne" accept="image/*" hidden>
+<input type="file" id="pickMany" accept="image/*" multiple hidden>
+
+<script>
+/* ============ DATA GALERI ============
+   Ubah judul di sini. Untuk foto permanen, isi "src" dengan alamat file
+   (misalnya "foto/crm-01.jpg"). o: L = lanskap, P = potret. c/r = lebar/tinggi kotak. */
+const SESSIONS = [
+  {
+    id: "sesi-1", no: "01", title: "Training Batch 1 – CRM", period: "Jan – Feb 2024",
+    pal: [["#0e9f9a", "#1b2a7a"], ["#e58a1f", "#a3265f"], ["#16b7a8", "#5a3fc4"], ["#f2a93b", "#0e8f8f"]],
+    items: [
+      { o: "L", c: 6, r: 5, src: "", cap: "Pembukaan pelatihan" },
+      { o: "P", c: 3, r: 5, src: "", cap: "Pengantar materi CRM" },
+      { o: "P", c: 3, r: 6, src: "", cap: "Peserta mencatat" },
+      { o: "P", c: 3, r: 6, src: "", cap: "Diskusi kelompok" },
+      { o: "L", c: 6, r: 4, src: "", cap: "Suasana ruang kelas" },
+      { o: "L", c: 3, r: 3, src: "", cap: "Sesi tanya jawab" },
+      { o: "L", c: 4, r: 5, src: "", cap: "Simulasi pelayanan pelanggan" },
+      { o: "P", c: 3, r: 5, src: "", cap: "Praktik aplikasi CRM" },
+      { o: "L", c: 3, r: 3, src: "", cap: "Presentasi hasil" },
+      { o: "P", c: 2, r: 4, src: "", cap: "Foto bersama" }
+    ]
+  },
+  {
+    id: "sesi-2", no: "02", title: "Training Batch 1 – CRM", period: "Jan – Feb 2024",
+    pal: [["#d6306f", "#4a2fb0"], ["#8b6bff", "#d6306f"], ["#ff8a5c", "#8b3dc8"], ["#c13b9c", "#2b2a8f"]],
+    items: [
+      { o: "P", c: 3, r: 6, src: "", cap: "Hari kedua dimulai" },
+      { o: "L", c: 6, r: 4, src: "", cap: "Studi kasus pelanggan" },
+      { o: "P", c: 3, r: 5, src: "", cap: "Narasumber berbagi pengalaman" },
+      { o: "L", c: 4, r: 4, src: "", cap: "Latihan role play" },
+      { o: "P", c: 2, r: 4, src: "", cap: "Catatan peserta" },
+      { o: "L", c: 3, r: 3, src: "", cap: "Kerja tim" },
+      { o: "L", c: 3, r: 4, src: "", cap: "Evaluasi materi" },
+      { o: "P", c: 2, r: 4, src: "", cap: "Pengisian formulir" },
+      { o: "L", c: 4, r: 4, src: "", cap: "Penyerahan sertifikat" },
+      { o: "P", c: 3, r: 6, src: "", cap: "Penutupan dan foto bersama" }
+    ]
+  }
+];
+
+const ROT = [-1.4, 0.9, -0.7, 1.3, -1.1, 0.6, -0.9, 1.5, -0.5, 1.0];
+const TY = [0, 18, -8, 12, 0, 22, -6, 14, 8, -10];
+const ANG = [135, 200, 160, 120, 220];
+
+const $ = (s, r = document) => r.querySelector(s);
+const pad = n => String(n).padStart(2, "0");
+const labelOf = o => (o === "L" ? "Lanskap" : "Potret");
+
+let pickTarget = null;
+const lb = { s: 0, list: [], pos: 0 };
+
+function sectionHTML(sess, si) {
+  const slots = sess.items.map((it, ii) => {
+    const [g1, g2] = sess.pal[ii % sess.pal.length];
+    const style = `--c:${it.c};--r:${it.r};--rot:${ROT[ii]}deg;--ty:${TY[ii]}px;--i:${ii + si * 10};--g1:${g1};--g2:${g2};--ang:${ANG[ii % ANG.length]}deg`;
+    return `<figure class="ph ${it.o}" style="${style}" data-s="${si}" data-i="${ii}" tabindex="0" role="button" aria-label="Foto ${pad(ii + 1)}, ${labelOf(it.o)}"></figure>`;
+  }).join("");
+  return `
+  <section class="sesi" id="${sess.id}" data-s="${sess.no === "01" ? 1 : 2}" aria-labelledby="h-${sess.id}">
+    <div class="sesi-head">
+      <div class="sesi-title">
+        <div class="ghost" aria-hidden="true">${sess.no}</div>
+        <h2 id="h-${sess.id}">Sesi ${Number(sess.no)} · ${sess.title}<small>${sess.period}</small></h2>
+      </div>
+      <div class="tools">
+        <span class="count" id="count-${si}"></span>
+        <button type="button" class="btn" data-many="${si}">Tambah foto</button>
+      </div>
+    </div>
+    <div class="status" id="status-${si}" aria-live="polite"></div>
+    <div class="board" id="board-${si}">${slots}</div>
+  </section>`;
+}
+
+function paintSlot(el) {
+  const si = +el.dataset.s, ii = +el.dataset.i;
+  const it = SESSIONS[si].items[ii];
+  const tag = `<span class="tag">${pad(ii + 1)}</span>`;
+  if (it.src) {
+    el.innerHTML = `${tag}<div class="in"><img src="${it.src}" alt="${it.cap}" loading="lazy"><div class="cap">${it.cap}</div></div><button type="button" class="swap">Ganti</button>`;
+  } else {
+    el.innerHTML = `${tag}<div class="in"><div class="empty"><strong>${pad(ii + 1)}</strong><span>${labelOf(it.o)}</span><em>Klik atau seret foto ke sini</em></div></div>`;
+  }
+}
+
+function paintCount(si) {
+  const n = SESSIONS[si].items.filter(x => x.src).length;
+  $("#count-" + si).innerHTML = `<b>${n}</b> dari ${SESSIONS[si].items.length} foto terisi`;
+}
+
+function setStatus(si, msg) { $("#status-" + si).textContent = msg; }
+
+function setImage(si, ii, url) {
+  SESSIONS[si].items[ii].src = url;
+  paintSlot($(`.ph[data-s="${si}"][data-i="${ii}"]`));
+  paintCount(si);
+}
+
+function readSize(url) {
+  return new Promise(res => {
+    const im = new Image();
+    im.onload = () => res({ w: im.naturalWidth, h: im.naturalHeight });
+    im.onerror = () => res(null);
+    im.src = url;
+  });
+}
+
+async function fillMany(si, files) {
+  const items = SESSIONS[si].items;
+  let placed = 0, skipped = 0;
+  for (const f of files) {
+    if (!f.type.startsWith("image/")) { skipped++; continue; }
+    const url = URL.createObjectURL(f);
+    const d = await readSize(url);
+    if (!d) { skipped++; continue; }
+    const want = d.w >= d.h ? "L" : "P";
+    let idx = items.findIndex(x => !x.src && x.o === want);
+    if (idx < 0) idx = items.findIndex(x => !x.src);
+    if (idx < 0) { skipped++; continue; }
+    setImage(si, idx, url);
+    placed++;
+  }
+  setStatus(si, `${placed} foto ditempatkan sesuai orientasinya.` + (skipped ? ` ${skipped} foto dilewati karena kotak penuh atau bukan gambar.` : ""));
+}
+
+function openLightbox(si, ii) {
+  lb.s = si;
+  lb.list = SESSIONS[si].items.map((x, i) => (x.src ? i : -1)).filter(i => i >= 0);
+  lb.pos = Math.max(0, lb.list.indexOf(ii));
+  $("#lb").hidden = false;
+  showLb();
+  $("#lbClose").focus();
+}
+function showLb() {
+  const it = SESSIONS[lb.s].items[lb.list[lb.pos]];
+  const img = $("#lbImg");
+  img.src = it.src; img.alt = it.cap;
+  $("#lbInfo").textContent = `Sesi ${lb.s + 1} · ${it.cap} · ${lb.pos + 1}/${lb.list.length}`;
+}
+function stepLb(d) {
+  if (!lb.list.length) return;
+  lb.pos = (lb.pos + d + lb.list.length) % lb.list.length;
+  showLb();
+}
+function closeLb() { $("#lb").hidden = true; }
+
+function activate(el) {
+  const si = +el.dataset.s, ii = +el.dataset.i;
+  if (SESSIONS[si].items[ii].src) openLightbox(si, ii);
+  else { pickTarget = { si, ii }; $("#pickOne").click(); }
+}
+
+function init() {
+  $("#sections").innerHTML = SESSIONS.map(sectionHTML).join("");
+  document.querySelectorAll(".ph").forEach(paintSlot);
+  SESSIONS.forEach((_, si) => paintCount(si));
+
+  const main = $("#sections");
+  main.addEventListener("click", e => {
+    const many = e.target.closest("[data-many]");
+    if (many) { pickTarget = { si: +many.dataset.many }; $("#pickMany").click(); return; }
+    const swap = e.target.closest(".swap");
+    const ph = e.target.closest(".ph");
+    if (swap && ph) { pickTarget = { si: +ph.dataset.s, ii: +ph.dataset.i }; $("#pickOne").click(); return; }
+    if (ph) activate(ph);
+  });
+  main.addEventListener("keydown", e => {
+    const ph = e.target.closest && e.target.closest(".ph");
+    if (ph && e.target === ph && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); activate(ph); }
+  });
+
+  main.addEventListener("dragover", e => {
+    if (!e.dataTransfer || ![...e.dataTransfer.types].includes("Files")) return;
+    e.preventDefault();
+    document.querySelectorAll(".ph.over").forEach(x => x.classList.remove("over"));
+    const ph = e.target.closest(".ph");
+    if (ph) ph.classList.add("over");
+  });
+  main.addEventListener("dragleave", e => {
+    const ph = e.target.closest(".ph");
+    if (ph) ph.classList.remove("over");
+  });
+  main.addEventListener("drop", e => {
+    e.preventDefault();
+    document.querySelectorAll(".ph.over").forEach(x => x.classList.remove("over"));
+    const files = [...(e.dataTransfer ? e.dataTransfer.files : [])];
+    if (!files.length) return;
+    const ph = e.target.closest(".ph");
+    const sec = e.target.closest(".sesi");
+    if (ph && files.length === 1) {
+      const si = +ph.dataset.s, ii = +ph.dataset.i;
+      if (files[0].type.startsWith("image/")) setImage(si, ii, URL.createObjectURL(files[0]));
+    } else if (sec) {
+      const si = SESSIONS.findIndex(s => s.id === sec.id);
+      fillMany(si, files);
+    }
+  });
+
+  $("#pickOne").addEventListener("change", e => {
+    const f = e.target.files[0];
+    if (f && pickTarget && pickTarget.ii !== undefined) setImage(pickTarget.si, pickTarget.ii, URL.createObjectURL(f));
+    e.target.value = "";
+  });
+  $("#pickMany").addEventListener("change", e => {
+    const files = [...e.target.files];
+    if (files.length && pickTarget) fillMany(pickTarget.si, files);
+    e.target.value = "";
+  });
+
+  $("#lbPrev").addEventListener("click", () => stepLb(-1));
+  $("#lbNext").addEventListener("click", () => stepLb(1));
+  $("#lbClose").addEventListener("click", closeLb);
+  $("#lb").addEventListener("click", e => { if (e.target.id === "lb" || e.target.classList.contains("lb-stage")) closeLb(); });
+  document.addEventListener("keydown", e => {
+    if ($("#lb").hidden) return;
+    if (e.key === "Escape") closeLb();
+    else if (e.key === "ArrowLeft") stepLb(-1);
+    else if (e.key === "ArrowRight") stepLb(1);
+  });
+
+  // Foto yang sudah punya alamat src di data langsung tampil
+  SESSIONS.forEach((s, si) => { if (s.items.some(x => x.src)) paintCount(si); });
+}
+init();
+</script>
