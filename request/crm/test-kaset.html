@@ -1,0 +1,559 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Test Praktek Kaset CRM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=Orbitron:wght@700;800&display=swap">
+<style>
+/* Layout: header strip with progress, two draw windows side by side (Nama, Kaset), result table below that fills row by row. */
+:root {
+  --bg: #e9eef2;
+  --panel: #f8fafb;
+  --ink: #12202b;
+  --muted: #5a6b78;
+  --line: #ccd6dd;
+  --accent: #0a6c8c;
+  --accent-ink: #ffffff;
+  --win: #0e2330;
+  --win-ink: #e6f4f9;
+  --win-dim: #6e93a5;
+  --ok: #1d7a4b;
+  --k-hitachi: #c8472b;
+  --k-hyosung: #2a6fb8;
+  --k-rg7: #8a5bb5;
+  --k-rg8: #b07a12;
+  --k-dn: #1d7a4b;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c141a; --panel: #131e26; --ink: #e4eef3; --muted: #8aa0ad; --line: #243541;
+    --accent: #3fb4d8; --accent-ink: #06222d; --win: #060d12; --win-ink: #e6f4f9; --win-dim: #5f8497;
+    --ok: #4bc58a; --k-hitachi: #ef7a5f; --k-hyosung: #6aa7ec; --k-rg7: #be97e3; --k-rg8: #e0a93d; --k-dn: #4bc58a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c141a; --panel: #131e26; --ink: #e4eef3; --muted: #8aa0ad; --line: #243541;
+  --accent: #3fb4d8; --accent-ink: #06222d; --win: #060d12; --win-ink: #e6f4f9; --win-dim: #5f8497;
+  --ok: #4bc58a; --k-hitachi: #ef7a5f; --k-hyosung: #6aa7ec; --k-rg7: #be97e3; --k-rg8: #e0a93d; --k-dn: #4bc58a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  padding-block: 20px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 6vw, 46px); line-height: 1; margin: 0; text-transform: uppercase; letter-spacing: 0.02em; text-wrap: balance; }
+.sub { color: var(--muted); margin: 6px 0 0; }
+.progress { min-width: 180px; }
+.progress .num { font-family: var(--font-mono); font-weight: 600; font-size: 15px; display: flex; justify-content: space-between; }
+.bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .5s ease; }
+
+.stage { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.draw { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.window {
+  background: var(--win); color: var(--win-ink); border-radius: 6px; min-height: 96px; padding: 12px 14px;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 5vw, 38px); line-height: 1.1; text-transform: uppercase; letter-spacing: 0.02em;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,.35); overflow-wrap: anywhere;
+}
+.window.idle { color: var(--win-dim); }
+.window.spin { filter: blur(0.4px); }
+.window.land { animation: land .45s ease; }
+@keyframes land { 0% { transform: scale(.94); } 60% { transform: scale(1.04); } 100% { transform: scale(1); } }
+button { font: inherit; cursor: pointer; }
+.btn { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 12px 16px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn:focus-visible, .ghost:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; font-size: 13px; font-weight: 500; }
+.ghost:hover { border-color: var(--accent); }
+.ghost.danger { color: var(--k-hitachi); }
+
+.tally { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.tally div { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.tally b { font-family: var(--font-mono); font-size: 22px; font-weight: 600; line-height: 1.1; }
+.tally span { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--muted)); flex: none; }
+
+.tablebox { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.thead { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.thead h2 { margin: 0; font-family: var(--font-display); font-size: 22px; text-transform: uppercase; letter-spacing: 0.03em; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 16px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+td.no { font-family: var(--font-mono); width: 56px; color: var(--muted); font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+tr.empty td { color: var(--line); }
+tr.fresh { animation: fresh 1.4s ease; }
+@keyframes fresh { 0% { background: color-mix(in srgb, var(--accent) 28%, transparent); transform: translateY(-14px); opacity: .2; } 30% { transform: none; opacity: 1; } 100% { background: transparent; } }
+.chip { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.note { text-align: center; color: var(--ok); font-weight: 600; min-height: 1.5em; margin: 0; }
+@media (max-width: 640px) {
+  .stage { grid-template-columns: 1fr; }
+  .tally { grid-template-columns: repeat(3, 1fr); }
+  th, td { padding: 9px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .window.land, tr.fresh { animation: none; }
+  .bar i { transition: none; }
+}
+
+/* ---------- Navbar ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  max-width: 980px; margin: 0 auto 20px; padding-block: 10px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.06em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.brand i { width: 10px; height: 10px; background: var(--accent); border-radius: 2px; transform: rotate(45deg); flex: none; }
+.menu { display: flex; gap: 6px; }
+.menu button { background: transparent; color: var(--muted); border: 1px solid transparent; border-radius: 6px; padding: 8px 14px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.menu button:hover { color: var(--ink); }
+.menu button[aria-current="page"] { color: var(--ink); border-color: var(--line); background: var(--panel); }
+.menu button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.badge { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+@media (max-width: 420px) { .brand span { display: none; } }
+
+/* ---------- Timer: dunia gelap tersendiri, sama di tema terang maupun gelap ---------- */
+body[data-view="timer"] {
+  --bg: #060a12; --panel: rgba(255,255,255,.05); --ink: #eef2ff; --muted: #8f9bb7; --line: rgba(255,255,255,.12); --accent: #e6c27a;
+  color-scheme: dark;
+  background:
+    radial-gradient(900px 520px at 50% 40%, rgba(72,92,210,.30), transparent 70%),
+    radial-gradient(700px 420px at 90% 100%, rgba(230,194,122,.16), transparent 70%),
+    radial-gradient(640px 400px at 8% 0%, rgba(40,150,170,.18), transparent 70%),
+    #060a12;
+}
+.timer { max-width: 980px; margin: 0 auto; min-height: 66vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; position: relative; padding-block: 12px; }
+.timer > :not(.tgrid) { position: relative; z-index: 1; }
+.tgrid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 15%, transparent 72%);
+  mask-image: radial-gradient(ellipse at center, #000 15%, transparent 72%);
+}
+.tlabel { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--accent); }
+.clock {
+  display: flex; align-items: center; justify-content: center; gap: 0.1em;
+  font-family: "Orbitron", var(--font-mono), monospace; font-weight: 700; font-size: clamp(40px, 12.5vw, 128px); line-height: 1; color: var(--ink);
+  filter: drop-shadow(0 0 28px rgba(230,194,122,.18));
+}
+.group { display: flex; gap: 0.07em; }
+.cell {
+  width: 0.82em; height: 1.28em; display: grid; place-items: center; position: relative; border-radius: 0.12em;
+  background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.04) 50%, rgba(0,0,0,.28) 50%, rgba(255,255,255,.05));
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 0.22em 0.6em rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.cell::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,.6); }
+.cell span { text-shadow: 0 0 0.32em rgba(230,194,122,.5); }
+.colon { width: 0.3em; color: var(--accent); text-align: center; padding-bottom: 0.08em; }
+.clock.running .colon { animation: blink 1s steps(2, start) infinite; }
+@keyframes blink { 50% { opacity: .15; } }
+.clock.warn .cell span { color: #ff9a78; text-shadow: 0 0 0.35em rgba(255,110,70,.6); }
+.clock.warn.running .cell:last-child { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.05); } }
+.clock.done { animation: flash 0.9s ease-in-out 4; }
+.clock.done .cell span { color: #ff7a5c; }
+@keyframes flash { 50% { opacity: .25; } }
+.tbar { width: min(640px, 100%); height: 4px; border-radius: 2px; background: rgba(255,255,255,.1); overflow: hidden; }
+.tbar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #b88a3c, #f3dba0); box-shadow: 0 0 12px rgba(230,194,122,.6); transition: width .25s linear; }
+.tstatus { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); min-height: 1.4em; }
+.tctrl { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.tbtn { min-width: 160px; padding: 14px 28px; border: 0; border-radius: 999px; font-weight: 700; font-size: 16px; letter-spacing: 0.05em; color: #1b1405; background: linear-gradient(180deg, #f6e1ab, #d6a955); box-shadow: 0 8px 28px rgba(230,194,122,.28), inset 0 1px 0 rgba(255,255,255,.55); }
+.tbtn:hover { filter: brightness(1.06); }
+.tbtn.stop { color: #2a0b05; background: linear-gradient(180deg, #ffb59b, #e5694a); box-shadow: 0 8px 28px rgba(229,105,74,.3), inset 0 1px 0 rgba(255,255,255,.5); }
+.tghost { padding: 14px 24px; border-radius: 999px; background: rgba(255,255,255,.05); color: var(--ink); border: 1px solid var(--line); font-weight: 600; font-size: 15px; backdrop-filter: blur(6px); }
+.tghost:hover { border-color: var(--accent); }
+.tbtn:focus-visible, .tghost:focus-visible, .preset:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.preset { padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--muted); font-family: var(--font-mono); font-weight: 600; font-size: 13px; }
+.preset:hover { color: var(--ink); border-color: var(--accent); }
+.preset[aria-pressed="true"] { color: #1b1405; background: var(--accent); border-color: var(--accent); }
+.custom { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; justify-content: center; }
+.custom label { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-align: left; }
+.custom input[type="number"] { width: 90px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--ink); font: 600 16px var(--font-mono); }
+.custom input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.custom .tghost { padding: 10px 20px; }
+.snd { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+.snd input { accent-color: #e6c27a; width: 16px; height: 16px; }
+@media (prefers-reduced-motion: reduce) {
+  .clock.running .colon, .clock.warn.running .cell:last-child, .clock.done { animation: none; }
+  .tbar i { transition: none; }
+}
+</style>
+
+<nav class="nav" aria-label="Menu utama">
+  <div class="brand"><i></i><span>CRM Kaset</span></div>
+  <div class="menu">
+    <button type="button" id="navUndian" data-view="undian" aria-current="page">Undian</button>
+    <button type="button" id="navTimer" data-view="timer">Timer <span class="badge" id="navBadge" hidden></span></button>
+  </div>
+</nav>
+
+<div class="wrap" id="viewUndian">
+  <header>
+    <div>
+      <h1>Test Praktek Kaset CRM</h1>
+      <p class="sub">Undi nama peserta, lalu undi kaset yang harus dikerjakan.</p>
+    </div>
+    <div class="progress" aria-live="polite">
+      <div class="num"><span>Terpilih</span><span id="count">0 / 24</span></div>
+      <div class="bar"><i id="bar"></i></div>
+    </div>
+  </header>
+
+  <section class="stage">
+    <div class="draw">
+      <div class="label">1 · Nama peserta</div>
+      <div class="window idle" id="nameWin" aria-live="polite">Belum dipilih</div>
+      <button class="btn" id="nameBtn" type="button">Klik Nama</button>
+    </div>
+    <div class="draw">
+      <div class="label">2 · Kaset</div>
+      <div class="window idle" id="kasetWin" aria-live="polite">Pilih nama dulu</div>
+      <button class="btn" id="kasetBtn" type="button" disabled>Pilih Kaset</button>
+    </div>
+  </section>
+  <p class="note" id="note"></p>
+
+  <section class="tally" id="tally" aria-label="Jumlah per kaset"></section>
+
+  <section class="tablebox">
+    <div class="thead">
+      <h2>Hasil Undian</h2>
+      <div class="actions">
+        <button class="ghost" id="copyBtn" type="button">Salin hasil</button>
+        <button class="ghost danger" id="resetBtn" type="button">Ulang dari awal</button>
+      </div>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>No</th><th>Nama</th><th>Kaset</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div class="timer" id="viewTimer" hidden>
+  <div class="tgrid" aria-hidden="true"></div>
+  <div class="tlabel">Waktu berjalan</div>
+  <div class="clock" id="clock" role="timer" aria-label="Waktu berjalan">
+    <div class="group"><div class="cell"><span>0</span></div><div class="cell"><span>0</span></div></div>
+    <div class="colon">:</div>
+    <div class="group"><div class="cell"><span>0</span></div><div class="cell"><span>0</span></div></div>
+    <div class="colon">:</div>
+    <div class="group"><div class="cell"><span>0</span></div><div class="cell"><span>0</span></div></div>
+  </div>
+  <div class="tstatus" id="tstatus" aria-live="polite">Siap</div>
+  <div class="tctrl">
+    <button class="tbtn" id="tStart" type="button">Mulai</button>
+    <button class="tghost" id="tReset" type="button">Reset</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var NAMES = ["Sudoni","Ahmad Ruda Efendi","MHD Teguh Winata","Eko Tri Syahputra","Muhammad Fikri","Ronny Adetya Ketaren","Rahmat","Adiyanto","Minan","Irfan Dadi","Jaenudin","Slamet Aryanto","Didik Nurgianto","Wahyu Eka Permana","Fajar Kusuma Dewa","Hadi Sopian","Said Humaidi","Ruly Rahmadian","Komang Suwarte","Sandi Wibowo","Vefri Setiawan","Muhammad Lukman","Ariawan Salim","Andrik Irawan"];
+  var KASET = [
+    { n: "Hitachi", c: "var(--k-hitachi)" },
+    { n: "Hyosung", c: "var(--k-hyosung)" },
+    { n: "OKI RG7", c: "var(--k-rg7)" },
+    { n: "OKI RG8", c: "var(--k-rg8)" },
+    { n: "DN", c: "var(--k-dn)" }
+  ];
+  var KEY = "kaset-crm-undian-v1";
+  var TOTAL = NAMES.length;
+
+  var nameWin = document.getElementById("nameWin");
+  var kasetWin = document.getElementById("kasetWin");
+  var nameBtn = document.getElementById("nameBtn");
+  var kasetBtn = document.getElementById("kasetBtn");
+  var rowsEl = document.getElementById("rows");
+  var tallyEl = document.getElementById("tally");
+  var countEl = document.getElementById("count");
+  var barEl = document.getElementById("bar");
+  var noteEl = document.getElementById("note");
+  var copyBtn = document.getElementById("copyBtn");
+  var resetBtn = document.getElementById("resetBtn");
+
+  var results = [];   // {name, kaset}
+  var deck = [];      // kaset tersisa, sudah dibagi rata
+  var current = null; // nama yang sedang menunggu kaset
+  var busy = false;
+  var resetArmed = false;
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  // 24 slot / 5 kaset: tiap kaset dapat 4, lalu 4 kaset acak dapat 1 tambahan (jadi 5).
+  function buildDeck() {
+    var d = [];
+    KASET.forEach(function (k) { for (var i = 0; i < Math.floor(TOTAL / KASET.length); i++) d.push(k.n); });
+    shuffle(KASET).slice(0, TOTAL - d.length).forEach(function (k) { d.push(k.n); });
+    return shuffle(d);
+  }
+  function kasetColor(n) { for (var i = 0; i < KASET.length; i++) if (KASET[i].n === n) return KASET[i].c; return "var(--muted)"; }
+  function remainingNames() {
+    var done = results.map(function (r) { return r.name; });
+    return NAMES.filter(function (n) { return done.indexOf(n) === -1; });
+  }
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify({ results: results, deck: deck })); } catch (e) {}
+  }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return false;
+      var s = JSON.parse(raw);
+      if (!s || !Array.isArray(s.results) || !Array.isArray(s.deck)) return false;
+      var okNames = s.results.every(function (r) { return NAMES.indexOf(r.name) !== -1; });
+      if (!okNames || s.results.length + s.deck.length !== TOTAL) return false;
+      results = s.results; deck = s.deck;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function renderTally() {
+    tallyEl.innerHTML = "";
+    KASET.forEach(function (k) {
+      var cnt = results.filter(function (r) { return r.kaset === k.n; }).length;
+      var d = document.createElement("div");
+      d.innerHTML = '<span><i class="dot" style="--c:' + k.c + '"></i>' + k.n + '</span><b>' + cnt + '</b>';
+      tallyEl.appendChild(d);
+    });
+  }
+  function renderRows(freshIndex) {
+    rowsEl.innerHTML = "";
+    for (var i = 0; i < TOTAL; i++) {
+      var tr = document.createElement("tr");
+      var r = results[i];
+      if (r) {
+        tr.innerHTML = '<td class="no">' + (i + 1) + '</td><td></td><td><span class="chip"><i class="dot" style="--c:' + kasetColor(r.kaset) + '"></i><span></span></span></td>';
+        tr.children[1].textContent = r.name;
+        tr.querySelector(".chip span").textContent = r.kaset;
+        if (i === freshIndex) tr.className = "fresh";
+      } else {
+        tr.className = "empty";
+        tr.innerHTML = '<td class="no">' + (i + 1) + '</td><td>—</td><td>—</td>';
+      }
+      rowsEl.appendChild(tr);
+    }
+  }
+  function renderProgress() {
+    countEl.textContent = results.length + " / " + TOTAL;
+    barEl.style.width = (results.length / TOTAL * 100) + "%";
+  }
+  function setWin(el, text, cls) {
+    el.textContent = text;
+    el.className = "window" + (cls ? " " + cls : "");
+  }
+  function refreshButtons() {
+    var finished = results.length >= TOTAL;
+    nameBtn.disabled = busy || finished || current !== null;
+    kasetBtn.disabled = busy || current === null;
+    if (finished) {
+      noteEl.textContent = "Selesai. Semua " + TOTAL + " peserta sudah mendapat kaset.";
+      setWin(nameWin, "Selesai", "idle");
+      setWin(kasetWin, "Selesai", "idle");
+    }
+  }
+
+  // Putaran acak: ganti teks makin lambat, berhenti di target.
+  function spin(el, pool, target) {
+    return new Promise(function (resolve) {
+      if (reduced) { setWin(el, target, "land"); resolve(); return; }
+      var steps = 26, i = 0;
+      function tick() {
+        i++;
+        if (i >= steps) { setWin(el, target, "land"); resolve(); return; }
+        setWin(el, pool[Math.floor(Math.random() * pool.length)], "spin");
+        setTimeout(tick, 45 + i * i * 0.28);
+      }
+      tick();
+    });
+  }
+
+  nameBtn.addEventListener("click", function () {
+    var left = remainingNames();
+    if (busy || current !== null || !left.length) return;
+    busy = true; noteEl.textContent = ""; refreshButtons();
+    setWin(kasetWin, "Pilih kaset", "idle");
+    var pick = left[Math.floor(Math.random() * left.length)];
+    spin(nameWin, left, pick).then(function () {
+      current = pick; busy = false; refreshButtons();
+    });
+  });
+
+  kasetBtn.addEventListener("click", function () {
+    if (busy || current === null || !deck.length) return;
+    busy = true; refreshButtons();
+    var target = deck.pop();
+    spin(kasetWin, KASET.map(function (k) { return k.n; }), target).then(function () {
+      setTimeout(function () {
+        results.push({ name: current, kaset: target });
+        current = null;
+        save();
+        renderRows(results.length - 1);
+        renderTally(); renderProgress();
+        if (results.length < TOTAL) {
+          setWin(nameWin, "Klik nama berikutnya", "idle");
+          setWin(kasetWin, "Menunggu", "idle");
+        }
+        busy = false; refreshButtons();
+        var row = rowsEl.children[results.length - 1];
+        if (row && row.scrollIntoView) row.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
+      }, reduced ? 0 : 900);
+    });
+  });
+
+  copyBtn.addEventListener("click", function () {
+    var text = results.map(function (r, i) { return (i + 1) + ". " + r.name + " - " + r.kaset; }).join("\n");
+    if (!text) { noteEl.textContent = "Belum ada hasil untuk disalin."; return; }
+    var done = function () { noteEl.textContent = "Hasil disalin."; };
+    var fail = function () { noteEl.textContent = "Salin otomatis gagal. Blok tabel lalu salin manual."; };
+    try { navigator.clipboard.writeText(text).then(done, fail); } catch (e) { fail(); }
+  });
+
+  resetBtn.addEventListener("click", function () {
+    if (busy) return;
+    if (!resetArmed) {
+      resetArmed = true; resetBtn.textContent = "Klik lagi untuk hapus semua hasil";
+      setTimeout(function () { resetArmed = false; resetBtn.textContent = "Ulang dari awal"; }, 3500);
+      return;
+    }
+    resetArmed = false; resetBtn.textContent = "Ulang dari awal";
+    results = []; deck = buildDeck(); current = null; noteEl.textContent = "";
+    save();
+    setWin(nameWin, "Belum dipilih", "idle");
+    setWin(kasetWin, "Pilih nama dulu", "idle");
+    renderRows(-1); renderTally(); renderProgress(); refreshButtons();
+  });
+
+  if (!load()) { results = []; deck = buildDeck(); }
+  renderRows(-1); renderTally(); renderProgress();
+  if (results.length < TOTAL) {
+    setWin(nameWin, results.length ? "Klik nama berikutnya" : "Belum dipilih", "idle");
+    setWin(kasetWin, results.length ? "Menunggu" : "Pilih nama dulu", "idle");
+  }
+  refreshButtons();
+})();
+</script>
+
+<script>
+(function () {
+  var viewUndian = document.getElementById("viewUndian");
+  var viewTimer = document.getElementById("viewTimer");
+  var navBtns = document.querySelectorAll(".menu button");
+  var badge = document.getElementById("navBadge");
+  var clock = document.getElementById("clock");
+  var spans = clock.querySelectorAll(".cell span");
+  var statusEl = document.getElementById("tstatus");
+  var startBtn = document.getElementById("tStart");
+  var resetBtn = document.getElementById("tReset");
+
+  var view = "undian";
+  var state = "idle"; // idle | running | stopped
+  var base = 0;       // ms terkumpul sebelum putaran berjalan sekarang
+  var startAt = 0;
+  var timerId = null;
+  var wake = null;
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function elapsed() { return base + (state === "running" ? Date.now() - startAt : 0); }
+  function parts(ms) {
+    var s = Math.floor(ms / 1000);
+    return { h: Math.floor(s / 3600) % 100, m: Math.floor((s % 3600) / 60), s: s % 60 };
+  }
+
+  function show(v) {
+    view = v === "timer" ? "timer" : "undian";
+    viewUndian.hidden = view !== "undian";
+    viewTimer.hidden = view !== "timer";
+    document.body.setAttribute("data-view", view);
+    navBtns.forEach(function (b) {
+      if (b.getAttribute("data-view") === view) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    });
+    try { if (location.hash.replace("#", "") !== view) location.hash = view; } catch (e) {}
+    render();
+  }
+
+  function render() {
+    var p = parts(elapsed());
+    var txt = pad(p.h) + pad(p.m) + pad(p.s);
+    for (var i = 0; i < 6; i++) spans[i].textContent = txt.charAt(i);
+    clock.classList.toggle("running", state === "running");
+    statusEl.textContent = { idle: "Siap", running: "Berjalan", stopped: "Berhenti" }[state];
+    startBtn.textContent = state === "running" ? "Stop" : state === "stopped" ? "Lanjut" : "Mulai";
+    startBtn.classList.toggle("stop", state === "running");
+    if (view !== "timer" && state !== "idle") {
+      badge.hidden = false; badge.textContent = (p.h ? p.h + ":" : "") + pad(p.m) + ":" + pad(p.s);
+    } else { badge.hidden = true; }
+  }
+
+  function lockScreen(on) {
+    try {
+      if (on && navigator.wakeLock && !wake) {
+        navigator.wakeLock.request("screen").then(function (l) { wake = l; l.addEventListener("release", function () { wake = null; }); }, function () {});
+      } else if (!on && wake) { wake.release(); wake = null; }
+    } catch (e) {}
+  }
+
+  function start() {
+    startAt = Date.now(); state = "running";
+    if (timerId) clearInterval(timerId);
+    timerId = setInterval(render, 200);
+    lockScreen(true); render();
+  }
+  function stop() {
+    base = elapsed(); state = "stopped";
+    if (timerId) { clearInterval(timerId); timerId = null; }
+    lockScreen(false); render();
+  }
+  function reset() {
+    if (timerId) { clearInterval(timerId); timerId = null; }
+    base = 0; state = "idle"; lockScreen(false); render();
+  }
+
+  startBtn.addEventListener("click", function () { if (state === "running") stop(); else start(); });
+  resetBtn.addEventListener("click", reset);
+  navBtns.forEach(function (b) { b.addEventListener("click", function () { show(b.getAttribute("data-view")); }); });
+  window.addEventListener("hashchange", function () {
+    var h = location.hash.replace("#", "");
+    if ((h === "timer" || h === "undian") && h !== view) show(h);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (view !== "timer" || e.code !== "Space") return;
+    var t = e.target && e.target.tagName;
+    if (t === "INPUT" || t === "BUTTON") return;
+    e.preventDefault();
+    if (state === "running") stop(); else start();
+  });
+  document.addEventListener("visibilitychange", function () { if (state === "running") render(); });
+
+  show(location.hash.replace("#", "") === "timer" ? "timer" : "undian");
+})();
+</script>
+
+</body></html>
