@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Galeri Training CRM — Batch 1 &amp; 2</title>
+<title>Galeri Training CRM — Batch 1, 2 &amp; Kaset</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -76,6 +76,7 @@ main{padding-bottom:40px}
 .session{width:min(1240px,calc(100vw - 40px));margin:0 auto;padding-top:clamp(50px,7vw,90px);scroll-margin-top:60px}
 .s1{--a:var(--violet);--b:var(--pink)}
 .s2{--a:var(--teal);--b:var(--amber)}
+.s3{--a:var(--blue);--b:var(--amber)}
 .shead{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px 30px;margin-bottom:46px}
 .big{font-family:var(--serif);font-weight:700;font-size:clamp(4.5rem,11vw,9rem);line-height:.8;color:transparent;
   background:linear-gradient(180deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;
@@ -138,6 +139,7 @@ footer .logo{display:block;margin:0 0 6px;font-size:1.4rem;color:#fff}
 
 /* ---------- Responsive ---------- */
 @media (max-width:760px){
+  .nav a{padding:9px 10px;font-size:.82rem}
   .collage{--gap:20px;grid-template-columns:repeat(2,1fr);grid-auto-rows:auto;padding:0 6px 20px}
   .slot{grid-column:auto;grid-row:auto;transform:rotate(var(--rot)) translateY(30px)}
   .slot.in{transform:rotate(var(--rot))}
@@ -157,18 +159,14 @@ footer .logo{display:block;margin:0 0 6px;font-size:1.4rem;color:#fff}
 
 <header class="nav">
   <div class="logo">Momen<i>.</i>CRM</div>
-  <a href="#sesi1">Sesi 1</a>
-  <a href="#sesi2">Sesi 2</a>
+  <span id="navLinks" style="display:contents"></span>
 </header>
 
 <section class="hero">
   <span class="eyebrow"><b></b> Galeri Dokumentasi</span>
   <h1>Kenangan <em>Training CRM</em> dalam bingkai</h1>
   <p>Kumpulan momen belajar, diskusi, dan kebersamaan peserta — ditata bebas dalam kolase potret &amp; lanskap.</p>
-  <div class="cta">
-    <a class="btn primary" href="#sesi1">Lihat Sesi 1</a>
-    <a class="btn ghost" href="#sesi2">Lihat Sesi 2</a>
-  </div>
+  <div class="cta" id="cta"></div>
   <div class="stats" id="stats"></div>
 </section>
 
@@ -176,7 +174,7 @@ footer .logo{display:block;margin:0 0 6px;font-size:1.4rem;color:#fff}
 
 <footer>
   <div class="logo">Momen<i style="font-style:normal;color:#f472b6">.</i>CRM</div>
-  Dokumentasi Training CRM · Batch 1 &amp; Batch 2
+  Dokumentasi Training CRM · Batch 1, Batch 2 &amp; Kaset CRM
 </footer>
 
 <!-- Lightbox -->
@@ -198,10 +196,11 @@ footer .logo{display:block;margin:0 0 6px;font-size:1.4rem;color:#fff}
 /* =====================================================================
    DAFTAR FOTO — ubah nama file di sini bila perlu.
    Letakkan semua file foto di FOLDER YANG SAMA dengan file HTML ini.
+   label = nama pendek untuk navigasi & statistik.
    ===================================================================== */
 const SESSIONS = [
   {
-    id:1, cls:'s1',
+    id:1, cls:'s1', label:'Batch 1',
     title:'Training Batch 1 - CRM',
     period:'Jan – Feb 2024',
     images:[
@@ -210,12 +209,21 @@ const SESSIONS = [
     ]
   },
   {
-    id:2, cls:'s2',
+    id:2, cls:'s2', label:'Batch 2',
     title:'Training Batch 2 - CRM',
     period:'Mar – Apr 2024',
     images:[
       'foto11.jpeg','foto12.jpeg','foto13.jpeg','foto14.jpeg','foto15.jpeg',
       'foto16.jpeg','foto17.jpeg','foto18.jpeg','foto19.jpeg'
+    ]
+  },
+  {
+    id:3, cls:'s3', label:'Kaset',
+    title:'Training Kaset - CRM',
+    period:'Oktober 2026',
+    images:[
+      'foto20.jpeg','foto21.jpeg','foto22.jpeg','foto23.jpeg','foto25.jpeg',
+      'foto26.jpeg'
     ]
   }
 ];
@@ -280,6 +288,11 @@ async function probe(name){
 
 /* ================= Bangun halaman ================= */
 function build(){
+  /* Navigasi & tombol hero dibuat otomatis dari daftar SESSIONS */
+  $('#navLinks').innerHTML=SESSIONS.map(s=>'<a href="#sesi'+s.id+'">Sesi '+s.id+'</a>').join('');
+  $('#cta').innerHTML=SESSIONS.map((s,i)=>
+    '<a class="btn '+(i===0?'primary':'ghost')+'" href="#sesi'+s.id+'">Lihat Sesi '+s.id+'</a>').join('');
+
   const main=$('#main'); main.innerHTML='';
   SESSIONS.forEach(s=>{
     s.layout=layoutFor(s.images.length);
@@ -288,7 +301,7 @@ function build(){
     sec.innerHTML=
       '<div class="shead">'+
         '<div class="big">'+pad(s.id)+'</div>'+
-        '<div class="ttlwrap"><div class="kicker">Sesi '+s.id+'</div>'+
+        '<div class="ttlwrap"><div class="kicker">Sesi '+s.id+' · '+esc(s.label)+'</div>'+
           '<h2 class="ttl">'+esc(s.title)+'</h2><div class="per">'+esc(s.period)+'</div></div>'+
         '<div class="cnt"><b>'+s.images.length+'</b> foto</div>'+
       '</div>'+
@@ -305,7 +318,7 @@ function build(){
   });
   const total=SESSIONS.reduce((a,s)=>a+s.images.length,0);
   $('#stats').innerHTML=SESSIONS.map(s=>
-    '<div class="stat"><small>Sesi '+s.id+' · Batch '+s.id+'</small><strong>'+s.images.length+'<span> foto</span></strong></div>').join('')+
+    '<div class="stat"><small>Sesi '+s.id+' · '+esc(s.label)+'</small><strong>'+s.images.length+'<span> foto</span></strong></div>').join('')+
     '<div class="stat"><small>Total Foto</small><strong>'+total+'<span> foto</span></strong></div>';
 }
 
@@ -333,7 +346,8 @@ function renderSlot(s,i,r){
 }
 
 async function load(){
-  for(const s of SESSIONS){
+  /* Semua sesi dimuat paralel agar Sesi 3 tidak menunggu sesi sebelumnya */
+  await Promise.all(SESSIONS.map(async s=>{
     const results=await Promise.all(s.images.map(probe));
     s.results=results;
     const place=assign(s,results);
@@ -345,13 +359,14 @@ async function load(){
       n.innerHTML='Foto berikut tidak ditemukan: <b>'+missing.map(esc).join(', ')+'</b>.<br>Pastikan file ada di folder yang sama dengan halaman ini dan namanya sama persis.';
       $('.shead',$('#sesi'+s.id)).after(n);
     }
-  }
+  }));
 }
 
 /* ================= Lightbox ================= */
 const lb=$('#lb'); let LB={s:null,list:[],pos:0};
 function openLb(s,n){
-  LB.s=s; LB.list=s.results.filter(r=>r.ok).map((r,k)=>({...r,idx:s.results.indexOf(r)}));
+  if(!s.results) return;
+  LB.s=s; LB.list=s.results.map((r,idx)=>({...r,idx})).filter(r=>r.ok);
   LB.pos=Math.max(0,LB.list.findIndex(r=>r.idx===n));
   showLb(); lb.hidden=false; document.body.style.overflow='hidden';
 }
