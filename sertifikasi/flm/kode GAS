@@ -1,0 +1,219 @@
+/**
+ * =====================================================================
+ *  POST TEST - SERTIFIKASI FLM   (BACKEND API) - VERSI FINAL
+ *  PT Swadharma Sarana Informatika
+ * =====================================================================
+ *  CARA DEPLOY:
+ *  1. Buka spreadsheet soal, lalu Extensions > Apps Script
+ *     (script HARUS dibuat dari dalam spreadsheet ini).
+ *  2. Sheet "Soal": A=No, B=Soal, C-F=Pilihan A-D, G=Kunci (A/B/C/D).
+ *     Baris 1 = header, baris 2-41 = 40 soal.
+ *  3. Tempel seluruh isi file ini ke Code.gs, lalu Simpan.
+ *  4. Jalankan fungsi "tesBackend" sekali dari editor (klik Run) untuk
+ *     memberi izin akses spreadsheet dan memastikan soal terbaca.
+ *  5. Deploy > New deployment > Web app
+ *       Execute as     : Me
+ *       Who has access : Anyone
+ *  6. Salin URL ".../exec" ke CONFIG.APPS_SCRIPT_URL di index.html.
+ *  7. Setiap mengubah kode: Deploy > Manage deployments > pensil >
+ *     Version: New version > Deploy. (Ctrl+S saja TIDAK cukup.)
+ *  8. Setiap mengubah ISI SOAL di sheet: jalankan fungsi "hapusCache"
+ *     dari editor agar soal terbaru langsung dipakai.
+ *  9. Tes: buka URL /exec?action=getQuestions di tab incognito.
+ *     Harus muncul JSON {"ok":true,...}. Jika muncul halaman login
+ *     Google, berarti akses belum "Anyone".
+ * =====================================================================
+ */
+
+const SOAL_SHEET_NAME  = 'Soal';
+const HASIL_SHEET_NAME = 'Hasil';
+const TEMA_SERTIFIKASI = 'Sertifikasi First Level Maintenance PT Swadharma Sarana Informatika';
+const PASSING_GRADE    = 70;     // nilai minimum
+const LULUS_JIKA_SAMA  = true;   // true: nilai >= 70 lulus | false: harus > 70
+const JUMLAH_SOAL      = 40;
+const CACHE_SOAL_KEY   = 'soal_cache_flm_v3';
+const CACHE_SOAL_TTL   = 600;    // detik
+
+const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli',
+               'Agustus','September','Oktober','November','Desember'];
+
+function doGet(e) {
+  try {
+    const action = e && e.parameter ? e.parameter.action : '';
+    if (action === 'getQuestions') {
+      return jsonOutput_({ ok: true, data: getQuestions_() });
+    }
+    return jsonOutput_({
+      ok: true,
+      message: 'Backend Post Test Sertifikasi FLM aktif. Gunakan ?action=getQuestions atau POST action=submitTest.'
+    });
+  } catch (err) {
+    return jsonOutput_({ ok: false, error: err.message });
+  }
+}
+
+function doPost(e) {
+  try {
+    const action = e && e.parameter ? e.parameter.action : '';
+    if (action === 'submitTest') {
+      const payload = JSON.parse(e.parameter.payload);
+      return jsonOutput_({ ok: true, data: submitTest_(payload) });
+    }
+    return jsonOutput_({ ok: false, error: 'Unknown action: ' + action });
+  } catch (err) {
+    return jsonOutput_({ ok: false, error: err.message });
+  }
+}
+
+function jsonOutput_(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Satu sumber data untuk soal DAN kunci jawaban (di-cache di server).
+ * Kunci tidak pernah dikirim ke client.
+ */
+function getSoalData_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get(CACHE_SOAL_KEY);
+  if (cached) return JSON.parse(cached);
+
+  const data = getSheet_(SOAL_SHEET_NAME).getDataRange().getValues();
+  const rows = [];
+  for (let i = 1; i < data.length && rows.length < JUMLAH_SOAL; i++) {
+    const r = data[i];
+    if (!r[1]) continue;
+    rows.push({
+      soal: String(r[1]),
+      A: String(r[2] === undefined ? '' : r[2]),
+      B: String(r[3] === undefined ? '' : r[3]),
+      C: String(r[4] === undefined ? '' : r[4]),
+      D: String(r[5] === undefined ? '' : r[5]),
+      kunci: String(r[6] || '').trim().toUpperCase()
+    });
+  }
+  if (rows.length === 0) {
+    throw new Error('Belum ada soal di sheet "' + SOAL_SHEET_NAME + '".');
+  }
+  try {
+    cache.put(CACHE_SOAL_KEY, JSON.stringify(rows), CACHE_SOAL_TTL);
+  } catch (e) { /* abaikan jika cache gagal */ }
+  return rows;
+}
+
+function getQuestions_() {
+  return getSoalData_().map(function (r, i) {
+    return { index: i, soal: r.soal, pilihan: { A: r.A, B: r.B, C: r.C, D: r.D } };
+  });
+}
+
+/**
+ * payload = { nama, npp, region, kantor, jawaban: { "0":"A", "1":"C", ... } }
+ */
+function submitTest_(payload) {
+  if (!payload || !payload.nama || !payload.npp) {
+    throw new Error('Data peserta tidak lengkap.');
+  }
+
+  const rows = getSoalData_();
+  const total = rows.length;
+  const jawaban = payload.jawaban || {};
+  let benar = 0;
+
+  rows.forEach(function (r, idx) {
+    const user = String(jawaban[idx] || '').trim().toUpperCase();
+    if (r.kunci !== '' && user === r.kunci) benar++;
+  });
+
+  const nilai = total > 0 ? Math.round((benar / total) * 100) : 0;
+  const lulus = LULUS_JIKA_SAMA ? (nilai >= PASSING_GRADE) : (nilai > PASSING_GRADE);
+
+  logHasil_(payload, nilai, benar, total, lulus);
+
+  return {
+    nilai: nilai,
+    benar: benar,
+    total: total,
+    lulus: lulus,
+    passingGrade: PASSING_GRADE,
+    lulusJikaSama: LULUS_JIKA_SAMA,
+    tema: TEMA_SERTIFIKASI,
+    nama: String(payload.nama),
+    npp: String(payload.npp),
+    region: String(payload.region || ''),
+    kantor: String(payload.kantor || ''),
+    tanggal: tanggalIndonesia_(new Date())
+  };
+}
+
+function tanggalIndonesia_(d) {
+  const tz = 'Asia/Jakarta';
+  const hari  = Utilities.formatDate(d, tz, 'dd');
+  const bulan = BULAN[Number(Utilities.formatDate(d, tz, 'M')) - 1];
+  const tahun = Utilities.formatDate(d, tz, 'yyyy');
+  return hari + ' ' + bulan + ' ' + tahun;
+}
+
+/** Cegah formula injection di Google Sheets. */
+function safe_(v) {
+  v = String(v === undefined || v === null ? '' : v);
+  return /^[=+\-@]/.test(v) ? "'" + v : v;
+}
+
+function logHasil_(payload, nilai, benar, total, lulus) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(25000);
+  } catch (e) {
+    throw new Error('Server sedang sibuk memproses banyak peserta lain, silakan coba submit ulang dalam beberapa detik.');
+  }
+
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let sheet = ss.getSheetByName(HASIL_SHEET_NAME);
+    if (!sheet) {
+      sheet = ss.insertSheet(HASIL_SHEET_NAME);
+      sheet.appendRow(['Timestamp', 'Nama Pegawai', 'NPP', 'Region', 'Kantor', 'Benar', 'Total Soal', 'Nilai', 'Status']);
+      sheet.getRange(1, 1, 1, 9).setFontWeight('bold');
+    }
+    // NPP disimpan sebagai teks agar angka 0 di depan tidak hilang
+    const npp = safe_(payload.npp);
+    sheet.appendRow([
+      new Date(), safe_(payload.nama), npp, safe_(payload.region), safe_(payload.kantor),
+      benar, total, nilai, lulus ? 'LULUS' : 'TIDAK LULUS'
+    ]);
+    const lastRow = sheet.getLastRow();
+    sheet.getRange(lastRow, 3).setNumberFormat('@').setValue(npp);
+    SpreadsheetApp.flush();
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function getSheet_(name) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name);
+  if (!sheet) {
+    throw new Error('Sheet "' + name + '" tidak ditemukan. Pastikan nama sheet soal adalah "' + name + '".');
+  }
+  return sheet;
+}
+
+/* ===================== FUNGSI BANTU (jalankan dari editor) ===================== */
+
+/** Jalankan setelah mengedit soal di sheet. */
+function hapusCache() {
+  CacheService.getScriptCache().remove(CACHE_SOAL_KEY);
+  Logger.log('Cache soal dihapus.');
+}
+
+/** Jalankan sekali untuk memberi izin & mengecek data soal. */
+function tesBackend() {
+  hapusCache();
+  const rows = getSoalData_();
+  const tanpaKunci = rows.filter(function (r) { return ['A','B','C','D'].indexOf(r.kunci) === -1; }).length;
+  Logger.log('Jumlah soal terbaca : ' + rows.length + ' (target ' + JUMLAH_SOAL + ')');
+  Logger.log('Soal tanpa kunci valid: ' + tanpaKunci);
+  Logger.log('Contoh tanggal      : ' + tanggalIndonesia_(new Date()));
+}
