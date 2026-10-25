@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,13 +10,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root{
-      --graphite:#171F1B;
-      --graphite-2:#1F2A22;
-      --rust:#D3672E;
-      --rust-light:#F0A876;
-      --bg:#F1F2ED;
-      --danger:#B23A2E;
-      --success:#3D7A56;
+      --graphite:#171F1B; --graphite-2:#1F2A22;
+      --rust:#D3672E; --rust-light:#F0A876;
+      --bg:#F1F2ED; --danger:#B23A2E; --success:#3D7A56;
     }
     *{box-sizing:border-box;}
     body{margin:0;font-family:'IBM Plex Sans',Arial,sans-serif;background:var(--bg);color:#1B221D;}
@@ -48,15 +44,21 @@
     .progress-bar{height:8px;background:#E6EAE0;border-radius:99px;overflow:hidden;margin-bottom:18px;}
     .progress-fill{height:100%;background:var(--rust);width:0%;transition:width .25s ease;}
     .q-counter{font-size:13px;color:#5F6B62;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;}
-    .q-text{font-family:'Archivo',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--graphite);}
+    .q-text{font-family:'Archivo',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--graphite);white-space:pre-line;}
     .option{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #DDE3D5;border-radius:10px;margin-bottom:10px;cursor:pointer;font-size:14px;transition:.15s;}
     .option:hover{border-color:var(--graphite-2);background:#F6F9F3;}
     .option.selected{border-color:var(--graphite);background:#EAF0E4;font-weight:600;}
     .option .letter{width:26px;height:26px;flex:0 0 26px;border-radius:50%;background:#EEF1E7;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--graphite);font-family:'IBM Plex Mono',monospace;}
     .option.selected .letter{background:var(--graphite);color:#fff;}
     .quiz-nav{display:flex;justify-content:space-between;margin-top:20px;gap:10px;}
+    .quiz-nav .btn{margin-top:0;}
+    .quiz-nav #btnPrev{width:auto;}
+    .quiz-nav #btnNext{width:auto;flex:1;max-width:260px;}
 
-    .loader{text-align:center;padding:30px 0;color:#5F6B62;font-size:14px;}
+    .loader{text-align:center;padding:30px 0;color:#5F6B62;font-size:14px;line-height:1.6;}
+    .loader .err{color:var(--danger);font-weight:600;}
+    .loader small{color:#8A948C;display:block;margin-top:6px;}
+    .loader .btn{margin-top:14px;padding:10px 22px;font-size:14px;}
     .spinner{width:34px;height:34px;margin:0 auto 12px;border:4px solid #E0E6D8;border-top-color:var(--graphite);border-radius:50%;animation:spin .8s linear infinite;}
     @keyframes spin{to{transform:rotate(360deg);}}
 
@@ -85,6 +87,15 @@
     .certificate .foot .line{border-top:1px solid #99A491;margin-top:30px;padding-top:6px;}
 
     footer{text-align:center;font-size:12px;color:#7A8674;padding:20px;font-family:'IBM Plex Mono',monospace;}
+
+    @media (max-width:560px){
+      .headline h1{font-size:25px;}
+      .certificate{padding:22px 14px;border-width:7px;outline-offset:-14px;}
+      .certificate .title{font-size:17px;}
+      .certificate .name{font-size:20px;}
+      .certificate .desc{font-size:10.5px;max-width:92%;}
+      .certificate .foot{font-size:9px;}
+    }
   </style>
 </head>
 <body>
@@ -129,10 +140,10 @@
     <div class="card" id="testSection" style="display:none;">
       <div class="step-tag">SESI 2 DARI 2</div>
       <h2>Post Test Pilihan Ganda</h2>
-      <div class="sub">Test terdiri dari 25 soal pilihan ganda. Pastikan koneksi internet Anda stabil.</div>
+      <div class="sub">Test terdiri dari 40 soal pilihan ganda. Nilai kelulusan minimal 70. Pastikan koneksi internet Anda stabil.</div>
 
       <div id="startArea"><button id="btnStart" class="btn btn-primary">Mulai Test</button></div>
-      <div id="loadingArea" class="loader" style="display:none;"><div class="spinner"></div>Memuat soal, mohon tunggu...</div>
+      <div id="loadingArea" class="loader" style="display:none;"></div>
 
       <div id="quizArea">
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -141,11 +152,11 @@
         <div id="optionsArea"></div>
         <div class="quiz-nav">
           <button class="btn btn-outline" id="btnPrev">&larr; Sebelumnya</button>
-          <button class="btn btn-primary" id="btnNext" style="margin-top:0;">Berikutnya &rarr;</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
         </div>
       </div>
 
-      <div id="calculatingArea" class="loader" style="display:none;"><div class="spinner"></div>Menghitung nilai Anda...</div>
+      <div id="calculatingArea" class="loader" style="display:none;"></div>
     </div>
 
     <div class="card" id="certSection">
@@ -187,24 +198,58 @@
       <div class="icon">&#10007;</div>
       <h3>Belum Memenuhi Passing Grade</h3>
       <div class="score-fail" id="failScore">-</div>
-      <p>Nilai Anda belum passing grade 70 atau lebih, tolong ulangi post test-nya.</p>
+      <p id="failMsg">Nilai Anda belum mencapai passing grade, silakan ulangi post test.</p>
       <button class="btn btn-primary" id="btnRetry" style="margin-top:16px;">Ulangi Post Test</button>
     </div>
   </div>
 
   <script>
-    const CONFIG = { APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwR-nff9b54GLsTMUJoFKe71OMZ7Vh3XBOEEdVrwHJXOGUYtDNkl35Ub0P7_x1dMbUCKQ/exec' };
+    // Ganti dengan URL /exec dari deployment Apps Script Anda
+    const CONFIG = { APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzc-PLzn5ShTlBctQFXm5XBs-aLC-M53GI_3O93A4Fy2Qe8FTUvpbR-qv1ZR4MgQ5M-qA/exec' };
 
-    document.getElementById('yearNow').textContent = new Date().getFullYear();
+    const $ = function(id){ return document.getElementById(id); };
+    $('yearNow').textContent = new Date().getFullYear();
 
     if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.indexOf('PASTE_URL') !== -1) {
-      document.getElementById('startArea').innerHTML = '<p style="color:#B23A2E;font-size:13px;">Konfigurasi belum lengkap: isi CONFIG.APPS_SCRIPT_URL pada file ini dengan URL /exec dari Apps Script Anda.</p>';
+      $('startArea').innerHTML = '<p style="color:#B23A2E;font-size:13px;">Konfigurasi belum lengkap: isi CONFIG.APPS_SCRIPT_URL dengan URL /exec dari Apps Script Anda.</p>';
     }
 
     let biodata = {};
     let questions = [];
     let currentIndex = 0;
     let answers = {};
+    let submitting = false;
+
+    function esc(s){
+      return String(s).replace(/[&<>"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+      });
+    }
+
+    function showSpinner(el, text){
+      el.innerHTML = '<div class="spinner"></div>' + esc(text);
+      el.style.display = 'block';
+    }
+
+    function showError(el, title, err, retryFn){
+      el.innerHTML = '<div class="err">' + esc(title) + '</div>' +
+        '<small>' + esc(err.message || err) + '</small>' +
+        '<button class="btn btn-primary" id="btnErrRetry">Coba Lagi</button>';
+      el.style.display = 'block';
+      $('btnErrRetry').addEventListener('click', retryFn);
+    }
+
+    function parseJsonResponse(res){
+      return res.text().then(function(text){
+        try { return JSON.parse(text); }
+        catch (e) {
+          if (text.trim().indexOf('<') === 0) {
+            throw new Error('Server mengembalikan halaman HTML, bukan data. Pastikan deployment Apps Script diatur "Anyone" dan sudah di-deploy sebagai versi baru.');
+          }
+          throw new Error('Format respon dari server tidak dikenali.');
+        }
+      });
+    }
 
     function fetchWithRetry(url, options, retriesLeft){
       if (retriesLeft === undefined) retriesLeft = 2;
@@ -218,83 +263,85 @@
       });
     }
 
-    function parseJsonResponse(res){
-      return res.text().then(function(text){
-        try { return JSON.parse(text); }
-        catch (e) {
-          const isHtml = text.trim().indexOf('<') === 0;
-          if (isHtml) throw new Error('Server mengembalikan halaman HTML, bukan data (kemungkinan deployment Apps Script belum "Anyone can access", atau URL /exec sudah tidak berlaku - deploy ulang sebagai versi baru).');
-          throw new Error('Format respon dari server tidak dikenali.');
-        }
-      });
-    }
-
-    document.getElementById('biodataForm').addEventListener('submit', function(e){
+    $('biodataForm').addEventListener('submit', function(e){
       e.preventDefault();
       biodata = {
-        nama: document.getElementById('nama').value.trim(),
-        npp: document.getElementById('npp').value.trim(),
-        region: document.getElementById('region').value,
-        kantor: document.getElementById('kantor').value.trim()
+        nama: $('nama').value.trim(),
+        npp: $('npp').value.trim(),
+        region: $('region').value,
+        kantor: $('kantor').value.trim()
       };
-      document.getElementById('biodataSection').style.display = 'none';
-      document.getElementById('testSection').style.display = 'block';
+      if (!biodata.nama || !biodata.npp || !biodata.region || !biodata.kantor) return;
+      $('biodataSection').style.display = 'none';
+      $('testSection').style.display = 'block';
       window.scrollTo({top:0, behavior:'smooth'});
     });
 
-    document.getElementById('btnStart').addEventListener('click', function(){
-      document.getElementById('startArea').style.display = 'none';
-      document.getElementById('calculatingArea').style.display = 'none';
-      const loadArea = document.getElementById('loadingArea');
-      loadArea.innerHTML = '<div class="spinner"></div>Memuat soal, mohon tunggu...';
-      loadArea.style.display = 'block';
+    function loadQuestions(){
+      $('startArea').style.display = 'none';
+      $('calculatingArea').style.display = 'none';
+      const loadArea = $('loadingArea');
+      showSpinner(loadArea, 'Memuat soal, mohon tunggu...');
 
+      // Tanpa header kustom => "simple request", tidak memicu CORS preflight
       fetchWithRetry(CONFIG.APPS_SCRIPT_URL + '?action=getQuestions', undefined, 2)
         .then(function(json){
           if (!json.ok) throw new Error(json.error || 'Gagal memuat soal');
+          if (!json.data || !json.data.length) throw new Error('Soal kosong.');
           questions = json.data;
           loadArea.style.display = 'none';
-          document.getElementById('quizArea').style.display = 'block';
+          $('quizArea').style.display = 'block';
           currentIndex = 0;
           renderQuestion();
         })
-        .catch(function(err){ loadArea.innerHTML = 'Gagal memuat soal: ' + err.message; });
-    });
+        .catch(function(err){
+          showError(loadArea, 'Gagal memuat soal. Periksa koneksi internet Anda.', err, loadQuestions);
+        });
+    }
+    $('btnStart').addEventListener('click', loadQuestions);
 
     function renderQuestion(){
       const q = questions[currentIndex];
-      document.getElementById('progressFill').style.width = (((currentIndex)/questions.length)*100) + '%';
-      document.getElementById('qCounter').textContent = 'Soal ' + (currentIndex+1) + ' dari ' + questions.length;
-      document.getElementById('qText').textContent = q.soal;
+      $('progressFill').style.width = ((currentIndex / questions.length) * 100) + '%';
+      $('qCounter').textContent = 'Soal ' + (currentIndex + 1) + ' dari ' + questions.length +
+        '  |  Terjawab: ' + Object.keys(answers).length;
+      $('qText').textContent = q.soal;
 
-      const optArea = document.getElementById('optionsArea');
+      const optArea = $('optionsArea');
       optArea.innerHTML = '';
       ['A','B','C','D'].forEach(function(letter){
-        const teksPilihan = q.pilihan[letter];
-        if (teksPilihan === undefined || teksPilihan === '') return;
+        const teks = q.pilihan[letter];
+        if (teks === undefined || teks === null || teks === '') return;
         const div = document.createElement('div');
         div.className = 'option' + (answers[q.index] === letter ? ' selected' : '');
-        div.innerHTML = '<span class="letter">' + letter + '</span><span>' + teksPilihan + '</span>';
+        const l = document.createElement('span'); l.className = 'letter'; l.textContent = letter;
+        const t = document.createElement('span'); t.textContent = teks;
+        div.appendChild(l); div.appendChild(t);
         div.addEventListener('click', function(){ answers[q.index] = letter; renderQuestion(); });
         optArea.appendChild(div);
       });
 
-      document.getElementById('btnPrev').disabled = currentIndex === 0;
-      document.getElementById('btnNext').textContent = (currentIndex === questions.length - 1) ? 'Selesai & Kirim' : 'Berikutnya \u2192';
+      $('btnPrev').disabled = currentIndex === 0;
+      $('btnNext').textContent = (currentIndex === questions.length - 1) ? 'Selesai & Kirim' : 'Berikutnya \u2192';
     }
 
-    document.getElementById('btnPrev').addEventListener('click', function(){ if (currentIndex > 0){ currentIndex--; renderQuestion(); } });
+    $('btnPrev').addEventListener('click', function(){
+      if (currentIndex > 0){ currentIndex--; renderQuestion(); }
+    });
 
-    document.getElementById('btnNext').addEventListener('click', function(){
-      if (currentIndex < questions.length - 1){ currentIndex++; renderQuestion(); }
-      else { submitAnswers(); }
+    $('btnNext').addEventListener('click', function(){
+      if (currentIndex < questions.length - 1){ currentIndex++; renderQuestion(); return; }
+      const kosong = questions.length - Object.keys(answers).length;
+      if (kosong > 0 && !confirm('Masih ada ' + kosong + ' soal yang belum dijawab. Tetap kirim jawaban?')) return;
+      submitAnswers();
     });
 
     function submitAnswers(){
-      document.getElementById('quizArea').style.display = 'none';
-      const calcArea = document.getElementById('calculatingArea');
-      calcArea.innerHTML = '<div class="spinner"></div>Menghitung nilai Anda...';
-      calcArea.style.display = 'block';
+      if (submitting) return;
+      submitting = true;
+      $('quizArea').style.display = 'none';
+      const calcArea = $('calculatingArea');
+      showSpinner(calcArea, 'Menghitung nilai Anda...');
 
       const payload = { nama: biodata.nama, npp: biodata.npp, region: biodata.region, kantor: biodata.kantor, jawaban: answers };
       const body = new URLSearchParams();
@@ -304,59 +351,71 @@
       fetchWithRetry(CONFIG.APPS_SCRIPT_URL, { method: 'POST', body: body }, 1)
         .then(function(json){
           if (!json.ok) throw new Error(json.error || 'Gagal mengirim jawaban');
+          submitting = false;
           calcArea.style.display = 'none';
           handleResult(json.data);
         })
-        .catch(function(err){ calcArea.innerHTML = 'Terjadi kesalahan: ' + err.message; });
+        .catch(function(err){
+          submitting = false;
+          showError(calcArea, 'Jawaban belum terkirim. Jawaban Anda masih tersimpan, silakan coba lagi.', err, submitAnswers);
+        });
     }
 
     function handleResult(result){
-      document.getElementById('testSection').style.display = 'none';
+      $('testSection').style.display = 'none';
       if (!result.lulus){
-        document.getElementById('failScore').textContent = result.nilai;
-        document.getElementById('failOverlay').style.display = 'flex';
+        $('failScore').textContent = result.nilai;
+        const syarat = result.lulusJikaSama === false ? 'di atas ' : '';
+        $('failMsg').textContent = 'Nilai Anda belum mencapai passing grade (' + syarat + result.passingGrade + '). Silakan ulangi post test.';
+        $('failOverlay').style.display = 'flex';
       } else {
-        document.getElementById('skorLulusText').textContent = result.nilai;
-        document.getElementById('certNama').textContent = result.nama;
-        document.getElementById('certNpp').textContent = 'NPP: ' + result.npp;
-        document.getElementById('certTema').textContent = result.tema;
-        document.getElementById('certNilai').textContent = result.nilai;
-        document.getElementById('certTanggal').textContent = result.tanggal;
-        document.getElementById('certKantorRegion').textContent = result.kantor + ' / ' + result.region;
-        document.getElementById('certSection').style.display = 'block';
+        $('skorLulusText').textContent = result.nilai;
+        $('certNama').textContent = result.nama;
+        $('certNpp').textContent = 'NPP: ' + result.npp;
+        $('certTema').textContent = result.tema;
+        $('certNilai').textContent = result.nilai;
+        $('certTanggal').textContent = result.tanggal;
+        $('certKantorRegion').textContent = result.kantor + ' / ' + result.region;
+        $('certSection').style.display = 'block';
       }
       window.scrollTo({top:0, behavior:'smooth'});
     }
 
-    document.getElementById('btnRetry').addEventListener('click', function(){
-      document.getElementById('failOverlay').style.display = 'none';
-      answers = {}; currentIndex = 0;
-      document.getElementById('testSection').style.display = 'block';
-      document.getElementById('quizArea').style.display = 'none';
-      document.getElementById('calculatingArea').style.display = 'none';
-      document.getElementById('loadingArea').style.display = 'none';
-      document.getElementById('startArea').style.display = 'block';
+    $('btnRetry').addEventListener('click', function(){
+      $('failOverlay').style.display = 'none';
+      answers = {}; currentIndex = 0; questions = [];
+      $('testSection').style.display = 'block';
+      $('quizArea').style.display = 'none';
+      $('calculatingArea').style.display = 'none';
+      $('loadingArea').style.display = 'none';
+      $('startArea').style.display = 'block';
     });
 
-    document.getElementById('btnDownloadPng').addEventListener('click', function(){
-      const node = document.getElementById('certificateNode');
-      html2canvas(node, {scale:3, backgroundColor:'#FDFCF7'}).then(function(canvas){
+    function renderCertCanvas(){
+      const node = $('certificateNode');
+      return html2canvas(node, { scale: 3, backgroundColor: '#FDFCF7', useCORS: true });
+    }
+    function safeFileName(){
+      return (biodata.nama || 'peserta').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-') || 'peserta';
+    }
+
+    $('btnDownloadPng').addEventListener('click', function(){
+      renderCertCanvas().then(function(canvas){
         const link = document.createElement('a');
-        link.download = 'Sertifikat-FLM-' + (biodata.nama || 'peserta') + '.png';
+        link.download = 'Sertifikat-FLM-' + safeFileName() + '.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
-      });
+      }).catch(function(){ alert('Gagal membuat PNG, silakan coba lagi.'); });
     });
 
-    document.getElementById('btnDownloadPdf').addEventListener('click', function(){
-      const node = document.getElementById('certificateNode');
-      html2canvas(node, {scale:3, backgroundColor:'#FDFCF7'}).then(function(canvas){
+    $('btnDownloadPdf').addEventListener('click', function(){
+      renderCertCanvas().then(function(canvas){
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({ orientation:'landscape', unit:'px', format:[canvas.width, canvas.height] });
+        const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [canvas.width, canvas.height] });
         pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-        pdf.save('Sertifikat-FLM-' + (biodata.nama || 'peserta') + '.pdf');
-      });
+        pdf.save('Sertifikat-FLM-' + safeFileName() + '.pdf');
+      }).catch(function(){ alert('Gagal membuat PDF, silakan coba lagi.'); });
     });
   </script>
 </body>
