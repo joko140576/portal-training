@@ -1,0 +1,151 @@
+/**
+ * POST TEST E-LEARNING SOP - Google Apps Script
+ * Dipanggil dari index.html lokal lewat JSONP (<script> tag)
+ * => tidak terkena CORS. Deploy sebagai Web App untuk mendapatkan URL .../exec
+ */
+
+// ================== KONFIGURASI ==================
+const SPREADSHEET_ID = '1OT3A50uM9qw-nVcBMLWk9_ZKJSQo3oU3-oR3pFMcxNc';
+const SHEET_SOAL     = '';            // kosong = sheet pertama (gid=0)
+const SHEET_HASIL    = 'Hasil';       // dibuat otomatis kalau belum ada
+const PASSING_SCORE  = 70;            // lulus jika nilai > 70
+const JUMLAH_SOAL    = 0;             // 0 = semua soal; isi angka untuk mengacak sebagian
+const BATASI_PERIODE = false;         // true = tes hanya dibuka pada periode pelatihan
+const TGL_MULAI      = '2026-11-09';
+const TGL_SELESAI    = '2026-11-16';
+const TZ             = 'Asia/Jakarta';
+
+// ================== API (JSONP - bebas CORS, bisa dipanggil dari file lokal) ==================
+function doGet(e) {
+  const p = (e && e.parameter) || {};
+  const cb = /^[A-Za-z_$][\w$.]*$/.test(p.callback || '') ? p.callback : '';
+  let res;
+  try {
+    if (p.action === 'questions') {
+      res = { ok: true, data: getQuestions() };
+    } else if (p.action === 'submit') {
+      // answers format: "1:2,2:0,3:1" (nomor soal : index pilihan)
+      const answers = {};
+      String(p.answers || '').split(',').forEach(pair => {
+        const kv = pair.split(':');
+        if (kv.length === 2) answers[kv[0]] = parseInt(kv[1], 10);
+      });
+      res = { ok: true, data: submitTest({
+        nama: p.nama, npp: p.npp, divisi: p.divisi, region: p.region, cou: p.cou,
+        answers: answers, asked: Object.keys(answers)
+      }) };
+    } else {
+      res = { ok: true, data: 'API Post Test E-Learning SOP aktif' };
+    }
+  } catch (err) {
+    res = { ok: false, error: String(err.message || err) };
+  }
+  const json = JSON.stringify(res);
+  return cb
+    ? ContentService.createTextOutput(cb + '(' + json + ');').setMimeType(ContentService.MimeType.JAVASCRIPT)
+    : ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+}
+
+// ================== AMBIL SOAL (tanpa kunci jawaban) ==================
+function getQuestions() {
+  checkPeriod_();
+  let rows = readQuestions_();
+  if (JUMLAH_SOAL > 0 && rows.length > JUMLAH_SOAL) {
+    rows = shuffle_(rows).slice(0, JUMLAH_SOAL);
+  }
+  return rows.map(r => ({ no: r.no, q: r.q, options: r.options })); // kunci TIDAK dikirim
+}
+
+// ================== PENILAIAN DI SERVER ==================
+function submitTest(payload) {
+  checkPeriod_();
+  const nama = String(payload.nama || '').trim();
+  const npp    = String(payload.npp || '').trim();
+  const divisi = String(payload.divisi || '').trim();
+  const region = String(payload.region || '').trim();
+  const cou    = String(payload.cou || '').trim();
+  const answers = payload.answers || {};   // { "1": 2, "2": 0, ... } (index pilihan)
+  const asked = payload.asked || [];       // daftar nomor soal yang ditampilkan
+  if (!nama || !npp || !divisi || !region || !cou) throw new Error('Semua data diri wajib diisi.');
+
+  const bank = {};
+  readQuestions_().forEach(r => bank[String(r.no)] = r);
+
+  let benar = 0, total = 0;
+  asked.forEach(no => {
+    const r = bank[String(no)];
+    if (!r) return;
+    total++;
+    if (answers[String(no)] === r.correctIndex) benar++;
+  });
+  if (total === 0) throw new Error('Tidak ada soal yang dinilai.');
+
+  const nilai = Math.round((benar / total) * 10000) / 100;
+  const lulus = nilai > PASSING_SCORE;
+  const now = new Date();
+  let noSertifikat = '';
+  if (lulus) {
+    noSertifikat = 'SOP/' + Utilities.formatDate(now, TZ, 'yyyyMM') + '/' +
+      Utilities.getUuid().substring(0, 6).toUpperCase();
+  }
+
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sh = ss.getSheetByName(SHEET_HASIL);
+  if (!sh) {
+    sh = ss.insertSheet(SHEET_HASIL);
+    sh.appendRow(['Waktu', 'Nama', 'NPP', 'Divisi', 'Region', 'COU/Kantor', 'Benar', 'Total', 'Nilai', 'Status', 'No. Sertifikat']);
+    sh.setFrozenRows(1);
+  }
+  sh.appendRow([now, nama, "'" + npp, divisi, region, cou, benar, total, nilai, lulus ? 'LULUS' : 'TIDAK LULUS', noSertifikat]);
+
+  return {
+    nama: nama, npp: npp, divisi: divisi, region: region, cou: cou,
+    benar: benar, total: total, nilai: nilai,
+    lulus: lulus, passing: PASSING_SCORE,
+    noSertifikat: noSertifikat,
+    tanggal: Utilities.formatDate(now, TZ, 'dd MMMM yyyy')
+  };
+}
+
+// ================== HELPER ==================
+function readQuestions_() {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const sh = SHEET_SOAL ? ss.getSheetByName(SHEET_SOAL) : ss.getSheets()[0];
+  const data = sh.getDataRange().getDisplayValues();
+  const out = [];
+  data.forEach(row => {
+    const no = String(row[0]).trim();
+    if (!/^\d+$/.test(no)) return;              // lewati header / baris kosong
+    const q = String(row[1]).trim();
+    const options = [row[2], row[3], row[4], row[5]].map(v => String(v).trim());
+    const key = String(row[6]).trim();
+    if (!q) return;
+
+    // Kunci boleh berupa huruf (A-D), angka (1-4), atau teks pilihan
+    let idx = -1;
+    const k = key.toUpperCase();
+    if (/^[A-D]$/.test(k)) idx = k.charCodeAt(0) - 65;
+    else if (/^[1-4]$/.test(k)) idx = parseInt(k, 10) - 1;
+    else idx = options.findIndex(o => o.toLowerCase() === key.toLowerCase());
+
+    out.push({ no: parseInt(no, 10), q: q, options: options, correctIndex: idx });
+  });
+  return out;
+}
+
+function shuffle_(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function checkPeriod_() {
+  if (!BATASI_PERIODE) return;
+  const today = Utilities.formatDate(new Date(), TZ, 'yyyy-MM-dd');
+  if (today < TGL_MULAI || today > TGL_SELESAI) {
+    throw new Error('Post test hanya dibuka pada 09 - 16 November 2026.');
+  }
+}
