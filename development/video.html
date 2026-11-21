@@ -1,1 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SCALE Platform</title>
+<meta name="description" content="Platform belajar SCALE: materi training dan webinar AI, konten kreator, Arduino, animasi, desain 3D, dan lainnya." />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#fbf9f4; --card:#fff; --ink:#16213e; --muted:#667085; --line:#ece7dc;
+  --gold:#c9972f; --indigo:#4338ca; --r:20px;
+  --sh:0 1px 2px rgba(22,33,62,.05),0 12px 32px -12px rgba(22,33,62,.14);
+  --sh2:0 2px 4px rgba(22,33,62,.06),0 24px 48px -16px rgba(22,33,62,.25);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em;line-height:1.15}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(251,249,244,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:20px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem}
+.logo i{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#4338ca,#7c3aed 60%,#c9972f);display:grid;place-items:center;color:#fff;font:700 1.15rem Fraunces,serif;font-style:normal;box-shadow:0 6px 16px -4px rgba(67,56,202,.5)}
+.logo small{display:block;font-weight:500;color:var(--muted);font-size:.7rem;margin-top:-3px}
+.search{margin-left:auto;position:relative;width:min(340px,100%)}
+.search input{width:100%;padding:11px 16px 11px 42px;border:1px solid var(--line);border-radius:999px;background:#fff;font:inherit;font-size:.92rem;transition:.2s}
+.search input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 4px rgba(67,56,202,.12)}
+.search svg{position:absolute;left:15px;top:50%;translate:0 -50%;width:18px;color:var(--muted)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:64px 0 56px}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0}
+.b1{width:420px;height:420px;background:#c7d2fe;top:-120px;left:-100px}
+.b2{width:380px;height:380px;background:#fde68a;right:-80px;top:40px}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.8rem;font-weight:700;color:var(--indigo);box-shadow:var(--sh)}
+.hero h1{font-size:clamp(2.2rem,4.6vw,3.6rem);margin:18px 0 16px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#4338ca,#c9972f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.08rem;color:var(--muted);max-width:520px}
+.cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:14px;font-weight:700;font-size:.95rem;transition:.2s}
+.btn.pri{background:linear-gradient(135deg,#4338ca,#6d4ee8);color:#fff;box-shadow:0 10px 24px -8px rgba(67,56,202,.6)}
+.btn.pri:hover{transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(67,56,202,.7)}
+.btn.sec{background:#fff;border:1px solid var(--line);box-shadow:var(--sh)}
+.btn.sec:hover{border-color:#cfc8b8}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.stats{display:flex;gap:34px;margin-top:38px}
+.stats b{display:block;font:700 1.9rem Fraunces,serif}
+.stats span{font-size:.82rem;color:var(--muted)}
+.collage{position:relative;height:380px}
+.collage a{position:absolute;width:62%;border-radius:18px;overflow:hidden;box-shadow:var(--sh2);border:5px solid #fff;background:#fff;transition:.3s}
+.collage a:nth-child(1){top:0;left:0;rotate:-5deg}
+.collage a:nth-child(2){top:90px;right:0;rotate:4deg;z-index:2}
+.collage a:nth-child(3){bottom:0;left:10%;rotate:-2deg;z-index:3}
+.collage a:hover{rotate:0deg;scale:1.04;z-index:5}
+.collage img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.collage span{position:absolute;left:10px;bottom:10px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.92);font-size:.72rem;font-weight:700}
+
+/* resume */
+.resume{margin-top:-8px;margin-bottom:8px}
+.resume a{display:flex;align-items:center;gap:16px;padding:16px 20px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.resume img{width:96px;border-radius:10px;aspect-ratio:16/9;object-fit:cover}
+.resume small{color:var(--muted);font-weight:600;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em}
+.resume b{display:block}
+.resume .go{margin-left:auto;white-space:nowrap}
+
+/* sections */
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:44px 0 26px}
+.sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+.sec-head p{color:var(--muted);max-width:480px;margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:24px}
+.card{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);border:1px solid var(--line);display:flex;flex-direction:column;transition:.3s;--h:240}
+.card:hover{transform:translateY(-6px);box-shadow:var(--sh2)}
+.cover{position:relative;aspect-ratio:16/9;overflow:hidden;background:hsl(var(--h) 60% 90%)}
+.cover img{width:100%;height:100%;object-fit:cover;transition:.5s}
+.card:hover .cover img{scale:1.07}
+.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,hsl(var(--h) 70% 30% / .05),hsl(var(--h) 70% 22% / .72))}
+.tag{position:absolute;z-index:1;left:14px;top:14px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.95);font-size:.72rem;font-weight:800;color:hsl(var(--h) 65% 38%)}
+.ico{position:absolute;z-index:1;left:14px;bottom:-22px;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:1.65rem;background:#fff;box-shadow:0 8px 20px -6px rgba(0,0,0,.3);border:3px solid #fff}
+.count{position:absolute;z-index:1;right:14px;bottom:12px;color:#fff;font-size:.78rem;font-weight:700;display:flex;gap:6px;align-items:center}
+.cbody{padding:34px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.cbody h3{font-size:1.2rem}
+.cbody p{font-size:.88rem;color:var(--muted);flex:1}
+.prog{height:6px;border-radius:99px;background:hsl(var(--h) 40% 93%);overflow:hidden;margin-top:6px}
+.prog i{display:block;height:100%;border-radius:99px;background:hsl(var(--h) 70% 48%);transition:width .4s}
+.pmeta{display:flex;justify-content:space-between;font-size:.76rem;color:var(--muted);font-weight:600}
+
+/* course view */
+.back{display:inline-flex;align-items:center;gap:6px;margin:26px 0 16px;font-weight:700;font-size:.9rem;color:var(--muted)}
+.back:hover{color:var(--ink)}
+.chead{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.chead .ico{position:static;width:58px;height:58px}
+.chead h1{font-size:clamp(1.5rem,3vw,2.1rem)}
+.chead p{color:var(--muted);font-size:.92rem}
+.learn{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:26px;align-items:start;padding-bottom:40px}
+.screen{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#0d1224;box-shadow:var(--sh2)}
+.screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.info{margin-top:22px;padding:22px 24px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.info small{font-weight:800;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;color:hsl(var(--h) 65% 42%)}
+.info h2{font-size:1.45rem;margin:6px 0 16px}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.btn.done{background:hsl(var(--h) 70% 46%);color:#fff;box-shadow:0 10px 22px -8px hsl(var(--h) 70% 40%)}
+.btn.done.on{background:#ecfdf3;color:#067647;box-shadow:none;border:1px solid #abefc6}
+.list{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;position:sticky;top:84px}
+.lh{padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+.lh b{font-family:Fraunces,serif;font-size:1.1rem}
+.lh .prog{margin-top:10px}
+.ls{max-height:min(66vh,620px);overflow:auto;padding:8px}
+.it{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:9px;border-radius:14px;transition:.15s}
+.it:hover{background:#f6f3ec}
+.it.act{background:hsl(var(--h) 90% 96%);box-shadow:inset 0 0 0 1.5px hsl(var(--h) 60% 80%)}
+.n{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.74rem;font-weight:800;background:#f1ede3;color:var(--muted)}
+.it.ok .n{background:#12b76a;color:#fff}
+.it.act .n{background:hsl(var(--h) 70% 46%);color:#fff}
+.it img{flex:none;width:84px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:#eee}
+.it span.t{font-size:.84rem;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* search results */
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;padding-bottom:40px}
+.rc{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--sh);transition:.2s}
+.rc:hover{transform:translateY(-4px)}
+.rc img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.rc div{padding:12px 14px}
+.rc small{font-weight:700;font-size:.72rem;color:var(--muted)}
+.rc b{display:block;font-size:.9rem;line-height:1.35;margin-top:2px}
+.empty{padding:60px 0;text-align:center;color:var(--muted)}
+
+footer{margin-top:30px;border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:.86rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media(max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .collage{height:300px;max-width:440px}
+  .learn{grid-template-columns:1fr}
+  .list{position:static}
+  .ls{max-height:420px}
+}
+@media(max-width:560px){
+  .wrap{padding:0 16px}
+  .logo small{display:none}
+  .stats{gap:22px}
+  .resume .go{display:none}
+  .nav{gap:10px}
+  .logo span{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#" aria-label="SCALE Platform"><i>S</i><span>SCALE<small>SSI Corporate Academy for Learning &amp; Excellence</small></span></a>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Cari materi, mis. Arduino, CapCut…" aria-label="Cari materi" />
+    </label>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <div class="wrap">
+    <span>© SCALE E-Learning · Materi training &amp; webinar</span>
+    <span>Video diputar melalui YouTube</span>
+  </div>
+</footer>
+
+<script>
+const S = [{"n":"Konten Kreator","e":"🎬","h":262,"d":"Bikin konten kreatif dengan bantuan AI: gambar, video, karakter berbicara, hingga animasi.","v":[["Membuat Konten dengan AI","eb8y66R69rM"],["Membuat Konten AI dengan Higgsfields","d6ykQ6qce-c"],["Membuat Konten dengan Gemini Veo 3","Y2wpAb6LWds"],["Menghilangkan Watermark Video dengan Vmake","c3f1yKvVd7A"],["Karikatur Berbicara by AI","SWiqyEl5mNM"],["Image Talking by Hedra","ucB3pZCUfF0"],["Membuat Figure dengan ChatGPT","u-bRDxOP8NA"],["Membuat Illusion Diffusion Image","RXxdEbQ7j5E"],["Bahan Ngonten dengan Coding","biBLz4jwNlA"],["Generate Image & Video untuk Konten","BweQd0z5Xao"],["Konten dengan AI","ckTYFJZob9I"],["Image Generate with PixVerse AI","ujsN5Pw9Otk"],["Image Generator – Buat Fotomu Jadi Quishi","0bK0FbOlgPo"],["Merubah Image Menjadi Video dan Animasi Video","ouMpGArM-no"],["Image to 3D","_OgpskO4uQ4"],["Image Bergerak & Berbicara dengan RunwayML","Z4molYCWsH8"],["Hidupkan Foto dengan LumaLabs AI","rIhbcTN5f1s"],["Image Talking dengan Vidnoz","32ZjG3wsc70"],["Membuat Image to Video dengan LumaLabs AI","r85fMz4ldaA"],["Membuat Animasi dengan Bantuan AI","lLCdPvWc1_k"],["Coba Modifikasi Foto di Adobe Firefly","Ephc5EOosCY"]]},{"n":"Artificial Intelligence","e":"🤖","h":215,"d":"Pengantar dan dasar teknologi kecerdasan buatan dari webinar AI.","v":[["Webinar AI","80R6yDt77Po"],["Materi Basic tentang Teknologi AI","xFPC2VEeT8E"]]},{"n":"Teknologi AI: Serial Tutorial","e":"✨","h":285,"d":"Serial tutorial praktis: face swap, avatar berbicara, stiker wajah, dan presenter berita.","v":[["Teknologi AI – Part 1: Face Swap","t6XlvPBaLJs"],["Teknologi AI – Part 2: Image to Talking","vuh28j_jVKc"],["Teknologi AI – Part 3: Image to Talk dengan Virbo (Aplikasi Android)","gVsl-8ZBtqM"],["Teknologi AI – Part 4: Animasi dengan Adobe Express, ElevenLabs AI & CapCut","XdUK_dzbPZ4"],["Teknologi AI – Part 5: Membuat Stiker Wajah dengan AI","jY0IjATeX3c"],["Teknologi AI – Part 6: Presenter News (Avatar Talking)","4CLY2PGHgpE"]]},{"n":"Arduino & Internet of Things","e":"🔌","h":165,"d":"Proyek elektronika dan IoT: sensor, otomasi, hingga server lokal dan database.","v":[["Webinar Arduino – Proyek Sederhana","-mAD2y7lH-k"],["Arduino – Membuat Jendela Otomatis dengan Sensor Cahaya","yuonGYxvQQM"],["Proyek Arduino – Membuat Palang Pintu Otomatis","-IidNBFfcjo"],["Membuat Perangkap Tikus dengan Arduino","Pd4QDLYrvwU"],["Webinar Arduino – 26 Maret 2024","fQQQxLfOt14"],["Webinar IoT","IG3x_WhFZ6I"],["IoT dengan Server Lokal (XAMPP) & Database MySQL","p7RSN-KCSyE"]]},{"n":"Pembuatan Aplikasi & Coding","e":"💻","h":200,"d":"Bangun aplikasi tanpa ribet dengan Glide dan buat company profile dengan Softr.","v":[["Webinar Membuat Aplikasi dengan GlideApp","CsHx4jAcnj4"],["Membuat Aplikasi Ramadhan dengan Glide – Part 1","LbrpNxcfISs"],["Membuat Aplikasi Ramadhan dengan Glide – Part 2","HtW_lxn9n98"],["Membuat Aplikasi Ramadhan dengan Glide – Part 3","z7pVJ6kTRVE"],["Membuat Company Profile dengan Soft.io – Recording Webinar Ramadhan","syuSYxYlt6k"]]},{"n":"Video Editing & Multimedia","e":"🎞️","h":350,"d":"Edit video, intro, green screen, bumper, dan slideshow foto dengan tools populer.","v":[["Membuat Intro dengan Panzoid","m80mw5JgCWg"],["CapCut – Latihan Membuat Video Kombinasi Image + Green Screen","jo0u5Xs3l8g"],["Editing CapCut dan Green Screen di HP","jHet1TWyKIU"],["Editing Video Sederhana dengan Green Screen dan CapCut","jHet1TWyKIU"],["Membuat Bumper Video – Contoh Acara Pengukuhan RT/RW 09","VLyxau0A3E0"],["Membuat Video dengan Foto Slider menggunakan FlexClip","wHwSEY39W8A"]]},{"n":"Google SketchUp & Desain 3D","e":"📐","h":28,"d":"Dari pengenalan SketchUp sampai membuat desain bangunan lengkap dengan atap.","v":[["Recording Webinar SketchUp – 10 Desember 2024","lRPdg7PRYUk"],["Google SketchUp Dasar – Pengenalan Part 1","NJ_yhSQBDXw"],["Google SketchUp Dasar – Pengenalan Part 2","Xogkz_CAn6Y"],["Google SketchUp Dasar – Pengenalan Part 3","aH-m0eUlJHo"],["Google SketchUp Dasar – Pengenalan Part 4","QpOOLBAqvU4"],["Google SketchUp Dasar – Pengenalan Part 5","WMo0sg1rygM"],["Google SketchUp Dasar – Pengenalan Part 6","tWWKnzGuRvg"],["Tutorial Membuat Desain – Part 1","oH0BHzuyqAg"],["Tutorial Membuat Desain – Part 2","uCFoBcP_Tb4"],["Tutorial Membuat Desain – Part 3","Ie_nPbI13Bk"],["Tutorial Membuat Desain – Part 4","XS27ae-UlkI"],["Plugin SketchUp untuk Membuat Atap / Roof","4C9zdY0JSbk"]]},{"n":"Sweet Home 3D","e":"🛋️","h":45,"d":"Merancang denah dan interior rumah dengan Sweet Home 3D.","v":[["Tutorial Sweet Home 3D – Part 1","A__EUoHZMbI"],["Tutorial Sweet Home 3D – Part 2","fore8e27QaM"]]},{"n":"Pelatihan Animasi","e":"🎨","h":320,"d":"Belajar membuat animasi dengan berbagai aplikasi, dari Powtoon sampai Synfig Studio.","v":[["Pelatihan Membuat Animasi dengan Muvizu","xmk7KbVI210"],["Pelatihan Membuat Animasi dengan Plotagon Studio","RHfJYT0soyo"],["Pelatihan Membuat Animasi dengan Animaker – Part 1","5wjJ0THi0js"],["Pelatihan Membuat Animasi dengan Animaker – Part 2","hdmxHumdvc4"],["Pelatihan Membuat Animasi dengan Powtoon","hE7sztVGAWU"],["Pelatihan Membuat Animasi dengan Doratoon – Part 1","aLMIq52zsFY"],["Pelatihan Membuat Animasi dengan Doratoon – Part 2","SW-VgLvmjl8"],["Pelatihan Membuat Animasi dengan Cartoon Animator – Part 2","dpbETQerfu0"],["Pelatihan Membuat Animasi dengan Cartoon Animation 4 – Part 1","_9mQ1U_-0b0"],["Pelatihan Membuat Animasi dengan CrazyTalk","uTvxKPofjJA"],["Pelatihan Membuat Animasi dengan Pivot Animator","tTlNUbaZhxs"],["Pelatihan Membuat Animasi dengan Adobe Animate","6cbMgXRZnis"],["Membuat Animasi dengan OpenToonz","EhOR8HtwYnc"],["Pelatihan Membuat Animasi dengan Synfig Studio – Part 1","R8_OTvJP-Po"],["Pelatihan Membuat Animasi dengan Synfig Studio – Part 2","Db5oF_q3fDo"],["Membuat Animasi dengan Plotagon","iSRYIWEVJG4"]]},{"n":"Data Visualization & Dashboard","e":"📊","h":195,"d":"Ubah data jadi grafik dan dashboard interaktif dengan Tableau, Power BI, dan AI.","v":[["Membuat Grafik Visual Race dengan Flourish Studio","xK5B3auT5jk"],["Recording Zoom – Training Create Dashboard dengan Tableau, Power BI & Looker Studio","CTqHbHFMd8U"],["Rows 2.0 – Tools Spreadsheet Berbasis AI","pcY16JoG-Dc"],["Data Analitik dengan AI","HXutSCpFNOU"]]},{"n":"Lainnya","e":"🧩","h":150,"d":"Materi pilihan: generator soal otomatis, peta ide visual, dan presentasi dengan AI.","v":[["Question Generator – Membuat Soal Otomatis dengan Smallpdf","jQ9h-8qUA1c"],["Visualisasikan Ide dengan Whimsical AI","V_HCZy7cHi4"],["Membuat PPT dengan AI","4jpqRXJEoyQ"]]}];
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const thumb = id => "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+const total = S.reduce((a, s) => a + s.v.length, 0);
+
+let done = new Set();
+try { done = new Set(JSON.parse(localStorage.getItem("ditas-done") || "[]")); } catch (e) {}
+const saveDone = () => { try { localStorage.setItem("ditas-done", JSON.stringify([...done])); } catch (e) {} };
+const key = (s, v) => s + "-" + v;
+const doneIn = si => S[si].v.filter((_, vi) => done.has(key(si, vi))).length;
+const pct = (n, t) => Math.round(n / t * 100);
+const img = id => '<img src="' + thumb(id) + '" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'">';
+
+function home() {
+  let last = null;
+  try { last = JSON.parse(localStorage.getItem("ditas-last") || "null"); } catch (e) {}
+  const lv = last && S[last[0]] && S[last[0]].v[last[1]];
+  const hero = [S[0].v[0], S[3 > S.length ? 0 : 3].v[0], S[8].v[0]];
+  app.innerHTML = `
+  <section class="hero">
+    <div class="blob b1"></div><div class="blob b2"></div>
+    <div class="wrap">
+      <div>
+        <span class="pill">✨ Platform belajar dari HCC Division</span>
+        <h1>Belajar teknologi kreatif, <em>langkah demi langkah.</em></h1>
+        <p class="lead">Kumpulan materi training dan webinar dari AI &amp; konten kreator hingga Arduino, animasi, dan desain 3D. Tersusun per session, tinggal pilih dan mulai belajar.</p>
+        <div class="cta">
+          <a class="btn pri" href="#s1-0">▶ Mulai dari Session 1</a>
+          <a class="btn sec" href="#session-list">Lihat semua session</a>
+        </div>
+        <div class="stats">
+          <div><b>${S.length}</b><span>Session</span></div>
+          <div><b>${total}</b><span>Video materi</span></div>
+          <div><b>${done.size}</b><span>Selesai kamu tonton</span></div>
+        </div>
+      </div>
+      <div class="collage" aria-hidden="true">
+        ${hero.map((v, i) => `<a href="#s${[1, 4, 9][i]}-0" tabindex="-1">${img(v[1])}<span>${["Konten AI", "Arduino & IoT", "Animasi"][i]}</span></a>`).join("")}
+      </div>
+    </div>
+  </section>
+  <div class="wrap">
+    ${lv ? `<div class="resume"><a href="#s${last[0] + 1}-${last[1]}">${img(lv[1])}<div><small>Lanjutkan belajar</small><b>${lv[0]}</b><small style="text-transform:none;letter-spacing:0">${S[last[0]].n}</small></div><span class="btn pri go">Lanjutkan ▶</span></a></div>` : ""}
+    <div class="sec-head" id="session-list">
+      <div><h2>Pilih session belajar</h2><p>Setiap session berisi materi yang dikelompokkan berdasarkan tema.</p></div>
+    </div>
+    <div class="grid">
+      ${S.map((s, si) => {
+        const d = doneIn(si);
+        return `<a class="card" style="--h:${s.h}" href="#s${si + 1}-0">
+          <div class="cover">${img(s.v[0][1])}<span class="tag">SESSION ${si + 1}</span><span class="count">🎞 ${s.v.length} video</span><span class="ico">${s.e}</span></div>
+          <div class="cbody"><h3>${s.n}</h3><p>${s.d}</p>
+            <div class="prog"><i style="width:${pct(d, s.v.length)}%"></i></div>
+            <div class="pmeta"><span>${d}/${s.v.length} selesai</span><span>${d ? pct(d, s.v.length) + "%" : "Mulai ›"}</span></div>
+          </div></a>`;
+      }).join("")}
+    </div>
+  </div>`;
+}
+
+function course(si, vi) {
+  const s = S[si];
+  if (!(vi >= 0 && vi < s.v.length)) vi = 0;
+  const v = s.v[vi];
+  try { localStorage.setItem("ditas-last", JSON.stringify([si, vi])); } catch (e) {}
+  const d = doneIn(si), ok = done.has(key(si, vi));
+  let src = "https://www.youtube.com/embed/" + v[1] + "?rel=0&playsinline=1";
+  if (location.protocol.startsWith("http")) src += "&origin=" + encodeURIComponent(location.origin);
+  document.title = v[0] + " · SCALE Platform";
+  app.innerHTML = `
+  <div class="wrap" style="--h:${s.h}">
+    <a class="back" href="#">← Semua session</a>
+    <div class="chead"><span class="ico" style="box-shadow:var(--sh)">${s.e}</span>
+      <div><h1>${s.n}</h1><p>Session ${si + 1} · ${s.v.length} video</p></div></div>
+    <div class="learn">
+      <div>
+        <div class="screen"><iframe src="${src}" title="${v[0].replace(/"/g, "&quot;")}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <div class="info">
+          <small>Materi ${vi + 1} dari ${s.v.length}</small>
+          <h2>${v[0]}</h2>
+          <div class="acts">
+            <a class="btn sec" id="prev" ${vi ? `href="#s${si + 1}-${vi - 1}"` : 'style="opacity:.4;pointer-events:none"'}>← Sebelumnya</a>
+            <button class="btn done ${ok ? "on" : ""}" id="mark">${ok ? "✓ Sudah selesai" : "Tandai selesai"}</button>
+            <a class="btn pri" ${vi < s.v.length - 1 ? `href="#s${si + 1}-${vi + 1}"` : `href="#s${si + 2 > S.length ? 1 : si + 2}-0"`}>${vi < s.v.length - 1 ? "Berikutnya →" : "Session selanjutnya →"}</a>
+            <a class="btn sec" href="https://www.youtube.com/watch?v=${v[1]}" target="_blank" rel="noopener">Buka di YouTube ↗</a>
+          </div>
+        </div>
+      </div>
+      <aside class="list">
+        <div class="lh"><b>Daftar materi</b>
+          <div class="pmeta" style="margin-top:4px"><span>${d}/${s.v.length} selesai</span><span>${pct(d, s.v.length)}%</span></div>
+          <div class="prog"><i style="width:${pct(d, s.v.length)}%"></i></div></div>
+        <div class="ls" id="ls">
+          ${s.v.map((x, i) => `<a class="it ${i === vi ? "act" : ""} ${done.has(key(si, i)) ? "ok" : ""}" href="#s${si + 1}-${i}">
+            <span class="n">${done.has(key(si, i)) ? "✓" : i + 1}</span>${img(x[1])}<span class="t">${x[0]}</span></a>`).join("")}
+        </div>
+      </aside>
+    </div>
+  </div>`;
+  $("#mark").onclick = () => {
+    const k = key(si, vi);
+    done.has(k) ? done.delete(k) : done.add(k);
+    saveDone();
+    const y = scrollY, top = $("#ls").scrollTop;
+    course(si, vi);
+    scrollTo(0, y); $("#ls").scrollTop = top;
+  };
+  const a = $("#ls .act");
+  if (a) $("#ls").scrollTop = a.offsetTop - 80;
+}
+
+function search(q) {
+  const t = q.trim().toLowerCase();
+  const hits = [];
+  S.forEach((s, si) => s.v.forEach((v, vi) => {
+    if ((v[0] + " " + s.n).toLowerCase().includes(t)) hits.push([si, vi, v]);
+  }));
+  app.innerHTML = `<div class="wrap"><div class="sec-head"><div><h2>Hasil pencarian</h2><p id="rc"></p></div></div>
+    ${hits.length ? `<div class="res">${hits.map(h => `<a class="rc" href="#s${h[0] + 1}-${h[1]}">${img(h[2][1])}<div><small>${S[h[0]].e} Session ${h[0] + 1}</small><b>${h[2][0]}</b></div></a>`).join("")}</div>` : '<div class="empty">Materi tidak ditemukan. Coba kata kunci lain.</div>'}</div>`;
+  $("#rc").textContent = hits.length + ' materi untuk "' + q.trim() + '"';
+}
+
+function route() {
+  const m = location.hash.match(/^#s(\d+)(?:-(\d+))?$/);
+  document.title = "SCALE Platform";
+  if (m && S[m[1] - 1]) { course(m[1] - 1, +(m[2] || 0)); scrollTo(0, 0); }
+  else { home(); if (location.hash !== "#session-list") scrollTo(0, 0); }
+}
+$("#q").addEventListener("input", e => e.target.value.trim() ? search(e.target.value) : route());
+addEventListener("hashchange", () => { $("#q").value = ""; route(); });
+route();
+</script>
+</body>
+</html>
