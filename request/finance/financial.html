@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance for Non Finance — Learning Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1f2e; --muted:#5b6b7a; --line:#dde4ea; --bg:#f5f7f9; --card:#ffffff;
+    --brand:#0b5d57; --brand-2:#13897f; --brand-soft:#e3f3f1;
+    --warn-bg:#fff4e0; --warn-line:#f0a82e; --warn-ink:#6b4200;
+    --ok:#1b8a4b; --lock:#8a97a3;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+  /* Section 1 — hero */
+  .hero{background:linear-gradient(135deg,#08423e 0%,#0b5d57 55%,#13897f 100%);color:#fff;padding:72px 0 64px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.06)}
+  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.8;font-weight:600}
+  .hero h1{font-family:Fraunces,Georgia,serif;font-size:clamp(34px,6vw,56px);line-height:1.1;margin:12px 0 20px;font-weight:700}
+  .hero p{max-width:680px;font-size:17px;margin:0 0 12px;opacity:.95}
+  .goals{margin:22px 0 0;padding:0;list-style:none;display:grid;gap:10px;max-width:680px}
+  .goals li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px}
+
+  /* Section 2 — warning */
+  .warning{margin:-28px auto 0;position:relative;z-index:2}
+  .warn-box{background:var(--warn-bg);border:1.5px solid var(--warn-line);border-left-width:6px;border-radius:12px;padding:18px 22px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+  .warn-ico{flex:none;font-size:26px;line-height:1}
+  .warn-box strong{display:block;color:var(--warn-ink);font-size:15px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+  .warn-box p{margin:0;color:var(--warn-ink);font-size:15px}
+
+  /* Section 3 — course */
+  .course{padding:56px 0 80px}
+  .course-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .course-head h2{font-family:Fraunces,Georgia,serif;font-size:30px;margin:0}
+  .course-head small{color:var(--muted)}
+  .overall{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:28px}
+  .overall-row{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:8px}
+  .bar{height:8px;background:#e8edf1;border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand-2));border-radius:99px;transition:width .5s}
+
+  .video-card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:22px;overflow:hidden;transition:box-shadow .3s,border-color .3s}
+  .video-card.active{border-color:var(--brand-2);box-shadow:0 8px 28px rgba(11,93,87,.12)}
+  .vc-head{display:flex;gap:14px;align-items:center;padding:18px 22px}
+  .num{flex:none;width:38px;height:38px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700}
+  .vc-title{flex:1;min-width:0}
+  .vc-title h3{margin:0;font-size:18px}
+  .badge{flex:none;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;background:#eef1f4;color:var(--lock)}
+  .video-card.active .badge{background:var(--brand-soft);color:var(--brand)}
+  .video-card.done .badge{background:#e2f5ea;color:var(--ok)}
+  .video-card.done .num{background:var(--ok);color:#fff}
+  .vc-body{padding:0 22px 22px}
+  .vc-desc{color:var(--muted);margin:0 0 16px;font-size:15px}
+  .player{position:relative;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+  .player iframe,.player>div{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .watch{margin-top:14px}
+  .watch-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+  .locked-box{aspect-ratio:16/9;border-radius:12px;background:repeating-linear-gradient(45deg,#eef1f4,#eef1f4 12px,#e6eaee 12px,#e6eaee 24px);display:grid;place-items:center;text-align:center;color:var(--lock);padding:20px}
+  .locked-box span{font-size:14px;max-width:320px;display:block}
+  .manual{display:none;margin-top:12px}
+  .manual button,.reset{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--brand);color:var(--brand);background:#fff;border-radius:8px;padding:8px 14px;cursor:pointer}
+  .manual button:hover,.reset:hover{background:var(--brand-soft)}
+  .reset{border-color:var(--line);color:var(--muted);font-weight:500;font-size:13px}
+
+  /* petunjuk */
+  .hint{margin-top:12px;display:flex;gap:10px;align-items:center;background:var(--brand-soft);border:1px solid #bfe0db;color:var(--brand);border-radius:10px;padding:10px 14px;font-size:13.5px;font-weight:500}
+  .hint svg{flex:none;width:18px;height:18px}
+  .hint.ready{background:#e2f5ea;border-color:#b6e2c7;color:var(--ok)}
+
+  .finish{display:none;text-align:center;background:var(--brand-soft);border:1px solid #bfe0db;border-radius:16px;padding:28px;color:var(--brand)}
+  .finish h3{font-family:Fraunces,serif;font-size:24px;margin:0 0 6px}
+  .finish p{margin:0;color:var(--ink)}
+
+  /* visuals */
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center;position:relative;z-index:1}
+  .hero-art svg{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.25))}
+  .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.09) 1.2px,transparent 1.2px);background-size:22px 22px;opacity:.7}
+  .gi{flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.16);display:grid;place-items:center}
+  .gi svg{width:20px;height:20px}
+  .topics{padding:44px 0 0}
+  .topics h2{font-family:Fraunces,Georgia,serif;font-size:26px;margin:0 0 4px}
+  .topics>.wrap>p{margin:0 0 20px;color:var(--muted);font-size:15px}
+  .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .topic{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:transform .25s,box-shadow .25s}
+  .topic:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,31,46,.08)}
+  .topic .ti{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:12px}
+  .topic .ti svg{width:26px;height:26px}
+  .topic h4{margin:0 0 4px;font-size:16px}
+  .topic p{margin:0;font-size:13.5px;color:var(--muted)}
+  .t1 .ti{background:#e3f3f1;color:#0b5d57}.t2 .ti{background:#e6eefb;color:#2456a6}
+  .t3 .ti{background:#fdeedb;color:#b36a00}.t4 .ti{background:#efe6fa;color:#6a3fb0}
+  .num svg{width:20px;height:20px}
+  .video-card.done .num svg{stroke:#fff}
+  .locked-box svg{width:44px;height:44px;margin-bottom:8px}
+  @media(max-width:760px){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:380px;margin:8px auto 0}}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.35s;z-index:20;max-width:90vw;text-align:center}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px;text-align:center}
+  @media(max-width:560px){.vc-head{padding:16px}.vc-body{padding:0 16px 16px}.badge{font-size:11px}}
+</style>
+</head>
+<body>
+
+<!-- SECTION 1 : TEMA & DEFINISI -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Program Pelatihan Internal</div>
+      <h1>Finance for Non Finance</h1>
+      <p>Pelatihan ini dirancang untuk membantu rekan-rekan dari berbagai fungsi non-keuangan memahami bahasa finansial yang digunakan di perusahaan, sehingga dapat membaca laporan keuangan dan mengambil keputusan dengan lebih percaya diri.</p>
+      <ul class="goals">
+        <li><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><span>Mengetahui dasar-dasar hal finansial umum yang terdapat pada laporan perusahaan.</span></li>
+        <li><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><path d="M9 8h6M9 12h6"/></svg></span><span>Memahami istilah dan komponen utama dalam laporan keuangan.</span></li>
+        <li><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></span><span>Menghubungkan pekerjaan sehari-hari dengan dampaknya terhadap kinerja keuangan perusahaan.</span></li>
+      </ul>
+    </div>
+    <div class="hero-art" aria-hidden="true"><svg viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi grafik keuangan, laporan, dan koin">
+  <defs>
+    <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d3c4"/><stop offset="1" stop-color="#13897f"/></linearGradient>
+    <linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#f0a82e"/></linearGradient>
+  </defs>
+  <g transform="rotate(-6 150 170)">
+    <rect x="48" y="40" width="230" height="270" rx="16" fill="#fff"/>
+    <rect x="48" y="40" width="230" height="46" rx="16" fill="#e3f3f1"/>
+    <rect x="68" y="56" width="90" height="12" rx="6" fill="#0b5d57"/>
+    <rect x="68" y="104" width="190" height="8" rx="4" fill="#dde4ea"/>
+    <rect x="68" y="124" width="150" height="8" rx="4" fill="#dde4ea"/>
+    <rect x="72" y="214" width="26" height="60" rx="5" fill="url(#gA)"/>
+    <rect x="108" y="190" width="26" height="84" rx="5" fill="url(#gA)"/>
+    <rect x="144" y="166" width="26" height="108" rx="5" fill="url(#gA)"/>
+    <rect x="180" y="198" width="26" height="76" rx="5" fill="#9bd9d2"/>
+    <rect x="216" y="148" width="26" height="126" rx="5" fill="url(#gA)"/>
+    <path d="M70 190 L120 160 L158 172 L196 136 L240 118" fill="none" stroke="#f0a82e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="240" cy="118" r="6" fill="#f0a82e"/>
+    <line x1="64" y1="276" x2="256" y2="276" stroke="#c7d1d9" stroke-width="2"/>
+  </g>
+  <g>
+    <ellipse cx="338" cy="292" rx="62" ry="14" fill="rgba(0,0,0,.18)"/>
+    <g fill="url(#gC)" stroke="#c98310" stroke-width="2">
+      <ellipse cx="338" cy="274" rx="52" ry="14"/><rect x="286" y="262" width="104" height="12" stroke="none"/><ellipse cx="338" cy="262" rx="52" ry="14"/>
+      <ellipse cx="338" cy="248" rx="52" ry="14"/><rect x="286" y="236" width="104" height="12" stroke="none"/><ellipse cx="338" cy="236" rx="52" ry="14"/>
+    </g>
+    <circle cx="338" cy="184" r="44" fill="url(#gC)" stroke="#c98310" stroke-width="3"/>
+    <circle cx="338" cy="184" r="34" fill="none" stroke="#c98310" stroke-width="2" stroke-dasharray="4 4"/>
+    <text x="338" y="198" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="700" font-size="42" fill="#8a5600">$</text>
+  </g>
+  <g transform="translate(300 40) rotate(8)">
+    <rect width="86" height="108" rx="12" fill="#0f1f2e"/>
+    <rect x="10" y="10" width="66" height="24" rx="6" fill="#9bd9d2"/>
+    <text x="70" y="28" text-anchor="end" font-family="Inter,sans-serif" font-weight="600" font-size="15" fill="#0f1f2e">1.250</text>
+    <g fill="#34495e"><rect x="10" y="44" width="16" height="14" rx="4"/><rect x="31" y="44" width="16" height="14" rx="4"/><rect x="52" y="44" width="16" height="14" rx="4"/>
+    <rect x="10" y="64" width="16" height="14" rx="4"/><rect x="31" y="64" width="16" height="14" rx="4"/><rect x="52" y="64" width="16" height="14" rx="4"/></g>
+    <rect x="10" y="84" width="58" height="14" rx="4" fill="#f0a82e"/>
+  </g>
+</svg></div>
+  </div>
+</header>
+
+<!-- SECTION 2 : WARNING -->
+<section class="warning wrap" aria-label="Peringatan">
+  <div class="warn-box" role="alert">
+    <div class="warn-ico">⚠️</div>
+    <div>
+      <strong>Peringatan — Materi Internal</strong>
+      <p>Materi pelatihan ini bersifat <b>internal dan rahasia</b>. Dilarang membagikan, menyebarkan, merekam, atau menyalin materi ini kepada pihak di luar perusahaan tanpa izin tertulis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="topics">
+  <div class="wrap">
+    <h2>Konsep yang akan sering Anda temui</h2>
+    <p>Gambaran umum istilah finansial yang lazim terdapat pada laporan perusahaan.</p>
+    <div class="topic-grid">
+      <div class="topic t1"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.5 9a2.5 2 0 0 0-2.5-1.5c-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2A2.5 2 0 0 1 9.5 15M12 6.5v1M12 16.5v1"/></svg></div><h4>Laba &amp; Rugi</h4><p>Pendapatan, biaya, dan keuntungan dalam satu periode.</p></div>
+      <div class="topic t2"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3.2 3.2 0 0 0 6 0zM19 7l-3 7a3.2 3.2 0 0 0 6 0z"/></svg></div><h4>Neraca</h4><p>Posisi aset, kewajiban, dan modal perusahaan.</p></div>
+      <div class="topic t3"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></div><h4>Arus Kas</h4><p>Pergerakan uang masuk dan keluar perusahaan.</p></div>
+      <div class="topic t4"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg></div><h4>Rasio Keuangan</h4><p>Angka pembanding untuk menilai kesehatan bisnis.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 : VIDEO -->
+<main class="course">
+  <div class="wrap">
+    <div class="course-head">
+      <div>
+        <h2>Materi Video</h2>
+        <small>Tonton secara berurutan. Video berikutnya terbuka setelah video sebelumnya ditonton selama 10 detik.</small>
+      </div>
+      <button class="reset" id="resetBtn" type="button">Ulangi dari awal</button>
+    </div>
+
+    <div class="overall">
+      <div class="overall-row"><span>Progres belajar</span><span id="overallText">0 / 0 video</span></div>
+      <div class="bar"><i id="overallBar"></i></div>
+    </div>
+
+    <div class="hint" style="margin:-12px 0 24px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span>Setiap video berikutnya otomatis terbuka setelah Anda menonton video sebelumnya selama <b>10 detik</b>.</span>
+    </div>
+
+    <div id="list"></div>
+
+    <div class="finish" id="finish">
+      <h3>🎉 Selamat, Anda telah menyelesaikan semua materi!</h3>
+      <p>Terima kasih telah mengikuti pelatihan Finance for Non Finance.</p>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap">© Finance for Non Finance — Materi internal, tidak untuk disebarluaskan.</div></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================
+   KONFIGURASI — edit judul & deskripsi tiap video di sini
+   ===================================================== */
+const VIDEOS = [
+  { id: "e78zg63xVsk", title: "Materi 1", desc: "Parameter laporan laba rugi perusahaan" },
+  { id: "1zsHZ_fT6hw", title: "Materi 2", desc: "OPEX dan CAPEX" },
+  { id: "klnJvEIoLM4", title: "Materi 3", desc: "Parameter ukuran kesehatan keuangan" },
+  { id: "JP9GBuAfFR0", title: "Materi 4", desc: "Rasio profitabilitas" },
+  { id: "rhgiZ6skXnA", title: "Materi 5", desc: "Memahami komponen biaya" },
+  { id: "jLUWgPsWOV8", title: "Materi 6", desc: "Dasar-dasar akuntansi" }
+  // Tambah video baru: { id: "YOUTUBE_ID", title: "...", desc: "..." },
+];
+const REQUIRED_SECONDS = 10;  // video berikutnya terbuka setelah video ini ditonton 10 detik
+const STORE_KEY = "ffnf_progress_v1";
+
+const ICON = {"chart": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3v18h18\"/><path d=\"M7 15l4-4 3 3 5-6\"/></svg>", "book": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z\"/><path d=\"M4 19V5\"/><path d=\"M9 8h6M9 12h6\"/></svg>", "coin": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M14.5 9a2.5 2 0 0 0-2.5-1.5c-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2A2.5 2 0 0 1 9.5 15M12 6.5v1M12 16.5v1\"/></svg>", "scale": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v18M7 21h10M5 7h14\"/><path d=\"M5 7l-3 7a3.2 3.2 0 0 0 6 0zM19 7l-3 7a3.2 3.2 0 0 0 6 0z\"/></svg>", "flow": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 8h13l-3-3M20 16H7l3 3\"/></svg>", "pct": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19 5L5 19\"/><circle cx=\"7\" cy=\"7\" r=\"2.5\"/><circle cx=\"17\" cy=\"17\" r=\"2.5\"/></svg>", "lock": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"11\" width=\"14\" height=\"10\" rx=\"2\"/><path d=\"M8 11V8a4 4 0 0 1 8 0v3\"/></svg>", "check": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg>"};
+const CARD_ICONS = ['chart','scale','flow','coin','pct','book'];
+
+/* ---------- state ---------- */
+let completed = 0;
+try { completed = Math.min(parseInt(localStorage.getItem(STORE_KEY) || "0", 10) || 0, VIDEOS.length); } catch(e){}
+const players = {};      // index -> YT.Player
+const watched = {};      // index -> detik nyata yang ditonton
+let apiReady = false, apiFailed = false;
+
+const $ = s => document.querySelector(s);
+const list = $("#list");
+
+function save(){ try{ localStorage.setItem(STORE_KEY, String(completed)); }catch(e){} }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3200); }
+
+/* ---------- render ---------- */
+function render(){
+  list.innerHTML = "";
+  VIDEOS.forEach((v,i)=>{
+    const state = i < completed ? "done" : i === completed ? "active" : "locked";
+    const card = document.createElement("article");
+    card.className = "video-card " + state;
+    card.id = "video-" + i;
+    const badge = state==="done" ? "Selesai" : state==="active" ? "Sedang berjalan" : "🔒 Terkunci";
+    let body;
+    if(state==="locked"){
+      body = `<div class="locked-box"><div>${ICON.lock}<span>Tonton <strong>Video ${i}</strong> selama ${REQUIRED_SECONDS} detik untuk membuka video ini.</span></div></div>`;
+    } else {
+      body = `
+        <p class="vc-desc">${v.desc}</p>
+        <div class="player"><div id="yt-${i}"></div></div>
+        ${state==="active" ? `
+        <div class="watch">
+          <div class="watch-row"><span>Progres menonton</span><span id="wtxt-${i}">0%</span></div>
+          <div class="bar"><i id="wbar-${i}"></i></div>
+          ${i < VIDEOS.length-1 ? `
+          <div class="hint" id="hint-${i}">
+            ${ICON.lock}
+            <span id="htxt-${i}">Video ${i+2} akan terbuka setelah video ini ditonton selama ${REQUIRED_SECONDS} detik.</span>
+          </div>` : ""}
+          <div class="manual" id="manual-${i}"><button type="button" data-i="${i}">Saya sudah menonton video ini</button></div>
+        </div>` : ""}`;
+    }
+    card.innerHTML = `
+      <div class="vc-head">
+        <div class="num">${state==="done" ? ICON.check : ICON[CARD_ICONS[i % CARD_ICONS.length]]}</div>
+        <div class="vc-title"><h3>${v.title}</h3></div>
+        <span class="badge">${badge}</span>
+      </div>
+      <div class="vc-body">${body}</div>`;
+    list.appendChild(card);
+  });
+
+  const total = VIDEOS.length;
+  $("#overallText").textContent = `${completed} / ${total} video`;
+  $("#overallBar").style.width = (completed/total*100) + "%";
+  $("#finish").style.display = completed >= total ? "block" : "none";
+
+  for(const k in players){ try{ players[k].destroy(); }catch(e){} delete players[k]; }
+  VIDEOS.forEach((_,i)=>{ if(i <= completed && i < total) mountPlayer(i); });
+  document.querySelectorAll(".manual button").forEach(b=>b.onclick=()=>finishVideo(+b.dataset.i));
+  if(apiFailed) document.querySelectorAll(".manual").forEach(m=>m.style.display="block");
+}
+
+/* ---------- YouTube player ---------- */
+function mountPlayer(i){
+  const el = $("#yt-"+i);
+  if(!el || !apiReady) return;
+  players[i] = new YT.Player("yt-"+i, {
+    videoId: VIDEOS[i].id,
+    playerVars: { rel:0, modestbranding:1, playsinline:1 },
+    events: { onStateChange: e => onState(i,e) }
+  });
+}
+
+let ticker = null;
+function onState(i,e){
+  if(i !== completed) return;               // hanya video aktif yang dihitung
+  if(e.data === YT.PlayerState.PLAYING){
+    if(!ticker) ticker = setInterval(tick, 1000);
+  } else {
+    clearInterval(ticker); ticker = null;
+    if(e.data === YT.PlayerState.ENDED) finishVideo(i);   // video lebih pendek dari 10 detik
+  }
+}
+
+function tick(){
+  const i = completed, p = players[i];
+  if(!p || !p.getDuration) return;
+  const dur = p.getDuration();
+  watched[i] = (watched[i]||0) + 1;   // +1 per detik nyata, tidak terpengaruh kecepatan putar
+  const need = Math.min(REQUIRED_SECONDS, dur || REQUIRED_SECONDS);
+  const pct = Math.min(100, Math.round(watched[i]/need*100));
+  const bar = $("#wbar-"+i), txt = $("#wtxt-"+i), ht = $("#htxt-"+i);
+  if(bar) bar.style.width = pct+"%";
+  if(txt) txt.textContent = pct+"%";
+  if(ht){
+    const left = Math.max(0, need - watched[i]);
+    ht.textContent = `Video ${i+2} terbuka dalam ${left} detik lagi. Terus tonton video ini.`;
+  }
+  if(watched[i] >= need) finishVideo(i);
+}
+
+function finishVideo(i){
+  if(i !== completed) return;
+  clearInterval(ticker); ticker = null;
+  completed++;
+  save();
+  const last = completed >= VIDEOS.length;
+  render();
+  toast(last ? "Semua video selesai ditonton 🎉" : `Video ${i+1} selesai! Video ${i+2} sekarang terbuka.`);
+  const target = last ? $("#finish") : $("#video-"+completed);
+  if(target) setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"center"}),150);
+}
+
+/* YouTube IFrame API callback */
+window.onYouTubeIframeAPIReady = function(){ apiReady = true; render(); };
+
+(function loadApi(){
+  const s = document.createElement("script");
+  s.src = "https://www.youtube.com/iframe_api";
+  s.onerror = () => { apiFailed = true; fallbackRender(); };
+  document.head.appendChild(s);
+  // jika API tidak siap dalam 8 detik, tampilkan iframe biasa + tombol manual
+  setTimeout(()=>{ if(!apiReady){ apiFailed = true; fallbackRender(); } }, 8000);
+})();
+
+function fallbackRender(){
+  render();
+  VIDEOS.forEach((v,i)=>{
+    const el = $("#yt-"+i);
+    if(el){
+      const f = document.createElement("iframe");
+      f.src = "https://www.youtube.com/embed/"+v.id+"?rel=0";
+      f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      f.allowFullscreen = true; f.title = v.title;
+      el.replaceWith(f);
+    }
+  });
+  document.querySelectorAll(".manual").forEach(m=>m.style.display="block");
+}
+
+$("#resetBtn").onclick = () => {
+  if(!confirm("Ulangi pelatihan dari awal? Progres Anda akan direset.")) return;
+  completed = 0; for(const k in watched) delete watched[k];
+  save(); render(); window.scrollTo({top:0,behavior:"smooth"});
+};
+
+render();   // tampilan awal (player dipasang saat API siap)
+</script>
+</body>
+</html>
