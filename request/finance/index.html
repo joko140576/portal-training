@@ -12,7 +12,6 @@
     --ink:#0f1f2e; --muted:#5b6b7a; --line:#dde4ea; --bg:#f5f7f9; --card:#ffffff;
     --brand:#0b5d57; --brand-2:#13897f; --brand-soft:#e3f3f1;
     --warn-bg:#fff4e0; --warn-line:#f0a82e; --warn-ink:#6b4200;
-    --ok:#1b8a4b; --lock:#8a97a3;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,47 +34,36 @@
   .warn-box strong{display:block;color:var(--warn-ink);font-size:15px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
   .warn-box p{margin:0;color:var(--warn-ink);font-size:15px}
 
-  /* Section 3 — course */
+  /* Section 3 — course (tabs) */
   .course{padding:56px 0 80px}
-  .course-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .course-head{margin-bottom:22px}
   .course-head h2{font-family:Fraunces,Georgia,serif;font-size:30px;margin:0}
   .course-head small{color:var(--muted)}
-  .overall{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:28px}
-  .overall-row{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:8px}
-  .bar{height:8px;background:#e8edf1;border-radius:99px;overflow:hidden}
-  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand-2));border-radius:99px;transition:width .5s}
 
-  .video-card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:22px;overflow:hidden;transition:box-shadow .3s,border-color .3s}
-  .video-card.active{border-color:var(--brand-2);box-shadow:0 8px 28px rgba(11,93,87,.12)}
-  .vc-head{display:flex;gap:14px;align-items:center;padding:18px 22px}
-  .num{flex:none;width:38px;height:38px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700}
-  .vc-title{flex:1;min-width:0}
-  .vc-title h3{margin:0;font-size:18px}
-  .badge{flex:none;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;background:#eef1f4;color:var(--lock)}
-  .video-card.active .badge{background:var(--brand-soft);color:var(--brand)}
-  .video-card.done .badge{background:#e2f5ea;color:var(--ok)}
-  .video-card.done .num{background:var(--ok);color:#fff}
-  .vc-body{padding:0 22px 22px}
-  .vc-desc{color:var(--muted);margin:0 0 16px;font-size:15px}
+  .tabs{display:flex;gap:4px;overflow-x:auto;padding:0 4px;margin:0;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .tab{
+    flex:none;display:flex;align-items:center;gap:8px;
+    font:inherit;font-size:14px;font-weight:600;color:var(--muted);
+    background:#e8edf1;border:1px solid var(--line);border-bottom:none;
+    border-radius:12px 12px 0 0;padding:11px 18px 10px;cursor:pointer;
+    position:relative;top:1px;transition:background .2s,color .2s;
+  }
+  .tab:hover{background:#dfe6ec;color:var(--ink)}
+  .tab .tn{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:#fff;color:var(--muted)}
+  .tab[aria-selected="true"]{background:var(--card);color:var(--brand);z-index:2;padding-top:13px;margin-top:-3px;box-shadow:0 -3px 0 var(--brand-2) inset}
+  .tab[aria-selected="true"] .tn{background:var(--brand);color:#fff}
+  .tab:focus-visible{outline:2px solid var(--brand-2);outline-offset:-2px}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:24px 24px 26px;box-shadow:0 8px 28px rgba(11,93,87,.08);position:relative;z-index:1}
+  .panel h3{margin:0 0 4px;font-size:20px}
+  .panel .desc{color:var(--muted);margin:0 0 16px;font-size:15px}
   .player{position:relative;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
-  .player iframe,.player>div{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .watch{margin-top:14px}
-  .watch-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
-  .locked-box{aspect-ratio:16/9;border-radius:12px;background:repeating-linear-gradient(45deg,#eef1f4,#eef1f4 12px,#e6eaee 12px,#e6eaee 24px);display:grid;place-items:center;text-align:center;color:var(--lock);padding:20px}
-  .locked-box span{font-size:14px;max-width:320px;display:block}
-  .manual{display:none;margin-top:12px}
-  .manual button,.reset{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--brand);color:var(--brand);background:#fff;border-radius:8px;padding:8px 14px;cursor:pointer}
-  .manual button:hover,.reset:hover{background:var(--brand-soft)}
-  .reset{border-color:var(--line);color:var(--muted);font-weight:500;font-size:13px}
-
-  /* petunjuk */
-  .hint{margin-top:12px;display:flex;gap:10px;align-items:center;background:var(--brand-soft);border:1px solid #bfe0db;color:var(--brand);border-radius:10px;padding:10px 14px;font-size:13.5px;font-weight:500}
-  .hint svg{flex:none;width:18px;height:18px}
-  .hint.ready{background:#e2f5ea;border-color:#b6e2c7;color:var(--ok)}
-
-  .finish{display:none;text-align:center;background:var(--brand-soft);border:1px solid #bfe0db;border-radius:16px;padding:28px;color:var(--brand)}
-  .finish h3{font-family:Fraunces,serif;font-size:24px;margin:0 0 6px}
-  .finish p{margin:0;color:var(--ink)}
+  .player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px}
+  .nav span{font-size:13px;color:var(--muted)}
+  .nav button{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--brand);color:var(--brand);background:#fff;border-radius:8px;padding:8px 14px;cursor:pointer}
+  .nav button:hover:not(:disabled){background:var(--brand-soft)}
+  .nav button:disabled{opacity:.4;cursor:not-allowed;border-color:var(--line);color:var(--muted)}
 
   /* visuals */
   .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center;position:relative;z-index:1}
@@ -95,14 +83,9 @@
   .topic p{margin:0;font-size:13.5px;color:var(--muted)}
   .t1 .ti{background:#e3f3f1;color:#0b5d57}.t2 .ti{background:#e6eefb;color:#2456a6}
   .t3 .ti{background:#fdeedb;color:#b36a00}.t4 .ti{background:#efe6fa;color:#6a3fb0}
-  .num svg{width:20px;height:20px}
-  .video-card.done .num svg{stroke:#fff}
-  .locked-box svg{width:44px;height:44px;margin-bottom:8px}
   @media(max-width:760px){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:380px;margin:8px auto 0}}
-  .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.35s;z-index:20;max-width:90vw;text-align:center}
-  .toast.show{opacity:1;transform:translate(-50%,0)}
   footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px;text-align:center}
-  @media(max-width:560px){.vc-head{padding:16px}.vc-body{padding:0 16px 16px}.badge{font-size:11px}}
+  @media(max-width:560px){.panel{padding:16px}.tab{padding:10px 12px 9px;font-size:13px}.tab[aria-selected="true"]{padding-top:12px}}
 </style>
 </head>
 <body>
@@ -186,38 +169,30 @@
   </div>
 </section>
 
-<!-- SECTION 3 : VIDEO -->
+<!-- SECTION 3 : VIDEO (TAB) -->
 <main class="course">
   <div class="wrap">
     <div class="course-head">
-      <div>
-        <h2>Materi Video</h2>
-        <small>Tonton secara berurutan. Video berikutnya terbuka setelah video sebelumnya ditonton selama 10 detik.</small>
+      <h2>Materi Video</h2>
+      <small>Pilih tab Materi 1–6 untuk menonton. Semua video terbuka dan dapat dipilih dalam urutan apa pun.</small>
+    </div>
+
+    <div class="tabs" id="tabs" role="tablist" aria-label="Daftar materi video"></div>
+
+    <section class="panel" id="panel" role="tabpanel" aria-live="polite">
+      <h3 id="pTitle"></h3>
+      <p class="desc" id="pDesc"></p>
+      <div class="player" id="player"></div>
+      <div class="nav">
+        <button type="button" id="prevBtn">← Sebelumnya</button>
+        <span id="pCount"></span>
+        <button type="button" id="nextBtn">Berikutnya →</button>
       </div>
-      <button class="reset" id="resetBtn" type="button">Ulangi dari awal</button>
-    </div>
-
-    <div class="overall">
-      <div class="overall-row"><span>Progres belajar</span><span id="overallText">0 / 0 video</span></div>
-      <div class="bar"><i id="overallBar"></i></div>
-    </div>
-
-    <div class="hint" style="margin:-12px 0 24px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      <span>Setiap video berikutnya otomatis terbuka setelah Anda menonton video sebelumnya selama <b>10 detik</b>.</span>
-    </div>
-
-    <div id="list"></div>
-
-    <div class="finish" id="finish">
-      <h3>🎉 Selamat, Anda telah menyelesaikan semua materi!</h3>
-      <p>Terima kasih telah mengikuti pelatihan Finance for Non Finance.</p>
-    </div>
+    </section>
   </div>
 </main>
 
 <footer><div class="wrap">© Finance for Non Finance — Materi internal, tidak untuk disebarluaskan.</div></footer>
-<div class="toast" id="toast"></div>
 
 <script>
 /* =====================================================
@@ -232,159 +207,67 @@ const VIDEOS = [
   { id: "jLUWgPsWOV8", title: "Materi 6", desc: "Dasar-dasar akuntansi" }
   // Tambah video baru: { id: "YOUTUBE_ID", title: "...", desc: "..." },
 ];
-const REQUIRED_SECONDS = 10;  // video berikutnya terbuka setelah video ini ditonton 10 detik
-const STORE_KEY = "ffnf_progress_v1";
-
-const ICON = {"chart": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3v18h18\"/><path d=\"M7 15l4-4 3 3 5-6\"/></svg>", "book": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z\"/><path d=\"M4 19V5\"/><path d=\"M9 8h6M9 12h6\"/></svg>", "coin": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M14.5 9a2.5 2 0 0 0-2.5-1.5c-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2A2.5 2 0 0 1 9.5 15M12 6.5v1M12 16.5v1\"/></svg>", "scale": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v18M7 21h10M5 7h14\"/><path d=\"M5 7l-3 7a3.2 3.2 0 0 0 6 0zM19 7l-3 7a3.2 3.2 0 0 0 6 0z\"/></svg>", "flow": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 8h13l-3-3M20 16H7l3 3\"/></svg>", "pct": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19 5L5 19\"/><circle cx=\"7\" cy=\"7\" r=\"2.5\"/><circle cx=\"17\" cy=\"17\" r=\"2.5\"/></svg>", "lock": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"11\" width=\"14\" height=\"10\" rx=\"2\"/><path d=\"M8 11V8a4 4 0 0 1 8 0v3\"/></svg>", "check": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg>"};
-const CARD_ICONS = ['chart','scale','flow','coin','pct','book'];
-
-/* ---------- state ---------- */
-let completed = 0;
-try { completed = Math.min(parseInt(localStorage.getItem(STORE_KEY) || "0", 10) || 0, VIDEOS.length); } catch(e){}
-const players = {};      // index -> YT.Player
-const watched = {};      // index -> detik nyata yang ditonton
-let apiReady = false, apiFailed = false;
+const STORE_KEY = "ffnf_tab_v1";
 
 const $ = s => document.querySelector(s);
-const list = $("#list");
+const tabsEl = $("#tabs");
+let current = 0;
+try { const n = parseInt(localStorage.getItem(STORE_KEY) || "0", 10); if (n >= 0 && n < VIDEOS.length) current = n; } catch(e){}
 
-function save(){ try{ localStorage.setItem(STORE_KEY, String(completed)); }catch(e){} }
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3200); }
+/* buat tab */
+VIDEOS.forEach((v, i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "tab";
+  b.id = "tab-" + i;
+  b.setAttribute("role", "tab");
+  b.setAttribute("aria-controls", "panel");
+  b.innerHTML = `<span class="tn">${i + 1}</span><span>${v.title}</span>`;
+  b.onclick = () => select(i);
+  b.onkeydown = e => {
+    let n = null;
+    if (e.key === "ArrowRight") n = (i + 1) % VIDEOS.length;
+    if (e.key === "ArrowLeft")  n = (i - 1 + VIDEOS.length) % VIDEOS.length;
+    if (e.key === "Home") n = 0;
+    if (e.key === "End")  n = VIDEOS.length - 1;
+    if (n !== null) { e.preventDefault(); select(n, true); }
+  };
+  tabsEl.appendChild(b);
+});
 
-/* ---------- render ---------- */
-function render(){
-  list.innerHTML = "";
-  VIDEOS.forEach((v,i)=>{
-    const state = i < completed ? "done" : i === completed ? "active" : "locked";
-    const card = document.createElement("article");
-    card.className = "video-card " + state;
-    card.id = "video-" + i;
-    const badge = state==="done" ? "Selesai" : state==="active" ? "Sedang berjalan" : "🔒 Terkunci";
-    let body;
-    if(state==="locked"){
-      body = `<div class="locked-box"><div>${ICON.lock}<span>Tonton <strong>Video ${i}</strong> selama ${REQUIRED_SECONDS} detik untuk membuka video ini.</span></div></div>`;
-    } else {
-      body = `
-        <p class="vc-desc">${v.desc}</p>
-        <div class="player"><div id="yt-${i}"></div></div>
-        ${state==="active" ? `
-        <div class="watch">
-          <div class="watch-row"><span>Progres menonton</span><span id="wtxt-${i}">0%</span></div>
-          <div class="bar"><i id="wbar-${i}"></i></div>
-          ${i < VIDEOS.length-1 ? `
-          <div class="hint" id="hint-${i}">
-            ${ICON.lock}
-            <span id="htxt-${i}">Video ${i+2} akan terbuka setelah video ini ditonton selama ${REQUIRED_SECONDS} detik.</span>
-          </div>` : ""}
-          <div class="manual" id="manual-${i}"><button type="button" data-i="${i}">Saya sudah menonton video ini</button></div>
-        </div>` : ""}`;
-    }
-    card.innerHTML = `
-      <div class="vc-head">
-        <div class="num">${state==="done" ? ICON.check : ICON[CARD_ICONS[i % CARD_ICONS.length]]}</div>
-        <div class="vc-title"><h3>${v.title}</h3></div>
-        <span class="badge">${badge}</span>
-      </div>
-      <div class="vc-body">${body}</div>`;
-    list.appendChild(card);
+function select(i, focus){
+  current = i;
+  try { localStorage.setItem(STORE_KEY, String(i)); } catch(e){}
+  const v = VIDEOS[i];
+
+  VIDEOS.forEach((_, k) => {
+    const t = $("#tab-" + k);
+    t.setAttribute("aria-selected", k === i ? "true" : "false");
+    t.tabIndex = k === i ? 0 : -1;
   });
+  if (focus) $("#tab-" + i).focus();
+  $("#tab-" + i).scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
 
-  const total = VIDEOS.length;
-  $("#overallText").textContent = `${completed} / ${total} video`;
-  $("#overallBar").style.width = (completed/total*100) + "%";
-  $("#finish").style.display = completed >= total ? "block" : "none";
+  $("#panel").setAttribute("aria-labelledby", "tab-" + i);
+  $("#pTitle").textContent = v.title;
+  $("#pDesc").textContent = v.desc;
+  $("#pCount").textContent = `Video ${i + 1} dari ${VIDEOS.length}`;
+  $("#prevBtn").disabled = i === 0;
+  $("#nextBtn").disabled = i === VIDEOS.length - 1;
 
-  for(const k in players){ try{ players[k].destroy(); }catch(e){} delete players[k]; }
-  VIDEOS.forEach((_,i)=>{ if(i <= completed && i < total) mountPlayer(i); });
-  document.querySelectorAll(".manual button").forEach(b=>b.onclick=()=>finishVideo(+b.dataset.i));
-  if(apiFailed) document.querySelectorAll(".manual").forEach(m=>m.style.display="block");
+  /* ganti iframe supaya video sebelumnya berhenti saat pindah tab */
+  const f = document.createElement("iframe");
+  f.src = "https://www.youtube.com/embed/" + v.id + "?rel=0&modestbranding=1&playsinline=1";
+  f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+  f.allowFullscreen = true;
+  f.title = v.title + " — " + v.desc;
+  $("#player").replaceChildren(f);
 }
 
-/* ---------- YouTube player ---------- */
-function mountPlayer(i){
-  const el = $("#yt-"+i);
-  if(!el || !apiReady) return;
-  players[i] = new YT.Player("yt-"+i, {
-    videoId: VIDEOS[i].id,
-    playerVars: { rel:0, modestbranding:1, playsinline:1 },
-    events: { onStateChange: e => onState(i,e) }
-  });
-}
+$("#prevBtn").onclick = () => { if (current > 0) select(current - 1); };
+$("#nextBtn").onclick = () => { if (current < VIDEOS.length - 1) select(current + 1); };
 
-let ticker = null;
-function onState(i,e){
-  if(i !== completed) return;               // hanya video aktif yang dihitung
-  if(e.data === YT.PlayerState.PLAYING){
-    if(!ticker) ticker = setInterval(tick, 1000);
-  } else {
-    clearInterval(ticker); ticker = null;
-    if(e.data === YT.PlayerState.ENDED) finishVideo(i);   // video lebih pendek dari 10 detik
-  }
-}
-
-function tick(){
-  const i = completed, p = players[i];
-  if(!p || !p.getDuration) return;
-  const dur = p.getDuration();
-  watched[i] = (watched[i]||0) + 1;   // +1 per detik nyata, tidak terpengaruh kecepatan putar
-  const need = Math.min(REQUIRED_SECONDS, dur || REQUIRED_SECONDS);
-  const pct = Math.min(100, Math.round(watched[i]/need*100));
-  const bar = $("#wbar-"+i), txt = $("#wtxt-"+i), ht = $("#htxt-"+i);
-  if(bar) bar.style.width = pct+"%";
-  if(txt) txt.textContent = pct+"%";
-  if(ht){
-    const left = Math.max(0, need - watched[i]);
-    ht.textContent = `Video ${i+2} terbuka dalam ${left} detik lagi. Terus tonton video ini.`;
-  }
-  if(watched[i] >= need) finishVideo(i);
-}
-
-function finishVideo(i){
-  if(i !== completed) return;
-  clearInterval(ticker); ticker = null;
-  completed++;
-  save();
-  const last = completed >= VIDEOS.length;
-  render();
-  toast(last ? "Semua video selesai ditonton 🎉" : `Video ${i+1} selesai! Video ${i+2} sekarang terbuka.`);
-  const target = last ? $("#finish") : $("#video-"+completed);
-  if(target) setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"center"}),150);
-}
-
-/* YouTube IFrame API callback */
-window.onYouTubeIframeAPIReady = function(){ apiReady = true; render(); };
-
-(function loadApi(){
-  const s = document.createElement("script");
-  s.src = "https://www.youtube.com/iframe_api";
-  s.onerror = () => { apiFailed = true; fallbackRender(); };
-  document.head.appendChild(s);
-  // jika API tidak siap dalam 8 detik, tampilkan iframe biasa + tombol manual
-  setTimeout(()=>{ if(!apiReady){ apiFailed = true; fallbackRender(); } }, 8000);
-})();
-
-function fallbackRender(){
-  render();
-  VIDEOS.forEach((v,i)=>{
-    const el = $("#yt-"+i);
-    if(el){
-      const f = document.createElement("iframe");
-      f.src = "https://www.youtube.com/embed/"+v.id+"?rel=0";
-      f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-      f.allowFullscreen = true; f.title = v.title;
-      el.replaceWith(f);
-    }
-  });
-  document.querySelectorAll(".manual").forEach(m=>m.style.display="block");
-}
-
-$("#resetBtn").onclick = () => {
-  if(!confirm("Ulangi pelatihan dari awal? Progres Anda akan direset.")) return;
-  completed = 0; for(const k in watched) delete watched[k];
-  save(); render(); window.scrollTo({top:0,behavior:"smooth"});
-};
-
-render();   // tampilan awal (player dipasang saat API siap)
+select(current);
 </script>
 </body>
 </html>
